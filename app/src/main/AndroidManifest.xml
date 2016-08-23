@@ -15,6 +15,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".main.register.RegisterSearchActivity" />
+        <activity android:name=".beautytip.BeautyTipDetailActivity" />
+        <activity android:name=".beautytip.BeautyTipWriteActivity"></activity>
         <activity android:name=".register.RegisterSearchActivity" />
         <activity android:name=".register.RegisterBarcodeActivity" />
         <activity android:name=".register.RegisterDetailActivity"></activity>
