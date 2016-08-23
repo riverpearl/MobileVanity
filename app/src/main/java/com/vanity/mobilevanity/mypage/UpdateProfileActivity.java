@@ -27,8 +27,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
 
     @OnClick(R.id.btn_set)
     public void onAlarmClick(View view) {
-        Intent intent = new Intent(this, MyPageFragment.class);
-        startActivity(intent);
+        finish();
     }
 
     @OnClick(R.id.btn_withdraw)

@@ -21,7 +21,6 @@ public class BeautyTipWriteActivity extends AppCompatActivity {
 
     @OnClick(R.id.btn_set)
     public void onSetClick(View view) {
-        Intent intent = new Intent(BeautyTipWriteActivity.this, BeautyTipFragment.class);
-        startActivity(intent);
+        finish();
     }
 }

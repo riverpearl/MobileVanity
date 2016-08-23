@@ -28,8 +28,6 @@ public class RegisterDetailActivity extends AppCompatActivity {
 
     @OnClick(R.id.btn_register)
     public void onRegisterClick(View view) {
-        Intent intent = new Intent(RegisterDetailActivity.this, CosmeticListActivity.class);
-        startActivity(intent);
         finish();
     }
 }
