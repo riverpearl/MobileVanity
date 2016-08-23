@@ -1,7 +1,9 @@
-package com.vanity.mobilevanity;
+package com.vanity.mobilevanity.main;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.vanity.mobilevanity.R;
 
 public class MainActivity extends AppCompatActivity {
 
