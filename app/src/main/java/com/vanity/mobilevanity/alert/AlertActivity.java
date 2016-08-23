@@ -1,4 +1,4 @@
-package com.vanity.mobilevanity.main;
+package com.vanity.mobilevanity.alert;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;

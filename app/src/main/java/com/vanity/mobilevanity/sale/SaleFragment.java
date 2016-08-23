@@ -1,4 +1,4 @@
-package com.vanity.mobilevanity.main;
+package com.vanity.mobilevanity.sale;
 
 
 import android.os.Bundle;
@@ -13,10 +13,10 @@ import com.vanity.mobilevanity.R;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class HomeFragment extends Fragment {
+public class SaleFragment extends Fragment {
 
 
-    public HomeFragment() {
+    public SaleFragment() {
         // Required empty public constructor
     }
 
@@ -25,7 +25,7 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        return inflater.inflate(R.layout.fragment_sale, container, false);
     }
 
 }

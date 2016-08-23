@@ -1,4 +1,4 @@
-package com.vanity.mobilevanity.main;
+package com.vanity.mobilevanity.beautytip;
 
 
 import android.os.Bundle;

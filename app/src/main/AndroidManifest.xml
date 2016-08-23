@@ -8,17 +8,16 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".main.MainActivity">
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".main.register.RegisterSearchActivity" />
+        <activity android:name=".register.RegisterSearchActivity" />
         <activity android:name=".beautytip.BeautyTipDetailActivity" />
         <activity android:name=".beautytip.BeautyTipWriteActivity" />
-        <activity android:name=".register.RegisterSearchActivity" />
         <activity android:name=".register.RegisterBarcodeActivity" />
         <activity android:name=".register.RegisterDetailActivity" />
         <activity android:name=".cosmetic.CosmeticListActivity" />
@@ -26,13 +25,12 @@
         <activity android:name=".mypage.UpdateProfileActivity" />
         <activity android:name=".mypage.MyBeautyTipActivity" />
         <activity android:name=".mypage.LikeActivity" />
-        <activity android:name=".main.AlertActivity"></activity>
-        <activity android:name=".register.RegisterDetailActivity" />
+        <activity android:name=".alert.AlertActivity" />
         <activity android:name=".setting.SettingActivity" />
         <activity android:name=".setting.AccessTermActivity" />
         <activity android:name=".setting.FAQActivity" />
         <activity android:name=".setting.PartnerShipActivity" />
-        <activity android:name=".setting.AlertActivity"></activity>
+        <activity android:name=".SplashActivity"></activity>
     </application>
 
 </manifest>
