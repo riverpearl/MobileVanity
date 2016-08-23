@@ -7,6 +7,7 @@ import android.view.View;
 
 import com.vanity.mobilevanity.R;
 
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class SettingActivity extends AppCompatActivity {
@@ -15,6 +16,8 @@ public class SettingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
+
+        ButterKnife.bind(this);
     }
 
     @OnClick(R.id.btn_access_term)
