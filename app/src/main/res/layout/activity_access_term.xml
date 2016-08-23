@@ -9,4 +9,10 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.vanity.mobilevanity.setting.AccessTermActivity">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="AccessTermActivity"
+        android:id="@+id/textView" />
+
 </RelativeLayout>
