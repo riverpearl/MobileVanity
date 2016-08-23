@@ -17,10 +17,16 @@
         </activity>
         <activity android:name=".main.register.RegisterSearchActivity" />
         <activity android:name=".beautytip.BeautyTipDetailActivity" />
-        <activity android:name=".beautytip.BeautyTipWriteActivity"></activity>
+        <activity android:name=".beautytip.BeautyTipWriteActivity" />
         <activity android:name=".register.RegisterSearchActivity" />
         <activity android:name=".register.RegisterBarcodeActivity" />
-        <activity android:name=".register.RegisterDetailActivity"></activity>
+        <activity android:name=".register.RegisterDetailActivity" />
+        <activity android:name=".cosmetic.CosmeticListActivity" />
+        <activity android:name=".cosmetic.CosmeticDetailActivity" />
+        <activity android:name=".mypage.UpdateProfileActivity" />
+        <activity android:name=".mypage.MyBeautyTipActivity" />
+        <activity android:name=".mypage.LikeActivity" />
+        <activity android:name=".main.AlertActivity"></activity>
     </application>
 
 </manifest>
