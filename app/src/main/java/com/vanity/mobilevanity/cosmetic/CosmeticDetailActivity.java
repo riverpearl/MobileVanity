@@ -7,6 +7,7 @@ import android.view.View;
 
 import com.vanity.mobilevanity.R;
 import com.vanity.mobilevanity.beautytip.BeautyTipDetailActivity;
+import com.vanity.mobilevanity.sale.SaleFragment;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -20,8 +21,14 @@ public class CosmeticDetailActivity extends AppCompatActivity {
         ButterKnife.bind(this);
     }
 
-    @OnClick(R.id.btn_more)
-    public void onMoreClick(View view) {
+    @OnClick(R.id.btn_saleinfo)
+    public void onSaleInfoClick(View view) {
+        Intent intent = new Intent(this, SaleFragment.class);
+        startActivity(intent);
+    }
+
+    @OnClick(R.id.btn_beautytip)
+    public void onBeautyTipClick(View view) {
         Intent intent = new Intent(this, BeautyTipDetailActivity.class);
         startActivity(intent);
     }
