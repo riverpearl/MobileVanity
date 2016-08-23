@@ -27,6 +27,12 @@
         <activity android:name=".mypage.MyBeautyTipActivity" />
         <activity android:name=".mypage.LikeActivity" />
         <activity android:name=".main.AlertActivity"></activity>
+        <activity android:name=".register.RegisterDetailActivity" />
+        <activity android:name=".setting.SettingActivity" />
+        <activity android:name=".setting.AccessTermActivity" />
+        <activity android:name=".setting.FAQActivity" />
+        <activity android:name=".setting.PartnerShipActivity" />
+        <activity android:name=".setting.AlertActivity"></activity>
     </application>
 
 </manifest>
