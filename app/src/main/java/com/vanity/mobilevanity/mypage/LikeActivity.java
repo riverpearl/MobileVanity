@@ -26,6 +26,4 @@ public class LikeActivity extends AppCompatActivity {
         Intent intent = new Intent(this, BeautyTipDetailActivity.class);
         startActivity(intent);
     }
-
-
 }

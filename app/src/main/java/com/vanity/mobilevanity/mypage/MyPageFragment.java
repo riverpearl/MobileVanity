@@ -37,12 +37,6 @@ public class MyPageFragment extends Fragment {
         return view;
     }
 
-    @OnClick(R.id.btn_alarm)
-    public void onAlarmClick(View view) {
-        Intent intent = new Intent(getContext(), AlertActivity.class);
-        startActivity(intent);
-    }
-
     @OnClick(R.id.btn_modification)
     public void onModificationClick(View view) {
         Intent intent = new Intent(getContext(), UpdateProfileActivity.class);

@@ -13,16 +13,6 @@
             style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="alarm"
-            android:id="@+id/btn_alarm"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
-
-        <Button
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:text="modification"
             android:id="@+id/btn_modification"
             android:layout_marginLeft="30dp"
@@ -67,9 +57,7 @@
             android:layout_height="wrap_content"
             android:text="like"
             android:id="@+id/btn_like"
-            android:layout_alignBottom="@+id/btn_tip"
-            android:layout_toLeftOf="@+id/btn_alarm"
-            android:layout_toStartOf="@+id/btn_alarm" />
+            android:layout_alignBottom="@+id/btn_tip" />
     </RelativeLayout>
 
 </FrameLayout>

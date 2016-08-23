@@ -23,5 +23,4 @@ public class BeautyTipDetailActivity extends AppCompatActivity {
         this.finish();
     }
 
-
 }

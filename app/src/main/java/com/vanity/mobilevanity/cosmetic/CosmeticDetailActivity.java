@@ -24,6 +24,5 @@ public class CosmeticDetailActivity extends AppCompatActivity {
     public void onMoreClick(View view) {
         Intent intent = new Intent(this, BeautyTipDetailActivity.class);
         startActivity(intent);
-
     }
 }
