@@ -10,10 +10,20 @@
     tools:context="com.vanity.mobilevanity.beautytip.BeautyTipWriteActivity">
 
     <Button
+        android:id="@+id/btn_quit"
+        style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="set"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:text="x" />
+
+    <Button
         android:id="@+id/btn_set"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:text="set" />
 </RelativeLayout>

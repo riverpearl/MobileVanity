@@ -19,6 +19,11 @@ public class BeautyTipWriteActivity extends AppCompatActivity {
         ButterKnife.bind(this);
     }
 
+    @OnClick(R.id.btn_quit)
+    public void onQuitClick(View view) {
+        finish();
+    }
+
     @OnClick(R.id.btn_set)
     public void onSetClick(View view) {
         finish();
