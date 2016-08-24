@@ -3,6 +3,8 @@ package com.vanity.mobilevanity.mypage;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.vanity.mobilevanity.R;
@@ -20,11 +22,6 @@ public class UpdateProfileActivity extends AppCompatActivity {
         ButterKnife.bind(this);
     }
 
-    @OnClick(R.id.btn_quit)
-    public void onQuitClick(View view) {
-        finish();
-    }
-
     @OnClick(R.id.btn_set)
     public void onAlarmClick(View view) {
         finish();
@@ -32,8 +29,22 @@ public class UpdateProfileActivity extends AppCompatActivity {
 
     @OnClick(R.id.btn_withdraw)
     public void onWithDrawClick(View view) {
-       int pid = android.os.Process.myPid();
-        android.os.Process.killProcess(pid);
+        //앱 종료
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.actionbar_cancel, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.menu_cancel) {
+            finish();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 }
