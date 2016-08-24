@@ -63,7 +63,7 @@ public class MyPageFragment extends Fragment {
 
     @OnClick(R.id.btn_like)
     public void onLikeClick(View view) {
-        Intent intent = new Intent(getContext(), BeautyTipDetailActivity.class);
+        Intent intent = new Intent(getContext(), LikeActivity.class);
         startActivity(intent);
     }
 

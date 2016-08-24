@@ -7,4 +7,7 @@
     <string name="view_like_sentence">Like</string>
     <string name="view_useby_sentence">Useby</string>
     <string name="view_useby_sentence_two">Remain</string>
+
+    <!-- view_like.xml -->
+    <string name="view_like_sentence">Like</string>
 </resources>
