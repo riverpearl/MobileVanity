@@ -10,4 +10,14 @@
     <string name="view_alert_useby_sentence_two">일 남았습니다.</string>
     <!-- view_like.xml -->
     <string name="view_like_sentence">게시물을 좋아합니다.</string>
+
+    <!-- fragment_my_page_my_cosmetics -->
+    <string name="fragment_my_page_my_cosmetics">내가 등록한 제품</string>
+    <string name="fragment_my_page_eye_title">Eye</string>
+    <string name="fragment_my_page_lip_title">Lip</string>
+    <string name="fragment_my_page_skin_title">Skin</string>
+    <string name="fragment_my_page_base_title">Base</string>
+    <string name="fragment_my_page_cleansing_title">Cleansing</string>
+    <string name="fragment_my_page_tool_title">Tool</string>
+    <string name="fragment_my_page_my_activities">나의 활동</string>
 </resources>
