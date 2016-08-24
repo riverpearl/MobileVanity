@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import com.vanity.mobilevanity.R;
 import com.vanity.mobilevanity.alert.AlertActivity;
 import com.vanity.mobilevanity.beautytip.BeautyTipDetailActivity;
+import com.vanity.mobilevanity.cosmetic.CosmeticListActivity;
 import com.vanity.mobilevanity.setting.SettingActivity;
 
 import butterknife.ButterKnife;
@@ -51,7 +52,7 @@ public class MyPageFragment extends Fragment {
 
     @OnClick(R.id.btn_my_cosmetic)
     public void onMyCosmeticClick(View view) {
-        Intent intent = new Intent(getContext(), AlertActivity.class);
+        Intent intent = new Intent(getContext(), CosmeticListActivity.class);
         startActivity(intent);
     }
 

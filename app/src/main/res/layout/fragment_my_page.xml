@@ -15,9 +15,9 @@
             android:layout_height="wrap_content"
             android:text="modification"
             android:id="@+id/btn_modification"
-            android:layout_marginLeft="30dp"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="70dp" />
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
 
         <Button
             style="?android:attr/buttonStyleSmall"
@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:text="setting"
             android:id="@+id/btn_setting"
-            android:layout_alignTop="@+id/btn_modification"
+            android:layout_alignParentTop="true"
             android:layout_toRightOf="@+id/btn_modification"
             android:layout_toEndOf="@+id/btn_modification" />
 
@@ -35,21 +35,19 @@
             android:layout_height="wrap_content"
             android:text="my cosmetic"
             android:id="@+id/btn_my_cosmetic"
-            android:layout_below="@+id/btn_modification"
+            android:layout_centerVertical="true"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginTop="37dp" />
+            android:layout_alignParentStart="true" />
 
         <Button
             style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="tip"
+            android:text="my tip"
             android:id="@+id/btn_tip"
             android:layout_below="@+id/btn_my_cosmetic"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginTop="99dp" />
+            android:layout_alignParentStart="true" />
 
         <Button
             style="?android:attr/buttonStyleSmall"
@@ -57,7 +55,9 @@
             android:layout_height="wrap_content"
             android:text="like"
             android:id="@+id/btn_like"
-            android:layout_alignBottom="@+id/btn_tip" />
+            android:layout_alignTop="@+id/btn_tip"
+            android:layout_toRightOf="@+id/btn_tip"
+            android:layout_toEndOf="@+id/btn_tip" />
     </RelativeLayout>
 
 </FrameLayout>

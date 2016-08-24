@@ -3,10 +3,11 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="view_comment_sentence">comment</string>
-    <string name="view_like_sentence">Like</string>
-    <string name="view_useby_sentence">Useby</string>
-    <string name="view_useby_sentence_two">Remain</string>
+
+    <string name="view_alert_comment_sentence">comment</string>
+    <string name="view_alert_like_sentence">Like</string>
+    <string name="view_alert_useby_sentence">Useby</string>
+    <string name="view_alert_useby_sentence_two">Remain</string>
 
     <!-- view_like.xml -->
     <string name="view_like_sentence">Like</string>
