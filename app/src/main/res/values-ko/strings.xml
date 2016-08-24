@@ -18,4 +18,14 @@
     <string name="activity_beauty_tip_write_content"></string>
     <!--activity_beauty_tip_write-->
     <string name="activity_beauty_tip_write_content_hint">ContentHint</string>
+    <!--activity_cosmetic_detail-->
+    <string name="activity_cosmetic_detail_register">RegisterDate</string>
+    <string name="activity_cosmetic_detail_register_year">Y</string>
+    <string name="activity_cosmetic_detail_register_month">M</string>
+    <string name="activity_cosmetic_detail_register_date">D</string>
+    <string name="activity_cosmetic_detail_usebydate">UseByDate</string>
+    <string name="activity_cosmetic_detail_usebydate_year">Y</string>
+    <string name="activity_cosmetic_detail_usebydate_month">M</string>
+    <string name="activity_cosmetic_detail_usebydate_date">D</string>
+    <string name="activity_cosmetic_detail_sale_information">SaleInformation</string>
 </resources>
