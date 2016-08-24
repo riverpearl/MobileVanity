@@ -21,16 +21,6 @@ public class AlertUseByViewHolder extends RecyclerView.ViewHolder {
     TextView usebyView;
 
 
-    public interface OnAlertUseByItemClickListener {
-        public void onAlertUseByItemClick(View view, UseByItem item, int position);
-    }
-
-    OnAlertUseByItemClickListener listener;
-
-    public void setOnAlertUseByItemClickListener(OnAlertUseByItemClickListener listener) {
-        this.listener = listener;
-    }
-
     public AlertUseByViewHolder(final View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
@@ -38,7 +28,7 @@ public class AlertUseByViewHolder extends RecyclerView.ViewHolder {
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(listener != null) {
+                if (listener != null) {
                     listener.onAlertUseByItemClick(view, item, getAdapterPosition());
                 }
             }
@@ -51,5 +41,15 @@ public class AlertUseByViewHolder extends RecyclerView.ViewHolder {
         this.item = item;
         cosmeticView.setText(item.getCosmetic());
         usebyView.setText("" + item.getUseby());
+    }
+
+    public interface OnAlertUseByItemClickListener {
+        public void onAlertUseByItemClick(View view, UseByItem item, int position);
+    }
+
+    OnAlertUseByItemClickListener listener;
+
+    public void setOnAlertUseByItemClickListener(OnAlertUseByItemClickListener listener) {
+        this.listener = listener;
     }
 }

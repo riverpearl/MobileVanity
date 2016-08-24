@@ -18,16 +18,6 @@ public class AlertLikeViewHolder extends RecyclerView.ViewHolder {
     TextView userView;
 
 
-    public interface OnAlertLikeItemClickListener {
-        public void onAlertLikeItemClick(View view, LikeItem item, int position);
-    }
-
-    OnAlertLikeItemClickListener listener;
-
-    public void setOnAlertLikeItemClickListener(OnAlertLikeItemClickListener listener) {
-        this.listener = listener;
-    }
-
     public AlertLikeViewHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
@@ -48,4 +38,15 @@ public class AlertLikeViewHolder extends RecyclerView.ViewHolder {
         this.item = item;
         userView.setText(item.getUser());
     }
+
+    public interface OnAlertLikeItemClickListener {
+        public void onAlertLikeItemClick(View view, LikeItem item, int position);
+    }
+
+    OnAlertLikeItemClickListener listener;
+
+    public void setOnAlertLikeItemClickListener(OnAlertLikeItemClickListener listener) {
+        this.listener = listener;
+    }
+
 }

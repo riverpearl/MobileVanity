@@ -3,6 +3,8 @@ package com.vanity.mobilevanity.beautytip;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
@@ -27,13 +29,25 @@ public class BeautyTipWriteActivity extends AppCompatActivity {
         ButterKnife.bind(this);
     }
 
-    @OnClick(R.id.btn_quit)
-    public void onQuitClick(View view) {
+    @OnClick(R.id.btn_set)
+    public void onSetClick(View view) {
         finish();
     }
 
-    @OnClick(R.id.btn_set)
-    public void onSetClick(View view) {
-       finish();
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.actionbar_cancel, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.menu_cancel) {
+            finish();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }
+

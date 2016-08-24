@@ -3,7 +3,10 @@ package com.vanity.mobilevanity.cosmetic;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.TabHost;
 
 import com.vanity.mobilevanity.R;
 import com.vanity.mobilevanity.register.RegisterBarcodeActivity;
@@ -26,8 +29,19 @@ public class CosmeticListActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    @OnClick(R.id.btn_quit)
-    public void onQuitClick(View view) {
-        finish();
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.activity_beauty_tip_detail, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_update:
+            case R.id.menu_delete:
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

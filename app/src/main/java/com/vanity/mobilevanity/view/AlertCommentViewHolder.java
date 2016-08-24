@@ -23,15 +23,6 @@ public class AlertCommentViewHolder extends RecyclerView.ViewHolder {
     TextView userView;
 
 
-    public interface OnAlertCommentItemClickListener{
-        public void onAlertCommentItemClick(View view, CommentItem item, int position);
-    }
-
-    OnAlertCommentItemClickListener listener;
-    public void setOnAlertCommentItemClickListener(OnAlertCommentItemClickListener listener) {
-        this.listener = listener;
-    }
-
     public AlertCommentViewHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
@@ -39,7 +30,7 @@ public class AlertCommentViewHolder extends RecyclerView.ViewHolder {
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(listener != null) {
+                if (listener != null) {
                     listener.onAlertCommentItemClick(view, item, getAdapterPosition());
                 }
             }
@@ -51,6 +42,16 @@ public class AlertCommentViewHolder extends RecyclerView.ViewHolder {
     public void setComment(CommentItem item) {
         this.item = item;
         userView.setText(item.getUser());
+    }
+
+    public interface OnAlertCommentItemClickListener {
+        public void onAlertCommentItemClick(View view, CommentItem item, int position);
+    }
+
+    OnAlertCommentItemClickListener listener;
+
+    public void setOnAlertCommentItemClickListener(OnAlertCommentItemClickListener listener) {
+        this.listener = listener;
     }
 
 
