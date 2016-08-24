@@ -55,10 +55,4 @@ public class LikeActivity extends AppCompatActivity {
             mAdapter.add(data);
         }
     }
-
-    @OnClick(R.id.btn_like)
-    public void onLikeClick(View view) {
-        Intent intent = new Intent(this, BeautyTipDetailActivity.class);
-        startActivity(intent);
-    }
 }
