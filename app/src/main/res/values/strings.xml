@@ -14,4 +14,12 @@
 
     <!-- view_like.xml -->
     <string name="view_like_sentence">Like</string>
+    <!--activity_beauty_tip_write -->
+    <string name="activity_beauty_tip_write_title"></string>
+    <!--activity_beauty_tip_write-->
+    <string name="activity_beauty_tip_write_title_hint">TitleHint</string>
+    <!--activity_beauty_tip_write-->
+    <string name="activity_beauty_tip_write_content"></string>
+    <!--activity_beauty_tip_write-->
+    <string name="activity_beauty_tip_write_content_hint">ContentHint</string>
 </resources>

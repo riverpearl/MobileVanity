@@ -10,4 +10,12 @@
     <string name="view_alert_useby_sentence_two">일 남았습니다.</string>
     <!-- view_like.xml -->
     <string name="view_like_sentence">게시물을 좋아합니다.</string>
+    <!--activity_beauty_tip_write -->
+    <string name="activity_beauty_tip_write_title"></string>
+    <!--activity_beauty_tip_write-->
+    <string name="activity_beauty_tip_write_title_hint">TitleHint</string>
+    <!--activity_beauty_tip_write-->
+    <string name="activity_beauty_tip_write_content"></string>
+    <!--activity_beauty_tip_write-->
+    <string name="activity_beauty_tip_write_content_hint">ContentHint</string>
 </resources>
