@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- view_alert_comment-->
+    <string name="view_comment_sentence">님이 회원님의 메이크업 게시물에 댓글을 남겼습니다.</string>
+    <!-- view_alert_like-->
+    <string name="view_like_sentence">님이 회원님의 게시물을 좋아합니다.</string>
+    <!--view_alert_useby-->
+    <string name="view_useby_sentence">의 사용기한이 </string>
+    <!--view_alert_useby-->
+    <string name="view_useby_sentence_two">일 남았습니다.</string>
+</resources>
