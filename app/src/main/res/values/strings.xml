@@ -21,7 +21,7 @@
     <string name="activity_beauty_tip_write_content"></string>
     <string name="activity_beauty_tip_write_content_hint">ContentHint</string>
 
-    <!-- fragment_my_page_my_cosmetics -->
+    <!-- fragment_my_page.xml -->
     <string name="fragment_my_page_my_cosmetics">My Cosmetics</string>
     <string name="fragment_my_page_eye_title">Eye</string>
     <string name="fragment_my_page_lip_title">Lip</string>
@@ -30,4 +30,15 @@
     <string name="fragment_my_page_cleansing_title">Cleansing</string>
     <string name="fragment_my_page_tool_title">Tool</string>
     <string name="fragment_my_page_my_activities">My Activities</string>
+
+    <!-- activity_update_profile.xml -->
+    <string name="activity_update_profile_detail_info">Detail Info.</string>
+    <string name="activity_update_profile_gender">Gender</string>
+    <string name="activity_update_profile_gender_male">Male</string>
+    <string name="activity_update_profile_gender_female">Female</string>
+    <string name="activity_update_profile_skin_type">Skin Type</string>
+    <string name="activity_update_profile_dry">Dry</string>
+    <string name="activity_update_profile_normal">Normal</string>
+    <string name="activity_update_profile_oily">Oily</string>
+    <string name="activity_update_profile_complex">Complex</string>
 </resources>

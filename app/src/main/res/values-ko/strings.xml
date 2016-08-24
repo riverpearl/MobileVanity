@@ -26,4 +26,15 @@
     <string name="fragment_my_page_cleansing_title">Cleansing</string>
     <string name="fragment_my_page_tool_title">Tool</string>
     <string name="fragment_my_page_my_activities">나의 활동</string>
+
+    <!-- activity_update_profile.xml -->
+    <string name="activity_update_profile_detail_info">상세정보</string>
+    <string name="activity_update_profile_gender">성별</string>
+    <string name="activity_update_profile_gender_male">남성</string>
+    <string name="activity_update_profile_gender_female">여성</string>
+    <string name="activity_update_profile_skin_type">피부타입</string>
+    <string name="activity_update_profile_dry">건성</string>
+    <string name="activity_update_profile_normal">중성</string>
+    <string name="activity_update_profile_oily">지성</string>
+    <string name="activity_update_profile_complex">복합성</string>
 </resources>
