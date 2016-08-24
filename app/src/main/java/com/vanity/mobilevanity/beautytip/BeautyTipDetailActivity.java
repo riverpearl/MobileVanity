@@ -5,14 +5,26 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.vanity.mobilevanity.R;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class BeautyTipDetailActivity extends AppCompatActivity {
+
+    @BindView(R.id.text_title)
+    TextView titleView;
+
+    @BindView(R.id.text_content)
+    TextView contentView;
+
+    @BindView(R.id.image_beauty_tip)
+    ImageView beautytipImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +37,8 @@ public class BeautyTipDetailActivity extends AppCompatActivity {
     public void onBeforeClick(View view) {
         this.finish();
     }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
