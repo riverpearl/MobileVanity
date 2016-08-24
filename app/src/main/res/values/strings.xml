@@ -15,6 +15,12 @@
     <!-- view_like.xml -->
     <string name="view_like_sentence">Like</string>
 
+    <!--activity_beauty_tip_write -->
+    <string name="activity_beauty_tip_write_title"></string>
+    <string name="activity_beauty_tip_write_title_hint">TitleHint</string>
+    <string name="activity_beauty_tip_write_content"></string>
+    <string name="activity_beauty_tip_write_content_hint">ContentHint</string>
+
     <!-- fragment_my_page_my_cosmetics -->
     <string name="fragment_my_page_my_cosmetics">My Cosmetics</string>
     <string name="fragment_my_page_eye_title">Eye</string>

@@ -39,29 +39,23 @@ public class AlertActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         mAdapter = new AlertAdapter();
-        mAdapter.setOnAdapterAlertCommentItemClickListener(new AlertCommentViewHolder.OnAlertCommentItemClickListener() {
+        mAdapter.setOnAdapterItemClickListener(new AlertAdapter.OnAdapterItemClickListener() {
             @Override
-            public void onAlertCommentItemClick(View view, CommentItem item, int position) {
-                Intent intent = new Intent(AlertActivity.this, BeautyTipDetailActivity.class);
-                startActivity(intent);
+            public void onAdapteItemClick(View view, AlertItem item, int position) {
+                if (item instanceof CommentItem) {
+                    Intent intent = new Intent(AlertActivity.this, BeautyTipDetailActivity.class);
+                    startActivity(intent);
+                } else if (item instanceof LikeItem) {
+                    Intent intent = new Intent(AlertActivity.this, BeautyTipDetailActivity.class);
+                    startActivity(intent);
+                } else if (item instanceof UseByItem) {
+                    Intent intent = new Intent(AlertActivity.this, CosmeticDetailActivity.class);
+                    startActivity(intent);
+
+                }
             }
         });
 
-        mAdapter.setOnAdapterAlertLikeItemClickListener(new AlertLikeViewHolder.OnAlertLikeItemClickListener() {
-            @Override
-            public void onAlertLikeItemClick(View view, LikeItem item, int position) {
-                Intent intent = new Intent(AlertActivity.this, BeautyTipDetailActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        mAdapter.setOnAdapterAlertUseByItemClickListener(new AlertUseByViewHolder.OnAlertUseByItemClickListener() {
-            @Override
-            public void onAlertUseByItemClick(View view, UseByItem item, int position) {
-                Intent intent = new Intent(AlertActivity.this, CosmeticDetailActivity.class);
-                startActivity(intent);
-            }
-        });
         listView.setAdapter(mAdapter);
 
         LinearLayoutManager manager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
@@ -91,6 +85,5 @@ public class AlertActivity extends AppCompatActivity {
     public void onQuitClick(View view) {
         finish();
     }
-
 
 }

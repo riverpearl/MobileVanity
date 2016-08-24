@@ -11,6 +11,12 @@
     <!-- view_like.xml -->
     <string name="view_like_sentence">게시물을 좋아합니다.</string>
 
+    <!--activity_beauty_tip_write -->
+    <string name="activity_beauty_tip_write_title"></string>
+    <string name="activity_beauty_tip_write_title_hint">TitleHint</string>
+    <string name="activity_beauty_tip_write_content"></string>
+    <string name="activity_beauty_tip_write_content_hint">ContentHint</string>
+
     <!-- fragment_my_page_my_cosmetics -->
     <string name="fragment_my_page_my_cosmetics">내가 등록한 제품</string>
     <string name="fragment_my_page_eye_title">Eye</string>

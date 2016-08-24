@@ -10,13 +10,90 @@
     tools:context="com.vanity.mobilevanity.beautytip.BeautyTipDetailActivity">
 
     <Button
+        android:id="@+id/btn_before"
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="&lt;"
-        android:id="@+id/btn_before"
-        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:text="&lt;" />
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation = "vertical"
+        android:layout_below="@+id/btn_before"
+        android:layout_above="@+id/btn_like">
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/btn_like"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/btn_before">
+
+            <TextView
+                android:id="@+id/text_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/btn_before"
+                android:text="Title" />
+
+            <TextView
+                android:id="@+id/text_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignEnd="@+id/text_title"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignRight="@+id/text_title"
+                android:layout_below="@+id/text_title"
+                android:text="Content" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:id="@+id/image_beauty_tip"
+                android:layout_below="@+id/text_content"
+                android:layout_marginTop="20dp"
+                android:src="@android:drawable/sym_def_app_icon"
+                android:layout_above="@+id/btn_like"
+                 />
+
+
+        </LinearLayout>
+    </ScrollView>
+
+
+    <Button
+
+        android:id="@+id/btn_like"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:text="Like" />
+
+    <Button
+        android:id="@+id/btn_comment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/btn_like"
+        android:layout_below="@+id/scrollView"
+        android:text="Coment" />
+
+
 
 </RelativeLayout>
