@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- view_like.xml -->
+    <string name="view_like_sentence">게시물을 좋아합니다.</string>
+</resources>
