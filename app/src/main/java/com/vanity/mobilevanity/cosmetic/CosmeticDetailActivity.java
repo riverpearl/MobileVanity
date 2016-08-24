@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -44,6 +45,11 @@ public class CosmeticDetailActivity extends AppCompatActivity {
     @BindView(R.id.text_usebydate_date)
     TextView useByDateDateView;
 
+    @BindView(R.id.text_brand_name)
+    TextView brandNameView;
+
+    @BindView(R.id.text_sale_information)
+    TextView saleInformationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +67,16 @@ public class CosmeticDetailActivity extends AppCompatActivity {
     public void onSaleInfoClick(View view) {
         Intent intent = new Intent(this, SaleFragment.class);
         startActivity(intent);
+    }
+
+    @OnClick(R.id.image_register)
+    public void onRegisterButtonClick(View view) {
+
+    }
+
+    @OnClick(R.id.image_usebydate)
+    public void onUseByDateButton(View view) {
+
     }
 
 }
