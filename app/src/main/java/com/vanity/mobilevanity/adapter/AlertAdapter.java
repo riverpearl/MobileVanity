@@ -27,8 +27,18 @@ import java.util.List;
 public class AlertAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements AlertCommentViewHolder.OnAlertCommentItemClickListener, AlertLikeViewHolder.OnAlertLikeItemClickListener, AlertUseByViewHolder.OnAlertUseByItemClickListener {
     List<AlertItem> items = new ArrayList<>();
 
+    public void clear() {
+        items.clear();
+        notifyDataSetChanged();
+    }
+
     public void add(AlertItem item) {
         items.add(item);
+        notifyDataSetChanged();
+    }
+
+    public void addAll(List<AlertItem> items) {
+        items.addAll(items);
         notifyDataSetChanged();
     }
 

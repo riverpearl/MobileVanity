@@ -40,13 +40,17 @@
     <string name="activity_update_profile_oily">지성</string>
     <string name="activity_update_profile_complex">복합성</string>
     <!--activity_cosmetic_detail-->
-    <string name="activity_cosmetic_detail_register">RegisterDate</string>
-    <string name="activity_cosmetic_detail_register_year">Y</string>
-    <string name="activity_cosmetic_detail_register_month">M</string>
-    <string name="activity_cosmetic_detail_register_date">D</string>
-    <string name="activity_cosmetic_detail_usebydate">UseByDate</string>
-    <string name="activity_cosmetic_detail_usebydate_year">Y</string>
-    <string name="activity_cosmetic_detail_usebydate_month">M</string>
-    <string name="activity_cosmetic_detail_usebydate_date">D</string>
-    <string name="activity_cosmetic_detail_sale_information">SaleInformation</string>
+    <string name="activity_cosmetic_detail_register">등록날짜</string>
+    <string name="activity_cosmetic_detail_register_year">년</string>
+    <string name="activity_cosmetic_detail_register_month">월</string>
+    <string name="activity_cosmetic_detail_register_date">일</string>
+    <string name="activity_cosmetic_detail_usebydate">사용기한</string>
+    <string name="activity_cosmetic_detail_usebydate_year">년</string>
+    <string name="activity_cosmetic_detail_usebydate_month">월</string>
+    <string name="activity_cosmetic_detail_usebydate_date">일</string>
+    <string name="activity_cosmetic_detail_sale_information">세일정보</string>
+
+    <!-- BeautyTipFragment의 Spinner부분 -->
+    <string name="list_item_01">최신순</string>
+    <string name="list_item_02">인기순</string>
 </resources>

@@ -17,6 +17,7 @@ public class AlertLikeViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.text_user)
     TextView userView;
 
+    private LikeItem item;
 
     public AlertLikeViewHolder(View itemView) {
         super(itemView);
@@ -31,8 +32,6 @@ public class AlertLikeViewHolder extends RecyclerView.ViewHolder {
             }
         });
     }
-
-    LikeItem item;
 
     public void setLike(LikeItem item) {
         this.item = item;

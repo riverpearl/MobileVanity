@@ -53,4 +53,8 @@
     <string name="activity_update_profile_normal">Normal</string>
     <string name="activity_update_profile_oily">Oily</string>
     <string name="activity_update_profile_complex">Complex</string>
+
+    <!-- BeautyTipFragment의 Spinner부분 -->
+    <string name="list_item_01">latest</string>
+    <string name="list_item_02">popularity</string>
 </resources>

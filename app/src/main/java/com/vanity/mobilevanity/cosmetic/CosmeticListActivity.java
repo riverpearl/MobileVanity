@@ -31,17 +31,17 @@ public class CosmeticListActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.activity_beauty_tip_detail, menu);
+        getMenuInflater().inflate(R.menu.actionbar_cancel, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.menu_update:
-            case R.id.menu_delete:
-                return true;
+        if (item.getItemId() == R.id.menu_cancel) {
+            finish();
+            return true;
         }
+
         return super.onOptionsItemSelected(item);
     }
 }

@@ -20,6 +20,7 @@ public class AlertUseByViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.text_useby)
     TextView usebyView;
 
+    private UseByItem item;
 
     public AlertUseByViewHolder(final View itemView) {
         super(itemView);
@@ -34,8 +35,6 @@ public class AlertUseByViewHolder extends RecyclerView.ViewHolder {
             }
         });
     }
-
-    UseByItem item;
 
     public void setUseBy(UseByItem item) {
         this.item = item;

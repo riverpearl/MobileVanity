@@ -22,6 +22,7 @@ public class AlertCommentViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.text_user)
     TextView userView;
 
+    private CommentItem item;
 
     public AlertCommentViewHolder(View itemView) {
         super(itemView);
@@ -36,8 +37,6 @@ public class AlertCommentViewHolder extends RecyclerView.ViewHolder {
             }
         });
     }
-
-    CommentItem item;
 
     public void setComment(CommentItem item) {
         this.item = item;

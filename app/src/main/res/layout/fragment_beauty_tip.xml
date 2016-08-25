@@ -13,4 +13,16 @@
         android:id="@+id/btn_set"
         android:layout_gravity="right|top" />
 
+    <Spinner
+        android:layout_width="156dp"
+        android:layout_height="30dp"
+        android:id="@+id/spinner"
+        android:layout_gravity="left|top" />
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="450dp"
+        android:id="@+id/beautytiplist"
+        android:layout_gravity="center_horizontal|bottom" />
+
 </FrameLayout>
