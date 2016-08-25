@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 
 import com.vanity.mobilevanity.R;
 import com.vanity.mobilevanity.data.BeautyTip;
+import com.vanity.mobilevanity.data.Comment;
 import com.vanity.mobilevanity.view.BeautyTipItemViewHolder;
 
 import java.util.ArrayList;
@@ -15,7 +16,7 @@ import java.util.List;
 /**
  * Created by Tacademy on 2016-08-25.
  */
-public class BeautyTipAdapter extends RecyclerView.Adapter<BeautyTipItemViewHolder> implements BeautyTipItemViewHolder.OnBeautyTipItemClickListener {
+public class BeautyTipAdapter extends RecyclerView.Adapter<BeautyTipItemViewHolder> implements BeautyTipItemViewHolder.OnBeautyTipItemClickListener, BeautyTipItemViewHolder.OnCommentDialogClickListener {
     List<BeautyTip> items = new ArrayList<>();
 
     public void clear() {
@@ -50,6 +51,23 @@ public class BeautyTipAdapter extends RecyclerView.Adapter<BeautyTipItemViewHold
     @Override
     public int getItemCount() {
         return items.size();
+    }
+
+    public interface OnAdapterCommentClickListener {
+        public void onAdapterCommentClick(View view, Comment comment);
+    }
+
+    OnAdapterCommentClickListener dialogListener;
+
+    public void setOnAdapterCommentClickListener(OnAdapterCommentClickListener dialogListener) {
+        this.dialogListener = dialogListener;
+    }
+
+    @Override
+    public void onCommentDialogClick(View view, Comment comment) {
+        if(dialogListener != null) {
+            dialogListener.onAdapterCommentClick(view, comment);
+        }
     }
 
     public interface OnAdapterItemClickListener {

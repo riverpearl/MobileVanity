@@ -1,16 +1,22 @@
 package com.vanity.mobilevanity.view;
 
+import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.vanity.mobilevanity.R;
 import com.vanity.mobilevanity.data.BeautyTip;
+import com.vanity.mobilevanity.data.Comment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by 은미 on 2016-08-24.
@@ -34,18 +40,30 @@ public class BeautyTipItemViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.image_beauty_tip_item)
     ImageView previewImageView;
 
+    @BindView(R.id.btn_comment)
+    Button commentButton;
+
     private BeautyTip item;
+    private Comment commentItem;
 
-
-    public BeautyTipItemViewHolder(View itemView) {
+    public BeautyTipItemViewHolder(final View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
 
-        previewImageView.setOnClickListener(new View.OnClickListener() {
+        itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (listener != null) {
                     listener.onBeautyTipItemClick(view, item, getAdapterPosition());
+                }
+            }
+        });
+
+        commentButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(dialogListener != null) {
+                    dialogListener.onCommentDialogClick(view, commentItem);
                 }
             }
         });
@@ -76,6 +94,17 @@ public class BeautyTipItemViewHolder extends RecyclerView.ViewHolder {
 
     public void setOnBeautyTipItemClickListener(OnBeautyTipItemClickListener listener) {
         this.listener = listener;
+    }
+
+
+    public interface OnCommentDialogClickListener{
+        public void onCommentDialogClick(View view, Comment comment);
+    }
+
+    OnCommentDialogClickListener dialogListener;
+
+    public void setOnCommentDialogClickListner(OnCommentDialogClickListener dialogListener) {
+        this.dialogListener = dialogListener;
     }
 
 }

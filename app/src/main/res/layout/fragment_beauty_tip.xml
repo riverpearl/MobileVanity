@@ -1,4 +1,4 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -8,46 +8,35 @@
     <RelativeLayout
         android:id="@+id/layout_one"
         android:layout_width="match_parent"
-        android:layout_height="49dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
         android:orientation="horizontal">
 
         <Spinner
             android:id="@+id/spinner"
             android:layout_width="156dp"
             android:layout_height="30dp"
-            android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true" />
 
         <Button
             android:id="@+id/btn_set"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="set"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true" />
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:text="set" />
 
     </RelativeLayout>
 
 
-    <RelativeLayout
-        android:id="@+id/layout_two"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/beautytiplist"
         android:layout_width="match_parent"
-        android:layout_height="439dp"
-        android:layout_below="@+id/layout_one"
-        android:orientation="vertical"
-        android:layout_gravity="right|bottom">
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/beautytiplist"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal|bottom"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentTop="true" />
-    </RelativeLayout>
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/layout_one" />
 
 
-</FrameLayout>
+</RelativeLayout>
