@@ -80,23 +80,23 @@ public class BeautyTipFragment extends Fragment {
         mAdapter.setOnAdapterCommentClickListener(new BeautyTipAdapter.OnAdapterCommentClickListener() {
             @Override
             public void onAdapterCommentClick(View view, Comment comment) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
-                builder.setIcon(android.R.drawable.ic_btn_speak_now);
-                builder.setTitle("Comment");
-                builder.setMessage("Message");
-
-                final EditText input = new EditText(view.getContext());
-                builder.setView(input);
-
-                builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        String value = input.getText().toString();
-                        value.toString();
-                    }
-                });
-                builder.show();
-
+//                AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+//                builder.setIcon(android.R.drawable.ic_btn_speak_now);
+//                builder.setTitle("Comment");
+//                builder.setMessage("Message");
+//
+//                final EditText input = new EditText(view.getContext());
+//                builder.setView(input);
+//
+//                builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialogInterface, int i) {
+//                        String value = input.getText().toString();
+//                        value.toString();
+//                    }
+//                });
+//                builder.show();
+                Toast.makeText(getContext(), "djdj", Toast.LENGTH_SHORT).show();
             }
         });
 
