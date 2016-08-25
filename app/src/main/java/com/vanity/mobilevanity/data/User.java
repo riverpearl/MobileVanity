@@ -12,7 +12,7 @@ public class User {
     private int eyeNum;
     private int lipNum;
     private int skinNum;
-    private int baseNum;
+    private int faceNum;
     private int cleansingNum;
     private int toolNum;
 
@@ -80,12 +80,12 @@ public class User {
         this.skinNum = skinNum;
     }
 
-    public int getBaseNum() {
-        return baseNum;
+    public int getFaceNum() {
+        return faceNum;
     }
 
-    public void setBaseNum(int baseNum) {
-        this.baseNum = baseNum;
+    public void setFaceNum(int baseNum) {
+        this.faceNum = baseNum;
     }
 
     public int getCleansingNum() {

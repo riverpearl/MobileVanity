@@ -1,6 +1,7 @@
 package com.vanity.mobilevanity.mypage;
 
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -53,8 +54,8 @@ public class MyPageFragment extends Fragment {
     @BindView(R.id.text_skin_count)
     TextView skinCountView;
 
-    @BindView(R.id.text_base_count)
-    TextView baseCountView;
+    @BindView(R.id.text_face_count)
+    TextView faceCountView;
 
     @BindView(R.id.text_cleansing_count)
     TextView cleansingCountView;
@@ -63,6 +64,8 @@ public class MyPageFragment extends Fragment {
     TextView toolCountView;
 
     User user;
+
+    public final static int RC_MODIFY = 100;
 
     public final static String TAG_NICKNAME = "nickname";
     public final static String TAG_SKIN_TYPE = "skintype";
@@ -73,7 +76,7 @@ public class MyPageFragment extends Fragment {
     public final static int INDEX_ITEM_EYE = 1;
     public final static int INDEX_ITEM_LIP = 2;
     public final static int INDEX_ITEM_SKIN = 3;
-    public final static int INDEX_ITEM_BASE = 4;
+    public final static int INDEX_ITEM_FACE = 4;
     public final static int INDEX_ITEM_CLEANSING = 5;
     public final static int INDEX_ITEM_TOOL = 6;
 
@@ -96,7 +99,7 @@ public class MyPageFragment extends Fragment {
         user.setEyeNum(10);
         user.setLipNum(10);
         user.setSkinNum(10);
-        user.setBaseNum(10);
+        user.setFaceNum(10);
         user.setCleansingNum(10);
         user.setToolNum(10);
 
@@ -141,7 +144,7 @@ public class MyPageFragment extends Fragment {
         eyeCountView.setText(user.getEyeNum() + "");
         lipCountView.setText(user.getLipNum() + "");
         skinCountView.setText(user.getSkinNum() + "");
-        baseCountView.setText(user.getBaseNum() + "");
+        faceCountView.setText(user.getFaceNum() + "");
         cleansingCountView.setText(user.getCleansingNum() + "");
         toolCountView.setText(user.getToolNum() + "");
     }
@@ -160,7 +163,18 @@ public class MyPageFragment extends Fragment {
         intent.putExtra(TAG_GENDER, user.getGender());
         intent.putExtra(TAG_SKIN_TYPE, user.getSkinType());
         intent.putExtra(TAG_SKIN_TONE, user.getSkinTone());
-        startActivity(intent);
+        startActivityForResult(intent, RC_MODIFY);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == RC_MODIFY) {
+            if (resultCode == Activity.RESULT_OK) {
+                //네트워크에서 프로필정보 받아와서 다시 세팅해줌
+            }
+        }
     }
 
     @OnClick(R.id.btn_setting)
@@ -190,10 +204,10 @@ public class MyPageFragment extends Fragment {
         startActivity(intent);
     }
 
-    @OnClick(R.id.text_base_count)
+    @OnClick(R.id.text_face_count)
     public void onBaseCountClick(View view) {
         Intent intent = new Intent(getContext(), CosmeticListActivity.class);
-        intent.putExtra(TAG_ITEM_TAB, INDEX_ITEM_BASE);
+        intent.putExtra(TAG_ITEM_TAB, INDEX_ITEM_FACE);
         startActivity(intent);
     }
 

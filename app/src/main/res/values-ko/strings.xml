@@ -24,7 +24,7 @@
     <string name="fragment_my_page_eye_title">Eye</string>
     <string name="fragment_my_page_lip_title">Lip</string>
     <string name="fragment_my_page_skin_title">Skin</string>
-    <string name="fragment_my_page_base_title">Base</string>
+    <string name="fragment_my_page_face_title">Face</string>
     <string name="fragment_my_page_cleansing_title">Cleansing</string>
     <string name="fragment_my_page_tool_title">Tool</string>
     <string name="fragment_my_page_my_activities">나의 활동</string>

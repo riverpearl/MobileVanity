@@ -1,5 +1,6 @@
 package com.vanity.mobilevanity.mypage;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -84,13 +85,15 @@ public class UpdateProfileActivity extends AppCompatActivity {
         }
     }
 
-    @OnClick(R.id.btn_set)
-    public void onAlarmClick(View view) {
+    @OnClick(R.id.btn_update)
+    public void onUpdateClick(View view) {
+        //네트워크에 업데이트 요청
+        setResult(Activity.RESULT_OK);
         finish();
     }
 
     @OnClick(R.id.btn_withdraw)
-    public void onWithDrawClick(View view) {
+    public void onWithdrawClick(View view) {
         //앱 종료
     }
 
