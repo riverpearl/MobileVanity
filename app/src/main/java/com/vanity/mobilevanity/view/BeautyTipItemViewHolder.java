@@ -36,9 +36,19 @@ public class BeautyTipItemViewHolder extends RecyclerView.ViewHolder {
 
     private BeautyTip item;
 
+
     public BeautyTipItemViewHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
+
+        previewImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (listener != null) {
+                    listener.onBeautyTipItemClick(view, item, getAdapterPosition());
+                }
+            }
+        });
     }
 
     public void setBeautyTipItem(BeautyTip item) {
@@ -57,4 +67,15 @@ public class BeautyTipItemViewHolder extends RecyclerView.ViewHolder {
                 .load(item.getPreviewImage())
                 .into(previewImageView);
     }
+
+    public interface OnBeautyTipItemClickListener {
+        public void onBeautyTipItemClick(View view, BeautyTip beautyTip, int position);
+    }
+
+    OnBeautyTipItemClickListener listener;
+
+    public void setOnBeautyTipItemClickListener(OnBeautyTipItemClickListener listener) {
+        this.listener = listener;
+    }
+
 }

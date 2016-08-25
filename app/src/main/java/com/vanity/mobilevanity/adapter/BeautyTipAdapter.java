@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * Created by Tacademy on 2016-08-25.
  */
-public class BeautyTipAdapter extends RecyclerView.Adapter<BeautyTipItemViewHolder> {
+public class BeautyTipAdapter extends RecyclerView.Adapter<BeautyTipItemViewHolder> implements BeautyTipItemViewHolder.OnBeautyTipItemClickListener {
     List<BeautyTip> items = new ArrayList<>();
 
     public void clear() {
@@ -44,10 +44,28 @@ public class BeautyTipAdapter extends RecyclerView.Adapter<BeautyTipItemViewHold
     @Override
     public void onBindViewHolder(BeautyTipItemViewHolder holder, int position) {
         holder.setBeautyTipItem(items.get(position));
+        holder.setOnBeautyTipItemClickListener(this);
     }
 
     @Override
     public int getItemCount() {
         return items.size();
+    }
+
+    public interface OnAdapterItemClickListener {
+        public void onAdapterItemClick(View view, BeautyTip beautyTip, int position);
+    }
+
+    OnAdapterItemClickListener listener;
+
+    public void setOnAdapterItemClickListener(OnAdapterItemClickListener listener) {
+        this.listener = listener;
+    }
+
+    @Override
+    public void onBeautyTipItemClick(View view, BeautyTip beautyTip, int position) {
+        if (listener != null) {
+            listener.onAdapterItemClick(view, beautyTip, position);
+        }
     }
 }

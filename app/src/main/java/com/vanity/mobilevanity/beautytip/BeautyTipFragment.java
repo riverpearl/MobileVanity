@@ -49,30 +49,46 @@ public class BeautyTipFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_beauty_tip, container, false);
         ButterKnife.bind(this, view);
-        //  spinner.setAdapter(sAdapter);
+
+        sAdapter = new BeautyTipSpinnerAdapter();
+        spinner.setAdapter(sAdapter);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
+                Toast.makeText(getContext(), "item:" + sAdapter.getItem(position), Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
         mAdapter = new BeautyTipAdapter();
         listView.setAdapter(mAdapter);
+        mAdapter.setOnAdapterItemClickListener(new BeautyTipAdapter.OnAdapterItemClickListener() {
+            @Override
+            public void onAdapterItemClick(View view, BeautyTip beautyTip, int position) {
+                Intent intent = new Intent(getContext(), BeautyTipDetailActivity.class);
+                startActivity(intent);
+            }
+        });
+
 
         GridLayoutManager manager = new GridLayoutManager(getContext(), 2, GridLayoutManager.VERTICAL, false);
         listView.setLayoutManager(manager);
 
-//        spinner.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-//                Toast.makeText(getContext(), "item:" + sAdapter.getItem(position), Toast.LENGTH_SHORT).show();
-//            }
-//        });
 
-        //initData();
+        init();
         initData();
         return view;
     }
 
     // Spinner
-//    private void initData() {
-//        String[] items = getResources().getStringArray(R.array.items);
-//        sAdapter.addAll(items);
-//    }
+    private void init() {
+        String[] items = getResources().getStringArray(R.array.items);
+        sAdapter.addAll(items);
+    }
 
     @OnClick(R.id.btn_set)
     public void onSetClick(View view) {
