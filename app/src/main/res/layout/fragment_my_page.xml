@@ -60,6 +60,13 @@
             style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="LOGOUT"
+            android:id="@+id/btn_logout" />
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="modification"
             android:id="@+id/btn_modification"
             android:layout_above="@+id/btn_my_cosmetic"

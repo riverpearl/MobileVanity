@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.vanity.mobilevanity.R;
+import com.vanity.mobilevanity.SplashActivity;
 import com.vanity.mobilevanity.alert.AlertActivity;
 import com.vanity.mobilevanity.beautytip.BeautyTipDetailActivity;
 import com.vanity.mobilevanity.cosmetic.CosmeticListActivity;
@@ -64,6 +65,13 @@ public class MyPageFragment extends Fragment {
         ButterKnife.bind(this, view);
 
         return view;
+    }
+
+    @OnClick(R.id.btn_logout)
+    public void onLogoutClick(View view) {
+        Intent intent = new Intent(getContext(), SplashActivity.class);
+        startActivity(intent);
+        getActivity().finish();
     }
 
     @OnClick(R.id.btn_modification)

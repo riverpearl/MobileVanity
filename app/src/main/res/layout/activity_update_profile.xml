@@ -60,11 +60,11 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/textView6"
-        android:id="@+id/linearLayout">
+        android:id="@+id/linearLayout"
+        android:gravity="center_vertical">
 
         <TextView
             android:layout_width="wrap_content"
@@ -79,7 +79,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:id="@+id/group_select_gender">
+            android:id="@+id/group_select_gender"
+            android:gravity="center_vertical">
 
             <RadioButton
                 android:layout_width="wrap_content"
@@ -103,7 +104,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/linearLayout"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        android:gravity="center_vertical">
 
         <TextView
             android:layout_width="wrap_content"
@@ -115,7 +117,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:id="@+id/group_select_skin_type">
+            android:id="@+id/group_select_skin_type"
+            android:gravity="center_vertical">
 
             <RadioButton
                 android:layout_width="wrap_content"
