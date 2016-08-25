@@ -39,6 +39,11 @@
     <string name="activity_update_profile_normal">중성</string>
     <string name="activity_update_profile_oily">지성</string>
     <string name="activity_update_profile_complex">복합성</string>
+    <string name="activity_update_profile_skin_tone">피부톤</string>
+    <string name="activity_update_profile_13">13호</string>
+    <string name="activity_update_profile_21">21호</string>
+    <string name="activity_update_profile_23">23호</string>
+
     <!--activity_cosmetic_detail-->
     <string name="activity_cosmetic_detail_register">등록날짜</string>
     <string name="activity_cosmetic_detail_register_year">년</string>
@@ -53,4 +58,5 @@
     <!-- BeautyTipFragment의 Spinner부분 -->
     <string name="list_item_01">최신순</string>
     <string name="list_item_02">인기순</string>
+
 </resources>
