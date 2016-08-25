@@ -82,4 +82,10 @@ public class HomeFragment extends Fragment {
         intent.putExtra(TAG_CATEGORY, Constant.INDEX_CATEGORY_TOOL);
         startActivity(intent);
     }
+
+    @OnClick(R.id.fab_add_cosmetic)
+    public void onAddClick(View view) {
+        Intent intent = new Intent(getContext(), RegisterBarcodeActivity.class);
+        startActivity(intent);
+    }
 }

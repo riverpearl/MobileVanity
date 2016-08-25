@@ -3,16 +3,28 @@ package com.vanity.mobilevanity.register;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
 import com.vanity.mobilevanity.R;
+import com.vanity.mobilevanity.adapter.SearchResultAdapter;
+import com.vanity.mobilevanity.data.Brand;
+import com.vanity.mobilevanity.data.Cosmetic;
+import com.vanity.mobilevanity.data.Product;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class RegisterSearchActivity extends AppCompatActivity {
+
+    @BindView(R.id.rv_cosmetic)
+    RecyclerView listView;
+
+    SearchResultAdapter resultAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +33,39 @@ public class RegisterSearchActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        resultAdapter = new SearchResultAdapter();
+        resultAdapter.setOnAdapterItemClickListener(new SearchResultAdapter.OnAdapterItemClickListener() {
+            @Override
+            public void onAdapterItemClick(View view, Cosmetic data, int position) {
+                Intent intent = new Intent(RegisterSearchActivity.this, RegisterDetailActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+        listView.setAdapter(resultAdapter);
+
+        LinearLayoutManager manager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        listView.setLayoutManager(manager);
+
+        init();
+    }
+
+    private void init() {
+        for (int i = 0; i < 10; i++) {
+            Cosmetic cosmetic = new Cosmetic();
+            Product product = new Product();
+            Brand brand = new Brand();
+
+            brand.setName("brand " + i);
+            product.setBrand(brand);
+            product.setName("product name " + i);
+            cosmetic.setProduct(product);
+            cosmetic.setColorCode("CODE" + i);
+            cosmetic.setColorName("컬러 " + i);
+
+            resultAdapter.add(cosmetic);
+        }
     }
 
     @Override
@@ -49,13 +94,6 @@ public class RegisterSearchActivity extends AppCompatActivity {
         super.onBackPressed();
 
         Intent intent = new Intent(RegisterSearchActivity.this, RegisterBarcodeActivity.class);
-        startActivity(intent);
-        finish();
-    }
-
-    @OnClick(R.id.btn_result)
-    public void onResultClick(View view) {
-        Intent intent = new Intent(RegisterSearchActivity.this, RegisterDetailActivity.class);
         startActivity(intent);
         finish();
     }

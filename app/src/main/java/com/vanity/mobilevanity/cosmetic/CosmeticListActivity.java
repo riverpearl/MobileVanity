@@ -64,7 +64,7 @@ public class CosmeticListActivity extends AppCompatActivity {
         
     }
 
-    @OnClick(R.id.btn_floating)
+    @OnClick(R.id.fab_add_cosmetic)
     public void onFloatingClick(View view) {
         Intent intent = new Intent(this, RegisterBarcodeActivity.class);
         startActivity(intent);
