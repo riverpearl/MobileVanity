@@ -29,9 +29,19 @@ public class MainActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
-        Fragment f = new HomeFragment();
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.add(R.id.container, f).commit();
+        Intent intent = getIntent();
+        int tab = intent.getIntExtra("saletab", 1);
+
+        if (tab == 3) {
+            Fragment f = new SaleFragment();
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.container, f).commit();
+        }
+        else {
+            Fragment f = new HomeFragment();
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.add(R.id.container, f).commit();
+        }
     }
 
     @Override

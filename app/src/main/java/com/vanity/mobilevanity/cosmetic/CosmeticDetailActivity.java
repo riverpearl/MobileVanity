@@ -10,6 +10,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.vanity.mobilevanity.MainActivity;
 import com.vanity.mobilevanity.R;
 import com.vanity.mobilevanity.beautytip.BeautyTipDetailActivity;
 import com.vanity.mobilevanity.sale.SaleFragment;
@@ -62,7 +63,10 @@ public class CosmeticDetailActivity extends AppCompatActivity {
 
     @OnClick(R.id.btn_saleinfo)
     public void onSaleInfoClick(View view) {
-        Intent intent = new Intent(this, SaleFragment.class);
+        Intent intent = new Intent(CosmeticDetailActivity.this, MainActivity.class);
+        intent.putExtra("saletab", 3);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        //intent.addFlags(Intent.FLAG_
         startActivity(intent);
     }
 
