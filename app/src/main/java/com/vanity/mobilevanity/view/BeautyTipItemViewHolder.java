@@ -50,7 +50,7 @@ public class BeautyTipItemViewHolder extends RecyclerView.ViewHolder {
         super(itemView);
         ButterKnife.bind(this, itemView);
 
-        itemView.setOnClickListener(new View.OnClickListener() {
+        previewImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (listener != null) {
@@ -106,5 +106,4 @@ public class BeautyTipItemViewHolder extends RecyclerView.ViewHolder {
     public void setOnCommentDialogClickListner(OnCommentDialogClickListener dialogListener) {
         this.dialogListener = dialogListener;
     }
-
 }
