@@ -5,24 +5,49 @@
     tools:context=".beautytip.BeautyTipFragment">
 
     <!-- TODO: Update blank fragment layout -->
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="set"
-        android:id="@+id/btn_set"
-        android:layout_gravity="right|top" />
-
-    <Spinner
-        android:layout_width="156dp"
-        android:layout_height="30dp"
-        android:id="@+id/spinner"
-        android:layout_gravity="left|top" />
-
-    <android.support.v7.widget.RecyclerView
+    <RelativeLayout
+        android:id="@+id/layout_one"
         android:layout_width="match_parent"
-        android:layout_height="450dp"
-        android:id="@+id/beautytiplist"
-        android:layout_gravity="center_horizontal|bottom" />
+        android:layout_height="49dp"
+        android:orientation="horizontal">
+
+        <Spinner
+            android:id="@+id/spinner"
+            android:layout_width="156dp"
+            android:layout_height="30dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <Button
+            android:id="@+id/btn_set"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="set"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true" />
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/layout_two"
+        android:layout_width="match_parent"
+        android:layout_height="439dp"
+        android:layout_below="@+id/layout_one"
+        android:orientation="vertical"
+        android:layout_gravity="right|bottom">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/beautytiplist"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|bottom"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentTop="true" />
+    </RelativeLayout>
+
 
 </FrameLayout>

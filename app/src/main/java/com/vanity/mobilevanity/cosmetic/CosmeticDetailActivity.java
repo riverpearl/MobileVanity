@@ -3,6 +3,8 @@ package com.vanity.mobilevanity.cosmetic;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -58,11 +60,6 @@ public class CosmeticDetailActivity extends AppCompatActivity {
         ButterKnife.bind(this);
     }
 
-    @OnClick(R.id.btn_quit)
-    public void onQuitClick(View view) {
-        finish();
-    }
-
     @OnClick(R.id.btn_saleinfo)
     public void onSaleInfoClick(View view) {
         Intent intent = new Intent(this, SaleFragment.class);
@@ -79,4 +76,19 @@ public class CosmeticDetailActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.actionbar_cancel, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.menu_cancel) {
+            finish();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 }

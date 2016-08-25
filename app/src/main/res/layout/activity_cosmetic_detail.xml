@@ -10,23 +10,12 @@
     tools:context="com.vanity.mobilevanity.cosmetic.CosmeticDetailActivity">
 
 
-    <Button
-        android:id="@+id/btn_quit"
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:text="x" />
-
     <ImageView
         android:id="@+id/image_cosmetic"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/btn_quit"
         android:src="@android:drawable/sym_def_app_icon" />
 
     <Button
@@ -226,8 +215,8 @@
         android:id="@+id/image_register"
         android:src="@drawable/abc_btn_check_to_on_mtrl_015"
         android:layout_above="@+id/textView10"
-        android:layout_alignRight="@+id/btn_quit"
-        android:layout_alignEnd="@+id/btn_quit" />
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
     <ImageView
         android:layout_width="wrap_content"

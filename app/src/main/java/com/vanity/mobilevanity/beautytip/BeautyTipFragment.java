@@ -81,19 +81,20 @@ public class BeautyTipFragment extends Fragment {
     }
 
     public void initData() {
-        BeautyTip beautyTip = new BeautyTip();
-        User user = new User();
+        for (int i = 0; i < 4; i++) {
+            BeautyTip beautyTip = new BeautyTip();
+            User user = new User();
 
-        beautyTip.setTitle("Title");
-        beautyTip.setPreviewImage("PreviewImage");
-        beautyTip.setContent("Content");
-        user.setUserNickname("NickName");
-        beautyTip.setUser(user);
-        beautyTip.setLikeNum(5);
-        beautyTip.setCommentNum(10);
-        beautyTip.setReadNum(15);
+            beautyTip.setTitle("Title");
+            beautyTip.setPreviewImage("PreviewImage");
+            beautyTip.setContent("Content");
+            user.setUserNickname("NickName");
+            beautyTip.setUser(user);
+            beautyTip.setLikeNum(5);
+            beautyTip.setCommentNum(10);
+            beautyTip.setReadNum(15);
 
-        mAdapter.add(beautyTip);
-
+            mAdapter.add(beautyTip);
+        }
     }
 }

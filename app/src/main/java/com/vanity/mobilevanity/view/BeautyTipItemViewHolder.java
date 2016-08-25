@@ -46,9 +46,9 @@ public class BeautyTipItemViewHolder extends RecyclerView.ViewHolder {
         titleView.setText(item.getTitle());
         contentView.setText(item.getContent());
         userView.setText(item.getUser().getUserNickname());
-        likeView.setText(item.getLikeNum());
-        commentView.setText(item.getCommentNum());
-        readView.setText(item.getReadNum());
+        likeView.setText("" + item.getLikeNum());
+        commentView.setText("" + item.getCommentNum());
+        readView.setText("" + item.getReadNum());
 
         Glide.with(userProfileView.getContext())
                 .load(item.getUser().getUserProfile())

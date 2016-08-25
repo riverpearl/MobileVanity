@@ -62,4 +62,9 @@
     <string name="list_item_01">latest</string>
     <string name="list_item_02">popularity</string>
 
+    <!-- actionbar_delete.xml -->
+    <string name="actionbar_delete">Delete</string>
+
+    <!-- actionbar_update.xml -->
+    <string name="actionbar_update">Update</string>
 </resources>

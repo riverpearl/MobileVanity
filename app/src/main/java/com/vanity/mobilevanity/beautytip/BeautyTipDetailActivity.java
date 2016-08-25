@@ -1,19 +1,17 @@
 package com.vanity.mobilevanity.beautytip;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.vanity.mobilevanity.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 public class BeautyTipDetailActivity extends AppCompatActivity {
 
@@ -33,26 +31,37 @@ public class BeautyTipDetailActivity extends AppCompatActivity {
         ButterKnife.bind(this);
     }
 
-    @OnClick(R.id.btn_before)
-    public void onBeforeClick(View view) {
-        this.finish();
-    }
-
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.activity_beauty_tip_detail, menu);
+        getMenuInflater().inflate(R.menu.actionbar_update, menu);
+        getMenuInflater().inflate(R.menu.actionbar_delete, menu);
+        getMenuInflater().inflate(R.menu.actionbar_cancel, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.menu_update:
-            case R.id.menu_delete:
-                return true;
+        if (item.getItemId() == R.id.menu_cancel) {
+            finish();
+            return true;
         }
+
+        if(item.getItemId() == R.id.menu_update) {
+            Intent intent = new Intent(BeautyTipDetailActivity.this, BeautyTipWriteActivity.class);
+            startActivity(intent);
+            return true;
+        }
+
+        if(item.getItemId() == R.id.menu_delete) {
+            finish();
+            return true;
+        }
+//        switch (item.getItemId()) {
+//            case R.id.menu_update:
+//            case R.id.menu_delete:
+//                return true;
+//        }
         return super.onOptionsItemSelected(item);
     }
+
 }

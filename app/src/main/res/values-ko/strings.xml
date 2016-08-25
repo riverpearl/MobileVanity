@@ -59,4 +59,9 @@
     <string name="list_item_01">최신순</string>
     <string name="list_item_02">인기순</string>
 
+    <!-- actionbar_delete.xml -->
+    <string name="actionbar_delete">삭제</string>
+
+    <!-- actionbar_update.xml -->
+    <string name="actionbar_update">수정</string>
 </resources>
