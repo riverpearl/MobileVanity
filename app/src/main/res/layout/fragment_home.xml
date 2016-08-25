@@ -1,4 +1,4 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -10,7 +10,57 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="makeup"
-        android:id="@+id/btn_makeup"
+        android:text="EYE MAKEUP"
+        android:id="@+id/btn_eye"
         android:layout_gravity="left|top" />
-</FrameLayout>
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="LIP MAKEUP"
+        android:id="@+id/btn_lip"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/btn_eye"
+        android:layout_toEndOf="@+id/btn_eye" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="SKIN CARE"
+        android:id="@+id/btn_skin"
+        android:layout_below="@+id/btn_eye"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="FACE MAKEUP"
+        android:id="@+id/btn_face"
+        android:layout_alignTop="@+id/btn_skin"
+        android:layout_toRightOf="@+id/btn_skin"
+        android:layout_toEndOf="@+id/btn_skin" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="CLEANSING"
+        android:id="@+id/btn_cleansing"
+        android:layout_below="@+id/btn_skin"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="MAKEUP TOOL"
+        android:id="@+id/btn_tool"
+        android:layout_alignTop="@+id/btn_cleansing"
+        android:layout_toRightOf="@+id/btn_eye"
+        android:layout_toEndOf="@+id/btn_eye" />
+</RelativeLayout>

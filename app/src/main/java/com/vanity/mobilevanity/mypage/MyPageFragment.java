@@ -16,6 +16,7 @@ import com.vanity.mobilevanity.SplashActivity;
 import com.vanity.mobilevanity.alert.AlertActivity;
 import com.vanity.mobilevanity.beautytip.BeautyTipDetailActivity;
 import com.vanity.mobilevanity.cosmetic.CosmeticListActivity;
+import com.vanity.mobilevanity.data.Constant;
 import com.vanity.mobilevanity.data.User;
 import com.vanity.mobilevanity.setting.SettingActivity;
 
@@ -71,14 +72,7 @@ public class MyPageFragment extends Fragment {
     public final static String TAG_SKIN_TYPE = "skintype";
     public final static String TAG_SKIN_TONE = "skintone";
     public final static String TAG_GENDER = "gender";
-    public final static String TAG_ITEM_TAB = "item";
-
-    public final static int INDEX_ITEM_EYE = 1;
-    public final static int INDEX_ITEM_LIP = 2;
-    public final static int INDEX_ITEM_SKIN = 3;
-    public final static int INDEX_ITEM_FACE = 4;
-    public final static int INDEX_ITEM_CLEANSING = 5;
-    public final static int INDEX_ITEM_TOOL = 6;
+    public final static String TAG_CATEGORY = "category";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -186,42 +180,42 @@ public class MyPageFragment extends Fragment {
     @OnClick(R.id.text_eye_count)
     public void onEyeCountClick(View view) {
         Intent intent = new Intent(getContext(), CosmeticListActivity.class);
-        intent.putExtra(TAG_ITEM_TAB, INDEX_ITEM_EYE);
+        intent.putExtra(TAG_CATEGORY, Constant.INDEX_CATEGORY_EYE);
         startActivity(intent);
     }
 
     @OnClick(R.id.text_lip_count)
     public void onLipCountClick(View view) {
         Intent intent = new Intent(getContext(), CosmeticListActivity.class);
-        intent.putExtra(TAG_ITEM_TAB, INDEX_ITEM_LIP);
+        intent.putExtra(TAG_CATEGORY, Constant.INDEX_CATEGORY_LIP);
         startActivity(intent);
     }
 
     @OnClick(R.id.text_skin_count)
     public void onSkinCountClick(View view) {
         Intent intent = new Intent(getContext(), CosmeticListActivity.class);
-        intent.putExtra(TAG_ITEM_TAB, INDEX_ITEM_SKIN);
+        intent.putExtra(TAG_CATEGORY, Constant.INDEX_CATEGORY_SKIN);
         startActivity(intent);
     }
 
     @OnClick(R.id.text_face_count)
     public void onBaseCountClick(View view) {
         Intent intent = new Intent(getContext(), CosmeticListActivity.class);
-        intent.putExtra(TAG_ITEM_TAB, INDEX_ITEM_FACE);
+        intent.putExtra(TAG_CATEGORY, Constant.INDEX_CATEGORY_FACE);
         startActivity(intent);
     }
 
     @OnClick(R.id.text_cleansing_count)
     public void onCleansingCountClick(View view) {
         Intent intent = new Intent(getContext(), CosmeticListActivity.class);
-        intent.putExtra(TAG_ITEM_TAB, INDEX_ITEM_CLEANSING);
+        intent.putExtra(TAG_CATEGORY, Constant.INDEX_CATEGORY_CLEANSING);
         startActivity(intent);
     }
 
     @OnClick(R.id.text_tool_count)
     public void onToolCountClick(View view) {
         Intent intent = new Intent(getContext(), CosmeticListActivity.class);
-        intent.putExtra(TAG_ITEM_TAB, INDEX_ITEM_TOOL);
+        intent.putExtra(TAG_CATEGORY, Constant.INDEX_CATEGORY_TOOL);
         startActivity(intent);
     }
 

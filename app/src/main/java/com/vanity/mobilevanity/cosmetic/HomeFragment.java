@@ -12,6 +12,7 @@ import com.vanity.mobilevanity.R;
 import com.vanity.mobilevanity.alert.AlertActivity;
 import com.vanity.mobilevanity.beautytip.BeautyTipDetailActivity;
 import com.vanity.mobilevanity.beautytip.BeautyTipFragment;
+import com.vanity.mobilevanity.data.Constant;
 import com.vanity.mobilevanity.mypage.MyPageFragment;
 import com.vanity.mobilevanity.register.RegisterBarcodeActivity;
 import com.vanity.mobilevanity.sale.SaleFragment;
@@ -25,11 +26,11 @@ import butterknife.OnClick;
  */
 public class HomeFragment extends Fragment {
 
+    public final static String TAG_CATEGORY = "category";
 
     public HomeFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -40,9 +41,45 @@ public class HomeFragment extends Fragment {
         return view;
     }
 
-    @OnClick(R.id.btn_makeup)
-    public void onMakeupClick(View view) {
+    @OnClick(R.id.btn_eye)
+    public void onEyeClick(View view) {
         Intent intent = new Intent(getContext(), CosmeticListActivity.class);
+        intent.putExtra(TAG_CATEGORY, Constant.INDEX_CATEGORY_EYE);
+        startActivity(intent);
+    }
+
+    @OnClick(R.id.btn_lip)
+    public void onLipClick(View view) {
+        Intent intent = new Intent(getContext(), CosmeticListActivity.class);
+        intent.putExtra(TAG_CATEGORY, Constant.INDEX_CATEGORY_LIP);
+        startActivity(intent);
+    }
+
+    @OnClick(R.id.btn_skin)
+    public void onSkinClick(View view) {
+        Intent intent = new Intent(getContext(), CosmeticListActivity.class);
+        intent.putExtra(TAG_CATEGORY, Constant.INDEX_CATEGORY_SKIN);
+        startActivity(intent);
+    }
+
+    @OnClick(R.id.btn_face)
+    public void onFaceClick(View view) {
+        Intent intent = new Intent(getContext(), CosmeticListActivity.class);
+        intent.putExtra(TAG_CATEGORY, Constant.INDEX_CATEGORY_FACE);
+        startActivity(intent);
+    }
+
+    @OnClick(R.id.btn_cleansing)
+    public void onCleansingClick(View view) {
+        Intent intent = new Intent(getContext(), CosmeticListActivity.class);
+        intent.putExtra(TAG_CATEGORY, Constant.INDEX_CATEGORY_CLEANSING);
+        startActivity(intent);
+    }
+
+    @OnClick(R.id.btn_tool)
+    public void onToolClick(View view) {
+        Intent intent = new Intent(getContext(), CosmeticListActivity.class);
+        intent.putExtra(TAG_CATEGORY, Constant.INDEX_CATEGORY_TOOL);
         startActivity(intent);
     }
 }
