@@ -5,6 +5,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.vanity.mobilevanity.alert.AlertActivity;
@@ -32,10 +34,21 @@ public class MainActivity extends AppCompatActivity {
         ft.add(R.id.container, f).commit();
     }
 
-    @OnClick(R.id.btn_alert)
-    public void onAlertClick(View view) {
-        Intent intent = new Intent(MainActivity.this, AlertActivity.class);
-        startActivity(intent);
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.activity_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.menu_alert) {
+            Intent intent = new Intent(MainActivity.this, AlertActivity.class);
+            startActivity(intent);
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     @OnClick(R.id.btn_home)

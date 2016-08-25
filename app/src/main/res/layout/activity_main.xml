@@ -52,7 +52,7 @@
         android:layout_alignParentStart="true"
         android:layout_above="@+id/btn_home"
         android:id="@+id/container"
-        android:layout_below="@+id/btn_alert"></FrameLayout>
+        android:layout_below="@+id/textView"></FrameLayout>
 
     <Button
         style="?android:attr/buttonStyleSmall"
@@ -64,13 +64,4 @@
         android:layout_toRightOf="@+id/btn_sale"
         android:layout_toEndOf="@+id/btn_sale" />
 
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="ALERT"
-        android:id="@+id/btn_alert"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
 </RelativeLayout>
