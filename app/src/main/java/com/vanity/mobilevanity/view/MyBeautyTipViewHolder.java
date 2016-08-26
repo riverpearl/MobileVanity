@@ -5,11 +5,10 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.vanity.mobilevanity.R;
-import com.vanity.mobilevanity.data.MyBeautyTipData;
+import com.vanity.mobilevanity.data.BeautyTip;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * Created by Tacademy on 2016-08-24.
@@ -19,7 +18,7 @@ public class MyBeautyTipViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.text_my_beauty_tip_title)
     TextView titleView;
 
-    private MyBeautyTipData data;
+    private BeautyTip data;
 
     public MyBeautyTipViewHolder(View itemView) {
         super(itemView);
@@ -34,14 +33,14 @@ public class MyBeautyTipViewHolder extends RecyclerView.ViewHolder {
         });
     }
 
-    public void setData(MyBeautyTipData data) {
+    public void setData(BeautyTip data) {
         this.data = data;
 
         titleView.setText(data.getTitle());
     }
 
     public interface OnMyBeautyTipItemClickListener {
-        public void onMyBeautyTipItemClick(View view, MyBeautyTipData data, int position);
+        public void onMyBeautyTipItemClick(View view, BeautyTip data, int position);
     }
 
     OnMyBeautyTipItemClickListener mListener;

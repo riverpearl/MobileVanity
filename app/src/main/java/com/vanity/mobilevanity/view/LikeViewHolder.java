@@ -5,7 +5,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.vanity.mobilevanity.R;
-import com.vanity.mobilevanity.data.LikeData;
+import com.vanity.mobilevanity.data.BeautyTip;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -18,7 +18,7 @@ public class LikeViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.text_beauty_tip_title)
     TextView titleView;
 
-    private LikeData data;
+    private BeautyTip data;
 
     public LikeViewHolder(View itemView) {
         super(itemView);
@@ -34,13 +34,13 @@ public class LikeViewHolder extends RecyclerView.ViewHolder {
         });
     }
 
-    public void setData(LikeData data) {
+    public void setData(BeautyTip data) {
         this.data = data;
         titleView.setText(data.getTitle());
     }
 
     public interface OnLikeItemClickListener {
-        public void onLikeItemClick(View view, LikeData data, int position);
+        public void onLikeItemClick(View view, BeautyTip data, int position);
     }
 
     OnLikeItemClickListener mListener;

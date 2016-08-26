@@ -6,19 +6,16 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
 import com.vanity.mobilevanity.R;
 import com.vanity.mobilevanity.adapter.MyBeautyTipAdapter;
-import com.vanity.mobilevanity.alert.AlertActivity;
 import com.vanity.mobilevanity.beautytip.BeautyTipDetailActivity;
-import com.vanity.mobilevanity.data.MyBeautyTipData;
+import com.vanity.mobilevanity.data.BeautyTip;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 public class MyBeautyTipActivity extends AppCompatActivity {
 
@@ -37,7 +34,7 @@ public class MyBeautyTipActivity extends AppCompatActivity {
         mAdapter = new MyBeautyTipAdapter();
         mAdapter.setOnAdapterItemClickListener(new MyBeautyTipAdapter.OnAdapterItemClickListener() {
             @Override
-            public void onAdapterItemClick(View view, MyBeautyTipData data, int position) {
+            public void onAdapterItemClick(View view, BeautyTip data, int position) {
                 Intent intent = new Intent(MyBeautyTipActivity.this, BeautyTipDetailActivity.class);
                 startActivity(intent);
             }
@@ -52,7 +49,7 @@ public class MyBeautyTipActivity extends AppCompatActivity {
 
     private void init() {
         for (int i = 0; i < 10; i++) {
-            MyBeautyTipData data = new MyBeautyTipData();
+            BeautyTip data = new BeautyTip();
             data.setTitle("board " + i + " ");
             mAdapter.add(data);
         }

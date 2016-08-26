@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.vanity.mobilevanity.R;
-import com.vanity.mobilevanity.data.MyBeautyTipData;
+import com.vanity.mobilevanity.data.BeautyTip;
 import com.vanity.mobilevanity.view.MyBeautyTipViewHolder;
 
 import java.util.ArrayList;
@@ -17,19 +17,19 @@ import java.util.List;
  */
 public class MyBeautyTipAdapter extends RecyclerView.Adapter<MyBeautyTipViewHolder>
     implements MyBeautyTipViewHolder.OnMyBeautyTipItemClickListener {
-    private List<MyBeautyTipData> items = new ArrayList<>();
+    private List<BeautyTip> items = new ArrayList<>();
 
     public void clear() {
         items.clear();
         notifyDataSetChanged();
     }
 
-    public void add(MyBeautyTipData item) {
+    public void add(BeautyTip item) {
         items.add(item);
         notifyDataSetChanged();
     }
 
-    public void addAll(List<MyBeautyTipData> items) {
+    public void addAll(List<BeautyTip> items) {
         items.addAll(items);
         notifyDataSetChanged();
     }
@@ -58,7 +58,7 @@ public class MyBeautyTipAdapter extends RecyclerView.Adapter<MyBeautyTipViewHold
     }
 
     public interface OnAdapterItemClickListener {
-        public void onAdapterItemClick(View view, MyBeautyTipData data, int position);
+        public void onAdapterItemClick(View view, BeautyTip data, int position);
     }
 
     OnAdapterItemClickListener mListener;
@@ -67,7 +67,7 @@ public class MyBeautyTipAdapter extends RecyclerView.Adapter<MyBeautyTipViewHold
     }
 
     @Override
-    public void onMyBeautyTipItemClick(View view, MyBeautyTipData data, int position) {
+    public void onMyBeautyTipItemClick(View view, BeautyTip data, int position) {
         if (mListener != null)
             mListener.onAdapterItemClick(view, data, position);
     }

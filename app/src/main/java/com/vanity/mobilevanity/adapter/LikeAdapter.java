@@ -5,7 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.vanity.mobilevanity.R;
-import com.vanity.mobilevanity.data.LikeData;
+import com.vanity.mobilevanity.data.BeautyTip;
 import com.vanity.mobilevanity.view.LikeViewHolder;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,19 +15,19 @@ import java.util.List;
  */
 public class LikeAdapter extends RecyclerView.Adapter<LikeViewHolder>
     implements LikeViewHolder.OnLikeItemClickListener {
-    private List<LikeData> items = new ArrayList<>();
+    private List<BeautyTip> items = new ArrayList<>();
 
     public void clear() {
         items.clear();
         notifyDataSetChanged();
     }
 
-    public void add(LikeData item) {
+    public void add(BeautyTip item) {
         items.add(item);
         notifyDataSetChanged();
     }
 
-    public void addAll(List<LikeData> items) {
+    public void addAll(List<BeautyTip> items) {
         items.addAll(items);
         notifyDataSetChanged();
     }
@@ -51,7 +51,7 @@ public class LikeAdapter extends RecyclerView.Adapter<LikeViewHolder>
     }
 
     public interface OnAdapterItemClickListener {
-        public void onAdapterItemClick(View view, LikeData data, int position);
+        public void onAdapterItemClick(View view, BeautyTip data, int position);
     }
 
     OnAdapterItemClickListener mListener;
@@ -60,7 +60,7 @@ public class LikeAdapter extends RecyclerView.Adapter<LikeViewHolder>
     }
 
     @Override
-    public void onLikeItemClick(View view, LikeData data, int position) {
+    public void onLikeItemClick(View view, BeautyTip data, int position) {
         if (mListener != null)
             mListener.onAdapterItemClick(view, data, position);
     }
