@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TabHost;
 
 import com.vanity.mobilevanity.R;
@@ -33,12 +34,10 @@ public class CosmeticListActivity extends AppCompatActivity {
 
     TabHost tabHost;
 
-    @BindView(R.id.cosmetilist_listview)
+    @BindView(R.id.rv_cosmetic)
     RecyclerView listView;
 
     CosmeticAdapter mAdapter;
-
-    public final static String TAG_CATEGORY = "category";
 
     @Override
 
@@ -47,13 +46,15 @@ public class CosmeticListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_cosmetic_list);
         ButterKnife.bind(this);
 
-        initTab();
+        Intent intent = getIntent();
+        int category = intent.getIntExtra(HomeFragment.TAG_CATEGORY, 0);
 
         mAdapter = new CosmeticAdapter();
         mAdapter.setOnAdapterItemClickListener(new CosmeticAdapter.OnAdapterItemClickListener() {
             @Override
             public void onAdapterItemClick(View view, Cosmetic data, int position) {
-
+                Intent intent = new Intent(CosmeticListActivity.this, CosmeticDetailActivity.class);
+                startActivity(intent);
             }
         });
         listView.setAdapter(mAdapter);
@@ -61,162 +62,34 @@ public class CosmeticListActivity extends AppCompatActivity {
         LinearLayoutManager manager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         listView.setLayoutManager(manager);
 
+        init();
 
+        initTab(category);
         tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                Fragment f = CosmeticListFragment.newInstance(tab.getText().toString());
-                getSupportFragmentManager().beginTransaction()
-                        .add(R.id.container, f, (String) tab.getTag())
-                        .commit();
+                mAdapter.clear();
+                init();
             }
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
-                if (tab == null) return;
-                Intent intent = getIntent();
-                int category = intent.getIntExtra("category", 0);
-
-                switch (category) {
-                    case Constant.INDEX_CATEGORY_EYE: {
-                        String tag = (String) tab.getTag();
-                        Fragment f = getSupportFragmentManager().findFragmentByTag(tag);
-                        if (f != null) {
-                            getSupportFragmentManager().beginTransaction()
-                                    .detach(f)
-                                    .commit();
-                            break;
-                        }
-                    }
-                    case Constant.INDEX_CATEGORY_LIP: {
-                        String tag = (String) tab.getTag();
-                        Fragment f = getSupportFragmentManager().findFragmentByTag(tag);
-                        if (f != null) {
-                            getSupportFragmentManager().beginTransaction()
-                                    .detach(f)
-                                    .commit();
-                            break;
-                        }
-                    }
-                    case Constant.INDEX_CATEGORY_SKIN: {
-                        String tag = (String) tab.getTag();
-                        Fragment f = getSupportFragmentManager().findFragmentByTag(tag);
-                        if (f != null) {
-                            getSupportFragmentManager().beginTransaction()
-                                    .detach(f)
-                                    .commit();
-                            break;
-                        }
-                    }
-                    case Constant.INDEX_CATEGORY_FACE: {
-                        String tag = (String) tab.getTag();
-                        Fragment f = getSupportFragmentManager().findFragmentByTag(tag);
-                        if (f != null) {
-                            getSupportFragmentManager().beginTransaction()
-                                    .detach(f)
-                                    .commit();
-                            break;
-                        }
-                    }
-                    case Constant.INDEX_CATEGORY_CLEANSING: {
-                        String tag = (String) tab.getTag();
-                        Fragment f = getSupportFragmentManager().findFragmentByTag(tag);
-                        if (f != null) {
-                            getSupportFragmentManager().beginTransaction()
-                                    .detach(f)
-                                    .commit();
-                            break;
-                        }
-                    }
-                    case Constant.INDEX_CATEGORY_TOOL: {
-                        String tag = (String) tab.getTag();
-                        Fragment f = getSupportFragmentManager().findFragmentByTag(tag);
-                        if (f != null) {
-                            getSupportFragmentManager().beginTransaction()
-                                    .detach(f)
-                                    .commit();
-                            break;
-                        }
-                    }
-                }
+                mAdapter.clear();
             }
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
-                Intent intent = getIntent();
-                int category = intent.getIntExtra("category", 0);
-                switch (category) {
-                    case Constant.INDEX_CATEGORY_EYE: {
-                        String tag = (String) tab.getTag();
-                        Fragment f = getSupportFragmentManager().findFragmentByTag(tag);
-                        if (f != null) {
-                            getSupportFragmentManager().beginTransaction()
-                                    .attach(f)
-                                    .commit();
-                        }
-                        break;
-                    }
-
-                    case Constant.INDEX_CATEGORY_LIP: {
-                        String tag = (String) tab.getTag();
-                        Fragment f = getSupportFragmentManager().findFragmentByTag(tag);
-                        if (f != null) {
-                            getSupportFragmentManager().beginTransaction()
-                                    .attach(f)
-                                    .commit();
-                        }
-                        break;
-                    }
-                    case Constant.INDEX_CATEGORY_SKIN: {
-                        String tag = (String) tab.getTag();
-                        Fragment f = getSupportFragmentManager().findFragmentByTag(tag);
-                        if (f != null) {
-                            getSupportFragmentManager().beginTransaction()
-                                    .attach(f)
-                                    .commit();
-                        }
-                        break;
-                    }
-                    case Constant.INDEX_CATEGORY_FACE: {
-                        String tag = (String) tab.getTag();
-                        Fragment f = getSupportFragmentManager().findFragmentByTag(tag);
-                        if (f != null) {
-                            getSupportFragmentManager().beginTransaction()
-                                    .attach(f)
-                                    .commit();
-                        }
-                        break;
-                    }
-                    case Constant.INDEX_CATEGORY_CLEANSING: {
-                        String tag = (String) tab.getTag();
-                        Fragment f = getSupportFragmentManager().findFragmentByTag(tag);
-                        if (f != null) {
-                            getSupportFragmentManager().beginTransaction()
-                                    .attach(f)
-                                    .commit();
-                        }
-                        break;
-                    }
-                    case Constant.INDEX_CATEGORY_TOOL: {
-                        String tag = (String) tab.getTag();
-                        Fragment f = getSupportFragmentManager().findFragmentByTag(tag);
-                        if (f != null) {
-                            getSupportFragmentManager().beginTransaction()
-                                    .attach(f)
-                                    .commit();
-                        }
-                        break;
-                    }
-                }
+                mAdapter.clear();
+                init();
             }
         });
 
-        init();
+
+
+
     }
 
-    private void initTab() {
-        Intent intent = getIntent();
-        int category = intent.getIntExtra(TAG_CATEGORY, 0);
+    private void initTab(int category) {
         List<String> tabName = new ArrayList<>();
 
         switch (category) {
@@ -274,8 +147,8 @@ public class CosmeticListActivity extends AppCompatActivity {
         Product product = new Product();
         Brand brand = new Brand();
 
-        cosmetic.setColorName("Name");
-        cosmetic.setColorCode("" + 1);
+        cosmetic.setColorName("Color Name");
+        cosmetic.setColorCode("COLOR01");
 
         brand.setName("Brand");
         product.setBrand(brand);

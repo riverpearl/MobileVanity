@@ -14,7 +14,7 @@ import butterknife.ButterKnife;
 /**
  * Created by Tacademy on 2016-08-26.
  */
-public class CosmeticListViewHolder extends RecyclerView.ViewHolder {
+public class MyCosmeticViewHolder extends RecyclerView.ViewHolder {
 
     @BindView(R.id.image_cosmetic)
     ImageView cosmeticView;
@@ -39,7 +39,7 @@ public class CosmeticListViewHolder extends RecyclerView.ViewHolder {
 
     private Cosmetic data;
 
-    public CosmeticListViewHolder(View itemView) {
+    public MyCosmeticViewHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
 

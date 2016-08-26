@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 
 import com.vanity.mobilevanity.R;
 import com.vanity.mobilevanity.data.Cosmetic;
-import com.vanity.mobilevanity.view.CosmeticListViewHolder;
+import com.vanity.mobilevanity.view.MyCosmeticViewHolder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * Created by Tacademy on 2016-08-26.
  */
-public class CosmeticAdapter extends RecyclerView.Adapter<CosmeticListViewHolder> implements CosmeticListViewHolder.OnCosmeticListItemClickListener {
+public class CosmeticAdapter extends RecyclerView.Adapter<MyCosmeticViewHolder> implements MyCosmeticViewHolder.OnCosmeticListItemClickListener {
     List<Cosmetic> items = new ArrayList<>();
 
     public void clear() {
@@ -34,15 +34,15 @@ public class CosmeticAdapter extends RecyclerView.Adapter<CosmeticListViewHolder
     }
 
     @Override
-    public CosmeticListViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public MyCosmeticViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_my_cosmetic, parent, false);
-        CosmeticListViewHolder holder = new CosmeticListViewHolder(view);
+        MyCosmeticViewHolder holder = new MyCosmeticViewHolder(view);
         holder.setOnCosmeticListItemClickListener(this);
         return holder;
     }
 
     @Override
-    public void onBindViewHolder(CosmeticListViewHolder holder, int position) {
+    public void onBindViewHolder(MyCosmeticViewHolder holder, int position) {
         holder.setCosmeticList(items.get(position));
     }
 
