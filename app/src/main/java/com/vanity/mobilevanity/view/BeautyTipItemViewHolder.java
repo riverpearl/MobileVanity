@@ -40,6 +40,9 @@ public class BeautyTipItemViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.image_beauty_tip_item)
     ImageView previewImageView;
 
+    @BindView(R.id.btn_like)
+    Button likeButton;
+
     @BindView(R.id.btn_comment)
     Button commentButton;
 

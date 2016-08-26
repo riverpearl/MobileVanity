@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
@@ -34,6 +35,8 @@ public class BeautyTipDetailActivity extends AppCompatActivity {
     @BindView(R.id.image_beauty_tip)
     ImageView beautytipImage;
 
+    @BindView(R.id.btn_like)
+    Button likeButton;
 
     PopupWindow popup;
 
@@ -52,14 +55,19 @@ public class BeautyTipDetailActivity extends AppCompatActivity {
         return true;
     }
 
+    @OnClick(R.id.btn_like)
+    public void onLikeClick() {
+        likeButton.setBackgroundColor(Color.YELLOW);
+    }
+
     @OnClick(R.id.btn_comment)
     public void onCommentClick() {
         View view = getLayoutInflater().inflate(R.layout.view_beauty_tip_pop_up, null);
         view.setBackgroundColor(Color.BLUE);
         popup = new PopupWindow(view, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         popup.setOutsideTouchable(true);
-        popup.showAtLocation(view, Gravity.CENTER, 0,0);
-        popup.showAtLocation(findViewById(R.id.btn_comment), Gravity.CENTER,0, 0);
+        popup.showAtLocation(view, Gravity.CENTER, 0, 0);
+        popup.showAtLocation(findViewById(R.id.btn_comment), Gravity.CENTER, 0, 0);
 
 //        Intent intent = new Intent(BeautyTipDetailActivity.this, BeautyTipPopUpActivity.class);
 //        startActivity(intent);
