@@ -6,6 +6,7 @@ import android.widget.TextView;
 
 import com.vanity.mobilevanity.R;
 import com.vanity.mobilevanity.data.LikeItem;
+import com.vanity.mobilevanity.data.User;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -17,7 +18,7 @@ public class AlertLikeViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.text_user)
     TextView userView;
 
-    private LikeItem item;
+    private User item;
 
     public AlertLikeViewHolder(View itemView) {
         super(itemView);
@@ -27,24 +28,24 @@ public class AlertLikeViewHolder extends RecyclerView.ViewHolder {
             @Override
             public void onClick(View view) {
                 if (listener != null) {
-                    listener.onAlertLikeItemClick(view, item, getAdapterPosition());
+                    listener.onAlertLikeClick(view, item, getAdapterPosition());
                 }
             }
         });
     }
 
-    public void setLike(LikeItem item) {
+    public void setLike(User item) {
         this.item = item;
-        userView.setText(item.getUser());
+        userView.setText(item.getUserNickname());
     }
 
-    public interface OnAlertLikeItemClickListener {
-        public void onAlertLikeItemClick(View view, LikeItem item, int position);
+    public interface OnAlertLikeClickListener {
+        public void onAlertLikeClick(View view, User user, int position);
     }
 
-    OnAlertLikeItemClickListener listener;
+    OnAlertLikeClickListener listener;
 
-    public void setOnAlertLikeItemClickListener(OnAlertLikeItemClickListener listener) {
+    public void setOnAlertLikeClickListener(OnAlertLikeClickListener listener) {
         this.listener = listener;
     }
 

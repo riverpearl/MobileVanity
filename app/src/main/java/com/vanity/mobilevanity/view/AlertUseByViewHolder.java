@@ -5,7 +5,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.vanity.mobilevanity.R;
-import com.vanity.mobilevanity.data.UseByItem;
+import com.vanity.mobilevanity.data.CosmeticItem;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -20,7 +20,7 @@ public class AlertUseByViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.text_useby)
     TextView usebyView;
 
-    private UseByItem item;
+    private CosmeticItem item;
 
     public AlertUseByViewHolder(final View itemView) {
         super(itemView);
@@ -36,14 +36,14 @@ public class AlertUseByViewHolder extends RecyclerView.ViewHolder {
         });
     }
 
-    public void setUseBy(UseByItem item) {
+    public void setUseBy(CosmeticItem item) {
         this.item = item;
-        cosmeticView.setText(item.getCosmetic());
-        usebyView.setText("" + item.getUseby());
+        cosmeticView.setText(item.getCosmetic().getProduct().getName());
+        usebyView.setText(""+item.getCosmeticTerm());
     }
 
     public interface OnAlertUseByItemClickListener {
-        public void onAlertUseByItemClick(View view, UseByItem item, int position);
+        public void onAlertUseByItemClick(View view, CosmeticItem item, int position);
     }
 
     OnAlertUseByItemClickListener listener;

@@ -10,7 +10,9 @@ import android.widget.TextView;
 import com.vanity.mobilevanity.R;
 import com.vanity.mobilevanity.alert.AlertActivity;
 import com.vanity.mobilevanity.cosmetic.CosmeticDetailActivity;
+import com.vanity.mobilevanity.data.Comment;
 import com.vanity.mobilevanity.data.CommentItem;
+import com.vanity.mobilevanity.data.User;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -22,7 +24,7 @@ public class AlertCommentViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.text_user)
     TextView userView;
 
-    private CommentItem item;
+    private Comment item;
 
     public AlertCommentViewHolder(View itemView) {
         super(itemView);
@@ -32,24 +34,24 @@ public class AlertCommentViewHolder extends RecyclerView.ViewHolder {
             @Override
             public void onClick(View view) {
                 if (listener != null) {
-                    listener.onAlertCommentItemClick(view, item, getAdapterPosition());
+                    listener.onAlertCommentClick(view, item, getAdapterPosition());
                 }
             }
         });
     }
 
-    public void setComment(CommentItem item) {
+    public void setComment(Comment item) {
         this.item = item;
-        userView.setText(item.getUser());
+        userView.setText(item.getWriter().getUserNickname());
     }
 
-    public interface OnAlertCommentItemClickListener {
-        public void onAlertCommentItemClick(View view, CommentItem item, int position);
+    public interface OnAlertCommentClickListener {
+        public void onAlertCommentClick(View view, Comment item, int position);
     }
 
-    OnAlertCommentItemClickListener listener;
+    OnAlertCommentClickListener listener;
 
-    public void setOnAlertCommentItemClickListener(OnAlertCommentItemClickListener listener) {
+    public void setOnAlertCommentClickListener(OnAlertCommentClickListener listener) {
         this.listener = listener;
     }
 

@@ -17,7 +17,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.vanity.mobilevanity.R;
-import com.vanity.mobilevanity.adapter.BeautyTipCommentPopUpAdapter;
 import com.vanity.mobilevanity.view.LikeViewHolder;
 
 import butterknife.BindView;
@@ -56,12 +55,12 @@ public class BeautyTipDetailActivity extends AppCompatActivity {
 
     @OnClick(R.id.btn_comment)
     public void onCommentClick() {
-        View view = getLayoutInflater().inflate(R.layout.view_beauty_tip_popup, null);
-        view.setBackgroundColor(Color.BLUE);
-        popup = new PopupWindow(view, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        popup.setOutsideTouchable(true);
-        popup.showAtLocation(view, Gravity.CENTER, 0,0);
-        popup.showAtLocation(findViewById(R.id.btn_comment), Gravity.CENTER,0, 0);
+//        View view = getLayoutInflater().inflate(R.layout.view_beauty_tip_popup, null);
+//        view.setBackgroundColor(Color.BLUE);
+//        popup = new PopupWindow(view, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+//        popup.setOutsideTouchable(true);
+//        popup.showAtLocation(view, Gravity.CENTER, 0,0);
+//        popup.showAtLocation(findViewById(R.id.btn_comment), Gravity.CENTER,0, 0);
 
 //        Intent intent = new Intent(BeautyTipDetailActivity.this, BeautyTipCommentDialogActivity.class);
 //        startActivity(intent);

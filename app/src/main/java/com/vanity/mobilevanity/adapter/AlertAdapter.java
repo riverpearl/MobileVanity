@@ -11,9 +11,12 @@ import com.vanity.mobilevanity.R;
 import com.vanity.mobilevanity.alert.AlertActivity;
 import com.vanity.mobilevanity.beautytip.BeautyTipDetailActivity;
 import com.vanity.mobilevanity.data.AlertItem;
+import com.vanity.mobilevanity.data.Comment;
 import com.vanity.mobilevanity.data.CommentItem;
+import com.vanity.mobilevanity.data.CosmeticItem;
 import com.vanity.mobilevanity.data.LikeItem;
 import com.vanity.mobilevanity.data.UseByItem;
+import com.vanity.mobilevanity.data.User;
 import com.vanity.mobilevanity.view.AlertCommentViewHolder;
 import com.vanity.mobilevanity.view.AlertLikeViewHolder;
 import com.vanity.mobilevanity.view.AlertUseByViewHolder;
@@ -24,7 +27,7 @@ import java.util.List;
 /**
  * Created by Tacademy on 2016-08-24.
  */
-public class AlertAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements AlertCommentViewHolder.OnAlertCommentItemClickListener, AlertLikeViewHolder.OnAlertLikeItemClickListener, AlertUseByViewHolder.OnAlertUseByItemClickListener {
+public class AlertAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements AlertCommentViewHolder.OnAlertCommentClickListener, AlertLikeViewHolder.OnAlertLikeClickListener, AlertUseByViewHolder.OnAlertUseByItemClickListener {
     List<AlertItem> items = new ArrayList<>();
 
     public void clear() {
@@ -50,11 +53,11 @@ public class AlertAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     public int getItemViewType(int position) {
         AlertItem item = items.get(position);
 
-        if (item instanceof CommentItem) {
+        if (item instanceof Comment) {
             return VIEW_TYPE_COMMENT;
-        } else if (item instanceof LikeItem) {
+        } else if (item instanceof User) {
             return VIEW_TYPE_LIKE;
-        } else if (item instanceof UseByItem) {
+        } else if (item instanceof CosmeticItem) {
             return VIEW_TYPE_USEBY;
         }
 
@@ -72,7 +75,7 @@ public class AlertAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 if (commentView == null) {
                     commentView = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_alert_comment, parent, false);
                     AlertCommentViewHolder holder = new AlertCommentViewHolder(commentView);
-                    holder.setOnAlertCommentItemClickListener(this);
+                    holder.setOnAlertCommentClickListener(this);
                     return holder;
                 }
             }
@@ -80,7 +83,7 @@ public class AlertAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 if (likeView == null) {
                     likeView = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_alert_like, parent, false);
                     AlertLikeViewHolder holder = new AlertLikeViewHolder(likeView);
-                    holder.setOnAlertLikeItemClickListener(this);
+                    holder.setOnAlertLikeClickListener(this);
                     return holder;
                 }
             }
@@ -88,6 +91,7 @@ public class AlertAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 if (usebyView == null) {
                     usebyView = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_alert_useby, parent, false);
                     AlertUseByViewHolder holder = new AlertUseByViewHolder(usebyView);
+                    // 고쳐야 함(UseBy부분)
                     holder.setOnAlertUseByItemClickListener(this);
                     return holder;
                 }
@@ -100,19 +104,19 @@ public class AlertAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         AlertItem item = items.get(position);
 
-        if (item instanceof CommentItem) {
+        if (item instanceof Comment) {
             AlertCommentViewHolder cvh = (AlertCommentViewHolder) holder;
-            ((AlertCommentViewHolder) holder).setComment((CommentItem) items.get(position));
+            ((AlertCommentViewHolder) holder).setComment((Comment) items.get(position));
             return;
         }
-        if (item instanceof LikeItem) {
+        if (item instanceof User) {
             AlertLikeViewHolder lvh = (AlertLikeViewHolder) holder;
-            ((AlertLikeViewHolder) holder).setLike((LikeItem) items.get(position));
+            ((AlertLikeViewHolder) holder).setLike((User) items.get(position));
             return;
         }
-        if (item instanceof UseByItem) {
+        if (item instanceof CosmeticItem) {
             AlertUseByViewHolder uvh = (AlertUseByViewHolder) holder;
-            ((AlertUseByViewHolder) holder).setUseBy((UseByItem) items.get(position));
+            ((AlertUseByViewHolder) holder).setUseBy((CosmeticItem) items.get(position));
             return;
         }
 
@@ -124,6 +128,27 @@ public class AlertAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         return items.size();
     }
 
+    @Override
+    public void onAlertCommentClick(View view, Comment item, int position) {
+        if (listener != null) {
+            listener.onAdapteItemClick(view, item, position);
+        }
+    }
+
+    @Override
+    public void onAlertLikeClick(View view, User user, int position) {
+        if (listener != null) {
+            listener.onAdapteItemClick(view, user, position);
+        }
+    }
+
+    @Override
+    public void onAlertUseByItemClick(View view, CosmeticItem item, int position) {
+        if (listener != null) {
+            listener.onAdapteItemClick(view, item, position);
+
+        }
+    }
 
     public interface OnAdapterItemClickListener {
         public void onAdapteItemClick(View view, AlertItem item, int position);
@@ -135,29 +160,4 @@ public class AlertAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         this.listener = listener;
     }
 
-
-    @Override
-    public void onAlertCommentItemClick(View view, CommentItem item, int position) {
-        if (listener != null) {
-            listener.onAdapteItemClick(view, item, position);
-
-        }
-    }
-
-    @Override
-    public void onAlertLikeItemClick(View view, LikeItem item, int position) {
-        if (listener != null) {
-            listener.onAdapteItemClick(view, item, position);
-
-        }
-    }
-
-
-    @Override
-    public void onAlertUseByItemClick(View view, UseByItem item, int position) {
-        if (listener != null) {
-            listener.onAdapteItemClick(view, item, position);
-
-        }
-    }
 }

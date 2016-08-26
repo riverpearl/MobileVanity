@@ -16,9 +16,14 @@ import com.vanity.mobilevanity.adapter.AlertAdapter;
 import com.vanity.mobilevanity.beautytip.BeautyTipDetailActivity;
 import com.vanity.mobilevanity.cosmetic.CosmeticDetailActivity;
 import com.vanity.mobilevanity.data.AlertItem;
+import com.vanity.mobilevanity.data.Comment;
 import com.vanity.mobilevanity.data.CommentItem;
+import com.vanity.mobilevanity.data.Cosmetic;
+import com.vanity.mobilevanity.data.CosmeticItem;
 import com.vanity.mobilevanity.data.LikeItem;
+import com.vanity.mobilevanity.data.Product;
 import com.vanity.mobilevanity.data.UseByItem;
+import com.vanity.mobilevanity.data.User;
 import com.vanity.mobilevanity.view.AlertCommentViewHolder;
 import com.vanity.mobilevanity.view.AlertLikeViewHolder;
 import com.vanity.mobilevanity.view.AlertUseByViewHolder;
@@ -44,13 +49,13 @@ public class AlertActivity extends AppCompatActivity {
         mAdapter.setOnAdapterItemClickListener(new AlertAdapter.OnAdapterItemClickListener() {
             @Override
             public void onAdapteItemClick(View view, AlertItem item, int position) {
-                if (item instanceof CommentItem) {
+                if (item instanceof Comment) {
                     Intent intent = new Intent(AlertActivity.this, BeautyTipDetailActivity.class);
                     startActivity(intent);
-                } else if (item instanceof LikeItem) {
+                } else if (item instanceof User) {
                     Intent intent = new Intent(AlertActivity.this, BeautyTipDetailActivity.class);
                     startActivity(intent);
-                } else if (item instanceof UseByItem) {
+                } else if (item instanceof CosmeticItem) {
                     Intent intent = new Intent(AlertActivity.this, CosmeticDetailActivity.class);
                     startActivity(intent);
 
@@ -68,19 +73,24 @@ public class AlertActivity extends AppCompatActivity {
     }
 
     public void initData() {
-        CommentItem commentItem = new CommentItem("User");
-        LikeItem likeItem = new LikeItem("Like");
-        UseByItem useByItem = new UseByItem("User", 3);
+        Comment comment = new Comment();
+        User user = new User();
+        CosmeticItem cosmeticItem = new CosmeticItem();
+        Cosmetic cosmetic = new Cosmetic();
+        Product product = new Product();
 
-        commentItem.setUser("user");
-        likeItem.setUser("like");
+        user.setUserNickname("NickName");
+        comment.setWriter(user);
 
-        useByItem.setCosmetic("cosmetic");
-        useByItem.setUseby(3);
+        product.setName("Product");
+        cosmetic.setProduct(product);
+        cosmeticItem.setCosmetic(cosmetic);
 
-        mAdapter.add(commentItem);
-        mAdapter.add(likeItem);
-        mAdapter.add(useByItem);
+        cosmeticItem.setCosmeticTerm(3);
+
+        mAdapter.add(comment);
+        mAdapter.add(user);
+        mAdapter.add(cosmeticItem);
     }
 
     @Override

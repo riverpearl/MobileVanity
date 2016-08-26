@@ -3,7 +3,7 @@ package com.vanity.mobilevanity.data;
 /**
  * Created by Tacademy on 2016-08-24.
  */
-public class User {
+public class User implements AlertItem{
     private long id;
     private String userProfile;
     private String userNickname;
