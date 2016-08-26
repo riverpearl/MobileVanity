@@ -6,13 +6,22 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListView;
 
 import com.vanity.mobilevanity.R;
+import com.vanity.mobilevanity.adapter.SettingAdapter;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class SettingActivity extends AppCompatActivity {
+
+    @BindView(R.id.list_setting)
+    ListView settingView;
+
+    SettingAdapter sAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,6 +29,47 @@ public class SettingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_setting);
 
         ButterKnife.bind(this);
+
+        View versionView = getLayoutInflater().inflate(R.layout.view_version, null);
+        View alertView = getLayoutInflater().inflate(R.layout.view_alert, null);
+        settingView.addHeaderView(versionView, null, false);
+        settingView.addHeaderView(alertView, null, false);
+
+        sAdapter = new SettingAdapter();
+        settingView.setAdapter(sAdapter);
+
+        settingView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                Intent intent;
+                switch(position) {
+                    case 2 :
+                        intent = new Intent(SettingActivity.this, AccessTermActivity.class);
+                        startActivity(intent);
+                        break;
+                    case 3 :
+                        intent = new Intent(SettingActivity.this, FAQActivity.class);
+                        startActivity(intent);
+                        break;
+                    case 4 :
+                        intent = new Intent(SettingActivity.this, PartnershipActivity.class);
+                        startActivity(intent);
+                        break;
+                }
+            }
+        });
+
+        init();
+    }
+
+    private void init() {
+        String accessTerm = "이용약관";
+        String faq = "FAQ";
+        String partnership = "제휴문의";
+
+        sAdapter.add(accessTerm);
+        sAdapter.add(faq);
+        sAdapter.add(partnership);
     }
 
     @Override
@@ -36,23 +86,5 @@ public class SettingActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    @OnClick(R.id.btn_access_term)
-    public void onAccessTermClick(View view) {
-        Intent intent = new Intent(SettingActivity.this, AccessTermActivity.class);
-        startActivity(intent);
-    }
-
-    @OnClick(R.id.btn_faq)
-    public void onFAQClick(View view) {
-        Intent intent = new Intent(SettingActivity.this, FAQActivity.class);
-        startActivity(intent);
-    }
-
-    @OnClick(R.id.btn_partnership)
-    public void onPartnershipClick(View view) {
-        Intent intent = new Intent(SettingActivity.this, PartnershipActivity.class);
-        startActivity(intent);
     }
 }

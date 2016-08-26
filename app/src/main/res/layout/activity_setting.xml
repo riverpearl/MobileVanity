@@ -9,47 +9,10 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.vanity.mobilevanity.setting.SettingActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="SettingActivity"
-        android:id="@+id/textView" />
-
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="ACCESS TERM"
-        android:id="@+id/btn_access_term"
-        android:layout_below="@+id/textView"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="PARTNERSHIP"
-        android:id="@+id/btn_partnership"
-        android:layout_below="@+id/btn_faq"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="FAQ"
-        android:id="@+id/btn_faq"
-        android:layout_below="@+id/btn_access_term"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
     <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/listView"
-        android:layout_below="@+id/btn_partnership"
+        android:id="@+id/list_setting"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
