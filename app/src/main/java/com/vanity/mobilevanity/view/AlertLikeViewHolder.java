@@ -5,7 +5,6 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.vanity.mobilevanity.R;
-import com.vanity.mobilevanity.data.LikeItem;
 import com.vanity.mobilevanity.data.User;
 
 import butterknife.BindView;

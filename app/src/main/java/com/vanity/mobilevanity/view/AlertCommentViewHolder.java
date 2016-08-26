@@ -11,7 +11,6 @@ import com.vanity.mobilevanity.R;
 import com.vanity.mobilevanity.alert.AlertActivity;
 import com.vanity.mobilevanity.cosmetic.CosmeticDetailActivity;
 import com.vanity.mobilevanity.data.Comment;
-import com.vanity.mobilevanity.data.CommentItem;
 import com.vanity.mobilevanity.data.User;
 
 import butterknife.BindView;
