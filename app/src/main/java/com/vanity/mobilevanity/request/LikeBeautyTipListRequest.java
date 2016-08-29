@@ -7,6 +7,7 @@ import com.vanity.mobilevanity.data.BeautyTip;
 import com.vanity.mobilevanity.data.NetworkResult;
 
 import java.lang.reflect.Type;
+import java.util.List;
 
 import okhttp3.HttpUrl;
 import okhttp3.Request;
@@ -14,7 +15,7 @@ import okhttp3.Request;
 /**
  * Created by Tacademy on 2016-08-29.
  */
-public class LikeBeautyTipListRequest extends AbstractRequest<NetworkResult<BeautyTip>> {
+public class LikeBeautyTipListRequest extends AbstractRequest<NetworkResult<List<BeautyTip>>> {
     Request request;
 
     public LikeBeautyTipListRequest(Context context) {
@@ -30,7 +31,7 @@ public class LikeBeautyTipListRequest extends AbstractRequest<NetworkResult<Beau
 
     @Override
     protected Type getType() {
-        return new TypeToken<NetworkResult<BeautyTip>>(){}.getType();
+        return new TypeToken<NetworkResult<List<BeautyTip>>>(){}.getType();
     }
 
     @Override

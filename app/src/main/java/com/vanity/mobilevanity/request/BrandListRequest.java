@@ -9,6 +9,7 @@ import com.vanity.mobilevanity.data.NetworkResult;
 import com.vanity.mobilevanity.data.User;
 
 import java.lang.reflect.Type;
+import java.util.List;
 
 import okhttp3.HttpUrl;
 import okhttp3.Request;
@@ -16,7 +17,7 @@ import okhttp3.Request;
 /**
  * Created by Tacademy on 2016-08-29.
  */
-public class BrandListRequest extends AbstractRequest<NetworkResult<Brand>> {
+public class BrandListRequest extends AbstractRequest<NetworkResult<List<Brand>>> {
     Request mRequest;
 
     public BrandListRequest(Context context) {
@@ -32,7 +33,7 @@ public class BrandListRequest extends AbstractRequest<NetworkResult<Brand>> {
 
     @Override
     protected Type getType() {
-        return new TypeToken<NetworkResult<Brand>>() {}.getType();
+        return new TypeToken<NetworkResult<List<Brand>>>() {}.getType();
     }
 
     @Override

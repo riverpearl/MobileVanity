@@ -75,44 +75,4 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
-//    @OnClick(R.id.btn_home)
-//    public void onHomeClick(View view) {
-//        if (f instanceof HomeFragment)
-//            return;
-//
-//        f = new HomeFragment();
-//        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-//        ft.replace(R.id.container, f).commit();
-//    }
-//
-//    @OnClick(R.id.btn_beautytip)
-//    public void onBeautyTipClick(View view) {
-//        if (f instanceof BeautyTipFragment)
-//            return;
-//
-//        f = new BeautyTipFragment();
-//        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-//        ft.replace(R.id.container, f).commit();
-//    }
-//
-//    @OnClick(R.id.btn_sale)
-//    public void onSaleClick(View view) {
-//        if (f instanceof SaleFragment)
-//            return;
-//
-//        f = new SaleFragment();
-//        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-//        ft.replace(R.id.container, f).commit();
-//    }
-//
-//    @OnClick(R.id.btn_mypage)
-//    public void onMypageClick(View view) {
-//        if (f instanceof MyPageFragment)
-//            return;
-//
-//        f = new MyPageFragment();
-//        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-//        ft.replace(R.id.container, f).commit();
-//    }
 }

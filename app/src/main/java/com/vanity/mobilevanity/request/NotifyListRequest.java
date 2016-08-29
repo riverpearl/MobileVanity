@@ -7,6 +7,7 @@ import com.vanity.mobilevanity.data.NetworkResult;
 import com.vanity.mobilevanity.data.Notify;
 
 import java.lang.reflect.Type;
+import java.util.List;
 
 import okhttp3.HttpUrl;
 import okhttp3.Request;
@@ -14,7 +15,7 @@ import okhttp3.Request;
 /**
  * Created by Tacademy on 2016-08-29.
  */
-public class NotifyListRequest extends AbstractRequest<NetworkResult<Notify>> {
+public class NotifyListRequest extends AbstractRequest<NetworkResult<List<Notify>>> {
     Request request;
 
     public NotifyListRequest(Context context, String date) {
@@ -31,7 +32,7 @@ public class NotifyListRequest extends AbstractRequest<NetworkResult<Notify>> {
 
     @Override
     protected Type getType() {
-        return new TypeToken<NetworkResult<Notify>>(){}.getType();
+        return new TypeToken<NetworkResult<List<Notify>>>(){}.getType();
     }
 
     @Override

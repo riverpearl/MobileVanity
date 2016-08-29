@@ -8,6 +8,7 @@ import com.vanity.mobilevanity.data.NetworkResult;
 import com.vanity.mobilevanity.manager.NetworkRequest;
 
 import java.lang.reflect.Type;
+import java.util.List;
 
 import okhttp3.HttpUrl;
 import okhttp3.Request;
@@ -15,7 +16,7 @@ import okhttp3.Request;
 /**
  * Created by Tacademy on 2016-08-29.
  */
-public class CommentListRequest extends AbstractRequest<NetworkResult<Comment>> {
+public class CommentListRequest extends AbstractRequest<NetworkResult<List<Comment>>> {
     Request request;
 
     public CommentListRequest(Context context, String beautyTipId) {
@@ -32,7 +33,7 @@ public class CommentListRequest extends AbstractRequest<NetworkResult<Comment>> 
 
     @Override
     protected Type getType() {
-        return new TypeToken<NetworkResult<Comment>>(){}.getType();
+        return new TypeToken<NetworkResult<List<Comment>>>(){}.getType();
     }
 
     @Override

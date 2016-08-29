@@ -10,6 +10,7 @@ import com.vanity.mobilevanity.data.Sale;
 import com.vanity.mobilevanity.data.User;
 
 import java.lang.reflect.Type;
+import java.util.List;
 
 import okhttp3.HttpUrl;
 import okhttp3.Request;
@@ -17,7 +18,7 @@ import okhttp3.Request;
 /**
  * Created by Tacademy on 2016-08-29.
  */
-public class SaleInfoRequest extends AbstractRequest<NetworkResult<Sale>> {
+public class SaleInfoRequest extends AbstractRequest<NetworkResult<List<Sale>>> {
     Request mRequest;
 
     public SaleInfoRequest(Context context, String type, String productid) {
@@ -49,7 +50,7 @@ public class SaleInfoRequest extends AbstractRequest<NetworkResult<Sale>> {
     @Override
     protected Type getType() {
 
-        return new TypeToken<NetworkResult<Sale>>(){}.getType();
+        return new TypeToken<NetworkResult<List<Sale>>>(){}.getType();
     }
 
     @Override

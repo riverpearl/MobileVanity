@@ -7,6 +7,7 @@ import com.vanity.mobilevanity.data.FAQ;
 import com.vanity.mobilevanity.data.NetworkResult;
 
 import java.lang.reflect.Type;
+import java.util.List;
 
 import okhttp3.HttpUrl;
 import okhttp3.Request;
@@ -14,7 +15,7 @@ import okhttp3.Request;
 /**
  * Created by Tacademy on 2016-08-29.
  */
-public class FAQListRequest extends AbstractRequest<NetworkResult<FAQ>> {
+public class FAQListRequest extends AbstractRequest<NetworkResult<List<FAQ>>> {
     Request request;
 
     public FAQListRequest(Context context) {
@@ -30,7 +31,7 @@ public class FAQListRequest extends AbstractRequest<NetworkResult<FAQ>> {
 
     @Override
     protected Type getType() {
-        return new TypeToken<NetworkResult<FAQ>>(){}.getType();
+        return new TypeToken<NetworkResult<List<FAQ>>>(){}.getType();
     }
 
     @Override

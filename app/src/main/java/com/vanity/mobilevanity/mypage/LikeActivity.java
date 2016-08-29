@@ -13,6 +13,10 @@ import com.vanity.mobilevanity.R;
 import com.vanity.mobilevanity.adapter.LikeAdapter;
 import com.vanity.mobilevanity.beautytip.BeautyTipDetailActivity;
 import com.vanity.mobilevanity.data.BeautyTip;
+import com.vanity.mobilevanity.data.NetworkResult;
+import com.vanity.mobilevanity.manager.NetworkManager;
+import com.vanity.mobilevanity.manager.NetworkRequest;
+import com.vanity.mobilevanity.request.LikeBeautyTipListRequest;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -70,5 +74,24 @@ public class LikeActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        LikeBeautyTipListRequest request = new LikeBeautyTipListRequest(this);
+        NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<BeautyTip>>() {
+            @Override
+            public void onSuccess(NetworkRequest<NetworkResult<BeautyTip>> request, NetworkResult<BeautyTip> result) {
+                BeautyTip tip = result.getResult();
+
+            }
+
+            @Override
+            public void onFail(NetworkRequest<NetworkResult<BeautyTip>> request, int errorCode, String errorMessage, Throwable e) {
+
+            }
+        });
     }
 }
