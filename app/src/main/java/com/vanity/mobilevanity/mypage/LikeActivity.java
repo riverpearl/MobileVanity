@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.vanity.mobilevanity.R;
 import com.vanity.mobilevanity.adapter.LikeAdapter;
@@ -17,6 +18,8 @@ import com.vanity.mobilevanity.data.NetworkResult;
 import com.vanity.mobilevanity.manager.NetworkManager;
 import com.vanity.mobilevanity.manager.NetworkRequest;
 import com.vanity.mobilevanity.request.LikeBeautyTipListRequest;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -49,7 +52,7 @@ public class LikeActivity extends AppCompatActivity {
         LinearLayoutManager manager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         listView.setLayoutManager(manager);
 
-        init();
+        //init();
     }
 
     private void init() {
@@ -81,16 +84,17 @@ public class LikeActivity extends AppCompatActivity {
         super.onStart();
 
         LikeBeautyTipListRequest request = new LikeBeautyTipListRequest(this);
-        NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<BeautyTip>>() {
+        NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<List<BeautyTip>>>() {
             @Override
-            public void onSuccess(NetworkRequest<NetworkResult<BeautyTip>> request, NetworkResult<BeautyTip> result) {
-                BeautyTip tip = result.getResult();
-
+            public void onSuccess(NetworkRequest<NetworkResult<List<BeautyTip>>> request, NetworkResult<List<BeautyTip>> result) {
+                List<BeautyTip> tips = result.getResult();
+                mAdapter.clear();
+                mAdapter.addAll(tips);
             }
 
             @Override
-            public void onFail(NetworkRequest<NetworkResult<BeautyTip>> request, int errorCode, String errorMessage, Throwable e) {
-
+            public void onFail(NetworkRequest<NetworkResult<List<BeautyTip>>> request, int errorCode, String errorMessage, Throwable e) {
+                Toast.makeText(LikeActivity.this, errorCode + " : " + errorMessage, Toast.LENGTH_SHORT).show();
             }
         });
     }
