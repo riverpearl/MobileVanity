@@ -8,16 +8,18 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.vanity.mobilevanity.R;
 import com.vanity.mobilevanity.SplashActivity;
-import com.vanity.mobilevanity.alert.AlertActivity;
-import com.vanity.mobilevanity.beautytip.BeautyTipDetailActivity;
 import com.vanity.mobilevanity.cosmetic.CosmeticListActivity;
 import com.vanity.mobilevanity.data.Constant;
+import com.vanity.mobilevanity.data.NetworkResult;
 import com.vanity.mobilevanity.data.User;
+import com.vanity.mobilevanity.manager.NetworkManager;
+import com.vanity.mobilevanity.manager.NetworkRequest;
+import com.vanity.mobilevanity.request.MyInfoRequest;
 import com.vanity.mobilevanity.setting.SettingActivity;
 
 import butterknife.BindView;
@@ -79,68 +81,8 @@ public class MyPageFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view =  inflater.inflate(R.layout.fragment_my_page, container, false);
         ButterKnife.bind(this, view);
-        init();
 
         return view;
-    }
-
-    private void init() {
-        user = new User();
-        user.setUserNickname("Vanity");
-        user.setGender(2);
-        user.setSkinType(2);
-        user.setSkinTone(2);
-        user.setEyeNum(10);
-        user.setLipNum(10);
-        user.setSkinNum(10);
-        user.setFaceNum(10);
-        user.setCleansingNum(10);
-        user.setToolNum(10);
-
-        nicknameView.setText(user.getUserNickname());
-
-        switch (user.getGender()) {
-            case 1 : default :
-                genderView.setText("남성");
-                break;
-            case 2 :
-                genderView.setText("여성");
-                break;
-        }
-
-        switch (user.getSkinType()) {
-            case 1 : default :
-                skinTypeView.setText("건성");
-                break;
-            case 2 :
-                skinTypeView.setText("중성");
-                break;
-            case 3 :
-                skinTypeView.setText("지성");
-                break;
-            case 4 :
-                skinTypeView.setText("복합성");
-                break;
-        }
-
-        switch (user.getSkinTone()) {
-            case 1 : default :
-                skinToneView.setText("13호");
-                break;
-            case 2 :
-                skinToneView.setText("21호");
-                break;
-            case 3 :
-                skinToneView.setText("23호");
-                break;
-        }
-
-        eyeCountView.setText(user.getEyeNum() + "");
-        lipCountView.setText(user.getLipNum() + "");
-        skinCountView.setText(user.getSkinNum() + "");
-        faceCountView.setText(user.getFaceNum() + "");
-        cleansingCountView.setText(user.getCleansingNum() + "");
-        toolCountView.setText(user.getToolNum() + "");
     }
 
     @OnClick(R.id.btn_logout)
@@ -153,7 +95,7 @@ public class MyPageFragment extends Fragment {
     @OnClick(R.id.btn_modification)
     public void onModificationClick(View view) {
         Intent intent = new Intent(getContext(), UpdateProfileActivity.class);
-        intent.putExtra(TAG_NICKNAME, user.getUserNickname());
+        intent.putExtra(TAG_NICKNAME, user.getUserNickName());
         intent.putExtra(TAG_GENDER, user.getGender());
         intent.putExtra(TAG_SKIN_TYPE, user.getSkinType());
         intent.putExtra(TAG_SKIN_TONE, user.getSkinTone());
@@ -231,5 +173,73 @@ public class MyPageFragment extends Fragment {
         startActivity(intent);
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
 
+        MyInfoRequest request = new MyInfoRequest(getContext());
+        NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<User>>() {
+            @Override
+            public void onSuccess(NetworkRequest<NetworkResult<User>> request, NetworkResult<User> result) {
+                User user = result.getResult();
+                nicknameView.setText(user.getUserNickName());
+                setGenderView(user.getGender());
+                setSkinTypeView(user.getSkinType());
+                setSkinToneView(user.getSkinTone());
+                eyeCountView.setText(user.getEyeNum() + "");
+                lipCountView.setText(user.getLipNum() + "");
+                skinCountView.setText(user.getSkinNum() + "");
+                faceCountView.setText(user.getFaceNum() + "");
+                cleansingCountView.setText(user.getCleansingNum() + "");
+                toolCountView.setText(user.getToolNum() + "");
+            }
+
+            @Override
+            public void onFail(NetworkRequest<NetworkResult<User>> request, int errorCode, String errorMessage, Throwable e) {
+                Toast.makeText(getContext(), errorCode + " : " + errorMessage, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void setGenderView(int gender) {
+        switch (gender) {
+            case 1 : default :
+                genderView.setText("남성");
+                break;
+            case 2 :
+                genderView.setText("여성");
+                break;
+        }
+    }
+
+    private void setSkinTypeView(int type) {
+        switch (type) {
+            case 1 : default :
+                skinTypeView.setText("건성");
+                break;
+            case 2 :
+                skinTypeView.setText("중성");
+                break;
+            case 3 :
+                skinTypeView.setText("지성");
+                break;
+            case 4 :
+                skinTypeView.setText("복합성");
+                break;
+        }
+    }
+
+    private void setSkinToneView(int tone) {
+        switch (tone) {
+            case 1 : default :
+                skinToneView.setText("13호");
+                break;
+            case 2 :
+                skinToneView.setText("21호");
+                break;
+            case 3 :
+                skinToneView.setText("23호");
+                break;
+        }
+    }
 }

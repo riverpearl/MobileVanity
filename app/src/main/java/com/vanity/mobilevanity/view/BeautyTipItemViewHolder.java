@@ -76,7 +76,7 @@ public class BeautyTipItemViewHolder extends RecyclerView.ViewHolder {
         this.item = item;
         titleView.setText(item.getTitle());
         contentView.setText(item.getContent());
-        userView.setText(item.getUser().getUserNickname());
+        userView.setText(item.getUser().getUserNickName());
         likeView.setText("" + item.getLikeCount());
         commentView.setText("" + item.getCommentNum());
         readView.setText("" + item.getReadNum());

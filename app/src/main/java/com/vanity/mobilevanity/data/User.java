@@ -6,7 +6,7 @@ package com.vanity.mobilevanity.data;
 public class User implements AlertItem{
     private long id;
     private String userProfile;
-    private String userNickname;
+    private String userNickName;
     private int skinType;
     private int skinTone;
     private int eyeNum;
@@ -32,12 +32,12 @@ public class User implements AlertItem{
         this.userProfile = userProfile;
     }
 
-    public String getUserNickname() {
-        return userNickname;
+    public String getUserNickName() {
+        return userNickName;
     }
 
-    public void setUserNickname(String userNickname) {
-        this.userNickname = userNickname;
+    public void setUserNickName(String userNickName) {
+        this.userNickName = userNickName;
     }
 
     public int getSkinType() {

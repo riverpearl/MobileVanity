@@ -33,7 +33,7 @@ public class BeautyTipPopUpViewHolder extends RecyclerView.ViewHolder {
     public void setPopUp(Comment item) {
         this.data = item;
         idView.setText("" + item.getBeautyTipId());
-        nameView.setText(item.getWriter().getUserNickname());
+        nameView.setText(item.getWriter().getUserNickName());
         commentView.setText(item.getContent());
     }
 }

@@ -156,7 +156,7 @@ public class BeautyTipFragment extends Fragment {
             beautyTip.setTitle("Title");
             beautyTip.setPreviewImage("PreviewImage");
             beautyTip.setContent("Content");
-            user.setUserNickname("NickName");
+            user.setUserNickName("NickName");
             beautyTip.setUser(user);
             beautyTip.setLikeCount(5);
             beautyTip.setCommentNum(10);

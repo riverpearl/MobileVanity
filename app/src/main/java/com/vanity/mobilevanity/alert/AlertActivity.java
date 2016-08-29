@@ -76,7 +76,7 @@ public class AlertActivity extends AppCompatActivity {
         Cosmetic cosmetic = new Cosmetic();
         Product product = new Product();
 
-        user.setUserNickname("NickName");
+        user.setUserNickName("NickName");
         comment.setWriter(user);
 
         product.setName("Product");

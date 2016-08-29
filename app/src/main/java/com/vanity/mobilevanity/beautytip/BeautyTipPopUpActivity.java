@@ -38,7 +38,7 @@ public class BeautyTipPopUpActivity extends AppCompatActivity {
             User user = new User();
 
             comment.setId(3);
-            user.setUserNickname("User");
+            user.setUserNickName("User");
             comment.setWriter(user);
             comment.setContent("Content");
 

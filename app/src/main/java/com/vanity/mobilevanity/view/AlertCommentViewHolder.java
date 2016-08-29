@@ -41,7 +41,7 @@ public class AlertCommentViewHolder extends RecyclerView.ViewHolder {
 
     public void setComment(Comment item) {
         this.item = item;
-        userView.setText(item.getWriter().getUserNickname());
+        userView.setText(item.getWriter().getUserNickName());
     }
 
     public interface OnAlertCommentClickListener {

@@ -14,10 +14,10 @@ import okhttp3.Request;
 /**
  * Created by Tacademy on 2016-08-29.
  */
-public class UserProfileRequest extends AbstractRequest<NetworkResult<User>> {
+public class MyInfoRequest extends AbstractRequest<NetworkResult<User>> {
     Request mRequest;
 
-    public UserProfileRequest(Context context) {
+    public MyInfoRequest(Context context) {
         HttpUrl url = getBaseUrlBuilder()
                 .addPathSegment("myinfo")
                 .build();

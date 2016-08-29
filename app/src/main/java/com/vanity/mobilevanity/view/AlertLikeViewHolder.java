@@ -35,7 +35,7 @@ public class AlertLikeViewHolder extends RecyclerView.ViewHolder {
 
     public void setLike(User item) {
         this.item = item;
-        userView.setText(item.getUserNickname());
+        userView.setText(item.getUserNickName());
     }
 
     public interface OnAlertLikeClickListener {
