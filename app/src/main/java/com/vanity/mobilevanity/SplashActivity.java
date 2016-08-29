@@ -20,6 +20,7 @@ public class SplashActivity extends AppCompatActivity {
 
     @OnClick(R.id.btn_fb_login)
     public void onLoginClick(View view) {
+
         Intent intent = new Intent(SplashActivity.this, MainActivity.class);
         startActivity(intent);
         finish();

@@ -2,6 +2,7 @@ package com.vanity.mobilevanity.request;
 
 import android.content.Context;
 
+import com.google.gson.reflect.TypeToken;
 import com.vanity.mobilevanity.data.NetworkResult;
 
 import java.lang.reflect.Type;
@@ -28,11 +29,11 @@ public class LogOutRequest extends AbstractRequest<NetworkResult<String>> {
 
     @Override
     protected Type getType() {
-        return null;
+        return new TypeToken<NetworkResult<String>>(){}.getType();
     }
 
     @Override
     public Request getRequest() {
-        return null;
+        return request;
     }
 }

@@ -35,6 +35,6 @@ public class FAQListRequest extends AbstractRequest<NetworkResult<FAQ>> {
 
     @Override
     public Request getRequest() {
-        return null;
+        return request;
     }
 }

@@ -35,7 +35,7 @@ public class SearchCosmeticListRequest extends AbstractRequest<NetworkResult<Cos
 
     @Override
     protected Type getType() {
-        return new TypeToken<NetworkResult<User>>() {}.getType();
+        return new TypeToken<NetworkResult<Cosmetic>>(){}.getType();
     }
 
     @Override

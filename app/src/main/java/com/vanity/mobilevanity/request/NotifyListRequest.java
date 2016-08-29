@@ -36,6 +36,6 @@ public class NotifyListRequest extends AbstractRequest<NetworkResult<Notify>> {
 
     @Override
     public Request getRequest() {
-        return null;
+        return request;
     }
 }

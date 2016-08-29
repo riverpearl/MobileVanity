@@ -35,6 +35,6 @@ public class LikeBeautyTipListRequest extends AbstractRequest<NetworkResult<Beau
 
     @Override
     public Request getRequest() {
-        return null;
+        return request;
     }
 }

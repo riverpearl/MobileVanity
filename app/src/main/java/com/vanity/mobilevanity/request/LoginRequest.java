@@ -8,26 +8,28 @@ import com.vanity.mobilevanity.data.User;
 
 import java.lang.reflect.Type;
 
+import okhttp3.FormBody;
 import okhttp3.HttpUrl;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 
 /**
  * Created by Tacademy on 2016-08-29.
  */
-public class UserProfileRequest extends AbstractRequest<NetworkResult<User>> {
-    Request mRequest;
+public class LoginRequest extends AbstractRequest<NetworkResult<User>> {
+    Request request;
 
-    public UserProfileRequest(Context context) {
+    public LoginRequest(Context context, String email, String password, String registrationId) {
         HttpUrl url = getBaseUrlBuilder()
-                .addPathSegment("myinfo")
+                .addPathSegment("login")
                 .build();
 
-        mRequest = new Request.Builder()
-                .url(url)
-                .tag(context)
+        RequestBody body = new FormBody.Builder()
+                .add("email", email)
+                .add("password", password)
+                .add("registrationId", registrationId)
                 .build();
     }
-
 
     @Override
     protected Type getType() {
@@ -36,6 +38,6 @@ public class UserProfileRequest extends AbstractRequest<NetworkResult<User>> {
 
     @Override
     public Request getRequest() {
-        return mRequest;
+        return request;
     }
 }

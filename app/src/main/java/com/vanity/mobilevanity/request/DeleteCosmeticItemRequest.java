@@ -33,8 +33,7 @@ public class DeleteCosmeticItemRequest extends AbstractRequest<NetworkResult<Cos
 
     @Override
     protected Type getType() {
-        return new TypeToken<NetworkResult<User>>() {
-        }.getType();
+        return new TypeToken<NetworkResult<CosmeticItem>>() {}.getType();
     }
 
     @Override

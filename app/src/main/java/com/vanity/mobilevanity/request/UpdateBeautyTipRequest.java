@@ -48,8 +48,7 @@ public class UpdateBeautyTipRequest extends AbstractRequest<NetworkResult<Beauty
 
     @Override
     protected Type getType() {
-        return new TypeToken<NetworkResult<User>>() {
-        }.getType();
+        return new TypeToken<NetworkResult<BeautyTip>>(){}.getType();
     }
 
     @Override

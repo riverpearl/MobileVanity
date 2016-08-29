@@ -32,8 +32,7 @@ public class ProductListRequest extends AbstractRequest<NetworkResult<Product>> 
 
     @Override
     protected Type getType() {
-        return new TypeToken<NetworkResult<User>>() {
-        }.getType();
+        return new TypeToken<NetworkResult<Product>>(){}.getType();
     }
 
     @Override

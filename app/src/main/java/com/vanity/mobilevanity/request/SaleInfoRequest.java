@@ -49,11 +49,11 @@ public class SaleInfoRequest extends AbstractRequest<NetworkResult<Sale>> {
     @Override
     protected Type getType() {
 
-        return new TypeToken<NetworkResult<User>>() {}.getType();
+        return new TypeToken<NetworkResult<Sale>>(){}.getType();
     }
 
     @Override
     public Request getRequest() {
-        return null;
+        return mRequest;
     }
 }

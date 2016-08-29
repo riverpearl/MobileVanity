@@ -33,8 +33,7 @@ public class CosmeticItemsRequest extends AbstractRequest<NetworkResult<Cosmetic
 
     @Override
     protected Type getType() {
-        return new TypeToken<NetworkResult<User>>() {
-        }.getType();
+        return new TypeToken<NetworkResult<CosmeticItem>>() {}.getType();
     }
 
     @Override

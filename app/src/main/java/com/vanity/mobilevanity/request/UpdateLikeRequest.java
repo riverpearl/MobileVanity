@@ -32,8 +32,7 @@ public class UpdateLikeRequest extends AbstractRequest<NetworkResult<BeautyTip>>
 
     @Override
     protected Type getType() {
-        return new TypeToken<NetworkResult<User>>() {
-        }.getType();
+        return new TypeToken<NetworkResult<BeautyTip>>(){}.getType();
     }
 
     @Override

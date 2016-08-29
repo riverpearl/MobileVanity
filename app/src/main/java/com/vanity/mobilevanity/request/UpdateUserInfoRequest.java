@@ -51,8 +51,7 @@ public class UpdateUserInfoRequest extends AbstractRequest<NetworkResult<User>> 
 
     @Override
     protected Type getType() {
-        return new TypeToken<NetworkResult<User>>() {
-        }.getType();
+        return new TypeToken<NetworkResult<User>>(){}.getType();
     }
 
     @Override

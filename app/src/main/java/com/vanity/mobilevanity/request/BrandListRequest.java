@@ -32,8 +32,7 @@ public class BrandListRequest extends AbstractRequest<NetworkResult<Brand>> {
 
     @Override
     protected Type getType() {
-        return new TypeToken<NetworkResult<User>>() {
-        }.getType();
+        return new TypeToken<NetworkResult<Brand>>() {}.getType();
     }
 
     @Override
