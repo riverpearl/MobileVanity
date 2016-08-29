@@ -29,6 +29,12 @@ public class LoginRequest extends AbstractRequest<NetworkResult<User>> {
                 .add("password", password)
                 .add("registrationId", registrationId)
                 .build();
+
+        request = new Request.Builder()
+                .url(url)
+                .post(body)
+                .tag(context)
+                .build();
     }
 
     @Override
