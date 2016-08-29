@@ -18,11 +18,11 @@ import okhttp3.RequestBody;
 /**
  * Created by Tacademy on 2016-08-29.
  */
-public class UpdateUserInfoRequest extends AbstractRequest<NetworkResult<User>> {
+public class UpdateMyInfoRequest extends AbstractRequest<NetworkResult<User>> {
     MediaType jpeg = MediaType.parse("image/jpeg");
     Request mRequest;
 
-    public UpdateUserInfoRequest(Context context, File userProfile, String userNickName, String skinType, String skinTone, String gender) {
+    public UpdateMyInfoRequest(Context context, File userProfile, String userNickName, String skinType, String skinTone, String gender) {
         HttpUrl url = getBaseUrlBuilder()
                 .addPathSegment("updatemyinfo")
                 .build();

@@ -7,11 +7,13 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.vanity.mobilevanity.R;
 import com.vanity.mobilevanity.alert.AlertActivity;
+import com.vanity.mobilevanity.request.UpdateMyInfoRequest;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -24,6 +26,9 @@ public class UpdateProfileActivity extends AppCompatActivity {
 
     @BindView(R.id.group_select_gender)
     RadioGroup groupGenderView;
+
+    @BindView(R.id.radio_male)
+    RadioButton maleView;
 
     @BindView(R.id.group_select_skin_type)
     RadioGroup groupSkinTypeView;
@@ -87,7 +92,24 @@ public class UpdateProfileActivity extends AppCompatActivity {
 
     @OnClick(R.id.btn_update)
     public void onUpdateClick(View view) {
-        //네트워크에 업데이트 요청
+        int gender;
+        int skinType;
+        int skinTone;
+
+        groupGenderView.get
+
+        switch (groupGenderView.getCheckedRadioButtonId()) {
+            case R.id.radio_male :
+            default :
+                gender = 1;
+                break;
+            case R.id.radio_female :
+                gender = 2;
+                break;
+        }
+        String
+
+        UpdateMyInfoRequest request =
         setResult(Activity.RESULT_OK);
         finish();
     }
