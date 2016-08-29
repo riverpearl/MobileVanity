@@ -13,9 +13,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.vanity.mobilevanity.R;
+import com.vanity.mobilevanity.data.BeautyTip;
+import com.vanity.mobilevanity.data.NetworkResult;
+import com.vanity.mobilevanity.manager.NetworkManager;
+import com.vanity.mobilevanity.manager.NetworkRequest;
+import com.vanity.mobilevanity.request.InsertBeautyTipRequest;
 
 import java.io.File;
 
@@ -33,6 +39,8 @@ public class BeautyTipWriteActivity extends AppCompatActivity {
 
     @BindView(R.id.image_content)
     ImageView imageView;
+
+    BeautyTip beautyTip;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +63,19 @@ public class BeautyTipWriteActivity extends AppCompatActivity {
 
     @OnClick(R.id.btn_set)
     public void onSetClick(View view) {
-        finish();
+        InsertBeautyTipRequest request = new InsertBeautyTipRequest(getBaseContext(), titleView.getText().toString(), contentView.getText().toString(), uploadFile);
+        NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<BeautyTip>>() {
+            @Override
+            public void onSuccess(NetworkRequest<NetworkResult<BeautyTip>> request, NetworkResult<BeautyTip> result) {
+                BeautyTip tip = result.getResult();
+                finish();
+            }
+
+            @Override
+            public void onFail(NetworkRequest<NetworkResult<BeautyTip>> request, int errorCode, String errorMessage, Throwable e) {
+                Toast.makeText(BeautyTipWriteActivity.this, "fail", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     File uploadFile = null;
@@ -79,7 +99,6 @@ public class BeautyTipWriteActivity extends AppCompatActivity {
             }
         }
     }
-    // 갤러리
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

@@ -23,6 +23,7 @@ import com.vanity.mobilevanity.adapter.BeautyTipSpinnerAdapter;
 import com.vanity.mobilevanity.data.BeautyTip;
 import com.vanity.mobilevanity.data.Comment;
 import com.vanity.mobilevanity.data.User;
+import com.vanity.mobilevanity.request.BeautyTipInfoRequest;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -164,5 +165,11 @@ public class BeautyTipFragment extends Fragment {
 
             mAdapter.add(beautyTip);
         }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        BeautyTipInfoRequest request = new BeautyTipInfoRequest(getContext(), )
     }
 }

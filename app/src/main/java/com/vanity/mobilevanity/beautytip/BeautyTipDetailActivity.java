@@ -18,7 +18,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.vanity.mobilevanity.R;
+import com.vanity.mobilevanity.data.BeautyTip;
+import com.vanity.mobilevanity.data.NetworkResult;
+import com.vanity.mobilevanity.manager.NetworkManager;
+import com.vanity.mobilevanity.manager.NetworkRequest;
+import com.vanity.mobilevanity.request.SearchBeautyTipRequest;
 import com.vanity.mobilevanity.view.LikeViewHolder;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -98,4 +105,21 @@ public class BeautyTipDetailActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+//        SearchBeautyTipRequest request = new SearchBeautyTipRequest(getBaseContext(), titleView.getText().toString());
+//        NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<List<BeautyTip>>>() {
+//            @Override
+//            public void onSuccess(NetworkRequest<NetworkResult<List<BeautyTip>>> request, NetworkResult<List<BeautyTip>> result) {
+//                List<BeautyTip> tip = result.getResult();
+//            }
+//
+//            @Override
+//            public void onFail(NetworkRequest<NetworkResult<List<BeautyTip>>> request, int errorCode, String errorMessage, Throwable e) {
+//                Toast.makeText(BeautyTipDetailActivity.this, "fail", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+
+    }
 }
