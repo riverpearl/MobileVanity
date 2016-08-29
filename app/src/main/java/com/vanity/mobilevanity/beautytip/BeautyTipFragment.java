@@ -158,7 +158,7 @@ public class BeautyTipFragment extends Fragment {
             beautyTip.setContent("Content");
             user.setUserNickname("NickName");
             beautyTip.setUser(user);
-            beautyTip.setLikeNum(5);
+            beautyTip.setLikeCount(5);
             beautyTip.setCommentNum(10);
             beautyTip.setReadNum(15);
 

@@ -8,11 +8,18 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.vanity.mobilevanity.R;
 import com.vanity.mobilevanity.adapter.MyBeautyTipAdapter;
 import com.vanity.mobilevanity.beautytip.BeautyTipDetailActivity;
 import com.vanity.mobilevanity.data.BeautyTip;
+import com.vanity.mobilevanity.data.NetworkResult;
+import com.vanity.mobilevanity.manager.NetworkManager;
+import com.vanity.mobilevanity.manager.NetworkRequest;
+import com.vanity.mobilevanity.request.SearchBeautyTipRequest;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -69,5 +76,27 @@ public class MyBeautyTipActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        String type = "user";
+
+        SearchBeautyTipRequest request = new SearchBeautyTipRequest(this, type);
+        NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<List<BeautyTip>>>() {
+            @Override
+            public void onSuccess(NetworkRequest<NetworkResult<List<BeautyTip>>> request, NetworkResult<List<BeautyTip>> result) {
+                List<BeautyTip> tips = result.getResult();
+                mAdapter.clear();
+                mAdapter.addAll(tips);
+            }
+
+            @Override
+            public void onFail(NetworkRequest<NetworkResult<List<BeautyTip>>> request, int errorCode, String errorMessage, Throwable e) {
+                Toast.makeText(MyBeautyTipActivity.this, errorCode + " : " + errorMessage, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

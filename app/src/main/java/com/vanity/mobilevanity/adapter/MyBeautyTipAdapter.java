@@ -25,12 +25,12 @@ public class MyBeautyTipAdapter extends RecyclerView.Adapter<MyBeautyTipViewHold
     }
 
     public void add(BeautyTip item) {
-        items.add(item);
+        this.items.add(item);
         notifyDataSetChanged();
     }
 
     public void addAll(List<BeautyTip> items) {
-        items.addAll(items);
+        this.items.addAll(items);
         notifyDataSetChanged();
     }
 

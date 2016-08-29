@@ -1,18 +1,21 @@
 package com.vanity.mobilevanity.data;
 
+import java.io.Serializable;
+
 /**
  * Created by 은미 on 2016-08-24.
  */
-public class BeautyTip {
+public class BeautyTip implements Serializable {
     private long id;
     private String previewImage;
     private String title;
     private String content;
     private User user;
-    private int likeNum;
+    private int likeCount;
     private int commentNum;
     private int readNum;
     private String writeDate;
+    private boolean isLike;
 
     public long getId() {
         return id;
@@ -54,12 +57,12 @@ public class BeautyTip {
         this.user = user;
     }
 
-    public int getLikeNum() {
-        return likeNum;
+    public int getLikeCount() {
+        return likeCount;
     }
 
-    public void setLikeNum(int likeNum) {
-        this.likeNum = likeNum;
+    public void setLikeCount(int likeCount) {
+        this.likeCount = likeCount;
     }
 
     public int getCommentNum() {
@@ -84,5 +87,13 @@ public class BeautyTip {
 
     public void setWriteDate(String writeDate) {
         this.writeDate = writeDate;
+    }
+
+    public boolean isLike() {
+        return isLike;
+    }
+
+    public void setLike(boolean like) {
+        isLike = like;
     }
 }

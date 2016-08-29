@@ -51,16 +51,6 @@ public class LikeActivity extends AppCompatActivity {
 
         LinearLayoutManager manager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         listView.setLayoutManager(manager);
-
-        //init();
-    }
-
-    private void init() {
-        for (int i = 0; i < 10; i++) {
-            BeautyTip data = new BeautyTip();
-            data.setTitle("board " + i + " ");
-            mAdapter.add(data);
-        }
     }
 
     @Override
