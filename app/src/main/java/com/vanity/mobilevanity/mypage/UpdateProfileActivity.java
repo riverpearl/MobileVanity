@@ -2,11 +2,14 @@ package com.vanity.mobilevanity.mypage;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -54,7 +57,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
     private File profile;
 
     private final static int RC_GET_IMAGE = 100;
-    private final static int RC_PERMISSION = 200;
+    private final static int RC_PERMISSION = 500;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +67,55 @@ public class UpdateProfileActivity extends AppCompatActivity {
 
         init();
         checkPermission();
+    }
+
+    private void checkPermission() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("Runtime Permission");
+                builder.setMessage("사진을 업로드하려면 앨범 접근 승인이 필요합니다.");
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        requestPermission();
+                    }
+                });
+                builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                    @Override
+                    public void onCancel(DialogInterface dialogInterface) {
+                        finishNoPermission();
+                    }
+                });
+
+                builder.create().show();
+                return;
+            }
+            requestPermission();
+        }
+    }
+
+    private void finishNoPermission() {
+        Toast.makeText(this, "no permission", Toast.LENGTH_SHORT).show();
+        finish();
+    }
+
+    private void requestPermission() {
+        ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.READ_EXTERNAL_STORAGE}, RC_PERMISSION);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == RC_PERMISSION) {
+            if (grantResults != null && grantResults.length > 0
+                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(this, "grant permission", Toast.LENGTH_SHORT).show();
+            } else {
+                finishNoPermission();
+            }
+        }
     }
 
     private void init() {
@@ -169,19 +221,6 @@ public class UpdateProfileActivity extends AppCompatActivity {
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         intent.setType("image/*");
         startActivityForResult(intent, RC_GET_IMAGE);
-    }
-
-    private boolean checkPermission() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
-                // dialog...
-                ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.READ_EXTERNAL_STORAGE}, RC_PERMISSION);
-                return false;
-            }
-            ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.READ_EXTERNAL_STORAGE}, RC_PERMISSION);
-            return false;
-        }
-        return true;
     }
 
     @Override
