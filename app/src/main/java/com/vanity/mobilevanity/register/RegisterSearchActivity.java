@@ -26,6 +26,8 @@ public class RegisterSearchActivity extends AppCompatActivity {
 
     SearchResultAdapter resultAdapter;
 
+    public final static String TAG_SEARCH = "search";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

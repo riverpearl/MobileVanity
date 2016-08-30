@@ -8,6 +8,7 @@ import com.vanity.mobilevanity.data.NetworkResult;
 import com.vanity.mobilevanity.data.User;
 
 import java.lang.reflect.Type;
+import java.util.List;
 
 import okhttp3.HttpUrl;
 import okhttp3.Request;
@@ -15,7 +16,7 @@ import okhttp3.Request;
 /**
  * Created by Tacademy on 2016-08-29.
  */
-public class SearchCosmeticListRequest extends AbstractRequest<NetworkResult<Cosmetic>> {
+public class SearchCosmeticListRequest extends AbstractRequest<NetworkResult<List<Cosmetic>>> {
     Request mRequest;
 
     public SearchCosmeticListRequest(Context context, String brandid, String category, String item, String keyword) {
@@ -35,7 +36,7 @@ public class SearchCosmeticListRequest extends AbstractRequest<NetworkResult<Cos
 
     @Override
     protected Type getType() {
-        return new TypeToken<NetworkResult<Cosmetic>>(){}.getType();
+        return new TypeToken<NetworkResult<List<Cosmetic>>>(){}.getType();
     }
 
     @Override

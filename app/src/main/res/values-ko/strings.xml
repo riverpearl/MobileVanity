@@ -64,4 +64,11 @@
 
     <!-- actionbar_update.xml -->
     <string name="actionbar_update">수정</string>
+
+    <!-- activity_register_detail.xml -->
+    <string name="activity_register_detail_register_date">등록날짜 :</string>
+    <string name="activity_register_detail_register_year">년</string>
+    <string name="activity_register_detail_register_month">월</string>
+    <string name="activity_register_detail_register_day">일</string>
+    <string name="activity_register_detail_useby_date">사용기한 :</string>
 </resources>

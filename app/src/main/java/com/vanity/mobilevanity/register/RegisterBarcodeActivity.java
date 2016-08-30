@@ -129,6 +129,7 @@ public class RegisterBarcodeActivity extends AppCompatActivity implements ZXingS
     public void handleResult(Result result) {
         Intent intent = new Intent(RegisterBarcodeActivity.this, RegisterDetailActivity.class);
         //intent.putExtra(TAG_BARCODE, result.getText());
+        intent.putExtra(RegisterDetailActivity.TAG_REQUEST_CODE, RegisterDetailActivity.INDEX_REQUEST_BARCODE);
         intent.putExtra(TAG_BARCODE, "1234567890");
         startActivity(intent);
         finish();

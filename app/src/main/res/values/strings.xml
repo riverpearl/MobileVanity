@@ -68,4 +68,11 @@
     <!-- actionbar_update.xml -->
     <string name="actionbar_update">Update</string>
 
+    <!-- activity_register_detail.xml -->
+    <string name="activity_register_detail_register_date">Register Date :</string>
+    <string name="activity_register_detail_register_year">Y</string>
+    <string name="activity_register_detail_register_month">M</string>
+    <string name="activity_register_detail_register_day">D</string>
+    <string name="activity_register_detail_useby_date">Use By Date :</string>
+
 </resources>
