@@ -22,6 +22,7 @@ import com.vanity.mobilevanity.data.BeautyTip;
 import com.vanity.mobilevanity.data.NetworkResult;
 import com.vanity.mobilevanity.manager.NetworkManager;
 import com.vanity.mobilevanity.manager.NetworkRequest;
+import com.vanity.mobilevanity.request.BeautyTipInfoRequest;
 import com.vanity.mobilevanity.request.SearchBeautyTipRequest;
 import com.vanity.mobilevanity.view.LikeViewHolder;
 
@@ -76,8 +77,6 @@ public class BeautyTipDetailActivity extends AppCompatActivity {
         popup.showAtLocation(view, Gravity.CENTER, 0, 0);
         popup.showAtLocation(findViewById(R.id.btn_comment), Gravity.CENTER, 0, 0);
 
-//        Intent intent = new Intent(BeautyTipDetailActivity.this, BeautyTipPopUpActivity.class);
-//        startActivity(intent);
     }
 
     @Override
@@ -97,29 +96,30 @@ public class BeautyTipDetailActivity extends AppCompatActivity {
             finish();
             return true;
         }
-//        switch (item.getItemId()) {
-//            case R.id.menu_update:
-//            case R.id.menu_delete:
-//                return true;
-//        }
+
         return super.onOptionsItemSelected(item);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-//        SearchBeautyTipRequest request = new SearchBeautyTipRequest(getBaseContext(), titleView.getText().toString());
-//        NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<List<BeautyTip>>>() {
-//            @Override
-//            public void onSuccess(NetworkRequest<NetworkResult<List<BeautyTip>>> request, NetworkResult<List<BeautyTip>> result) {
-//                List<BeautyTip> tip = result.getResult();
-//            }
-//
-//            @Override
-//            public void onFail(NetworkRequest<NetworkResult<List<BeautyTip>>> request, int errorCode, String errorMessage, Throwable e) {
-//                Toast.makeText(BeautyTipDetailActivity.this, "fail", Toast.LENGTH_SHORT).show();
-//            }
-//        });
+        Intent intent = getIntent();
+        long id = intent.getLongExtra("beautytipid", 0);
+
+        BeautyTipInfoRequest request = new BeautyTipInfoRequest(getBaseContext(), ""+id);
+        NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<BeautyTip>>() {
+            @Override
+            public void onSuccess(NetworkRequest<NetworkResult<BeautyTip>> request, NetworkResult<BeautyTip> result) {
+                BeautyTip beautyTip = result.getResult();
+                titleView.setText(beautyTip.getTitle());
+                contentView.setText(beautyTip.getContent());
+            }
+
+            @Override
+            public void onFail(NetworkRequest<NetworkResult<BeautyTip>> request, int errorCode, String errorMessage, Throwable e) {
+
+            }
+        });
 
     }
 }

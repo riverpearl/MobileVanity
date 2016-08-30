@@ -6,6 +6,7 @@ package com.vanity.mobilevanity.data;
 public class NetworkResult<T> {
     private T result;
     private int code;
+    private String error;
 
     public T getResult() {
         return this.result;
@@ -13,4 +14,5 @@ public class NetworkResult<T> {
     public int getCode() {
         return this.code;
     }
+    public String getError() { return error;}
 }

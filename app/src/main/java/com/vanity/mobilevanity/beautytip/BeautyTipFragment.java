@@ -22,8 +22,16 @@ import com.vanity.mobilevanity.adapter.BeautyTipAdapter;
 import com.vanity.mobilevanity.adapter.BeautyTipSpinnerAdapter;
 import com.vanity.mobilevanity.data.BeautyTip;
 import com.vanity.mobilevanity.data.Comment;
+import com.vanity.mobilevanity.data.NetworkResult;
 import com.vanity.mobilevanity.data.User;
+import com.vanity.mobilevanity.manager.NetworkManager;
+import com.vanity.mobilevanity.manager.NetworkRequest;
 import com.vanity.mobilevanity.request.BeautyTipInfoRequest;
+import com.vanity.mobilevanity.request.SearchBeautyTipRequest;
+import com.vanity.mobilevanity.request.UpdateBeautyTipRequest;
+
+import java.io.File;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -73,7 +81,9 @@ public class BeautyTipFragment extends Fragment {
         mAdapter.setOnAdapterItemClickListener(new BeautyTipAdapter.OnAdapterItemClickListener() {
             @Override
             public void onAdapterItemClick(View view, BeautyTip beautyTip, int position) {
+                //   BeautyTipInfoRequest request = new BeautyTipInfoRequest(getContext(),mAdapter.getItemId(position))
                 Intent intent = new Intent(getContext(), BeautyTipDetailActivity.class);
+                intent.putExtra("beautytipid", beautyTip.getId() + "");
                 startActivity(intent);
             }
         });
@@ -167,9 +177,36 @@ public class BeautyTipFragment extends Fragment {
         }
     }
 
+    public static final String keyword = "keyword";
+    public static final String query = " ";
+
     @Override
     public void onStart() {
         super.onStart();
-        BeautyTipInfoRequest request = new BeautyTipInfoRequest(getContext(), )
+        String order;
+
+        if (spinner.getSelectedItemPosition() == 0)
+            order = "recent";
+        else
+            order = "popular";
+
+        SearchBeautyTipRequest request = new SearchBeautyTipRequest(getContext(), keyword, query, order);
+        NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<List<BeautyTip>>>() {
+            @Override
+            public void onSuccess(NetworkRequest<NetworkResult<List<BeautyTip>>> request, NetworkResult<List<BeautyTip>> result) {
+                List<BeautyTip> tips = result.getResult();
+
+                mAdapter.clear();
+                mAdapter.addAll(tips);
+            }
+
+            @Override
+            public void onFail(NetworkRequest<NetworkResult<List<BeautyTip>>> request, int errorCode, String errorMessage, Throwable e) {
+                Toast.makeText(getContext(), "fail", Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
+
+
 }
