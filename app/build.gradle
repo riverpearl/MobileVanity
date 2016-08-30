@@ -37,4 +37,5 @@ dependencies {
     compile 'com.google.code.gson:gson:2.7'
     compile 'com.github.franmontiel:PersistentCookieJar:v0.9.3'
     compile 'me.dm7.barcodescanner:zxing:1.9'
+    compile 'com.wdullaer:materialdatetimepicker:2.5.0'
 }

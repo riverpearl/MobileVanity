@@ -20,6 +20,7 @@ import com.vanity.mobilevanity.manager.NetworkManager;
 import com.vanity.mobilevanity.manager.NetworkRequest;
 import com.vanity.mobilevanity.request.InsertCosmeticItemRequest;
 import com.vanity.mobilevanity.request.SearchCosmeticByBarcodeRequest;
+import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -30,7 +31,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class RegisterDetailActivity extends AppCompatActivity {
+public class RegisterDetailActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
 
     @BindView(R.id.image_cosmetic)
     ImageView imageView;
@@ -96,7 +97,15 @@ public class RegisterDetailActivity extends AppCompatActivity {
 
     @OnClick(R.id.btn_edit_register)
     public void onEditClick(View view) {
+        Calendar now = Calendar.getInstance();
+        DatePickerDialog dpd = DatePickerDialog.newInstance(
+                RegisterDetailActivity.this,
+                now.get(Calendar.YEAR),
+                now.get(Calendar.MONTH),
+                now.get(Calendar.DAY_OF_MONTH)
+        );
 
+        dpd.show(getFragmentManager(), "Datepickerdialog");
     }
 
     @OnClick(R.id.btn_register)
@@ -107,7 +116,13 @@ public class RegisterDetailActivity extends AppCompatActivity {
         }
 
         Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
+        calendar.set(Calendar.YEAR, Integer.parseInt(registerYearView.getText().toString()));
+        calendar.set(Calendar.MONTH, Integer.parseInt(registerMonthView.getText().toString()) - 1);
+        calendar.set(Calendar.DATE, Integer.parseInt(registerDayView.getText().toString()));
+        calendar.set(Calendar.HOUR, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
 
         SimpleDateFormat form = new SimpleDateFormat("yyyy-MM-dd'T'kk:mm:ss.SSSZ");
         String parseDate = form.format(calendar.getTime());
@@ -198,5 +213,26 @@ public class RegisterDetailActivity extends AppCompatActivity {
 
     private void searchRequset(String cosmeticId) {
 
+    }
+
+    @Override
+    public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
+        //String date = "You picked the following date: "+dayOfMonth+"/"+(monthOfYear+1)+"/"+year;
+        //dateTextView.setText(date);
+        //Toast.makeText(RegisterDetailActivity.this, date, Toast.LENGTH_SHORT).show();
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.YEAR, year);
+        calendar.set(Calendar.MONTH, monthOfYear);
+        calendar.set(Calendar.DATE, dayOfMonth);
+
+        registerYearView.setText(year + "");
+        registerMonthView.setText((monthOfYear + 1) + "");
+        registerDayView.setText(dayOfMonth + "");
+
+        calendar.add(Calendar.DATE, cosmetic.getProduct().getUseBy());
+
+        usebyYearView.setText(calendar.get(Calendar.YEAR) + "");
+        usebyMonthView.setText((calendar.get(Calendar.MONTH) + 1) + "");
+        usebyDayView.setText(calendar.get(Calendar.DATE) + "");
     }
 }
