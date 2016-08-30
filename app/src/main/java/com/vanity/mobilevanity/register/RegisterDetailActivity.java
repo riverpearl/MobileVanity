@@ -14,11 +14,14 @@ import com.bumptech.glide.Glide;
 import com.vanity.mobilevanity.R;
 import com.vanity.mobilevanity.cosmetic.CosmeticListActivity;
 import com.vanity.mobilevanity.data.Cosmetic;
+import com.vanity.mobilevanity.data.CosmeticItem;
 import com.vanity.mobilevanity.data.NetworkResult;
 import com.vanity.mobilevanity.manager.NetworkManager;
 import com.vanity.mobilevanity.manager.NetworkRequest;
+import com.vanity.mobilevanity.request.InsertCosmeticItemRequest;
 import com.vanity.mobilevanity.request.SearchCosmeticByBarcodeRequest;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -91,9 +94,43 @@ public class RegisterDetailActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @OnClick(R.id.btn_edit_register)
+    public void onEditClick(View view) {
+
+    }
+
     @OnClick(R.id.btn_register)
     public void onRegisterClick(View view) {
-        finish();
+        if (cosmetic == null) {
+            Toast.makeText(RegisterDetailActivity.this, "올바른 접근이 아닙니다.", Toast.LENGTH_SHORT).show();
+            finish();
+        }
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+
+        SimpleDateFormat form = new SimpleDateFormat("yyyy-MM-dd'T'kk:mm:ss.SSSZ");
+        String parseDate = form.format(calendar.getTime());
+
+        String id = cosmetic.getId() + "";
+        String dateAdded = parseDate;
+        String cosmeticTerm = cosmetic.getProduct().getUseBy() + "";
+
+        InsertCosmeticItemRequest request = new InsertCosmeticItemRequest(this, id, dateAdded, cosmeticTerm);
+        NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<CosmeticItem>>() {
+            @Override
+            public void onSuccess(NetworkRequest<NetworkResult<CosmeticItem>> request, NetworkResult<CosmeticItem> result) {
+                if (result.getCode() == 1) {
+                    Toast.makeText(RegisterDetailActivity.this, "등록되었습니다.", Toast.LENGTH_SHORT).show();
+                    finish();
+                }
+            }
+
+            @Override
+            public void onFail(NetworkRequest<NetworkResult<CosmeticItem>> request, int errorCode, String errorMessage, Throwable e) {
+                Toast.makeText(RegisterDetailActivity.this, errorCode + " : " + errorMessage, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
@@ -106,7 +143,7 @@ public class RegisterDetailActivity extends AppCompatActivity {
         switch (requestCode) {
             case INDEX_REQUEST_INVALID :
             default :
-                Toast.makeText(RegisterDetailActivity.this, "Invalid Request", Toast.LENGTH_SHORT).show();
+                Toast.makeText(RegisterDetailActivity.this, "올바른 접근이 아닙니다.", Toast.LENGTH_SHORT).show();
                 finish();
                 return;
             case INDEX_REQUEST_BARCODE :
@@ -120,6 +157,9 @@ public class RegisterDetailActivity extends AppCompatActivity {
         }
     }
 
+    Cosmetic cosmetic;
+    Date date;
+
     private void barcodeRequest(String barcode) {
         SearchCosmeticByBarcodeRequest request = new SearchCosmeticByBarcodeRequest(this, barcode);
         NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<Cosmetic>>() {
@@ -128,7 +168,8 @@ public class RegisterDetailActivity extends AppCompatActivity {
                 if (result == null)
                     return;
 
-                Cosmetic cosmetic = result.getResult();
+                cosmetic = result.getResult();
+
                 Glide.with(RegisterDetailActivity.this).load(cosmetic.getImage()).into(imageView);
                 brandView.setText(cosmetic.getProduct().getBrand().getName());
                 colorCodeView.setText(cosmetic.getColorName());
@@ -136,7 +177,7 @@ public class RegisterDetailActivity extends AppCompatActivity {
                 cosmeticView.setText(cosmetic.getProduct().getName());
 
                 Calendar calendar = Calendar.getInstance();
-                Date date = new Date();
+                date = new Date();
                 calendar.setTime(date);
                 registerYearView.setText(calendar.get(Calendar.YEAR) + "");
                 registerMonthView.setText((calendar.get(Calendar.MONTH) + 1) + "");
@@ -150,6 +191,7 @@ public class RegisterDetailActivity extends AppCompatActivity {
 
             @Override
             public void onFail(NetworkRequest<NetworkResult<Cosmetic>> request, int errorCode, String errorMessage, Throwable e) {
+                Toast.makeText(RegisterDetailActivity.this, errorCode + " : " + errorMessage, Toast.LENGTH_SHORT).show();
             }
         });
     }
