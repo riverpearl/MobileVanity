@@ -8,9 +8,11 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.vanity.mobilevanity.R;
 import com.vanity.mobilevanity.SplashActivity;
 import com.vanity.mobilevanity.cosmetic.CosmeticListActivity;
@@ -35,6 +37,9 @@ public class MyPageFragment extends Fragment {
     public MyPageFragment() {
         // Required empty public constructor
     }
+
+    @BindView(R.id.image_profile)
+    ImageView profileView;
 
     @BindView(R.id.text_nickname)
     TextView nicknameView;
@@ -66,14 +71,6 @@ public class MyPageFragment extends Fragment {
     @BindView(R.id.text_tool_count)
     TextView toolCountView;
 
-    User user;
-
-    public final static int RC_MODIFY = 100;
-
-    public final static String TAG_NICKNAME = "nickname";
-    public final static String TAG_SKIN_TYPE = "skintype";
-    public final static String TAG_SKIN_TONE = "skintone";
-    public final static String TAG_GENDER = "gender";
     public final static String TAG_CATEGORY = "category";
 
     @Override
@@ -95,22 +92,7 @@ public class MyPageFragment extends Fragment {
     @OnClick(R.id.btn_modification)
     public void onModificationClick(View view) {
         Intent intent = new Intent(getContext(), UpdateProfileActivity.class);
-        intent.putExtra(TAG_NICKNAME, user.getUserNickName());
-        intent.putExtra(TAG_GENDER, user.getGender());
-        intent.putExtra(TAG_SKIN_TYPE, user.getSkinType());
-        intent.putExtra(TAG_SKIN_TONE, user.getSkinTone());
-        startActivityForResult(intent, RC_MODIFY);
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == RC_MODIFY) {
-            if (resultCode == Activity.RESULT_OK) {
-                //네트워크에서 프로필정보 받아와서 다시 세팅해줌
-            }
-        }
+        startActivity(intent);
     }
 
     @OnClick(R.id.btn_setting)
@@ -182,6 +164,7 @@ public class MyPageFragment extends Fragment {
             @Override
             public void onSuccess(NetworkRequest<NetworkResult<User>> request, NetworkResult<User> result) {
                 User user = result.getResult();
+                Glide.with(getContext()).load(user.getUserProfile()).into(profileView);
                 nicknameView.setText(user.getUserNickName());
                 setGenderView(user.getGender());
                 setSkinTypeView(user.getSkinType());
@@ -201,6 +184,13 @@ public class MyPageFragment extends Fragment {
         });
     }
 
+    private int getGender() {
+        if (genderView.getText().toString().equals("여성"))
+            return 2;
+        else
+            return 1;
+    }
+
     private void setGenderView(int gender) {
         switch (gender) {
             case 1 : default :
@@ -210,6 +200,17 @@ public class MyPageFragment extends Fragment {
                 genderView.setText("여성");
                 break;
         }
+    }
+
+    private int getSkinType() {
+        if (skinTypeView.getText().toString().equals("중성"))
+            return 2;
+        else if (skinTypeView.getText().toString().equals("지성"))
+            return 3;
+        else if (skinTypeView.getText().toString().equals("복합성"))
+            return 4;
+        else
+            return 1;
     }
 
     private void setSkinTypeView(int type) {
@@ -227,6 +228,15 @@ public class MyPageFragment extends Fragment {
                 skinTypeView.setText("복합성");
                 break;
         }
+    }
+
+    private int getSkinTone() {
+        if (skinToneView.getText().toString().equals("21호"))
+            return 2;
+        else if (skinToneView.getText().toString().equals("23호"))
+            return 3;
+        else
+            return 1;
     }
 
     private void setSkinToneView(int tone) {

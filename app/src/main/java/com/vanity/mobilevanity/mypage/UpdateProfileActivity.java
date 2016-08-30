@@ -1,19 +1,34 @@
 package com.vanity.mobilevanity.mypage;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.net.Uri;
+import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.RadioButton;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioGroup;
-import android.widget.TextView;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.vanity.mobilevanity.R;
-import com.vanity.mobilevanity.alert.AlertActivity;
+import com.vanity.mobilevanity.data.NetworkResult;
+import com.vanity.mobilevanity.data.User;
+import com.vanity.mobilevanity.manager.NetworkManager;
+import com.vanity.mobilevanity.manager.NetworkRequest;
+import com.vanity.mobilevanity.request.MyInfoRequest;
 import com.vanity.mobilevanity.request.UpdateMyInfoRequest;
+
+import java.io.File;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -21,20 +36,25 @@ import butterknife.OnClick;
 
 public class UpdateProfileActivity extends AppCompatActivity {
 
-    @BindView(R.id.text_nickname)
-    TextView nicknameView;
+    @BindView(R.id.image_profile)
+    ImageView profileView;
+
+    @BindView(R.id.edit_nickname)
+    EditText nicknameView;
 
     @BindView(R.id.group_select_gender)
     RadioGroup groupGenderView;
-
-    @BindView(R.id.radio_male)
-    RadioButton maleView;
 
     @BindView(R.id.group_select_skin_type)
     RadioGroup groupSkinTypeView;
 
     @BindView(R.id.group_select_skin_tone)
     RadioGroup groupSkinToneView;
+
+    private File profile;
+
+    private final static int RC_GET_IMAGE = 100;
+    private final static int RC_PERMISSION = 200;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,16 +63,40 @@ public class UpdateProfileActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         init();
+        checkPermission();
     }
 
     private void init() {
-        Intent intent = getIntent();
-        int gender = intent.getIntExtra(MyPageFragment.TAG_GENDER, 1);
-        int type = intent.getIntExtra(MyPageFragment.TAG_SKIN_TYPE, 1);
-        int tone = intent.getIntExtra(MyPageFragment.TAG_SKIN_TONE, 1);
+        MyInfoRequest request = new MyInfoRequest(this);
+        NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<User>>() {
+            @Override
+            public void onSuccess(NetworkRequest<NetworkResult<User>> request, NetworkResult<User> result) {
+                User user = result.getResult();
+                Glide.with(UpdateProfileActivity.this).load(user.getUserProfile()).into(profileView);
+                nicknameView.setText(user.getUserNickName());
+                setGroupGenderView(user.getGender());
+                setGroupSkinTypeView(user.getSkinType());
+                setGroupSkinToneView(user.getSkinTone());
+            }
 
-        nicknameView.setText(intent.getStringExtra(MyPageFragment.TAG_NICKNAME));
+            @Override
+            public void onFail(NetworkRequest<NetworkResult<User>> request, int errorCode, String errorMessage, Throwable e) {
+                Toast.makeText(UpdateProfileActivity.this, errorCode + " : " + errorMessage, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 
+    private int getGroupGenderView() {
+        switch (groupGenderView.getCheckedRadioButtonId()) {
+            case R.id.radio_male :
+            default :
+                return 1;
+            case R.id.radio_female :
+                return 2;
+        }
+    }
+
+    private void setGroupGenderView(int gender) {
         switch (gender) {
             case 1 :
                 groupGenderView.check(R.id.radio_male);
@@ -61,7 +105,23 @@ public class UpdateProfileActivity extends AppCompatActivity {
                 groupGenderView.check(R.id.radio_female);
                 break;
         }
+    }
 
+    private int getGroupSkinTypeView() {
+        switch (groupSkinTypeView.getCheckedRadioButtonId()) {
+            case R.id.radio_dry :
+            default :
+                return 1;
+            case R.id.radio_normal :
+                return 2;
+            case R.id.radio_oily :
+                return 3;
+            case R.id.radio_complex :
+                return 4;
+        }
+    }
+
+    private void setGroupSkinTypeView(int type) {
         switch (type) {
             case 1 :
                 groupSkinTypeView.check(R.id.radio_dry);
@@ -76,7 +136,21 @@ public class UpdateProfileActivity extends AppCompatActivity {
                 groupSkinTypeView.check(R.id.radio_complex);
                 break;
         }
+    }
 
+    private int getGroupSkinToneView() {
+        switch (groupSkinToneView.getCheckedRadioButtonId()) {
+            case R.id.radio_13 :
+            default :
+                return 1;
+            case R.id.radio_21 :
+                return 2;
+            case R.id.radio_23 :
+                return 3;
+        }
+    }
+
+    private void setGroupSkinToneView(int tone) {
         switch (tone) {
             case 1 :
                 groupSkinToneView.check(R.id.radio_13);
@@ -90,28 +164,66 @@ public class UpdateProfileActivity extends AppCompatActivity {
         }
     }
 
+    @OnClick(R.id.image_profile)
+    public void onProfileClick(View view) {
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        intent.setType("image/*");
+        startActivityForResult(intent, RC_GET_IMAGE);
+    }
+
+    private boolean checkPermission() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                // dialog...
+                ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.READ_EXTERNAL_STORAGE}, RC_PERMISSION);
+                return false;
+            }
+            ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.READ_EXTERNAL_STORAGE}, RC_PERMISSION);
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == RC_GET_IMAGE) {
+            if (resultCode == Activity.RESULT_OK) {
+                Uri uri = data.getData();
+                Cursor c = getContentResolver().query(uri, new String[] { MediaStore.Images.Media.DATA }, null, null, null);
+                c.moveToFirst();
+
+                String path = c.getString(c.getColumnIndex(MediaStore.Images.Media.DATA));
+                profile = new File(path);
+                Glide.with(this).load(profile).into(profileView);
+            }
+        }
+    }
+
     @OnClick(R.id.btn_update)
     public void onUpdateClick(View view) {
-        int gender;
-        int skinType;
-        int skinTone;
+        if (profile == null)
+            return; // default 프로필 이미지를 넣어준다
 
-        groupGenderView.get
+        String nickname = nicknameView.getText().toString();
+        String gender = getGroupGenderView() + "";
+        String skinType = getGroupSkinTypeView() + "";
+        String skinTone = getGroupSkinToneView() + "";
 
-        switch (groupGenderView.getCheckedRadioButtonId()) {
-            case R.id.radio_male :
-            default :
-                gender = 1;
-                break;
-            case R.id.radio_female :
-                gender = 2;
-                break;
-        }
-        String
+        UpdateMyInfoRequest request = new UpdateMyInfoRequest(this, profile, nickname, skinType, skinTone, gender);
+        NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<User>>() {
+            @Override
+            public void onSuccess(NetworkRequest<NetworkResult<User>> request, NetworkResult<User> result) {
+                Toast.makeText(UpdateProfileActivity.this, "회원정보가 수정되었습니다.", Toast.LENGTH_SHORT).show();
+                finish();
+            }
 
-        UpdateMyInfoRequest request =
-        setResult(Activity.RESULT_OK);
-        finish();
+            @Override
+            public void onFail(NetworkRequest<NetworkResult<User>> request, int errorCode, String errorMessage, Throwable e) {
+                Toast.makeText(UpdateProfileActivity.this, errorCode + " : " + errorMessage, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @OnClick(R.id.btn_withdraw)
