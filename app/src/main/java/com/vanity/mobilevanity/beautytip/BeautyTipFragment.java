@@ -83,7 +83,7 @@ public class BeautyTipFragment extends Fragment {
             public void onAdapterItemClick(View view, BeautyTip beautyTip, int position) {
                 //   BeautyTipInfoRequest request = new BeautyTipInfoRequest(getContext(),mAdapter.getItemId(position))
                 Intent intent = new Intent(getContext(), BeautyTipDetailActivity.class);
-                intent.putExtra("beautytipid", beautyTip.getId() + "");
+                intent.putExtra("beautytipid", beautyTip.getId());
                 startActivity(intent);
             }
         });
@@ -120,7 +120,6 @@ public class BeautyTipFragment extends Fragment {
         return view;
     }
 
-    // Spinner
     private void init() {
         String[] items = getResources().getStringArray(R.array.items);
         sAdapter.addAll(items);
@@ -132,33 +131,6 @@ public class BeautyTipFragment extends Fragment {
         startActivity(intent);
     }
 
-    //    @OnClick(R.id.btn_comment)
-//    public void onCommentClick() {
-//        AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
-//
-//        alert.setTitle("Comment");
-//        alert.setMessage("Message");
-//
-//        final EditText input = new EditText(getContext());
-//        alert.setView(input);
-//
-//        alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialogInterface, int i) {
-//                String value = input.getText().toString();
-//                value.toString();
-//            }
-//        });
-//
-//        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialogInterface, int i) {
-//
-//            }
-//        });
-//
-//        alert.show();
-//    }
     public void initData() {
         for (int i = 0; i < 4; i++) {
             BeautyTip beautyTip = new BeautyTip();
@@ -195,7 +167,6 @@ public class BeautyTipFragment extends Fragment {
             @Override
             public void onSuccess(NetworkRequest<NetworkResult<List<BeautyTip>>> request, NetworkResult<List<BeautyTip>> result) {
                 List<BeautyTip> tips = result.getResult();
-
                 mAdapter.clear();
                 mAdapter.addAll(tips);
             }
