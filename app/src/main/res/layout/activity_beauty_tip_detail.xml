@@ -52,7 +52,7 @@
             <ImageView
                 android:id="@+id/image_beauty_tip"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="300dp"
                 android:layout_alignBottom="@+id/scrollView"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"

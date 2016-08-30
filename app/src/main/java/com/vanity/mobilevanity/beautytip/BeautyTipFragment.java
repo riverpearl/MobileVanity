@@ -150,7 +150,7 @@ public class BeautyTipFragment extends Fragment {
     }
 
     public static final String keyword = "keyword";
-    public static final String query = " ";
+    public static final String query = "";
 
     @Override
     public void onStart() {
@@ -178,6 +178,4 @@ public class BeautyTipFragment extends Fragment {
         });
 
     }
-
-
 }

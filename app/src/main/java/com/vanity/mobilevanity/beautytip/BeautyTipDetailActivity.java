@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
@@ -19,6 +20,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
@@ -27,10 +29,12 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.vanity.mobilevanity.R;
 import com.vanity.mobilevanity.data.BeautyTip;
+import com.vanity.mobilevanity.data.Comment;
 import com.vanity.mobilevanity.data.NetworkResult;
 import com.vanity.mobilevanity.manager.NetworkManager;
 import com.vanity.mobilevanity.manager.NetworkRequest;
 import com.vanity.mobilevanity.request.BeautyTipInfoRequest;
+import com.vanity.mobilevanity.request.CommentListRequest;
 import com.vanity.mobilevanity.request.SearchBeautyTipRequest;
 import com.vanity.mobilevanity.view.LikeViewHolder;
 
@@ -54,7 +58,8 @@ public class BeautyTipDetailActivity extends AppCompatActivity {
     @BindView(R.id.btn_like)
     Button likeButton;
 
-    PopupWindow popup;
+    Intent intent;
+    long id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,12 +83,11 @@ public class BeautyTipDetailActivity extends AppCompatActivity {
 
     @OnClick(R.id.btn_comment)
     public void onCommentClick() {
-        View view = getLayoutInflater().inflate(R.layout.view_beauty_tip_pop_up, null);
-        view.setBackgroundColor(Color.BLUE);
-        popup = new PopupWindow(view, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        popup.setOutsideTouchable(true);
-        popup.showAtLocation(view, Gravity.CENTER, 0, 0);
-        popup.showAtLocation(findViewById(R.id.btn_comment), Gravity.CENTER, 0, 0);
+        BeautyTipCommentFragment dialog = new BeautyTipCommentFragment();
+        Bundle args = new Bundle();
+        args.putLong("commentid", id);
+        dialog.setArguments(args);
+        dialog.show(getSupportFragmentManager(), "dialog");
 
     }
 
@@ -111,10 +115,10 @@ public class BeautyTipDetailActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        Intent intent = getIntent();
-        long id = intent.getLongExtra("beautytipid", 0);
+        intent = getIntent();
+        id = intent.getLongExtra("beautytipid", 0);
 
-        BeautyTipInfoRequest request = new BeautyTipInfoRequest(getBaseContext(), ""+id);
+        BeautyTipInfoRequest request = new BeautyTipInfoRequest(getBaseContext(), "" + id);
         NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<BeautyTip>>() {
             @Override
             public void onSuccess(NetworkRequest<NetworkResult<BeautyTip>> request, NetworkResult<BeautyTip> result) {
@@ -133,6 +137,7 @@ public class BeautyTipDetailActivity extends AppCompatActivity {
             }
         });
     }
+
     private void checkPermission() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -166,8 +171,9 @@ public class BeautyTipDetailActivity extends AppCompatActivity {
     }
 
     private static final int RC_PERMISSION = 100;
+
     private void requestPermission() {
-        ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE}, RC_PERMISSION);
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, RC_PERMISSION);
     }
 
     @Override

@@ -2,8 +2,10 @@ package com.vanity.mobilevanity.view;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.vanity.mobilevanity.R;
 import com.vanity.mobilevanity.data.Comment;
 
@@ -14,11 +16,8 @@ import butterknife.ButterKnife;
  * Created by Tacademy on 2016-08-26.
  */
 public class BeautyTipPopUpViewHolder extends RecyclerView.ViewHolder {
-    @BindView(R.id.text_user_id)
-    TextView idView;
-
-    @BindView(R.id.text_user_name)
-    TextView nameView;
+    @BindView(R.id.image_userprofile)
+    ImageView userImage;
 
     @BindView(R.id.text_comment)
     TextView commentView;
@@ -32,8 +31,10 @@ public class BeautyTipPopUpViewHolder extends RecyclerView.ViewHolder {
 
     public void setPopUp(Comment item) {
         this.data = item;
-        idView.setText("" + item.getBeautyTipId());
-        nameView.setText(item.getWriter().getUserNickName());
+//        Glide.with(userImage.getContext())
+//                .load(data.getWriter().getUserProfile())
+//                .into(userImage);
+
         commentView.setText(item.getContent());
     }
 }

@@ -81,12 +81,13 @@ public class BeautyTipItemViewHolder extends RecyclerView.ViewHolder {
         commentView.setText("" + item.getCommentNum());
         readView.setText("" + item.getReadNum());
 
-//        Glide.with(userProfileView.getContext())
-//                .load(item.getUser().getUserProfile())
-//                .into(userProfileView);
-//        Glide.with(previewImageView.getContext())
-//                .load(item.getPreviewImage())
-//                .into(previewImageView);
+        Glide.with(previewImageView.getContext())
+                .load(item.getPreviewImage())
+                .into(previewImageView);
+
+        Glide.with(userProfileView.getContext())
+                .load(item.getUser().getUserProfile())
+                .into(userProfileView);
     }
 
     public interface OnBeautyTipItemClickListener {
