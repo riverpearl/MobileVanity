@@ -75,4 +75,7 @@
     <string name="activity_register_detail_register_day">D</string>
     <string name="activity_register_detail_useby_date">Use By Date :</string>
 
+    <!-- activity_register_search.xml -->
+    <string name="activity_register_search">Find Cosmetic!</string>
+
 </resources>

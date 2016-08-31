@@ -6,4 +6,58 @@
         <item>@string/list_item_02</item>
     </string-array>
 
+    <string-array name="categories">
+        <item>Category</item>
+        <item>Eye Makeup</item>
+        <item>Lip Makeup</item>
+        <item>Skincare</item>
+        <item>Face Makeup</item>
+        <item>Cleansing</item>
+        <item>Tool</item>
+    </string-array>
+    
+    <string-array name="items_eye">
+        <item>Item</item>
+        <item>Eyeshadow</item>
+        <item>Mascara</item>
+        <item>Eyeliner</item>
+        <item>Eyebrow</item>
+        <item>Primer</item>
+    </string-array>
+
+    <string-array name="items_lips">
+        <item>Item</item>
+        <item>Lipstick</item>
+        <item>Lipgloss</item>
+        <item>Liptint</item>
+        <item>Lipcare</item>
+    </string-array>
+
+    <string-array name="items_skin">
+        <item>Item</item>
+        <item>Skin/Toner</item>
+        <item>Lotion/Cream</item>
+        <item>Essense/Serum</item>
+        <item>Suncare</item>
+    </string-array>
+
+    <string-array name="items_face">
+        <item>Item</item>
+        <item>BB Cream/Foundation</item>
+        <item>Powder/Packed</item>
+        <item>Primer/Base</item>
+        <item>Cheek/Highlighter</item>
+    </string-array>
+
+    <string-array name="items_cleansing">
+        <item>Item</item>
+        <item>Makeup Cleanser</item>
+        <item>Foam Cleanser</item>
+    </string-array>
+
+    <string-array name="items_tool">
+        <item>Item</item>
+        <item>Brush</item>
+        <item>Puff</item>
+    </string-array>
 </resources>

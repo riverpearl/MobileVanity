@@ -20,6 +20,7 @@ import com.vanity.mobilevanity.manager.NetworkManager;
 import com.vanity.mobilevanity.manager.NetworkRequest;
 import com.vanity.mobilevanity.request.InsertCosmeticItemRequest;
 import com.vanity.mobilevanity.request.SearchCosmeticByBarcodeRequest;
+import com.vanity.mobilevanity.request.SearchCosmeticListRequest;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 import java.text.ParseException;
@@ -66,10 +67,7 @@ public class RegisterDetailActivity extends AppCompatActivity implements DatePic
     @BindView(R.id.text_useby_day)
     TextView usebyDayView;
 
-    public final static String TAG_REQUEST_CODE = "requestcode";
-    public final static int INDEX_REQUEST_INVALID = 0;
-    public final static int INDEX_REQUEST_BARCODE = 1;
-    public final static int INDEX_REQUEST_SEARCH = 2;
+    Cosmetic cosmetic;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,6 +104,24 @@ public class RegisterDetailActivity extends AppCompatActivity implements DatePic
         );
 
         dpd.show(getFragmentManager(), "Datepickerdialog");
+    }
+
+    @Override
+    public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.YEAR, year);
+        calendar.set(Calendar.MONTH, monthOfYear);
+        calendar.set(Calendar.DATE, dayOfMonth);
+
+        registerYearView.setText(year + "");
+        registerMonthView.setText((monthOfYear + 1) + "");
+        registerDayView.setText(dayOfMonth + "");
+
+        calendar.add(Calendar.DATE, cosmetic.getProduct().getUseBy());
+
+        usebyYearView.setText(calendar.get(Calendar.YEAR) + "");
+        usebyMonthView.setText((calendar.get(Calendar.MONTH) + 1) + "");
+        usebyDayView.setText(calendar.get(Calendar.DATE) + "");
     }
 
     @OnClick(R.id.btn_register)
@@ -153,29 +169,7 @@ public class RegisterDetailActivity extends AppCompatActivity implements DatePic
         super.onStart();
 
         Intent intent = getIntent();
-        int requestCode = intent.getIntExtra(TAG_REQUEST_CODE, 0);
-
-        switch (requestCode) {
-            case INDEX_REQUEST_INVALID :
-            default :
-                Toast.makeText(RegisterDetailActivity.this, "올바른 접근이 아닙니다.", Toast.LENGTH_SHORT).show();
-                finish();
-                return;
-            case INDEX_REQUEST_BARCODE :
-                String barcode = intent.getStringExtra(RegisterBarcodeActivity.TAG_BARCODE);
-                barcodeRequest(barcode);
-                break;
-            case INDEX_REQUEST_SEARCH :
-                String cosmeticId = intent.getStringExtra(RegisterSearchActivity.TAG_SEARCH);
-                searchRequset(cosmeticId);
-                break;
-        }
-    }
-
-    Cosmetic cosmetic;
-    Date date;
-
-    private void barcodeRequest(String barcode) {
+        String barcode = intent.getStringExtra(RegisterBarcodeActivity.TAG_BARCODE);
         SearchCosmeticByBarcodeRequest request = new SearchCosmeticByBarcodeRequest(this, barcode);
         NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<Cosmetic>>() {
             @Override
@@ -183,25 +177,10 @@ public class RegisterDetailActivity extends AppCompatActivity implements DatePic
                 if (result == null)
                     return;
 
-                cosmetic = result.getResult();
-
-                Glide.with(RegisterDetailActivity.this).load(cosmetic.getImage()).into(imageView);
-                brandView.setText(cosmetic.getProduct().getBrand().getName());
-                colorCodeView.setText(cosmetic.getColorName());
-                //colorNameView.setText(cosmetic.getColorName());
-                cosmeticView.setText(cosmetic.getProduct().getName());
-
-                Calendar calendar = Calendar.getInstance();
-                date = new Date();
-                calendar.setTime(date);
-                registerYearView.setText(calendar.get(Calendar.YEAR) + "");
-                registerMonthView.setText((calendar.get(Calendar.MONTH) + 1) + "");
-                registerDayView.setText(calendar.get(Calendar.DATE) + "");
-
-                calendar.add(Calendar.DATE, cosmetic.getProduct().getUseBy());
-                usebyYearView.setText(calendar.get(Calendar.YEAR) + "");
-                usebyMonthView.setText((calendar.get(Calendar.MONTH) + 1) + "");
-                usebyDayView.setText(calendar.get(Calendar.DATE) + "");
+                if (result.getCode() == 1) {
+                    cosmetic = result.getResult();
+                    setViewByRequestResult(cosmetic);
+                }
             }
 
             @Override
@@ -211,26 +190,21 @@ public class RegisterDetailActivity extends AppCompatActivity implements DatePic
         });
     }
 
-    private void searchRequset(String cosmeticId) {
+    private void setViewByRequestResult(Cosmetic cosmetic) {
+        Glide.with(RegisterDetailActivity.this).load(cosmetic.getImage()).into(imageView);
+        brandView.setText(cosmetic.getProduct().getBrand().getName());
+        colorCodeView.setText(cosmetic.getColorName());
+        //colorNameView.setText(cosmetic.getColorName());
+        cosmeticView.setText(cosmetic.getProduct().getName());
 
-    }
-
-    @Override
-    public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
-        //String date = "You picked the following date: "+dayOfMonth+"/"+(monthOfYear+1)+"/"+year;
-        //dateTextView.setText(date);
-        //Toast.makeText(RegisterDetailActivity.this, date, Toast.LENGTH_SHORT).show();
         Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.YEAR, year);
-        calendar.set(Calendar.MONTH, monthOfYear);
-        calendar.set(Calendar.DATE, dayOfMonth);
-
-        registerYearView.setText(year + "");
-        registerMonthView.setText((monthOfYear + 1) + "");
-        registerDayView.setText(dayOfMonth + "");
+        Date date = new Date();
+        calendar.setTime(date);
+        registerYearView.setText(calendar.get(Calendar.YEAR) + "");
+        registerMonthView.setText((calendar.get(Calendar.MONTH) + 1) + "");
+        registerDayView.setText(calendar.get(Calendar.DATE) + "");
 
         calendar.add(Calendar.DATE, cosmetic.getProduct().getUseBy());
-
         usebyYearView.setText(calendar.get(Calendar.YEAR) + "");
         usebyMonthView.setText((calendar.get(Calendar.MONTH) + 1) + "");
         usebyDayView.setText(calendar.get(Calendar.DATE) + "");

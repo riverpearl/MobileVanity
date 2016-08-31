@@ -71,4 +71,7 @@
     <string name="activity_register_detail_register_month">월</string>
     <string name="activity_register_detail_register_day">일</string>
     <string name="activity_register_detail_useby_date">사용기한 :</string>
+
+    <!-- activity_register_search.xml -->
+    <string name="activity_register_search">화장품을 찾아보세요!</string>
 </resources>

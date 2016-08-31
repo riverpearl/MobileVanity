@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="categories">
+        <item>카테고리</item>
+        <item>아이메이크업</item>
+        <item>립메이크업</item>
+        <item>스킨케어</item>
+        <item>페이스</item>
+        <item>클렌징</item>
+        <item>화장도구</item>
+    </string-array>
+
+    <string-array name="items_eye">
+        <item>품목</item>
+        <item>아이섀도우</item>
+        <item>마스카라</item>
+        <item>아이라이너</item>
+        <item>아이브로우</item>
+        <item>프라이머</item>
+    </string-array>
+
+    <string-array name="items_lips">
+        <item>품목</item>
+        <item>립스틱</item>
+        <item>립글로스</item>
+        <item>립틴트</item>
+        <item>립케어</item>
+    </string-array>
+
+    <string-array name="items_skin">
+        <item>품목</item>
+        <item>스킨/토너</item>
+        <item>로션/크림</item>
+        <item>에센스/세럼</item>
+        <item>선케어</item>
+    </string-array>
+
+    <string-array name="items_face">
+        <item>품목</item>
+        <item>비비크림/파운데이션</item>
+        <item>파우더/팩트</item>
+        <item>프라이머/베이스</item>
+        <item>치크/하이라이터</item>
+    </string-array>
+
+    <string-array name="items_cleansing">
+        <item>품목</item>
+        <item>클렌징</item>
+        <item>폼클렌징</item>
+    </string-array>
+
+    <string-array name="items_tool">
+        <item>품목</item>
+        <item>브러쉬</item>
+        <item>퍼프</item>
+    </string-array>
+</resources>
