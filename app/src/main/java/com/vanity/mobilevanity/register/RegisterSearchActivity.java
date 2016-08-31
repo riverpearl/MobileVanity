@@ -5,7 +5,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,6 +16,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.vanity.mobilevanity.R;
 import com.vanity.mobilevanity.adapter.SearchResultAdapter;
@@ -60,8 +63,6 @@ public class RegisterSearchActivity extends AppCompatActivity {
     ArrayAdapter<String> itemAdapter;
     List<Brand> brands;
 
-    public final static String TAG_BARCODE = "barcode";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,24 +71,66 @@ public class RegisterSearchActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-//        brandView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> adapterView) {
-//
-//            }
-//        });
+        brandView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                searchRequest();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        categoryView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                setItemView(position);
+                searchRequest();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        itemView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                searchRequest();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        keywordView.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                searchRequest();
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
 
         resultAdapter = new SearchResultAdapter();
         resultAdapter.setOnAdapterItemClickListener(new SearchResultAdapter.OnAdapterItemClickListener() {
             @Override
             public void onAdapterItemClick(View view, Cosmetic data, int position) {
                 Intent intent = new Intent(RegisterSearchActivity.this, RegisterDetailActivity.class);
-                intent.putExtra(TAG_BARCODE, data.getBarcode());
+                intent.putExtra(RegisterDetailActivity.TAG_BARCODE, data.getBarcode());
                 startActivity(intent);
                 finish();
             }
@@ -96,25 +139,6 @@ public class RegisterSearchActivity extends AppCompatActivity {
 
         LinearLayoutManager manager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         listView.setLayoutManager(manager);
-
-        init();
-    }
-
-    private void init() {
-        for (int i = 0; i < 10; i++) {
-            Cosmetic cosmetic = new Cosmetic();
-            Product product = new Product();
-            Brand brand = new Brand();
-
-            brand.setName("brand " + i);
-            product.setBrand(brand);
-            product.setName("product name " + i);
-            cosmetic.setProduct(product);
-            cosmetic.setColorCode("CODE" + i);
-            cosmetic.setColorName("컬러 " + i);
-
-            resultAdapter.add(cosmetic);
-        }
     }
 
     @Override
@@ -159,6 +183,7 @@ public class RegisterSearchActivity extends AppCompatActivity {
                 if (result.getCode() == 1) {
                     brands = result.getResult();
                     List<String> brandList = new ArrayList<String>();
+                    brandList.add("브랜드");
 
                     for (int i = 0; i < brands.size(); i++) {
                         brandList.add(brands.get(i).getName());
@@ -174,7 +199,7 @@ public class RegisterSearchActivity extends AppCompatActivity {
 
             @Override
             public void onFail(NetworkRequest<NetworkResult<List<Brand>>> request, int errorCode, String errorMessage, Throwable e) {
-
+                Toast.makeText(RegisterSearchActivity.this, errorCode + " : " + errorMessage, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -227,11 +252,13 @@ public class RegisterSearchActivity extends AppCompatActivity {
         int categoryPos = categoryView.getSelectedItemPosition();
         int itemPos = itemView.getSelectedItemPosition();
 
-        if (brandPos == 0 && categoryPos == 0 && itemPos == 0 && TextUtils.isEmpty(keyword))
+        if (brandPos == 0 && categoryPos == 0 && itemPos == 0 && TextUtils.isEmpty(keyword)) {
+            resultAdapter.clear();
             return;
+        }
 
         if (brandPos == 0) brandid = "";
-        else brandid = brandPos + "";
+        else brandid = (brands.get(brandPos - 1).getId()) + "";
 
         if (categoryPos == 0) category = "";
         else category = categoryPos + "";
@@ -246,13 +273,15 @@ public class RegisterSearchActivity extends AppCompatActivity {
             @Override
             public void onSuccess(NetworkRequest<NetworkResult<List<Cosmetic>>> request, NetworkResult<List<Cosmetic>> result) {
                 if (result.getCode() == 1) {
-
+                    List<Cosmetic> cosmetics = result.getResult();
+                    resultAdapter.clear();
+                    resultAdapter.addAll(cosmetics);
                 }
             }
 
             @Override
             public void onFail(NetworkRequest<NetworkResult<List<Cosmetic>>> request, int errorCode, String errorMessage, Throwable e) {
-
+                Toast.makeText(RegisterSearchActivity.this, errorCode + " : " + errorMessage, Toast.LENGTH_SHORT).show();
             }
         });
     }

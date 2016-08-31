@@ -69,6 +69,8 @@ public class RegisterDetailActivity extends AppCompatActivity implements DatePic
 
     Cosmetic cosmetic;
 
+    public final static String TAG_BARCODE = "barcode";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -169,7 +171,7 @@ public class RegisterDetailActivity extends AppCompatActivity implements DatePic
         super.onStart();
 
         Intent intent = getIntent();
-        String barcode = intent.getStringExtra(RegisterBarcodeActivity.TAG_BARCODE);
+        String barcode = intent.getStringExtra(TAG_BARCODE);
         SearchCosmeticByBarcodeRequest request = new SearchCosmeticByBarcodeRequest(this, barcode);
         NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<Cosmetic>>() {
             @Override

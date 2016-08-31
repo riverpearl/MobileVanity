@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.vanity.mobilevanity.R;
 import com.vanity.mobilevanity.data.Cosmetic;
 
@@ -49,8 +50,9 @@ public class CosmeticViewHolder extends RecyclerView.ViewHolder {
     public void setData(Cosmetic data) {
         this.data = data;
 
-        colorCodeView.setText(data.getColorCode());
-        colorNameView.setText(data.getColorName());
+        Glide.with(cosmeticView.getContext()).load(data.getImage()).into(cosmeticView);
+        colorCodeView.setText(data.getColorName());
+        //colorNameView.setText(data.getColorName());
         productNameView.setText(data.getProduct().getName());
         brandNameView.setText(data.getProduct().getBrand().getName());
     }
