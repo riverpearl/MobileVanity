@@ -1,6 +1,7 @@
 package com.vanity.mobilevanity.beautytip;
 
 import android.Manifest;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -8,6 +9,7 @@ import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -83,12 +85,12 @@ public class BeautyTipDetailActivity extends AppCompatActivity {
 
     @OnClick(R.id.btn_comment)
     public void onCommentClick() {
+        FragmentManager fm = getSupportFragmentManager();
         BeautyTipCommentFragment dialog = new BeautyTipCommentFragment();
         Bundle args = new Bundle();
         args.putLong("commentid", id);
         dialog.setArguments(args);
-        dialog.show(getSupportFragmentManager(), "dialog");
-
+        dialog.show(fm, "dialog");
     }
 
     @Override
@@ -188,5 +190,4 @@ public class BeautyTipDetailActivity extends AppCompatActivity {
             }
         }
     }
-
 }

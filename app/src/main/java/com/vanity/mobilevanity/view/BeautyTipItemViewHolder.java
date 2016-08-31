@@ -66,8 +66,15 @@ public class BeautyTipItemViewHolder extends RecyclerView.ViewHolder {
             @Override
             public void onClick(View view) {
                 if(dialogListener != null) {
-                    dialogListener.onCommentDialogClick(view, commentItem);
+                    dialogListener.onCommentDialogClick(view,item, commentItem);
                 }
+            }
+        });
+
+        likeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
             }
         });
     }
@@ -102,7 +109,7 @@ public class BeautyTipItemViewHolder extends RecyclerView.ViewHolder {
 
 
     public interface OnCommentDialogClickListener{
-        public void onCommentDialogClick(View view, Comment comment);
+        public void onCommentDialogClick(View view, BeautyTip beautyTip, Comment comment);
     }
 
     OnCommentDialogClickListener dialogListener;

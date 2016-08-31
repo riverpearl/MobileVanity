@@ -45,7 +45,6 @@ import butterknife.OnClick;
  * Created by Tacademy on 2016-08-30.
  */
 public class BeautyTipCommentFragment extends DialogFragment {
-// 마지막에 버터나이프해주기 (꼭!)
 
     @BindView(R.id.text_real)
     TextView textView;
@@ -64,7 +63,6 @@ public class BeautyTipCommentFragment extends DialogFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getShowsDialog();
     }
 
     @Nullable
@@ -91,7 +89,7 @@ public class BeautyTipCommentFragment extends DialogFragment {
             @Override
             public void onSuccess(NetworkRequest<NetworkResult<Comment>> request, NetworkResult<Comment> result) {
                 Comment comment = result.getResult();
-                Log.d("comment message", comment.getContent().toString());
+              //  Log.d("comment message", comment.getContent().toString());
             }
 
             @Override

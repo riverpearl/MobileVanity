@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:weightSum="1">
 
     <TextView
         android:layout_width="match_parent"
@@ -42,6 +43,20 @@
             android:text="User"
             android:id="@+id/text_user"
             android:gravity="center" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_weight="0.05"
+            android:layout_height="wrap_content"
+            android:text="Like"
+            android:id="@+id/btn_like" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_weight="0.24"
+            android:layout_height="wrap_content"
+            android:text="Comment"
+            android:id="@+id/btn_comment" />
     </LinearLayout>
 
     <LinearLayout
@@ -101,19 +116,7 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
-    <Button
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:layout_height="wrap_content"
-        android:text="Like"
-        android:id="@+id/btn_like" />
 
-    <Button
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:layout_height="wrap_content"
-        android:text="Comment"
-        android:id="@+id/btn_comment" />
 </LinearLayout>
 
 

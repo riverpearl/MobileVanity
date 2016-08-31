@@ -55,8 +55,9 @@ public class BeautyTipAdapter extends RecyclerView.Adapter<BeautyTipItemViewHold
         return items.size();
     }
 
+
     public interface OnAdapterCommentClickListener {
-        public void onAdapterCommentClick(View view, Comment comment);
+        public void onAdapterCommentClick(View view, BeautyTip beautyTip, Comment comment);
     }
 
     OnAdapterCommentClickListener dialogListener;
@@ -66,9 +67,9 @@ public class BeautyTipAdapter extends RecyclerView.Adapter<BeautyTipItemViewHold
     }
 
     @Override
-    public void onCommentDialogClick(View view, Comment comment) {
+    public void onCommentDialogClick(View view, BeautyTip beautyTip, Comment comment) {
         if(dialogListener != null) {
-            dialogListener.onAdapterCommentClick(view, comment);
+            dialogListener.onAdapterCommentClick(view, beautyTip, comment);
         }
     }
 

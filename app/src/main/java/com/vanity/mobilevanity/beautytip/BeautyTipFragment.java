@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -50,6 +51,9 @@ public class BeautyTipFragment extends Fragment {
     RecyclerView listView;
     BeautyTipAdapter mAdapter;
 
+    Intent intent;
+    long id;
+
     public BeautyTipFragment() {
         // Required empty public constructor
     }
@@ -90,24 +94,13 @@ public class BeautyTipFragment extends Fragment {
 
         mAdapter.setOnAdapterCommentClickListener(new BeautyTipAdapter.OnAdapterCommentClickListener() {
             @Override
-            public void onAdapterCommentClick(View view, Comment comment) {
-//                AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
-//                builder.setIcon(android.R.drawable.ic_btn_speak_now);
-//                builder.setTitle("Comment");
-//                builder.setMessage("Message");
-//
-//                final EditText input = new EditText(view.getContext());
-//                builder.setView(input);
-//
-//                builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialogInterface, int i) {
-//                        String value = input.getText().toString();
-//                        value.toString();
-//                    }
-//                });
-//                builder.show();
-                Toast.makeText(getContext(), "djdj", Toast.LENGTH_SHORT).show();
+            public void onAdapterCommentClick(View view, BeautyTip beautyTip, Comment comment) {
+                FragmentManager fm = getFragmentManager();
+                BeautyTipCommentFragment dialog = new BeautyTipCommentFragment();
+                Bundle args = new Bundle();
+                args.putLong("commentid", beautyTip.getId());
+                dialog.setArguments(args);
+                dialog.show(fm, "dialog");
             }
         });
 
