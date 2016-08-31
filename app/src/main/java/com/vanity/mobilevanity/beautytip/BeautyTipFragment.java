@@ -30,6 +30,7 @@ import com.vanity.mobilevanity.manager.NetworkRequest;
 import com.vanity.mobilevanity.request.BeautyTipInfoRequest;
 import com.vanity.mobilevanity.request.SearchBeautyTipRequest;
 import com.vanity.mobilevanity.request.UpdateBeautyTipRequest;
+import com.vanity.mobilevanity.request.UpdateLikeRequest;
 
 import java.io.File;
 import java.util.List;
@@ -104,17 +105,40 @@ public class BeautyTipFragment extends Fragment {
             }
         });
 
+        mAdapter.setOnAdapterLikeClickListener(new BeautyTipAdapter.OnAdapterLikeClickListener() {
+            @Override
+            public void onAdapterLikeClick(View view, BeautyTip beautyTip, final int position) {
+                String like;
+                if(beautyTip.isLike()) like = "false";
+                else like="true";
+
+                UpdateLikeRequest likeRequest = new UpdateLikeRequest(getContext(), "" + beautyTip.getId(), like);
+                NetworkManager.getInstance().getNetworkData(likeRequest, new NetworkManager.OnResultListener<NetworkResult<BeautyTip>>() {
+                    @Override
+                    public void onSuccess(NetworkRequest<NetworkResult<BeautyTip>> request, NetworkResult<BeautyTip> result) {
+                        BeautyTip beauty = result.getResult();
+                        mAdapter.set(position, beauty);
+                    }
+
+                    @Override
+                    public void onFail(NetworkRequest<NetworkResult<BeautyTip>> request, int errorCode, String errorMessage, Throwable e) {
+                        Toast.makeText(getContext(), "like fail", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
+
 
         GridLayoutManager manager = new GridLayoutManager(getContext(), 2, GridLayoutManager.VERTICAL, false);
         listView.setLayoutManager(manager);
 
         init();
-        initData();
+        //  initData();
         return view;
     }
 
     private void init() {
-        String[] items = getResources().getStringArray(R.array.items);
+        String[] items = getResources().getStringArray(R.array.beautytip_sort);
         sAdapter.addAll(items);
     }
 

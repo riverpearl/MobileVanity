@@ -21,6 +21,7 @@ public class UpdateLikeRequest extends AbstractRequest<NetworkResult<BeautyTip>>
     public UpdateLikeRequest(Context context, String beautytipid, String like) {
         HttpUrl url = getBaseUrlBuilder()
                 .addPathSegment("updatelike")
+                .addQueryParameter("beautytipid", beautytipid)
                 .addQueryParameter("like", like)
                 .build();
 

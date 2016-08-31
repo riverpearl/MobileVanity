@@ -17,7 +17,7 @@ import java.util.List;
  * Created by Tacademy on 2016-08-25.
  */
 public class BeautyTipAdapter extends RecyclerView.Adapter<BeautyTipItemViewHolder>
-        implements BeautyTipItemViewHolder.OnBeautyTipItemClickListener, BeautyTipItemViewHolder.OnCommentDialogClickListener {
+        implements BeautyTipItemViewHolder.OnBeautyTipItemClickListener, BeautyTipItemViewHolder.OnCommentDialogClickListener, BeautyTipItemViewHolder.OnLikeClickListener {
     List<BeautyTip> items = new ArrayList<>();
 
     public void clear() {
@@ -35,6 +35,11 @@ public class BeautyTipAdapter extends RecyclerView.Adapter<BeautyTipItemViewHold
         notifyDataSetChanged();
     }
 
+    public void set(int position, BeautyTip b) {
+        items.set(position, b);
+        notifyDataSetChanged();
+    }
+
 
     @Override
     public BeautyTipItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -48,11 +53,29 @@ public class BeautyTipAdapter extends RecyclerView.Adapter<BeautyTipItemViewHold
         holder.setBeautyTipItem(items.get(position));
         holder.setOnBeautyTipItemClickListener(this);
         holder.setOnCommentDialogClickListner(this);
+        holder.setOnLikeClickListener(this);
     }
 
     @Override
     public int getItemCount() {
         return items.size();
+    }
+
+    public interface OnAdapterLikeClickListener{
+        public void onAdapterLikeClick(View view, BeautyTip beautyTip, int position);
+    }
+
+    OnAdapterLikeClickListener likeListener;
+
+    public void setOnAdapterLikeClickListener(OnAdapterLikeClickListener likeListener) {
+        this.likeListener = likeListener;
+    }
+
+    @Override
+    public void onLikeClick(View view, BeautyTip beautyTip, int position) {
+        if(likeListener != null) {
+            likeListener.onAdapterLikeClick(view, beautyTip, position);
+        }
     }
 
 

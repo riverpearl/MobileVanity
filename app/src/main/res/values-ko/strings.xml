@@ -56,8 +56,8 @@
     <string name="activity_cosmetic_detail_sale_information">세일정보</string>
 
     <!-- BeautyTipFragment의 Spinner부분 -->
-    <string name="list_item_01">최신순</string>
-    <string name="list_item_02">인기순</string>
+    <string name="latest">최신순</string>
+    <string name="popularity">인기순</string>
 
     <!-- actionbar_delete.xml -->
     <string name="actionbar_delete">삭제</string>

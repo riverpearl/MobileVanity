@@ -30,6 +30,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.vanity.mobilevanity.R;
+import com.vanity.mobilevanity.adapter.BeautyTipAdapter;
 import com.vanity.mobilevanity.data.BeautyTip;
 import com.vanity.mobilevanity.data.Comment;
 import com.vanity.mobilevanity.data.NetworkResult;
@@ -37,7 +38,9 @@ import com.vanity.mobilevanity.manager.NetworkManager;
 import com.vanity.mobilevanity.manager.NetworkRequest;
 import com.vanity.mobilevanity.request.BeautyTipInfoRequest;
 import com.vanity.mobilevanity.request.CommentListRequest;
+import com.vanity.mobilevanity.request.LikeBeautyTipListRequest;
 import com.vanity.mobilevanity.request.SearchBeautyTipRequest;
+import com.vanity.mobilevanity.request.UpdateLikeRequest;
 import com.vanity.mobilevanity.view.LikeViewHolder;
 
 import java.util.List;
@@ -68,6 +71,7 @@ public class BeautyTipDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_beauty_tip_detail);
         ButterKnife.bind(this);
+
     }
 
     @Override
@@ -78,9 +82,29 @@ public class BeautyTipDetailActivity extends AppCompatActivity {
         return true;
     }
 
+
     @OnClick(R.id.btn_like)
     public void onLikeClick() {
-        likeButton.setBackgroundColor(Color.YELLOW);
+        String like;
+        if (likeButton.isPressed()){
+            likeButton.setBackgroundColor(Color.YELLOW);
+            like = "false";}
+        else likeButton.setBackgroundColor(Color.BLUE);
+            like = "true";
+
+        UpdateLikeRequest request = new UpdateLikeRequest(getBaseContext(), "" + id, like);
+        NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<BeautyTip>>() {
+            @Override
+            public void onSuccess(NetworkRequest<NetworkResult<BeautyTip>> request, NetworkResult<BeautyTip> result) {
+                BeautyTip beautyTip = result.getResult();
+
+            }
+
+            @Override
+            public void onFail(NetworkRequest<NetworkResult<BeautyTip>> request, int errorCode, String errorMessage, Throwable e) {
+                Toast.makeText(BeautyTipDetailActivity.this, "fail", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @OnClick(R.id.btn_comment)

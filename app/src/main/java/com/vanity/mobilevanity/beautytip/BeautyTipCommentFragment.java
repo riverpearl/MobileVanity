@@ -89,12 +89,11 @@ public class BeautyTipCommentFragment extends DialogFragment {
             @Override
             public void onSuccess(NetworkRequest<NetworkResult<Comment>> request, NetworkResult<Comment> result) {
                 Comment comment = result.getResult();
-              //  Log.d("comment message", comment.getContent().toString());
             }
 
             @Override
             public void onFail(NetworkRequest<NetworkResult<Comment>> request, int errorCode, String errorMessage, Throwable e) {
-
+                Toast.makeText(getContext(), "fail", Toast.LENGTH_SHORT).show();
             }
         });
     }

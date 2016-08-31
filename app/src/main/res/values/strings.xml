@@ -59,8 +59,8 @@
     <string name="activity_update_profile_23">23</string>
 
     <!-- BeautyTipFragment의 Spinner부분 -->
-    <string name="list_item_01">latest</string>
-    <string name="list_item_02">popularity</string>
+    <string name="latest">latest</string>
+    <string name="popularity">popularity</string>
 
     <!-- actionbar_delete.xml -->
     <string name="actionbar_delete">Delete</string>

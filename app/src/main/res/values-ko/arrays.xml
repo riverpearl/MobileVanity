@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string-array name="beautytip_sort">
+        <item>@string/latest</item>
+        <item>@string/popularity</item>
+    </string-array>
+
     <string-array name="categories">
         <item>카테고리</item>
         <item>아이메이크업</item>
