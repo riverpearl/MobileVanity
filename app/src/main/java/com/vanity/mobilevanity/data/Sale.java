@@ -1,13 +1,18 @@
 package com.vanity.mobilevanity.data;
 
+import java.util.Date;
+
 /**
  * Created by Tacademy on 2016-08-25.
  */
 public class Sale {
     private long id;
-    private Brand brand;
+    private Product product;
     private String endDay;
     private String startDay;
+    private String title;
+    private String link;
+    private String banner;
 
     public long getId() {
         return id;
@@ -17,12 +22,12 @@ public class Sale {
         this.id = id;
     }
 
-    public Brand getBrand() {
-        return brand;
+    public Product getProduct() {
+        return product;
     }
 
-    public void setBrand(Brand brand) {
-        this.brand = brand;
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
     public String getEndDay() {
@@ -39,5 +44,29 @@ public class Sale {
 
     public void setStartDay(String startDay) {
         this.startDay = startDay;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getLink() {
+        return link;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
+    }
+
+    public String getBanner() {
+        return banner;
+    }
+
+    public void setBanner(String banner) {
+        this.banner = banner;
     }
 }

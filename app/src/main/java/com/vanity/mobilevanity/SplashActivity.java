@@ -35,9 +35,11 @@ public class SplashActivity extends AppCompatActivity {
         NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<User>>() {
             @Override
             public void onSuccess(NetworkRequest<NetworkResult<User>> request, NetworkResult<User> result) {
-                Intent intent = new Intent(SplashActivity.this, MainActivity.class);
-                startActivity(intent);
-                finish();
+                if (result.getCode() == 1) {
+                    Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
             }
 
             @Override

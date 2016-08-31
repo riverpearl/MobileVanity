@@ -4,8 +4,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.vanity.mobilevanity.R;
-import com.vanity.mobilevanity.data.BannerData;
+import com.vanity.mobilevanity.data.Sale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -18,7 +19,7 @@ public class BannerViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.image_banner)
     ImageView bannerView;
 
-    private BannerData data;
+    private Sale data;
 
     public BannerViewHolder(View itemView) {
         super(itemView);
@@ -33,13 +34,14 @@ public class BannerViewHolder extends RecyclerView.ViewHolder {
         });
     }
 
-    public void setData(BannerData data) {
+    public void setData(Sale data) {
         this.data = data;
-        //bannerView.setImageDrawable(data.getImage());
+
+        Glide.with(bannerView.getContext()).load(data.getBanner()).into(bannerView);
     }
 
     public interface OnBannerItemClickListener {
-        public void onBannerItemClick(View view, BannerData data, int position);
+        public void onBannerItemClick(View view, Sale data, int position);
     }
 
     OnBannerItemClickListener mListener;

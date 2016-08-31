@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.vanity.mobilevanity.R;
-import com.vanity.mobilevanity.data.BannerData;
+import com.vanity.mobilevanity.data.Sale;
 import com.vanity.mobilevanity.view.BannerViewHolder;
 
 import java.util.ArrayList;
@@ -15,23 +15,23 @@ import java.util.List;
 /**
  * Created by Tacademy on 2016-08-25.
  */
-public class BannerAdapter extends RecyclerView.Adapter<BannerViewHolder>
+public class SaleAdapter extends RecyclerView.Adapter<BannerViewHolder>
     implements BannerViewHolder.OnBannerItemClickListener {
 
-    List<BannerData> items = new ArrayList<>();
+    List<Sale> items = new ArrayList<>();
 
     public void clear() {
         items.clear();
         notifyDataSetChanged();
     }
 
-    public void add(BannerData item) {
+    public void add(Sale item) {
         items.add(item);
         notifyDataSetChanged();
     }
 
-    public void addAll(List<BannerData> items) {
-        items.addAll(items);
+    public void addAll(List<Sale> items) {
+        this.items.addAll(items);
         notifyDataSetChanged();
     }
 
@@ -54,7 +54,7 @@ public class BannerAdapter extends RecyclerView.Adapter<BannerViewHolder>
     }
 
     public interface OnAdapterItemClickListener {
-        public void onAdapterItemClick(View view, BannerData data, int position);
+        public void onAdapterItemClick(View view, Sale data, int position);
     }
 
     OnAdapterItemClickListener mListener;
@@ -63,7 +63,7 @@ public class BannerAdapter extends RecyclerView.Adapter<BannerViewHolder>
     }
 
     @Override
-    public void onBannerItemClick(View view, BannerData data, int position) {
+    public void onBannerItemClick(View view, Sale data, int position) {
         if (mListener != null)
             mListener.onAdapterItemClick(view, data, position);
     }

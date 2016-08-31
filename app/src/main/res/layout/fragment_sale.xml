@@ -16,6 +16,38 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text=""
+                android:id="@+id/text_month"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true" />
+
+            <com.github.sundeepk.compactcalendarview.CompactCalendarView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/compactcalendar_view"
+                android:layout_height="250dp"
+                android:layout_width="match_parent"
+                android:paddingRight="10dp"
+                android:paddingLeft="10dp"
+                android:layout_below="@+id/text_month"
+                app:compactCalendarTextSize="16sp"
+                app:compactCalendarBackgroundColor="@android:color/transparent"
+                app:compactCalendarTextColor="#000000"
+                app:compactCalendarCurrentSelectedDayBackgroundColor="#E57373"
+                app:compactCalendarCurrentDayBackgroundColor="#B71C1C" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="sale info."
+                android:id="@+id/text_sale_info"
+                android:layout_below="@+id/compactcalendar_view"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+
             <android.support.v7.widget.RecyclerView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -23,23 +55,6 @@
                 android:layout_below="@+id/text_sale_info"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true" />
-
-            <CalendarView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/calendarView"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="sale info."
-                android:id="@+id/text_sale_info"
-                android:layout_below="@+id/calendarView"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
-
 
         </RelativeLayout>
     </ScrollView>
