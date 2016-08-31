@@ -31,11 +31,11 @@ public class SearchBeautyTipRequest extends AbstractRequest<NetworkResult<List<B
                 .build();
     }
 
-    public SearchBeautyTipRequest(Context context, String type, String order, String query) {
+    public SearchBeautyTipRequest(Context context, String type, String query, String order) {
         HttpUrl url = getBaseUrlBuilder()
                 .addPathSegment("searchbeautytip")
                 .addQueryParameter("type", type)
-                .addQueryParameter("query", " ")
+                .addQueryParameter("query", query)
                 .addQueryParameter("order", order)
                 .build();
 

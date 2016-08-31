@@ -9,10 +9,18 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.vanity.mobilevanity.setting.AccessTermActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="AccessTermActivity"
-        android:id="@+id/textView" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/scrollView3"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" >
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="New Text"
+            android:id="@+id/text_accessterm" />
+    </ScrollView>
 </RelativeLayout>
