@@ -55,7 +55,6 @@ public class AlertActivity extends AppCompatActivity {
                 } else if (item instanceof CosmeticItem) {
                     Intent intent = new Intent(AlertActivity.this, CosmeticDetailActivity.class);
                     startActivity(intent);
-
                 }
             }
         });
