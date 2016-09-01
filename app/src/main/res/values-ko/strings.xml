@@ -45,6 +45,7 @@
     <string name="activity_update_profile_23">23호</string>
 
     <!--activity_cosmetic_detail-->
+    <string name="activity_cosmetic_detail_unit">용량</string>
     <string name="activity_cosmetic_detail_register">등록날짜</string>
     <string name="activity_cosmetic_detail_register_year">년</string>
     <string name="activity_cosmetic_detail_register_month">월</string>
@@ -54,6 +55,7 @@
     <string name="activity_cosmetic_detail_usebydate_month">월</string>
     <string name="activity_cosmetic_detail_usebydate_date">일</string>
     <string name="activity_cosmetic_detail_sale_information">세일정보</string>
+    <string name="activity_cosmetic_detail_sale_text">까지 세일이 진행됩니다</string>
 
     <!-- BeautyTipFragment의 Spinner부분 -->
     <string name="latest">최신순</string>

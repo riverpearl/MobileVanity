@@ -7,27 +7,30 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TabHost;
+import android.widget.Toast;
 
 import com.vanity.mobilevanity.R;
 import com.vanity.mobilevanity.adapter.CosmeticAdapter;
 import com.vanity.mobilevanity.data.Brand;
 import com.vanity.mobilevanity.data.Constant;
 import com.vanity.mobilevanity.data.Cosmetic;
+import com.vanity.mobilevanity.data.CosmeticItem;
 import com.vanity.mobilevanity.data.NetworkResult;
 import com.vanity.mobilevanity.data.Product;
 import com.vanity.mobilevanity.manager.NetworkManager;
 import com.vanity.mobilevanity.manager.NetworkRequest;
 import com.vanity.mobilevanity.register.RegisterBarcodeActivity;
+import com.vanity.mobilevanity.request.CosmeticItemsRequest;
 import com.vanity.mobilevanity.request.CosmeticListRequest;
-
+import com.vanity.mobilevanity.request.SearchCosmeticListRequest;
 import java.util.ArrayList;
 import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -36,13 +39,10 @@ public class CosmeticListActivity extends AppCompatActivity {
     @BindView(R.id.tabs)
     TabLayout tabs;
 
-    TabHost tabHost;
-
     @BindView(R.id.rv_cosmetic)
     RecyclerView listView;
 
     CosmeticAdapter mAdapter;
-    long id;
 
     @Override
 
@@ -52,13 +52,14 @@ public class CosmeticListActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         Intent intent = getIntent();
-        int category = intent.getIntExtra(HomeFragment.TAG_CATEGORY, 0);
+        final int category = intent.getIntExtra(HomeFragment.TAG_CATEGORY, 0);
 
         mAdapter = new CosmeticAdapter();
         mAdapter.setOnAdapterItemClickListener(new CosmeticAdapter.OnAdapterItemClickListener() {
             @Override
-            public void onAdapterItemClick(View view, Cosmetic data, int position) {
+            public void onAdapterItemClick(View view, CosmeticItem data, int position) {
                 Intent intent = new Intent(CosmeticListActivity.this, CosmeticDetailActivity.class);
+                intent.putExtra("productid", data.getCosmetic().getProduct().getId());
                 startActivity(intent);
             }
         });
@@ -67,14 +68,12 @@ public class CosmeticListActivity extends AppCompatActivity {
         LinearLayoutManager manager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         listView.setLayoutManager(manager);
 
-        init();
-
         initTab(category);
         tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 mAdapter.clear();
-                init();
+                onCosmetic(category);
             }
 
             @Override
@@ -85,15 +84,31 @@ public class CosmeticListActivity extends AppCompatActivity {
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
                 mAdapter.clear();
-                init();
+                onCosmetic(category);
             }
         });
+    }
 
+    public void onCosmetic(int category) {
+        int tabPos = tabs.getSelectedTabPosition() + 1;
+
+        CosmeticItemsRequest request = new CosmeticItemsRequest(CosmeticListActivity.this, ""+category, ""+tabPos);
+        NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<List<CosmeticItem>>>() {
+            @Override
+            public void onSuccess(NetworkRequest<NetworkResult<List<CosmeticItem>>> request, NetworkResult<List<CosmeticItem>> result) {
+                List<CosmeticItem> cosmetic = result.getResult();
+                mAdapter.addAll(cosmetic);
+            }
+
+            @Override
+            public void onFail(NetworkRequest<NetworkResult<List<CosmeticItem>>> request, int errorCode, String errorMessage, Throwable e) {
+                Toast.makeText(CosmeticListActivity.this, "fail", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void initTab(int category) {
         List<String> tabName = new ArrayList<>();
-
         switch (category) {
             case Constant.INDEX_CATEGORY_EYE:
                 tabName.add("섀도우");
@@ -101,7 +116,6 @@ public class CosmeticListActivity extends AppCompatActivity {
                 tabName.add("아이라이너");
                 tabName.add("아이브로우");
                 tabName.add("프라이머");
-
                 break;
 
             case Constant.INDEX_CATEGORY_LIP: {
@@ -109,7 +123,6 @@ public class CosmeticListActivity extends AppCompatActivity {
                 tabName.add("립글로스");
                 tabName.add("립틴트");
                 tabName.add("립케어");
-
                 break;
             }
             case Constant.INDEX_CATEGORY_SKIN: {
@@ -142,27 +155,6 @@ public class CosmeticListActivity extends AppCompatActivity {
             tabs.addTab(tabs.newTab().setText(tabName.get(i)).setTag(tabName.get(i)));
         }
 
-    }
-
-    public void init() {
-        Cosmetic cosmetic = new Cosmetic();
-        Product product = new Product();
-        Brand brand = new Brand();
-
-        cosmetic.setColorName("Color Name");
-        cosmetic.setColorCode("COLOR01");
-
-        brand.setName("Brand");
-        product.setBrand(brand);
-        cosmetic.setProduct(product);
-
-        product.setName("Product");
-        cosmetic.setProduct(product);
-
-        product.setUseBy(1);
-        cosmetic.setProduct(product);
-
-        mAdapter.add(cosmetic);
     }
 
     @OnClick(R.id.fab_add_cosmetic)

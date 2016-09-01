@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.vanity.mobilevanity.R;
-import com.vanity.mobilevanity.data.Cosmetic;
+import com.vanity.mobilevanity.data.CosmeticItem;
 import com.vanity.mobilevanity.view.MyCosmeticViewHolder;
 
 import java.util.ArrayList;
@@ -16,20 +16,20 @@ import java.util.List;
  * Created by Tacademy on 2016-08-26.
  */
 public class CosmeticAdapter extends RecyclerView.Adapter<MyCosmeticViewHolder> implements MyCosmeticViewHolder.OnCosmeticListItemClickListener {
-    List<Cosmetic> items = new ArrayList<>();
+    List<CosmeticItem> items = new ArrayList<>();
 
     public void clear() {
         items.clear();
         notifyDataSetChanged();
     }
 
-    public void add(Cosmetic item) {
+    public void add(CosmeticItem item) {
         items.add(item);
         notifyDataSetChanged();
     }
 
-    public void addAll(List<Cosmetic> items) {
-        items.addAll(items);
+    public void addAll(List<CosmeticItem> items) {
+        this.items.addAll(items);
         notifyDataSetChanged();
     }
 
@@ -52,7 +52,7 @@ public class CosmeticAdapter extends RecyclerView.Adapter<MyCosmeticViewHolder> 
     }
 
     public interface OnAdapterItemClickListener {
-        public void onAdapterItemClick(View view, Cosmetic data, int position);
+        public void onAdapterItemClick(View view, CosmeticItem data, int position);
     }
 
     OnAdapterItemClickListener mListener;
@@ -62,7 +62,7 @@ public class CosmeticAdapter extends RecyclerView.Adapter<MyCosmeticViewHolder> 
     }
 
     @Override
-    public void onCosmeticListItemClick(View view, Cosmetic data, int position) {
+    public void onCosmeticListItemClick(View view, CosmeticItem data, int position) {
         if (mListener != null)
             mListener.onAdapterItemClick(view, data, position);
     }

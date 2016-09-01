@@ -60,7 +60,6 @@ public class BeautyTipFragment extends Fragment {
         // Required empty public constructor
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -155,7 +154,7 @@ public class BeautyTipFragment extends Fragment {
         listView.setLayoutManager(manager);
 
         init();
-        //  initData();
+
         return view;
     }
 
@@ -168,24 +167,6 @@ public class BeautyTipFragment extends Fragment {
     public void onSetClick(View view) {
         Intent intent = new Intent(getContext(), BeautyTipWriteActivity.class);
         startActivity(intent);
-    }
-
-    public void initData() {
-        for (int i = 0; i < 4; i++) {
-            BeautyTip beautyTip = new BeautyTip();
-            User user = new User();
-
-            beautyTip.setTitle("Title");
-            beautyTip.setPreviewImage("PreviewImage");
-            beautyTip.setContent("Content");
-            user.setUserNickName("NickName");
-            beautyTip.setUser(user);
-            beautyTip.setLikeCount(5);
-            beautyTip.setCommentNum(10);
-            beautyTip.setReadNum(15);
-
-            mAdapter.add(beautyTip);
-        }
     }
 
     public static final String keyword = "keyword";

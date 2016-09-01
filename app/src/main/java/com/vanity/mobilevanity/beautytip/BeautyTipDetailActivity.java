@@ -38,6 +38,7 @@ import com.vanity.mobilevanity.manager.NetworkManager;
 import com.vanity.mobilevanity.manager.NetworkRequest;
 import com.vanity.mobilevanity.request.BeautyTipInfoRequest;
 import com.vanity.mobilevanity.request.CommentListRequest;
+import com.vanity.mobilevanity.request.DeleteBeautyTipRequest;
 import com.vanity.mobilevanity.request.LikeBeautyTipListRequest;
 import com.vanity.mobilevanity.request.SearchBeautyTipRequest;
 import com.vanity.mobilevanity.request.UpdateLikeRequest;
@@ -131,7 +132,19 @@ public class BeautyTipDetailActivity extends AppCompatActivity {
         }
 
         if (item.getItemId() == R.id.menu_delete) {
-            finish();
+            DeleteBeautyTipRequest request = new DeleteBeautyTipRequest(getBaseContext(), ""+id);
+            NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<BeautyTip>>() {
+                @Override
+                public void onSuccess(NetworkRequest<NetworkResult<BeautyTip>> request, NetworkResult<BeautyTip> result) {
+                    BeautyTip beautyTip = result.getResult();
+                    finish();
+                }
+
+                @Override
+                public void onFail(NetworkRequest<NetworkResult<BeautyTip>> request, int errorCode, String errorMessage, Throwable e) {
+                    Toast.makeText(BeautyTipDetailActivity.this, "fail", Toast.LENGTH_SHORT).show();
+                }
+            });
             return true;
         }
 

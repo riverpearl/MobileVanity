@@ -5,8 +5,10 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.vanity.mobilevanity.R;
 import com.vanity.mobilevanity.data.Cosmetic;
+import com.vanity.mobilevanity.data.CosmeticItem;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -37,7 +39,7 @@ public class MyCosmeticViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.text_dday)
     TextView ddayView;
 
-    private Cosmetic data;
+    private CosmeticItem data;
 
     public MyCosmeticViewHolder(View itemView) {
         super(itemView);
@@ -52,18 +54,21 @@ public class MyCosmeticViewHolder extends RecyclerView.ViewHolder {
         });
     }
 
-    public void setCosmeticList(Cosmetic item) {
+    public void setCosmeticList(CosmeticItem item) {
         this.data = item;
 
-        colorCodeView.setText(item.getColorCode());
-        colorNameView.setText(item.getColorName());
-        productNameView.setText(item.getProduct().getName());
-        brandNameView.setText(item.getProduct().getBrand().getName());
-        ddayView.setText(""+item.getProduct().getUseBy());
+        colorCodeView.setText(item.getCosmetic().getColorCode());
+        colorNameView.setText(item.getCosmetic().getColorName());
+        productNameView.setText(item.getCosmetic().getProduct().getName());
+        brandNameView.setText(item.getCosmetic().getProduct().getBrand().getName());
+        ddayView.setText("" + item.getCosmetic().getProduct().getUseBy());
+        Glide.with(cosmeticView.getContext())
+                .load(item.getCosmetic().getImage())
+                .into(cosmeticView);
     }
 
     public interface OnCosmeticListItemClickListener {
-        public void onCosmeticListItemClick(View view, Cosmetic data, int position);
+        public void onCosmeticListItemClick(View view, CosmeticItem data, int position);
     }
 
     OnCosmeticListItemClickListener mListener;
