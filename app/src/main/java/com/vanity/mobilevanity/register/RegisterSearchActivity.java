@@ -63,6 +63,13 @@ public class RegisterSearchActivity extends AppCompatActivity {
     ArrayAdapter<String> itemAdapter;
     List<Brand> brands;
 
+    public final static String TAG_IMAGE = "image";
+    public final static String TAG_BRAND = "brand";
+    public final static String TAG_COLOR_CODE = "colorcode";
+    public final static String TAG_COLOR_NAME = "colorname";
+    public final static String TAG_NAME = "name";
+    public final static String TAG_USEBY = "useby";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -130,7 +137,13 @@ public class RegisterSearchActivity extends AppCompatActivity {
             @Override
             public void onAdapterItemClick(View view, Cosmetic data, int position) {
                 Intent intent = new Intent(RegisterSearchActivity.this, RegisterDetailActivity.class);
-                intent.putExtra(RegisterDetailActivity.TAG_BARCODE, data.getBarcode());
+                intent.putExtra(RegisterDetailActivity.TAG_SEARCH_TYPE, RegisterDetailActivity.INDEX_TYPE_SEARCH);
+                intent.putExtra(TAG_IMAGE, data.getImage());
+                intent.putExtra(TAG_COLOR_CODE, data.getColorCode());
+                intent.putExtra(TAG_COLOR_NAME, data.getColorName());
+                intent.putExtra(TAG_NAME, data.getProduct().getName());
+                intent.putExtra(TAG_BRAND, data.getProduct().getBrand().getName());
+                intent.putExtra(TAG_USEBY, data.getProduct().getUseBy());
                 startActivity(intent);
                 finish();
             }

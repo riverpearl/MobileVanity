@@ -13,9 +13,11 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.vanity.mobilevanity.R;
 import com.vanity.mobilevanity.cosmetic.CosmeticListActivity;
+import com.vanity.mobilevanity.data.Brand;
 import com.vanity.mobilevanity.data.Cosmetic;
 import com.vanity.mobilevanity.data.CosmeticItem;
 import com.vanity.mobilevanity.data.NetworkResult;
+import com.vanity.mobilevanity.data.Product;
 import com.vanity.mobilevanity.manager.NetworkManager;
 import com.vanity.mobilevanity.manager.NetworkRequest;
 import com.vanity.mobilevanity.request.InsertCosmeticItemRequest;
@@ -69,7 +71,10 @@ public class RegisterDetailActivity extends AppCompatActivity implements DatePic
 
     Cosmetic cosmetic;
 
-    public final static String TAG_BARCODE = "barcode";
+    public final static String TAG_SEARCH_TYPE = "searchtype";
+    public final static int INDEX_TYPE_NONE = 0;
+    public final static int INDEX_TYPE_BARCODE = 1;
+    public final static int INDEX_TYPE_SEARCH = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -137,10 +142,6 @@ public class RegisterDetailActivity extends AppCompatActivity implements DatePic
         calendar.set(Calendar.YEAR, Integer.parseInt(registerYearView.getText().toString()));
         calendar.set(Calendar.MONTH, Integer.parseInt(registerMonthView.getText().toString()) - 1);
         calendar.set(Calendar.DATE, Integer.parseInt(registerDayView.getText().toString()));
-        calendar.set(Calendar.HOUR, 0);
-        calendar.set(Calendar.MINUTE, 0);
-        calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.MILLISECOND, 0);
 
         SimpleDateFormat form = new SimpleDateFormat("yyyy-MM-dd'T'kk:mm:ss.SSSZ");
         String parseDate = form.format(calendar.getTime());
@@ -171,7 +172,27 @@ public class RegisterDetailActivity extends AppCompatActivity implements DatePic
         super.onStart();
 
         Intent intent = getIntent();
-        String barcode = intent.getStringExtra(TAG_BARCODE);
+        int code = intent.getIntExtra(TAG_SEARCH_TYPE, 0);
+
+        switch (code) {
+            case INDEX_TYPE_NONE :
+            default :
+                Toast.makeText(RegisterDetailActivity.this, "잘못된 접근입니다.", Toast.LENGTH_SHORT).show();
+                finish();
+                return;
+            case INDEX_TYPE_BARCODE :
+                String barcode = intent.getStringExtra(RegisterBarcodeActivity.TAG_BARCODE);
+                getDetailInfoByBarcode(barcode);
+                return;
+            case INDEX_TYPE_SEARCH :
+                getDetailInfoByIntent(intent);
+                return;
+        }
+
+
+    }
+
+    private void getDetailInfoByBarcode(String barcode) {
         SearchCosmeticByBarcodeRequest request = new SearchCosmeticByBarcodeRequest(this, barcode);
         NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<Cosmetic>>() {
             @Override
@@ -181,7 +202,7 @@ public class RegisterDetailActivity extends AppCompatActivity implements DatePic
 
                 if (result.getCode() == 1) {
                     cosmetic = result.getResult();
-                    setViewByRequestResult(cosmetic);
+                    setView();
                 }
             }
 
@@ -192,11 +213,42 @@ public class RegisterDetailActivity extends AppCompatActivity implements DatePic
         });
     }
 
-    private void setViewByRequestResult(Cosmetic cosmetic) {
+    private void getDetailInfoByIntent(Intent intent) {
+        String image = intent.getStringExtra(RegisterSearchActivity.TAG_IMAGE);
+        String brandName = intent.getStringExtra(RegisterSearchActivity.TAG_BRAND);
+        String colorCode = intent.getStringExtra(RegisterSearchActivity.TAG_COLOR_CODE);
+        String colorName = intent.getStringExtra(RegisterSearchActivity.TAG_COLOR_NAME);
+        String name = intent.getStringExtra(RegisterSearchActivity.TAG_NAME);
+        int useby = intent.getIntExtra(RegisterSearchActivity.TAG_USEBY, 0);
+
+        if (useby > 0) {
+            Brand brand = new Brand();
+            brand.setName(brandName);
+
+            Product product = new Product();
+            product.setName(name);
+            product.setBrand(brand);
+            product.setUseBy(useby);
+
+            cosmetic = new Cosmetic();
+            cosmetic.setProduct(product);
+            cosmetic.setColorCode(colorCode);
+            cosmetic.setColorName(colorName);
+            cosmetic.setImage(image);
+
+            setView();
+        } else {
+            Toast.makeText(RegisterDetailActivity.this, "잘못된 접근입니다.", Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
+    }
+
+    private void setView() {
         Glide.with(RegisterDetailActivity.this).load(cosmetic.getImage()).into(imageView);
         brandView.setText(cosmetic.getProduct().getBrand().getName());
-        colorCodeView.setText(cosmetic.getColorName());
-        //colorNameView.setText(cosmetic.getColorName());
+        colorCodeView.setText(cosmetic.getColorCode());
+        colorNameView.setText(cosmetic.getColorName());
         cosmeticView.setText(cosmetic.getProduct().getName());
 
         Calendar calendar = Calendar.getInstance();

@@ -28,6 +28,7 @@ public class RegisterBarcodeActivity extends AppCompatActivity implements ZXingS
     @BindView(R.id.view_scanner)
     ZXingScannerView scannerView;
 
+    public final static String TAG_BARCODE = "barcode";
     private final static int RC_PERMISSION = 500;
 
     @Override
@@ -127,8 +128,8 @@ public class RegisterBarcodeActivity extends AppCompatActivity implements ZXingS
     @Override
     public void handleResult(Result result) {
         Intent intent = new Intent(RegisterBarcodeActivity.this, RegisterDetailActivity.class);
-        //intent.putExtra(TAG_BARCODE, result.getText());
-        intent.putExtra(RegisterDetailActivity.TAG_BARCODE, "1234567890");
+        intent.putExtra(RegisterDetailActivity.TAG_SEARCH_TYPE, RegisterDetailActivity.INDEX_TYPE_BARCODE);
+        intent.putExtra(TAG_BARCODE, "1234567890");
         startActivity(intent);
         finish();
     }

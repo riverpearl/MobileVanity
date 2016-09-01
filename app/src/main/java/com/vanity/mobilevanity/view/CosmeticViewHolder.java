@@ -51,8 +51,8 @@ public class CosmeticViewHolder extends RecyclerView.ViewHolder {
         this.data = data;
 
         Glide.with(cosmeticView.getContext()).load(data.getImage()).into(cosmeticView);
-        colorCodeView.setText(data.getColorName());
-        //colorNameView.setText(data.getColorName());
+        colorCodeView.setText(data.getColorCode());
+        colorNameView.setText(data.getColorName());
         productNameView.setText(data.getProduct().getName());
         brandNameView.setText(data.getProduct().getBrand().getName());
     }
