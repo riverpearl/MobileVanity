@@ -188,8 +188,6 @@ public class RegisterDetailActivity extends AppCompatActivity implements DatePic
                 getDetailInfoByIntent(intent);
                 return;
         }
-
-
     }
 
     private void getDetailInfoByBarcode(String barcode) {
@@ -197,12 +195,13 @@ public class RegisterDetailActivity extends AppCompatActivity implements DatePic
         NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<Cosmetic>>() {
             @Override
             public void onSuccess(NetworkRequest<NetworkResult<Cosmetic>> request, NetworkResult<Cosmetic> result) {
-                if (result == null)
-                    return;
-
                 if (result.getCode() == 1) {
                     cosmetic = result.getResult();
                     setView();
+                } else {
+                    Toast.makeText(RegisterDetailActivity.this, "검색 결과가 없습니다.", Toast.LENGTH_SHORT).show();
+                    finish();
+                    return;
                 }
             }
 
@@ -214,6 +213,7 @@ public class RegisterDetailActivity extends AppCompatActivity implements DatePic
     }
 
     private void getDetailInfoByIntent(Intent intent) {
+        long id = intent.getLongExtra(RegisterSearchActivity.TAG_COSMETIC_ID, 0);
         String image = intent.getStringExtra(RegisterSearchActivity.TAG_IMAGE);
         String brandName = intent.getStringExtra(RegisterSearchActivity.TAG_BRAND);
         String colorCode = intent.getStringExtra(RegisterSearchActivity.TAG_COLOR_CODE);
@@ -221,7 +221,7 @@ public class RegisterDetailActivity extends AppCompatActivity implements DatePic
         String name = intent.getStringExtra(RegisterSearchActivity.TAG_NAME);
         int useby = intent.getIntExtra(RegisterSearchActivity.TAG_USEBY, 0);
 
-        if (useby > 0) {
+        if (id != 0) {
             Brand brand = new Brand();
             brand.setName(brandName);
 
@@ -231,6 +231,7 @@ public class RegisterDetailActivity extends AppCompatActivity implements DatePic
             product.setUseBy(useby);
 
             cosmetic = new Cosmetic();
+            cosmetic.setId(id);
             cosmetic.setProduct(product);
             cosmetic.setColorCode(colorCode);
             cosmetic.setColorName(colorName);

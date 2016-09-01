@@ -63,6 +63,7 @@ public class RegisterSearchActivity extends AppCompatActivity {
     ArrayAdapter<String> itemAdapter;
     List<Brand> brands;
 
+    public final static String TAG_COSMETIC_ID = "cid";
     public final static String TAG_IMAGE = "image";
     public final static String TAG_BRAND = "brand";
     public final static String TAG_COLOR_CODE = "colorcode";
@@ -138,6 +139,7 @@ public class RegisterSearchActivity extends AppCompatActivity {
             public void onAdapterItemClick(View view, Cosmetic data, int position) {
                 Intent intent = new Intent(RegisterSearchActivity.this, RegisterDetailActivity.class);
                 intent.putExtra(RegisterDetailActivity.TAG_SEARCH_TYPE, RegisterDetailActivity.INDEX_TYPE_SEARCH);
+                intent.putExtra(TAG_COSMETIC_ID, data.getId());
                 intent.putExtra(TAG_IMAGE, data.getImage());
                 intent.putExtra(TAG_COLOR_CODE, data.getColorCode());
                 intent.putExtra(TAG_COLOR_NAME, data.getColorName());
