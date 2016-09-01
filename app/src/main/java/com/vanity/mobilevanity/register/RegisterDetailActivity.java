@@ -18,6 +18,7 @@ import com.vanity.mobilevanity.data.Cosmetic;
 import com.vanity.mobilevanity.data.CosmeticItem;
 import com.vanity.mobilevanity.data.NetworkResult;
 import com.vanity.mobilevanity.data.Product;
+import com.vanity.mobilevanity.manager.DBManager;
 import com.vanity.mobilevanity.manager.NetworkManager;
 import com.vanity.mobilevanity.manager.NetworkRequest;
 import com.vanity.mobilevanity.request.InsertCosmeticItemRequest;
@@ -155,6 +156,11 @@ public class RegisterDetailActivity extends AppCompatActivity implements DatePic
             @Override
             public void onSuccess(NetworkRequest<NetworkResult<CosmeticItem>> request, NetworkResult<CosmeticItem> result) {
                 if (result.getCode() == 1) {
+                    CosmeticItem citem = result.getResult();
+                    long id = citem.getId();
+                    String dateAdded = citem.getDateAdded();
+                    int term = citem.getCosmeticTerm();
+                    DBManager.getInstance().insertCosmeticItem(id, dateAdded, term);
                     Toast.makeText(RegisterDetailActivity.this, "등록되었습니다.", Toast.LENGTH_SHORT).show();
                     finish();
                 }
