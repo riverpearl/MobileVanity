@@ -18,8 +18,12 @@ import com.vanity.mobilevanity.adapter.CosmeticAdapter;
 import com.vanity.mobilevanity.data.Brand;
 import com.vanity.mobilevanity.data.Constant;
 import com.vanity.mobilevanity.data.Cosmetic;
+import com.vanity.mobilevanity.data.NetworkResult;
 import com.vanity.mobilevanity.data.Product;
+import com.vanity.mobilevanity.manager.NetworkManager;
+import com.vanity.mobilevanity.manager.NetworkRequest;
 import com.vanity.mobilevanity.register.RegisterBarcodeActivity;
+import com.vanity.mobilevanity.request.CosmeticListRequest;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +42,7 @@ public class CosmeticListActivity extends AppCompatActivity {
     RecyclerView listView;
 
     CosmeticAdapter mAdapter;
+    long id;
 
     @Override
 
@@ -83,9 +88,6 @@ public class CosmeticListActivity extends AppCompatActivity {
                 init();
             }
         });
-
-
-
 
     }
 
@@ -136,7 +138,7 @@ public class CosmeticListActivity extends AppCompatActivity {
             }
         }
 
-        for (int i =0; i < tabName.size(); i++){
+        for (int i = 0; i < tabName.size(); i++) {
             tabs.addTab(tabs.newTab().setText(tabName.get(i)).setTag(tabName.get(i)));
         }
 

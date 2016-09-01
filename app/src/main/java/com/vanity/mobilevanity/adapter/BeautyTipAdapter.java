@@ -40,7 +40,6 @@ public class BeautyTipAdapter extends RecyclerView.Adapter<BeautyTipItemViewHold
         notifyDataSetChanged();
     }
 
-
     @Override
     public BeautyTipItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_beauty_tip_item, parent, false);

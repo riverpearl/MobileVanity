@@ -60,7 +60,6 @@ public class BeautyTipWriteActivity extends AppCompatActivity {
     }
 
     private static final int RC_GET_IMAGE = 1;
-    long id;
 
     @OnClick(R.id.btn_set)
     public void onSetClick(View view) {

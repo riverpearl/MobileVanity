@@ -1,123 +1,124 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:weightSum="1">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
     <TextView
+        android:id="@+id/text_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Title"
-        android:id="@+id/text_title"
-        />
+        android:text="Title" />
 
     <ImageView
+        android:id="@+id/image_beauty_tip_item"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:id="@+id/image_beauty_tip_item"
-        android:src="@mipmap/ic_launcher"
-        android:layout_marginTop="0dp" />
+        android:layout_marginTop="0dp"
+        android:src="@mipmap/ic_launcher" />
 
     <TextView
+        android:id="@+id/text_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Content"
-        android:id="@+id/text_content" />
+        android:text="Content" />
 
     <LinearLayout
         android:id="@+id/layout_user_profile"
-        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:weightSum="1"
-        android:gravity="center_vertical">
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
         <ImageView
-            android:id ="@+id/image_profile"
-            android:src="@mipmap/ic_launcher"
+            android:id="@+id/image_profile"
             android:layout_width="30dp"
-            android:layout_height="30dp" />
+            android:layout_height="30dp"
+            android:src="@mipmap/ic_launcher" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="User"
             android:id="@+id/text_user"
-            android:gravity="center" />
-
-        <Button
             android:layout_width="wrap_content"
-            android:layout_weight="0.05"
             android:layout_height="wrap_content"
-            android:text="Like"
-            android:id="@+id/btn_like" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_weight="0.24"
-            android:layout_height="wrap_content"
-            android:text="Comment"
-            android:id="@+id/btn_comment" />
+            android:gravity="center"
+            android:text="User" />
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/layout_info"
-        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
         <ImageView
             android:id="@+id/image_like"
-            android:src="@android:drawable/ic_input_add"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp" />
+            android:layout_marginLeft="5dp"
+            android:src="@android:drawable/ic_input_add" />
 
         <TextView
+            android:id="@+id/text_like"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="Like"
-            android:id="@+id/text_like"
             android:layout_marginLeft="3dp"
-            android:gravity="center" />
+            android:gravity="center"
+            android:text="Like" />
 
 
         <ImageView
             android:id="@+id/image_comment"
-            android:src="@android:drawable/ic_input_add"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="6dp" />
+            android:layout_marginLeft="6dp"
+            android:src="@android:drawable/ic_input_add" />
 
         <TextView
+            android:id="@+id/text_comment"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="Comment"
-            android:id="@+id/text_comment"
             android:layout_marginLeft="3dp"
-            android:gravity="center" />
+            android:gravity="center"
+            android:text="Comment" />
 
         <ImageView
             android:id="@+id/image_read"
-            android:src="@android:drawable/ic_input_add"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp" />
+            android:layout_marginLeft="5dp"
+            android:src="@android:drawable/ic_input_add" />
 
         <TextView
+            android:id="@+id/text_read"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="Read"
-            android:id="@+id/text_read"
             android:layout_marginLeft="3dp"
-            android:gravity="center" />
+            android:gravity="center"
+            android:text="Read" />
 
     </LinearLayout>
-<LinearLayout
-    android:orientation="horizontal"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
 
-</LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_like"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Like" />
+
+        <Button
+            android:id="@+id/btn_comment"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="1"
+            android:text="Comment" />
+    </LinearLayout>
 
 
 </LinearLayout>

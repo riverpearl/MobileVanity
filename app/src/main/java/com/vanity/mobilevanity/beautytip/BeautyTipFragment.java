@@ -33,6 +33,7 @@ import com.vanity.mobilevanity.request.UpdateBeautyTipRequest;
 import com.vanity.mobilevanity.request.UpdateLikeRequest;
 
 import java.io.File;
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
@@ -71,8 +72,30 @@ public class BeautyTipFragment extends Fragment {
         spinner.setAdapter(sAdapter);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
+            public void onItemSelected(AdapterView<?> adapterView, View view, final int position, final long id) {
                 Toast.makeText(getContext(), "item:" + sAdapter.getItem(position), Toast.LENGTH_SHORT).show();
+                final String order;
+
+                if (spinner.getSelectedItemPosition() == 0)
+                    order = "recent";
+                else
+                    order = "rank";
+
+                SearchBeautyTipRequest searchRequest = new SearchBeautyTipRequest(getContext(), keyword, query, order);
+                NetworkManager.getInstance().getNetworkData(searchRequest, new NetworkManager.OnResultListener<NetworkResult<List<BeautyTip>>>() {
+                    @Override
+                    public void onSuccess(NetworkRequest<NetworkResult<List<BeautyTip>>> request, NetworkResult<List<BeautyTip>> result) {
+                        List<BeautyTip> beautySpinner = result.getResult();
+                        Collections.reverse(beautySpinner);
+                        mAdapter.clear();
+                        mAdapter.addAll(beautySpinner);
+                    }
+
+                    @Override
+                    public void onFail(NetworkRequest<NetworkResult<List<BeautyTip>>> request, int errorCode, String errorMessage, Throwable e) {
+                        Toast.makeText(getContext(), "spinnerError", Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
 
             @Override
@@ -109,8 +132,8 @@ public class BeautyTipFragment extends Fragment {
             @Override
             public void onAdapterLikeClick(View view, BeautyTip beautyTip, final int position) {
                 String like;
-                if(beautyTip.isLike()) like = "false";
-                else like="true";
+                if (beautyTip.isLike()) like = "false";
+                else like = "true";
 
                 UpdateLikeRequest likeRequest = new UpdateLikeRequest(getContext(), "" + beautyTip.getId(), like);
                 NetworkManager.getInstance().getNetworkData(likeRequest, new NetworkManager.OnResultListener<NetworkResult<BeautyTip>>() {
@@ -127,7 +150,6 @@ public class BeautyTipFragment extends Fragment {
                 });
             }
         });
-
 
         GridLayoutManager manager = new GridLayoutManager(getContext(), 2, GridLayoutManager.VERTICAL, false);
         listView.setLayoutManager(manager);
@@ -169,30 +191,4 @@ public class BeautyTipFragment extends Fragment {
     public static final String keyword = "keyword";
     public static final String query = "";
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        String order;
-
-        if (spinner.getSelectedItemPosition() == 0)
-            order = "recent";
-        else
-            order = "popular";
-
-        SearchBeautyTipRequest request = new SearchBeautyTipRequest(getContext(), keyword, query, order);
-        NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<List<BeautyTip>>>() {
-            @Override
-            public void onSuccess(NetworkRequest<NetworkResult<List<BeautyTip>>> request, NetworkResult<List<BeautyTip>> result) {
-                List<BeautyTip> tips = result.getResult();
-                mAdapter.clear();
-                mAdapter.addAll(tips);
-            }
-
-            @Override
-            public void onFail(NetworkRequest<NetworkResult<List<BeautyTip>>> request, int errorCode, String errorMessage, Throwable e) {
-                Toast.makeText(getContext(), "fail", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-    }
 }

@@ -97,7 +97,7 @@ public class BeautyTipDetailActivity extends AppCompatActivity {
             @Override
             public void onSuccess(NetworkRequest<NetworkResult<BeautyTip>> request, NetworkResult<BeautyTip> result) {
                 BeautyTip beautyTip = result.getResult();
-
+                // 여기 셋(again)
             }
 
             @Override
