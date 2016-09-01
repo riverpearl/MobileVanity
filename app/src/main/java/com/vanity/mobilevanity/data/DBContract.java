@@ -15,14 +15,8 @@ public class DBContract {
     }
 
     public interface Notify extends BaseColumns {
-        public static final String TYPE_LIKE = "like";
-        public static final String TYPE_COMMENT = "comment";
-        public static final String TYPE_USEBY = "useby";
-
         public static final String TABLE = "notify";
-        public static final String COLUMN_SERVER_ID = "sid";
-        public static final String COLUMN_TYPE = "type";
-        public static final String COLUMN_CONTENT_ID = "contentid";
+        public static final String COLUMN_COSMETIC_ITEM_ID = "cosmeticitemid";
         public static final String COLUMN_MESSAGE = "message";
         public static final String COLUMN_DATE = "date";
     }

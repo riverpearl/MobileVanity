@@ -3,7 +3,7 @@ package com.vanity.mobilevanity.data;
 /**
  * Created by Tacademy on 2016-08-25.
  */
-public class Comment implements AlertItem {
+public class Comment {
     private long id;
     private User writer;
     private long BeautyTipId;

@@ -48,9 +48,7 @@ public class DBManager extends SQLiteOpenHelper {
 
         sql = "CREATE TABLE "+ DBContract.Notify.TABLE + " (" +
                 DBContract.Notify._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
-                DBContract.Notify.COLUMN_SERVER_ID + " INTEGER," +
-                DBContract.Notify.COLUMN_TYPE + " TEXT," +
-                DBContract.Notify.COLUMN_CONTENT_ID + " INTEGER," +
+                DBContract.Notify.COLUMN_COSMETIC_ITEM_ID + " INTEGER," +
                 DBContract.Notify.COLUMN_MESSAGE + " TEXT," +
                 DBContract.Notify.COLUMN_DATE + " TEXT);";
         db.execSQL(sql);
@@ -100,32 +98,20 @@ public class DBManager extends SQLiteOpenHelper {
         return usebyDate;
     }
 
-    public long insertNotify(long sid, String type, long cid, String message, String date) {
+    public long insertNotify(long cid, String message, String date) {
         SQLiteDatabase db = getWritableDatabase();
         values.clear();
-        values.put(DBContract.Notify.COLUMN_SERVER_ID, sid);
-        values.put(DBContract.Notify.COLUMN_TYPE, type);
-        values.put(DBContract.Notify.COLUMN_CONTENT_ID, cid);
+        values.put(DBContract.Notify.COLUMN_COSMETIC_ITEM_ID, cid);
         values.put(DBContract.Notify.COLUMN_MESSAGE, message);
         values.put(DBContract.Notify.COLUMN_DATE, date);
         return db.insert(DBContract.CosmeticItem.TABLE, null, values);
     }
 
-    public int deleteNotify(long sid) {
-        SQLiteDatabase db = getWritableDatabase();
-        String where = DBContract.Notify.COLUMN_SERVER_ID + " = ?";
-        String[] args = { sid + "" };
-        return db.delete(DBContract.Notify.TABLE, where, args);
-    }
-
     public Cursor selectNotify(String lastDate) {
         SQLiteDatabase db = getReadableDatabase();
-        String[] columns = { DBContract.Notify.COLUMN_SERVER_ID, DBContract.Notify.COLUMN_TYPE,
-                DBContract.Notify.COLUMN_CONTENT_ID, DBContract.Notify.COLUMN_MESSAGE };
-        String selection = DBContract.Notify.COLUMN_DATE + " >= ?";
-        String[] args = { lastDate };
+        String[] columns = { DBContract.Notify.COLUMN_COSMETIC_ITEM_ID, DBContract.Notify.COLUMN_MESSAGE };
         String orderBy = DBContract.Notify.COLUMN_DATE + " DESC";
-        Cursor c = db.query(DBContract.Notify.TABLE, columns, selection, args, null, null, orderBy);
+        Cursor c = db.query(DBContract.Notify.TABLE, columns, null, null, null, null, orderBy);
         return c;
     }
 }

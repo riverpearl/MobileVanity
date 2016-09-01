@@ -3,7 +3,7 @@ package com.vanity.mobilevanity.data;
 /**
  * Created by Tacademy on 2016-08-26.
  */
-public class CosmeticItem implements AlertItem{
+public class CosmeticItem {
     private long id;
     private Cosmetic cosmetic;
     private String dateAdded;

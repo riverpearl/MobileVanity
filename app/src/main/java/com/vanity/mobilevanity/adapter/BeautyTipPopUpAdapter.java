@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.vanity.mobilevanity.R;
-import com.vanity.mobilevanity.data.AlertItem;
 import com.vanity.mobilevanity.data.Comment;
 import com.vanity.mobilevanity.view.BeautyTipPopUpViewHolder;
 

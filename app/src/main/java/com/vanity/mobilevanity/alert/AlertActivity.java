@@ -1,33 +1,42 @@
 package com.vanity.mobilevanity.alert;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Button;
 
 import com.vanity.mobilevanity.R;
 import com.vanity.mobilevanity.adapter.AlertAdapter;
 import com.vanity.mobilevanity.beautytip.BeautyTipDetailActivity;
 import com.vanity.mobilevanity.cosmetic.CosmeticDetailActivity;
-import com.vanity.mobilevanity.data.AlertItem;
 import com.vanity.mobilevanity.data.Comment;
 import com.vanity.mobilevanity.data.Cosmetic;
 import com.vanity.mobilevanity.data.CosmeticItem;
+import com.vanity.mobilevanity.data.DBContract;
+import com.vanity.mobilevanity.data.NetworkResult;
+import com.vanity.mobilevanity.data.Notify;
 import com.vanity.mobilevanity.data.Product;
 import com.vanity.mobilevanity.data.User;
-import com.vanity.mobilevanity.view.AlertCommentViewHolder;
-import com.vanity.mobilevanity.view.AlertLikeViewHolder;
-import com.vanity.mobilevanity.view.AlertUseByViewHolder;
+import com.vanity.mobilevanity.manager.DBManager;
+import com.vanity.mobilevanity.manager.NetworkManager;
+import com.vanity.mobilevanity.manager.NetworkRequest;
+import com.vanity.mobilevanity.request.NotifyListRequest;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 public class AlertActivity extends AppCompatActivity {
 
@@ -35,6 +44,8 @@ public class AlertActivity extends AppCompatActivity {
     RecyclerView listView;
 
     AlertAdapter mAdapter;
+    List<Notify> notifyList = new ArrayList<>();
+    SimpleDateFormat form = new SimpleDateFormat("yyyy-MM-dd'T'kk:mm:ss.SSSZ");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,48 +56,22 @@ public class AlertActivity extends AppCompatActivity {
         mAdapter = new AlertAdapter();
         mAdapter.setOnAdapterItemClickListener(new AlertAdapter.OnAdapterItemClickListener() {
             @Override
-            public void onAdapteItemClick(View view, AlertItem item, int position) {
-                if (item instanceof Comment) {
-                    Intent intent = new Intent(AlertActivity.this, BeautyTipDetailActivity.class);
-                    startActivity(intent);
-                } else if (item instanceof User) {
-                    Intent intent = new Intent(AlertActivity.this, BeautyTipDetailActivity.class);
-                    startActivity(intent);
-                } else if (item instanceof CosmeticItem) {
+            public void onAdapterItemClick(View view, Notify item, int position) {
+                if (item.getType().equals("useby")) {
                     Intent intent = new Intent(AlertActivity.this, CosmeticDetailActivity.class);
+                    intent.putExtra("cosmeticitemid", item.getCosmeticItemId());
+                    startActivity(intent);
+                } else {
+                    Intent intent = new Intent(AlertActivity.this, BeautyTipDetailActivity.class);
+                    intent.putExtra("beautytipid", item.getBeautytipid());
                     startActivity(intent);
                 }
             }
         });
-
         listView.setAdapter(mAdapter);
 
         LinearLayoutManager manager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         listView.setLayoutManager(manager);
-
-
-        initData();
-    }
-
-    public void initData() {
-        Comment comment = new Comment();
-        User user = new User();
-        CosmeticItem cosmeticItem = new CosmeticItem();
-        Cosmetic cosmetic = new Cosmetic();
-        Product product = new Product();
-
-        user.setUserNickName("NickName");
-        comment.setWriter(user);
-
-        product.setName("Product");
-        cosmetic.setProduct(product);
-        cosmeticItem.setCosmetic(cosmetic);
-
-        cosmeticItem.setCosmeticTerm(3);
-
-        mAdapter.add(comment);
-        mAdapter.add(user);
-        mAdapter.add(cosmeticItem);
     }
 
     @Override
@@ -103,5 +88,77 @@ public class AlertActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        Calendar aWeekAgo = Calendar.getInstance();
+        aWeekAgo.add(Calendar.DATE, -15);
+
+        String date = form.format(aWeekAgo.getTime());
+
+        NotifyListRequest request = new NotifyListRequest(this, date);
+        NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<List<Notify>>>() {
+            @Override
+            public void onSuccess(NetworkRequest<NetworkResult<List<Notify>>> request, NetworkResult<List<Notify>> result) {
+                if (result.getCode() == 1) {
+                    notifyList.addAll(result.getResult());
+                }
+            }
+
+            @Override
+            public void onFail(NetworkRequest<NetworkResult<List<Notify>>> request, int errorCode, String errorMessage, Throwable e) {
+
+            }
+        });
+
+        Cursor c = DBManager.getInstance().selectNotify(date);
+
+        if (c != null && c.getCount() > 0) {
+            while(c.moveToNext()) {
+                String tempDate = c.getString(c.getColumnIndex(DBContract.Notify.COLUMN_DATE));
+                Calendar cal = Calendar.getInstance();
+                SimpleDateFormat form = new SimpleDateFormat("yyyy-MM-dd'T'kk:mm:ss.SSSZ");
+
+                try {
+                    cal.setTime(form.parse(tempDate));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+                if (cal.before(Calendar.getInstance()))
+                    continue;
+
+                Notify temp = new Notify();
+                temp.setId(c.getLong(c.getColumnIndex(DBContract.Notify._ID)));
+                temp.setType("like");
+                temp.setCosmeticItemId(c.getLong(c.getColumnIndex(DBContract.Notify.COLUMN_COSMETIC_ITEM_ID)));
+                temp.setMessage(c.getString(c.getColumnIndex(DBContract.Notify.COLUMN_MESSAGE)));
+                temp.setDate(c.getString(c.getColumnIndex(DBContract.Notify.COLUMN_DATE)));
+                notifyList.add(temp);
+            }
+        }
+
+        Collections.sort(notifyList, new Comparator<Notify>() {
+            @Override
+            public int compare(Notify noti1, Notify noti2) {
+                Calendar noti1cal = Calendar.getInstance();
+                Calendar noti2cal = Calendar.getInstance();
+
+                try {
+                    noti1cal.setTime(form.parse(noti1.getDate()));
+                    noti2cal.setTime(form.parse(noti2.getDate()));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+                return (noti1cal.before(noti2cal)) ? -1 : 1;
+            }
+        });
+
+        notifyList.clear();
+        mAdapter.addAll(notifyList);
     }
 }

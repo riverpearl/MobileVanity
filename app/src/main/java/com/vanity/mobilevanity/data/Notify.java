@@ -8,9 +8,10 @@ import java.util.Date;
 public class Notify {
     private long id;
     private String type;
-    private long beautyTipId;
+    private long beautytipid;
+    private long cosmeticItemId;
     private String message;
-    private Date date;
+    private String date;
 
     public long getId() {
         return id;
@@ -28,12 +29,20 @@ public class Notify {
         this.type = type;
     }
 
-    public long getBeautyTipId() {
-        return beautyTipId;
+    public long getBeautytipid() {
+        return beautytipid;
     }
 
-    public void setBeautyTipId(long beautyTipId) {
-        this.beautyTipId = beautyTipId;
+    public void setBeautytipid(long beautytipid) {
+        this.beautytipid = beautytipid;
+    }
+
+    public long getCosmeticItemId() {
+        return cosmeticItemId;
+    }
+
+    public void setCosmeticItemId(long cosmeticItemId) {
+        this.cosmeticItemId = cosmeticItemId;
     }
 
     public String getMessage() {
@@ -44,11 +53,11 @@ public class Notify {
         this.message = message;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 }
