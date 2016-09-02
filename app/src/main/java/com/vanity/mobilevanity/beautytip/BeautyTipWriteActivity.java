@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -22,6 +23,7 @@ import com.vanity.mobilevanity.data.NetworkResult;
 import com.vanity.mobilevanity.manager.NetworkManager;
 import com.vanity.mobilevanity.manager.NetworkRequest;
 import com.vanity.mobilevanity.request.InsertBeautyTipRequest;
+import com.vanity.mobilevanity.request.UpdateBeautyTipRequest;
 
 import java.io.File;
 
@@ -40,7 +42,13 @@ public class BeautyTipWriteActivity extends AppCompatActivity {
     @BindView(R.id.image_content)
     ImageView imageView;
 
-    BeautyTip beautyTip;
+    Intent intent;
+    long id;
+
+    public final static String TAG_SEARCH_TYPE = "searchtype";
+    public final static int INDEX_TYPE_NONE = 0;
+    public final static int INDEX_TYPE_DETAIL = 1;
+    public final static int INDEX_TYPE_FRAGMENT = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,21 +69,59 @@ public class BeautyTipWriteActivity extends AppCompatActivity {
 
     private static final int RC_GET_IMAGE = 1;
 
+
     @OnClick(R.id.btn_set)
     public void onSetClick(View view) {
-        InsertBeautyTipRequest request = new InsertBeautyTipRequest(getBaseContext(), titleView.getText().toString(), contentView.getText().toString(), uploadFile);
-        NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<BeautyTip>>() {
-            @Override
-            public void onSuccess(NetworkRequest<NetworkResult<BeautyTip>> request, NetworkResult<BeautyTip> result) {
-                BeautyTip tip = result.getResult();
-                finish();
-            }
 
-            @Override
-            public void onFail(NetworkRequest<NetworkResult<BeautyTip>> request, int errorCode, String errorMessage, Throwable e) {
-                Toast.makeText(BeautyTipWriteActivity.this, "fail", Toast.LENGTH_SHORT).show();
-            }
-        });
+        Intent intent = getIntent();
+        int code = intent.getIntExtra(TAG_SEARCH_TYPE, 0);
+
+        switch (code) {
+            case INDEX_TYPE_NONE:
+            default:
+                Toast.makeText(BeautyTipWriteActivity.this, "잘못된 접근입니다.", Toast.LENGTH_SHORT).show();
+                finish();
+                return;
+
+            case INDEX_TYPE_DETAIL:
+                id = intent.getLongExtra(BeautyTipDetailActivity.DETAIL_ID, 0);
+                UpdateBeautyTipRequest request = new UpdateBeautyTipRequest(getBaseContext(), "" + id, titleView.getText().toString(), contentView.getText().toString(), uploadFile);
+                NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<BeautyTip>>() {
+                    @Override
+                    public void onSuccess(NetworkRequest<NetworkResult<BeautyTip>> request, NetworkResult<BeautyTip> result) {
+                        BeautyTip beautyTip = result.getResult();
+                        titleView.setText(beautyTip.getTitle());
+                        contentView.setText(beautyTip.getContent());
+                        Glide.with(imageView.getContext())
+                                .load(uploadFile)
+                                .into(imageView);
+                        finish();
+                    }
+
+                    @Override
+                    public void onFail(NetworkRequest<NetworkResult<BeautyTip>> request, int errorCode, String errorMessage, Throwable e) {
+                        Toast.makeText(BeautyTipWriteActivity.this, "fail", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                return;
+
+            case INDEX_TYPE_FRAGMENT:
+                InsertBeautyTipRequest beautyTipRequest = new InsertBeautyTipRequest(getBaseContext(), titleView.getText().toString(), contentView.getText().toString(), uploadFile);
+                NetworkManager.getInstance().getNetworkData(beautyTipRequest, new NetworkManager.OnResultListener<NetworkResult<BeautyTip>>() {
+                    @Override
+                    public void onSuccess(NetworkRequest<NetworkResult<BeautyTip>> request, NetworkResult<BeautyTip> result) {
+                        BeautyTip tip = result.getResult();
+                        finish();
+                    }
+
+                    @Override
+                    public void onFail(NetworkRequest<NetworkResult<BeautyTip>> request, int errorCode, String errorMessage, Throwable e) {
+                        Toast.makeText(BeautyTipWriteActivity.this, "fail", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+        }
+
     }
 
     File uploadFile = null;
@@ -114,6 +160,13 @@ public class BeautyTipWriteActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+
     }
 }
 

@@ -55,6 +55,9 @@ public class BeautyTipFragment extends Fragment {
 
     Intent intent;
     long id;
+    String order;
+
+    public static final String TAG_FRAGMENT = "fragment";
 
     public BeautyTipFragment() {
         // Required empty public constructor
@@ -73,7 +76,7 @@ public class BeautyTipFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, final int position, final long id) {
                 Toast.makeText(getContext(), "item:" + sAdapter.getItem(position), Toast.LENGTH_SHORT).show();
-                final String order;
+                // final String order;
 
                 if (spinner.getSelectedItemPosition() == 0)
                     order = "recent";
@@ -95,6 +98,8 @@ public class BeautyTipFragment extends Fragment {
                         Toast.makeText(getContext(), "spinnerError", Toast.LENGTH_SHORT).show();
                     }
                 });
+
+                //onStart();
             }
 
             @Override
@@ -165,10 +170,36 @@ public class BeautyTipFragment extends Fragment {
     @OnClick(R.id.btn_set)
     public void onSetClick(View view) {
         Intent intent = new Intent(getContext(), BeautyTipWriteActivity.class);
+        intent.putExtra(BeautyTipWriteActivity.TAG_SEARCH_TYPE, BeautyTipWriteActivity.INDEX_TYPE_FRAGMENT);
         startActivity(intent);
     }
 
     public static final String keyword = "keyword";
     public static final String query = "";
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (spinner.getSelectedItemPosition() == 0)
+            order = "recent";
+        else
+            order = "rank";
+
+        SearchBeautyTipRequest searchRequest = new SearchBeautyTipRequest(getContext(), keyword, query, order);
+        NetworkManager.getInstance().getNetworkData(searchRequest, new NetworkManager.OnResultListener<NetworkResult<List<BeautyTip>>>() {
+            @Override
+            public void onSuccess(NetworkRequest<NetworkResult<List<BeautyTip>>> request, NetworkResult<List<BeautyTip>> result) {
+                List<BeautyTip> beautySpinner = result.getResult();
+                Collections.reverse(beautySpinner);
+                mAdapter.clear();
+                mAdapter.addAll(beautySpinner);
+            }
+
+            @Override
+            public void onFail(NetworkRequest<NetworkResult<List<BeautyTip>>> request, int errorCode, String errorMessage, Throwable e) {
+                Toast.makeText(getContext(), "spinnerError", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
 }

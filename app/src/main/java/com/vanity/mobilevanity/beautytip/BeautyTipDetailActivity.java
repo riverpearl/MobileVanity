@@ -1,12 +1,16 @@
 package com.vanity.mobilevanity.beautytip;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
@@ -41,14 +45,17 @@ import com.vanity.mobilevanity.request.CommentListRequest;
 import com.vanity.mobilevanity.request.DeleteBeautyTipRequest;
 import com.vanity.mobilevanity.request.LikeBeautyTipListRequest;
 import com.vanity.mobilevanity.request.SearchBeautyTipRequest;
+import com.vanity.mobilevanity.request.UpdateBeautyTipRequest;
 import com.vanity.mobilevanity.request.UpdateLikeRequest;
 import com.vanity.mobilevanity.view.LikeViewHolder;
 
+import java.io.File;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
 
 public class BeautyTipDetailActivity extends AppCompatActivity {
 
@@ -66,6 +73,9 @@ public class BeautyTipDetailActivity extends AppCompatActivity {
 
     Intent intent;
     long id;
+
+    public static final String TAG_DETAIL = "detail";
+    public static final String DETAIL_ID = "beautytipid";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,11 +96,11 @@ public class BeautyTipDetailActivity extends AppCompatActivity {
     @OnClick(R.id.btn_like)
     public void onLikeClick() {
         String like;
-        if (likeButton.isPressed()){
+        if (likeButton.isPressed()) {
             likeButton.setBackgroundColor(Color.YELLOW);
-            like = "false";}
-        else likeButton.setBackgroundColor(Color.BLUE);
-            like = "true";
+            like = "false";
+        } else likeButton.setBackgroundColor(Color.BLUE);
+        like = "true";
 
         UpdateLikeRequest request = new UpdateLikeRequest(getBaseContext(), "" + id, like);
         NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<BeautyTip>>() {
@@ -117,6 +127,8 @@ public class BeautyTipDetailActivity extends AppCompatActivity {
         dialog.show(fm, "dialog");
     }
 
+    File updateImage = null;
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.menu_cancel) {
@@ -126,12 +138,14 @@ public class BeautyTipDetailActivity extends AppCompatActivity {
 
         if (item.getItemId() == R.id.menu_update) {
             Intent intent = new Intent(BeautyTipDetailActivity.this, BeautyTipWriteActivity.class);
+            intent.putExtra(BeautyTipWriteActivity.TAG_SEARCH_TYPE, BeautyTipWriteActivity.INDEX_TYPE_DETAIL);
+            intent.putExtra(DETAIL_ID, id);
             startActivity(intent);
             return true;
         }
 
         if (item.getItemId() == R.id.menu_delete) {
-            DeleteBeautyTipRequest request = new DeleteBeautyTipRequest(getBaseContext(), ""+id);
+            DeleteBeautyTipRequest request = new DeleteBeautyTipRequest(getBaseContext(), "" + id);
             NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<BeautyTip>>() {
                 @Override
                 public void onSuccess(NetworkRequest<NetworkResult<BeautyTip>> request, NetworkResult<BeautyTip> result) {
@@ -154,7 +168,7 @@ public class BeautyTipDetailActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         intent = getIntent();
-        id = intent.getLongExtra("beautytipid", 0);
+       id = intent.getLongExtra("beautytipid", 0);
 
         BeautyTipInfoRequest request = new BeautyTipInfoRequest(getBaseContext(), "" + id);
         NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<BeautyTip>>() {
@@ -180,4 +194,5 @@ public class BeautyTipDetailActivity extends AppCompatActivity {
             }
         });
     }
+
 }
