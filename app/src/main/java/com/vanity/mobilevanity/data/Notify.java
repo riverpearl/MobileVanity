@@ -1,14 +1,12 @@
 package com.vanity.mobilevanity.data;
 
-import java.util.Date;
-
 /**
  * Created by Tacademy on 2016-08-29.
  */
 public class Notify {
     private long id;
     private String type;
-    private long beautytipid;
+    private BeautyTipId beautyTipId;
     private long cosmeticItemId;
     private String message;
     private String date;
@@ -29,12 +27,12 @@ public class Notify {
         this.type = type;
     }
 
-    public long getBeautytipid() {
-        return beautytipid;
+    public BeautyTipId getBeautyTipId() {
+        return beautyTipId;
     }
 
-    public void setBeautytipid(long beautytipid) {
-        this.beautytipid = beautytipid;
+    public void setBeautyTipId(BeautyTipId beautyTipId) {
+        this.beautyTipId = beautyTipId;
     }
 
     public long getCosmeticItemId() {

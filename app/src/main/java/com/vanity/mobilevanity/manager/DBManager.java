@@ -59,13 +59,15 @@ public class DBManager extends SQLiteOpenHelper {
 
     }
 
-    public long insertCosmeticItem(long cid, String dateAdded, int term) {
+    public int insertCosmeticItem(long cid, String dateAdded, int term) {
         SQLiteDatabase db = getWritableDatabase();
         values.clear();
         values.put(DBContract.CosmeticItem.COLUMN_COSMETIC_ID, cid);
         values.put(DBContract.CosmeticItem.COLUMN_REG_DATE, dateAdded);
         values.put(DBContract.CosmeticItem.COLUMN_USEBY_DATE, calculateUseby(dateAdded, term));
-        return db.insert(DBContract.CosmeticItem.TABLE, null, values);
+        if (db.insert(DBContract.CosmeticItem.TABLE, null, values) == -1)
+            return -1;
+        else return 1;
     }
 
     public int updateCosmeticItem(long sid, String dateAdded, int term) {
@@ -98,20 +100,21 @@ public class DBManager extends SQLiteOpenHelper {
         return usebyDate;
     }
 
-    public long insertNotify(long cid, String message, String date) {
+    public int insertNotify(long cid, String message, String date) {
         SQLiteDatabase db = getWritableDatabase();
         values.clear();
         values.put(DBContract.Notify.COLUMN_COSMETIC_ITEM_ID, cid);
         values.put(DBContract.Notify.COLUMN_MESSAGE, message);
         values.put(DBContract.Notify.COLUMN_DATE, date);
-        return db.insert(DBContract.CosmeticItem.TABLE, null, values);
+        if (db.insert(DBContract.Notify.TABLE, null, values) == -1)
+            return -1;
+        else return 1;
     }
 
-    public Cursor selectNotify(String lastDate) {
+    public Cursor selectNotify() {
         SQLiteDatabase db = getReadableDatabase();
-        String[] columns = { DBContract.Notify.COLUMN_COSMETIC_ITEM_ID, DBContract.Notify.COLUMN_MESSAGE };
-        String orderBy = DBContract.Notify.COLUMN_DATE + " DESC";
-        Cursor c = db.query(DBContract.Notify.TABLE, columns, null, null, null, null, orderBy);
+        String[] columns = { DBContract.Notify.COLUMN_COSMETIC_ITEM_ID, DBContract.Notify.COLUMN_MESSAGE, DBContract.Notify.COLUMN_DATE };
+        Cursor c = db.query(DBContract.Notify.TABLE, columns, null, null, null, null, null);
         return c;
     }
 }

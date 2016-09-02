@@ -63,7 +63,7 @@ public class AlertActivity extends AppCompatActivity {
                     startActivity(intent);
                 } else {
                     Intent intent = new Intent(AlertActivity.this, BeautyTipDetailActivity.class);
-                    intent.putExtra("beautytipid", item.getBeautytipid());
+                    intent.putExtra("beautytipid", item.getBeautyTipId().getKey().getRaw().getId());
                     startActivity(intent);
                 }
             }
@@ -72,6 +72,8 @@ public class AlertActivity extends AppCompatActivity {
 
         LinearLayoutManager manager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         listView.setLayoutManager(manager);
+
+        int result = DBManager.getInstance().insertNotify(5068433729257472L, "usebylimitiscoming", "2016-09-01T10:10:10.123+0900");
     }
 
     @Override
@@ -94,8 +96,10 @@ public class AlertActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        Calendar aWeekAgo = Calendar.getInstance();
-        aWeekAgo.add(Calendar.DATE, -15);
+        notifyList.clear();
+
+        final Calendar aWeekAgo = Calendar.getInstance();
+        aWeekAgo.add(Calendar.DATE, -7);
 
         String date = form.format(aWeekAgo.getTime());
 
@@ -105,6 +109,51 @@ public class AlertActivity extends AppCompatActivity {
             public void onSuccess(NetworkRequest<NetworkResult<List<Notify>>> request, NetworkResult<List<Notify>> result) {
                 if (result.getCode() == 1) {
                     notifyList.addAll(result.getResult());
+                    Cursor c = DBManager.getInstance().selectNotify();
+
+                    if (c != null && c.getCount() > 0) {
+                        while(c.moveToNext()) {
+                            String tempDate = c.getString(c.getColumnIndex(DBContract.Notify.COLUMN_DATE));
+                            Calendar cal = Calendar.getInstance();
+                            SimpleDateFormat form = new SimpleDateFormat("yyyy-MM-dd'T'kk:mm:ss.SSSZ");
+
+                            try {
+                                cal.setTime(form.parse(tempDate));
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
+
+                            if (cal.before(aWeekAgo))
+                                continue;
+
+                            Notify temp = new Notify();
+                            temp.setType("useby");
+                            temp.setCosmeticItemId(c.getLong(c.getColumnIndex(DBContract.Notify.COLUMN_COSMETIC_ITEM_ID)));
+                            temp.setMessage(c.getString(c.getColumnIndex(DBContract.Notify.COLUMN_MESSAGE)));
+                            temp.setDate(c.getString(c.getColumnIndex(DBContract.Notify.COLUMN_DATE)));
+                            notifyList.add(temp);
+                        }
+                    }
+
+                    Collections.sort(notifyList, new Comparator<Notify>() {
+                        @Override
+                        public int compare(Notify noti1, Notify noti2) {
+                            Calendar noti1cal = Calendar.getInstance();
+                            Calendar noti2cal = Calendar.getInstance();
+
+                            try {
+                                noti1cal.setTime(form.parse(noti1.getDate()));
+                                noti2cal.setTime(form.parse(noti2.getDate()));
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
+
+                            return (noti1cal.before(noti2cal)) ? -1 : 1;
+                        }
+                    });
+
+                    mAdapter.clear();
+                    mAdapter.addAll(notifyList);
                 }
             }
 
@@ -114,51 +163,6 @@ public class AlertActivity extends AppCompatActivity {
             }
         });
 
-        Cursor c = DBManager.getInstance().selectNotify(date);
 
-        if (c != null && c.getCount() > 0) {
-            while(c.moveToNext()) {
-                String tempDate = c.getString(c.getColumnIndex(DBContract.Notify.COLUMN_DATE));
-                Calendar cal = Calendar.getInstance();
-                SimpleDateFormat form = new SimpleDateFormat("yyyy-MM-dd'T'kk:mm:ss.SSSZ");
-
-                try {
-                    cal.setTime(form.parse(tempDate));
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-
-                if (cal.before(Calendar.getInstance()))
-                    continue;
-
-                Notify temp = new Notify();
-                temp.setId(c.getLong(c.getColumnIndex(DBContract.Notify._ID)));
-                temp.setType("like");
-                temp.setCosmeticItemId(c.getLong(c.getColumnIndex(DBContract.Notify.COLUMN_COSMETIC_ITEM_ID)));
-                temp.setMessage(c.getString(c.getColumnIndex(DBContract.Notify.COLUMN_MESSAGE)));
-                temp.setDate(c.getString(c.getColumnIndex(DBContract.Notify.COLUMN_DATE)));
-                notifyList.add(temp);
-            }
-        }
-
-        Collections.sort(notifyList, new Comparator<Notify>() {
-            @Override
-            public int compare(Notify noti1, Notify noti2) {
-                Calendar noti1cal = Calendar.getInstance();
-                Calendar noti2cal = Calendar.getInstance();
-
-                try {
-                    noti1cal.setTime(form.parse(noti1.getDate()));
-                    noti2cal.setTime(form.parse(noti2.getDate()));
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-
-                return (noti1cal.before(noti2cal)) ? -1 : 1;
-            }
-        });
-
-        notifyList.clear();
-        mAdapter.addAll(notifyList);
     }
 }
