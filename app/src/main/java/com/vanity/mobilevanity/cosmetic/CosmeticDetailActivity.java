@@ -1,6 +1,7 @@
 package com.vanity.mobilevanity.cosmetic;
 
 import android.content.Intent;
+import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -28,11 +29,13 @@ import com.vanity.mobilevanity.request.ProductListRequest;
 import com.vanity.mobilevanity.request.SaleInfoRequest;
 import com.vanity.mobilevanity.sale.SaleFragment;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -70,15 +73,11 @@ public class CosmeticDetailActivity extends AppCompatActivity {
     @BindView(R.id.text_usebydate_date)
     TextView useByDateDateView;
 
-    @BindView(R.id.text_brand_name)
-    TextView brandNameView;
-
     @BindView(R.id.text_start_sale)
     TextView saleView;
 
     @BindView(R.id.text_capacity)
     TextView capacityView;
-
 
     long id;
 
@@ -95,15 +94,13 @@ public class CosmeticDetailActivity extends AppCompatActivity {
             @Override
             public void onSuccess(NetworkRequest<NetworkResult<List<Cosmetic>>> request, NetworkResult<List<Cosmetic>> result) {
                 List<Cosmetic> cosmetics = result.getResult();
-                for (int i = 0; i < cosmetics.size(); i++) {
-                    Glide.with(cosmeticImage.getContext())
-                            .load(cosmetics.get(i).getImage())
-                            .into(cosmeticImage);
-                    cosmeticView.setText(cosmetics.get(i).getProduct().getName());
-                    brandView.setText(cosmetics.get(i).getProduct().getBrand().getName());
-                    capacityView.setText("" + cosmetics.get(i).getCapacity());
-                    unitView.setText("" + cosmetics.get(i).getUnit());
-                }
+                Glide.with(cosmeticImage.getContext())
+                        .load(cosmetics.get(0).getImage())
+                        .into(cosmeticImage);
+                cosmeticView.setText(cosmetics.get(0).getProduct().getName());
+                brandView.setText(cosmetics.get(0).getProduct().getBrand().getName());
+                capacityView.setText("" + cosmetics.get(0).getCapacity());
+                unitView.setText("" + cosmetics.get(0).getUnit());
             }
 
             @Override
@@ -122,27 +119,46 @@ public class CosmeticDetailActivity extends AppCompatActivity {
             public void onSuccess(NetworkRequest<NetworkResult<List<Sale>>> request, NetworkResult<List<Sale>> result) {
                 List<Sale> saleList = result.getResult();
                 StringBuffer buffer = new StringBuffer();
+                StringBuffer registerYearBuffer = new StringBuffer();
+                StringBuffer registerMonthBuffer = new StringBuffer();
+                StringBuffer registerDateBuffer = new StringBuffer();
+                StringBuffer usebyYearBuffer = new StringBuffer();
+                StringBuffer usebyMonthBuffer = new StringBuffer();
+
                 SimpleDateFormat form = new SimpleDateFormat("yyyy-MM-dd'T'kk:mm:ss.SSSZ");
 
-                for (int i = 0; i < saleList.size(); i++) {
+                try {
+                    Calendar startDate = Calendar.getInstance();
+                    startDate.setTime(form.parse(saleList.get(0).getStartDay()));
 
-                    try {
-                        Calendar startDate = Calendar.getInstance();
-                        startDate.setTime(form.parse(saleList.get(i).getStartDay()));
+                    Calendar endDate = Calendar.getInstance();
+                    endDate.setTime(form.parse(saleList.get(0).getEndDay()));
 
-                        Calendar endDate = Calendar.getInstance();
-                        endDate.setTime(form.parse(saleList.get(i).getEndDay()));
+                    String start = startDate.get(Calendar.YEAR) + "/" + startDate.get(Calendar.MONTH) + "/" + startDate.get(Calendar.DATE);
+                    String end = endDate.get(Calendar.YEAR) + "/" + endDate.get(Calendar.MONTH) + "/" + endDate.get(Calendar.DATE);
+                    String registerYear = startDate.get(Calendar.YEAR) + "";
+                    String registerMonth = startDate.get(Calendar.MONTH) + "";
+                    String registerDate = startDate.get(Calendar.DATE) + "";
+                    String usebyYear = startDate.get(Calendar.YEAR) + 1 + "";
+                    String usebyMonth = startDate.get(Calendar.MONTH) + 6 + "";
 
-                        String start = startDate.get(Calendar.YEAR) + "/" + startDate.get(Calendar.MONTH) + "/" + startDate.get(Calendar.DATE);
-                        String end = endDate.get(Calendar.YEAR) + "/" + endDate.get(Calendar.MONTH) + "/" + endDate.get(Calendar.DATE);
+                    buffer.append(" 세일 : " + start + " ~ " + end + "\n");
+                    registerYearBuffer.append(registerYear);
+                    registerMonthBuffer.append(registerMonth);
+                    registerDateBuffer.append(registerDate);
+                    usebyYearBuffer.append(usebyYear);
+                    usebyMonthBuffer.append(usebyMonth);
 
-                        buffer.append(" 세일 : " + start + " ~ " + end + "\n");
-
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-                    saleView.setText(buffer);
+                } catch (ParseException e) {
+                    e.printStackTrace();
                 }
+                saleView.setText(buffer);
+                registerYearView.setText(registerYearBuffer);
+                registerMonthView.setText(registerMonthBuffer);
+                registerDateView.setText(registerDateBuffer);
+                useByDateYearView.setText(usebyYearBuffer);
+                useByDateMonthView.setText(usebyMonthBuffer);
+                useByDateDateView.setText(registerDateBuffer);
             }
 
             @Override
@@ -152,7 +168,6 @@ public class CosmeticDetailActivity extends AppCompatActivity {
         });
     }
 
-
     @OnClick(R.id.text_start_sale)
     public void onSaleClick() {
         Intent intent = new Intent(CosmeticDetailActivity.this, MainActivity.class);
@@ -160,11 +175,6 @@ public class CosmeticDetailActivity extends AppCompatActivity {
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }
-//
-//    @OnClick(R.id.btn_saleinfo)
-//    public void onSaleInfoClick(View view) {
-//
-//    }
 
     @OnClick(R.id.image_register)
     public void onRegisterButtonClick(View view) {
