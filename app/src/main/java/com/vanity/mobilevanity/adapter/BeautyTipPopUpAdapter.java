@@ -24,12 +24,12 @@ public class BeautyTipPopUpAdapter extends RecyclerView.Adapter<BeautyTipPopUpVi
     }
 
     public void add(Comment item) {
-        items.add(item);
+        this.items.add(item);
         notifyDataSetChanged();
     }
 
     public void addAll(List<Comment> items) {
-        items.addAll(items);
+        this.items.addAll(items);
         notifyDataSetChanged();
     }
 

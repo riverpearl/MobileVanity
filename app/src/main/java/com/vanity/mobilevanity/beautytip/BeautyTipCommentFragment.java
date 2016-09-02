@@ -96,6 +96,8 @@ public class BeautyTipCommentFragment extends DialogFragment {
                 Toast.makeText(getContext(), "fail", Toast.LENGTH_SHORT).show();
             }
         });
+
+        onStart();
     }
 
     @Override

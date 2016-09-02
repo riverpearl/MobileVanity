@@ -61,7 +61,7 @@ public class BeautyTipFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_beauty_tip, container, false);
@@ -154,7 +154,6 @@ public class BeautyTipFragment extends Fragment {
         listView.setLayoutManager(manager);
 
         init();
-
         return view;
     }
 
