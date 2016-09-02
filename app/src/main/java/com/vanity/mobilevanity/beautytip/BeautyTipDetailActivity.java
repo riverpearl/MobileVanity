@@ -72,7 +72,6 @@ public class BeautyTipDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_beauty_tip_detail);
         ButterKnife.bind(this);
-
     }
 
     @Override
@@ -161,13 +160,18 @@ public class BeautyTipDetailActivity extends AppCompatActivity {
         NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<BeautyTip>>() {
             @Override
             public void onSuccess(NetworkRequest<NetworkResult<BeautyTip>> request, NetworkResult<BeautyTip> result) {
-                BeautyTip beautyTip = result.getResult();
+                if (result.getCode() == 1) {
+                    BeautyTip beautyTip = result.getResult();
 
-                titleView.setText(beautyTip.getTitle());
-                contentView.setText(beautyTip.getContent());
-                Glide.with(beautytipImage.getContext())
-                        .load(beautyTip.getPreviewImage())
-                        .into(beautytipImage);
+                    titleView.setText(beautyTip.getTitle());
+                    contentView.setText(beautyTip.getContent());
+                    Glide.with(beautytipImage.getContext())
+                            .load(beautyTip.getPreviewImage())
+                            .into(beautytipImage);
+                } else {
+                    Toast.makeText(BeautyTipDetailActivity.this, "삭제된 게시물입니다.", Toast.LENGTH_SHORT).show();
+                    finish();
+                }
             }
 
             @Override
@@ -175,56 +179,5 @@ public class BeautyTipDetailActivity extends AppCompatActivity {
                 Toast.makeText(BeautyTipDetailActivity.this, "fail", Toast.LENGTH_SHORT).show();
             }
         });
-    }
-
-    private void checkPermission() {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                titleView.setText("permission");
-                contentView.setText("permission .....");
-                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        requestPermission();
-                    }
-                });
-                builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
-                    @Override
-                    public void onCancel(DialogInterface dialogInterface) {
-                        finishNoPermission();
-                    }
-                });
-
-                builder.create().show();
-                return;
-            }
-            requestPermission();
-        }
-    }
-
-    private void finishNoPermission() {
-        Toast.makeText(this, "no permission", Toast.LENGTH_SHORT).show();
-        finish();
-    }
-
-    private static final int RC_PERMISSION = 100;
-
-    private void requestPermission() {
-        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, RC_PERMISSION);
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == RC_PERMISSION) {
-            if (grantResults != null && grantResults.length > 0
-                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(this, "grant permission", Toast.LENGTH_SHORT).show();
-            } else {
-                finishNoPermission();
-            }
-        }
     }
 }

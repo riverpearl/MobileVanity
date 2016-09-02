@@ -35,7 +35,7 @@ public class AlertAdapter extends RecyclerView.Adapter<AlertListViewHolder> impl
 
     @Override
     public AlertListViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_like, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_alert_item, parent, false);
         AlertListViewHolder holder = new AlertListViewHolder(view);
         holder.setOnAlertItemClickListener(this);
         return holder;
