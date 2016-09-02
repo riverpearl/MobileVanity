@@ -46,7 +46,6 @@ public class CosmeticListActivity extends AppCompatActivity {
     int category;
 
     @Override
-
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cosmetic_list);
@@ -60,7 +59,16 @@ public class CosmeticListActivity extends AppCompatActivity {
             @Override
             public void onAdapterItemClick(View view, CosmeticItem data, int position) {
                 Intent intent = new Intent(CosmeticListActivity.this, CosmeticDetailActivity.class);
-                intent.putExtra("productid", data.getCosmetic().getProduct().getId());
+                intent.putExtra(CosmeticDetailActivity.TAG_COSMETIC_ITEM_ID, data.getId());
+                intent.putExtra(CosmeticDetailActivity.TAG_COSMETIC_ID, data.getCosmetic().getId());
+                intent.putExtra(CosmeticDetailActivity.TAG_PRODUCT_ID, data.getCosmetic().getProduct().getId());
+                intent.putExtra(CosmeticDetailActivity.TAG_IMAGE, data.getCosmetic().getImage());
+                intent.putExtra(CosmeticDetailActivity.TAG_BRAND, data.getCosmetic().getProduct().getBrand().getName());
+                intent.putExtra(CosmeticDetailActivity.TAG_COLOR_CODE, data.getCosmetic().getColorCode());
+                intent.putExtra(CosmeticDetailActivity.TAG_COLOR_NAME, data.getCosmetic().getColorName());
+                intent.putExtra(CosmeticDetailActivity.TAG_NAME, data.getCosmetic().getProduct().getName());
+                intent.putExtra(CosmeticDetailActivity.TAG_REG_DATE, data.getDateAdded());
+                intent.putExtra(CosmeticDetailActivity.TAG_USEBY, data.getCosmeticTerm());
                 startActivity(intent);
             }
         });
