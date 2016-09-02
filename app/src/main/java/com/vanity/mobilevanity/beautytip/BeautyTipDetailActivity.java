@@ -73,6 +73,7 @@ public class BeautyTipDetailActivity extends AppCompatActivity {
 
     Intent intent;
     long id;
+    boolean like;
 
     public static final String TAG_DETAIL = "detail";
     public static final String DETAIL_ID = "beautytipid";
@@ -95,19 +96,18 @@ public class BeautyTipDetailActivity extends AppCompatActivity {
 
     @OnClick(R.id.btn_like)
     public void onLikeClick() {
-        String like;
-        if (likeButton.isPressed()) {
-            likeButton.setBackgroundColor(Color.YELLOW);
-            like = "false";
-        } else likeButton.setBackgroundColor(Color.BLUE);
-        like = "true";
+        String isLike;
+        if (like) isLike = "false";
+        else isLike = "true";
 
-        UpdateLikeRequest request = new UpdateLikeRequest(getBaseContext(), "" + id, like);
+        id = intent.getLongExtra("beautytipid", 0);
+
+        UpdateLikeRequest request = new UpdateLikeRequest(getBaseContext(), "" + id, isLike);
         NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<BeautyTip>>() {
             @Override
             public void onSuccess(NetworkRequest<NetworkResult<BeautyTip>> request, NetworkResult<BeautyTip> result) {
                 BeautyTip beautyTip = result.getResult();
-                // 여기 셋(again)
+
             }
 
             @Override
@@ -168,7 +168,7 @@ public class BeautyTipDetailActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         intent = getIntent();
-       id = intent.getLongExtra("beautytipid", 0);
+        id = intent.getLongExtra("beautytipid", 0);
 
         BeautyTipInfoRequest request = new BeautyTipInfoRequest(getBaseContext(), "" + id);
         NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<BeautyTip>>() {
@@ -182,6 +182,8 @@ public class BeautyTipDetailActivity extends AppCompatActivity {
                     Glide.with(beautytipImage.getContext())
                             .load(beautyTip.getPreviewImage())
                             .into(beautytipImage);
+
+                    like = beautyTip.isLike();
                 } else {
                     Toast.makeText(BeautyTipDetailActivity.this, "삭제된 게시물입니다.", Toast.LENGTH_SHORT).show();
                     finish();
