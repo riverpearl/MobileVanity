@@ -14,7 +14,7 @@ import java.util.List;
  * Created by riverpearl on 2016-08-24.
  */
 public class LikeAdapter extends RecyclerView.Adapter<LikeViewHolder>
-    implements LikeViewHolder.OnLikeItemClickListener {
+    implements LikeViewHolder.OnLikeItemClickListener, LikeViewHolder.OnLikeItemLongClickListener {
     private List<BeautyTip> items = new ArrayList<>();
 
     public void clear() {
@@ -32,11 +32,17 @@ public class LikeAdapter extends RecyclerView.Adapter<LikeViewHolder>
         notifyDataSetChanged();
     }
 
+    public void remove(int position) {
+        items.remove(position);
+        notifyDataSetChanged();
+    }
+
     @Override
     public LikeViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_like, parent, false);
         LikeViewHolder holder = new LikeViewHolder(view);
         holder.setOnLikeItemClickListener(this);
+        holder.setOnLikeItemLongClickListener(this);
         return holder;
     }
 
@@ -63,5 +69,20 @@ public class LikeAdapter extends RecyclerView.Adapter<LikeViewHolder>
     public void onLikeItemClick(View view, BeautyTip data, int position) {
         if (mListener != null)
             mListener.onAdapterItemClick(view, data, position);
+    }
+
+    public interface OnAdapterItemLongClickListener {
+        public void onAdapterLongItemClick(View view, BeautyTip data, int position);
+    }
+
+    OnAdapterItemLongClickListener longClickListener;
+    public void setOnAdapterItemLongClickListener(OnAdapterItemLongClickListener listener) {
+        longClickListener = listener;
+    }
+
+    @Override
+    public void onLikeItemLongClick(View view, BeautyTip data, int position) {
+        if (longClickListener != null)
+            longClickListener.onAdapterLongItemClick(view, data, position);
     }
 }

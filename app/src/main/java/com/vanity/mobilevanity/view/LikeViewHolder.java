@@ -32,6 +32,17 @@ public class LikeViewHolder extends RecyclerView.ViewHolder {
                     mListener.onLikeItemClick(view, data, getAdapterPosition());
             }
         });
+
+        itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                if (longClickListener != null) {
+                    longClickListener.onLikeItemLongClick(view, data, getAdapterPosition());
+                    return true;
+                }
+                return false;
+            }
+        });
     }
 
     public void setData(BeautyTip data) {
@@ -46,5 +57,14 @@ public class LikeViewHolder extends RecyclerView.ViewHolder {
     OnLikeItemClickListener mListener;
     public void setOnLikeItemClickListener(OnLikeItemClickListener listener) {
         mListener = listener;
+    }
+
+    public interface  OnLikeItemLongClickListener {
+        public void onLikeItemLongClick(View view, BeautyTip data, int position);
+    }
+
+    OnLikeItemLongClickListener longClickListener;
+    public void setOnLikeItemLongClickListener(OnLikeItemLongClickListener listener) {
+        longClickListener = listener;
     }
 }

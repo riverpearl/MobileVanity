@@ -1,6 +1,8 @@
 package com.vanity.mobilevanity.mypage;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -18,6 +20,8 @@ import com.vanity.mobilevanity.data.NetworkResult;
 import com.vanity.mobilevanity.manager.NetworkManager;
 import com.vanity.mobilevanity.manager.NetworkRequest;
 import com.vanity.mobilevanity.request.LikeBeautyTipListRequest;
+import com.vanity.mobilevanity.request.UpdateLikeRequest;
+import com.vanity.mobilevanity.request.UpdateMyInfoRequest;
 
 import java.util.List;
 
@@ -44,6 +48,30 @@ public class LikeActivity extends AppCompatActivity {
             public void onAdapterItemClick(View view, BeautyTip data, int position) {
                 Intent intent = new Intent(LikeActivity.this, BeautyTipDetailActivity.class);
                 startActivity(intent);
+            }
+        });
+        mAdapter.setOnAdapterItemLongClickListener(new LikeAdapter.OnAdapterItemLongClickListener() {
+            @Override
+            public void onAdapterLongItemClick(View view, BeautyTip data, int position) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(LikeActivity.this);
+                builder.setTitle("좋아요 취소");
+                builder.setMessage("취소하시겠습니까?");
+
+                final long id = data.getId();
+                final int pos = position;
+                builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        updateLikeRequest(id, pos);
+                    }
+                });
+                builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                });
+                builder.create().show();
             }
         });
 
@@ -77,14 +105,36 @@ public class LikeActivity extends AppCompatActivity {
         NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<List<BeautyTip>>>() {
             @Override
             public void onSuccess(NetworkRequest<NetworkResult<List<BeautyTip>>> request, NetworkResult<List<BeautyTip>> result) {
-                List<BeautyTip> tips = result.getResult();
-                mAdapter.clear();
-                mAdapter.addAll(tips);
+                if (result.getCode() == 1) {
+                    List<BeautyTip> tips = result.getResult();
+                    mAdapter.clear();
+                    mAdapter.addAll(tips);
+                }
             }
 
             @Override
             public void onFail(NetworkRequest<NetworkResult<List<BeautyTip>>> request, int errorCode, String errorMessage, Throwable e) {
                 Toast.makeText(LikeActivity.this, errorCode + " : " + errorMessage, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void updateLikeRequest(long id, int position) {
+        final int pos = position;
+
+        UpdateLikeRequest request = new UpdateLikeRequest(this, id + "", "false");
+        NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<BeautyTip>>() {
+            @Override
+            public void onSuccess(NetworkRequest<NetworkResult<BeautyTip>> request, NetworkResult<BeautyTip> result) {
+                if (result.getCode() == 1) {
+                    Toast.makeText(LikeActivity.this, "좋아요가 취소되었습니다.", Toast.LENGTH_SHORT).show();
+                    mAdapter.remove(pos);
+                }
+            }
+
+            @Override
+            public void onFail(NetworkRequest<NetworkResult<BeautyTip>> request, int errorCode, String errorMessage, Throwable e) {
+
             }
         });
     }

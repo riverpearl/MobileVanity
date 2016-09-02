@@ -50,7 +50,6 @@ public class MyBeautyTipActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
         mAdapter.setOnAdapterItemLongClickListener(new MyBeautyTipAdapter.OnAdapterItemLongClickListener() {
             @Override
             public void onAdapterItemLongClick(View view, BeautyTip data, int position) {
@@ -75,6 +74,7 @@ public class MyBeautyTipActivity extends AppCompatActivity {
                 builder.create().show();
             }
         });
+
         listView.setAdapter(mAdapter);
 
         LinearLayoutManager manager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
