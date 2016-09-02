@@ -16,7 +16,7 @@ import java.util.List;
  * Created by Tacademy on 2016-08-24.
  */
 public class MyBeautyTipAdapter extends RecyclerView.Adapter<MyBeautyTipViewHolder>
-    implements MyBeautyTipViewHolder.OnMyBeautyTipItemClickListener {
+    implements MyBeautyTipViewHolder.OnMyBeautyTipItemClickListener, MyBeautyTipViewHolder.OnMyBeautyTipItemLongClickListener {
     private List<BeautyTip> items = new ArrayList<>();
 
     public void clear() {
@@ -44,6 +44,7 @@ public class MyBeautyTipAdapter extends RecyclerView.Adapter<MyBeautyTipViewHold
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_my_beauty_tip, parent, false);
         MyBeautyTipViewHolder holder = new MyBeautyTipViewHolder(view);
         holder.setOnMyBeautyTipItemClickListener(this);
+        holder.setOnMyBeautyTipItemLongClickListener(this);
         return holder;
     }
 
@@ -70,5 +71,20 @@ public class MyBeautyTipAdapter extends RecyclerView.Adapter<MyBeautyTipViewHold
     public void onMyBeautyTipItemClick(View view, BeautyTip data, int position) {
         if (mListener != null)
             mListener.onAdapterItemClick(view, data, position);
+    }
+
+    public interface OnAdapterItemLongClickListener {
+        public void onAdapterItemLongClick(View view, BeautyTip data, int position);
+    }
+
+    OnAdapterItemLongClickListener longClickListener;
+    public void setOnAdapterItemLongClickListener(OnAdapterItemLongClickListener listener) {
+        longClickListener = listener;
+    }
+
+    @Override
+    public void onMyBeautyTipItemLongClick(View view, BeautyTip data, int position) {
+        if (mListener != null)
+            longClickListener.onAdapterItemLongClick(view, data, position);
     }
 }

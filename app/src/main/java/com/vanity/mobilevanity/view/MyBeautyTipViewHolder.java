@@ -1,7 +1,10 @@
 package com.vanity.mobilevanity.view;
 
 import android.support.v7.widget.RecyclerView;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.vanity.mobilevanity.R;
@@ -31,6 +34,17 @@ public class MyBeautyTipViewHolder extends RecyclerView.ViewHolder {
                     mListener.onMyBeautyTipItemClick(view, data, getAdapterPosition());
             }
         });
+
+        itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                if (longClickListener != null) {
+                    longClickListener.onMyBeautyTipItemLongClick(view, data, getAdapterPosition());
+                    return true;
+                }
+                return false;
+            }
+        });
     }
 
     public void setData(BeautyTip data) {
@@ -46,5 +60,14 @@ public class MyBeautyTipViewHolder extends RecyclerView.ViewHolder {
     OnMyBeautyTipItemClickListener mListener;
     public void setOnMyBeautyTipItemClickListener(OnMyBeautyTipItemClickListener listener) {
         mListener = listener;
+    }
+
+    public interface OnMyBeautyTipItemLongClickListener {
+        public void onMyBeautyTipItemLongClick(View view, BeautyTip data, int position);
+    }
+
+    OnMyBeautyTipItemLongClickListener longClickListener;
+    public void setOnMyBeautyTipItemLongClickListener(OnMyBeautyTipItemLongClickListener listener) {
+        longClickListener = listener;
     }
 }
