@@ -152,6 +152,7 @@ public class CosmeticDetailActivity extends AppCompatActivity {
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
+
                 saleView.setText(buffer);
                 registerYearView.setText(registerYearBuffer);
                 registerMonthView.setText(registerMonthBuffer);

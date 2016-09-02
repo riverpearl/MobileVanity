@@ -9,6 +9,7 @@ import com.bumptech.glide.Glide;
 import com.vanity.mobilevanity.R;
 import com.vanity.mobilevanity.data.Cosmetic;
 import com.vanity.mobilevanity.data.CosmeticItem;
+import com.vanity.mobilevanity.util.DateCalculator;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -61,10 +62,16 @@ public class MyCosmeticViewHolder extends RecyclerView.ViewHolder {
         colorNameView.setText(item.getCosmetic().getColorName());
         productNameView.setText(item.getCosmetic().getProduct().getName());
         brandNameView.setText(item.getCosmetic().getProduct().getBrand().getName());
-        ddayView.setText("" + item.getCosmetic().getProduct().getUseBy());
+
+        DateCalculator calculator = new DateCalculator();
+        ddayView.setText("" + calculator.calculateDDay(item.getDateAdded(), item.getCosmetic().getProduct().getUseBy()));
+
         Glide.with(cosmeticView.getContext())
                 .load(item.getCosmetic().getImage())
                 .into(cosmeticView);
+
+        if (!calculator.isNew(item.getDateAdded()))
+            newView.setVisibility(View.GONE);
     }
 
     public interface OnCosmeticListItemClickListener {

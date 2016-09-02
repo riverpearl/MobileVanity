@@ -43,6 +43,7 @@ public class CosmeticListActivity extends AppCompatActivity {
     RecyclerView listView;
 
     CosmeticAdapter mAdapter;
+    int category;
 
     @Override
 
@@ -52,7 +53,7 @@ public class CosmeticListActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         Intent intent = getIntent();
-        final int category = intent.getIntExtra(HomeFragment.TAG_CATEGORY, 0);
+        category = intent.getIntExtra(HomeFragment.TAG_CATEGORY, 0);
 
         mAdapter = new CosmeticAdapter();
         mAdapter.setOnAdapterItemClickListener(new CosmeticAdapter.OnAdapterItemClickListener() {
@@ -68,12 +69,12 @@ public class CosmeticListActivity extends AppCompatActivity {
         LinearLayoutManager manager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         listView.setLayoutManager(manager);
 
-        initTab(category);
+        initTab();
         tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 mAdapter.clear();
-                onCosmetic(category);
+                getCosmeticItemList(tab.getPosition());
             }
 
             @Override
@@ -84,20 +85,21 @@ public class CosmeticListActivity extends AppCompatActivity {
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
                 mAdapter.clear();
-                onCosmetic(category);
+                getCosmeticItemList(tab.getPosition());
             }
         });
     }
 
-    public void onCosmetic(int category) {
-        int tabPos = tabs.getSelectedTabPosition() + 1;
-
-        CosmeticItemsRequest request = new CosmeticItemsRequest(CosmeticListActivity.this, ""+category, ""+tabPos);
+    public void getCosmeticItemList(int tabPos) {
+        CosmeticItemsRequest request = new CosmeticItemsRequest(CosmeticListActivity.this, "" + category, "" + (tabPos + 1));
         NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<List<CosmeticItem>>>() {
             @Override
             public void onSuccess(NetworkRequest<NetworkResult<List<CosmeticItem>>> request, NetworkResult<List<CosmeticItem>> result) {
-                List<CosmeticItem> cosmetic = result.getResult();
-                mAdapter.addAll(cosmetic);
+                if (result.getCode() == 1) {
+                    List<CosmeticItem> cosmetic = result.getResult();
+                    mAdapter.clear();
+                    mAdapter.addAll(cosmetic);
+                }
             }
 
             @Override
@@ -107,7 +109,7 @@ public class CosmeticListActivity extends AppCompatActivity {
         });
     }
 
-    private void initTab(int category) {
+    private void initTab() {
         List<String> tabName = new ArrayList<>();
         switch (category) {
             case Constant.INDEX_CATEGORY_EYE:
@@ -177,5 +179,11 @@ public class CosmeticListActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        getCosmeticItemList(tabs.getSelectedTabPosition());
     }
 }
