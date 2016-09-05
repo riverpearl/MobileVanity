@@ -59,13 +59,11 @@ public class AlertActivity extends AppCompatActivity {
             public void onAdapterItemClick(View view, Notify item, int position) {
                 if (item.getType().equals("useby")) {
                     Intent intent = new Intent(AlertActivity.this, CosmeticDetailActivity.class);
-                    intent.putExtra(CosmeticDetailActivity.TAG_COSMETIC_ITEM_ID, item.getId());
-                    intent.putExtra(CosmeticDetailActivity.TAG_COSMETIC_ID, item.getCosmeticItemId());
-                    intent.putExtra("cosmeticitemid", item.getCosmeticItemId());
+                    intent.putExtra(CosmeticDetailActivity.TAG_COSMETIC_ITEM_ID, item.getCosmeticItemId());
                     startActivity(intent);
                 } else {
                     Intent intent = new Intent(AlertActivity.this, BeautyTipDetailActivity.class);
-                    intent.putExtra("beautytipid", item.getBeautyTipId().getKey().getRaw().getId());
+                    intent.putExtra(BeautyTipDetailActivity.DETAIL_ID, item.getBeautyTipId().getKey().getRaw().getId());
                     startActivity(intent);
                 }
             }
@@ -75,7 +73,7 @@ public class AlertActivity extends AppCompatActivity {
         LinearLayoutManager manager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         listView.setLayoutManager(manager);
 
-        //int result = DBManager.getInstance().insertNotify(5068433729257472L, "usebylimitiscoming", "2016-09-01T10:10:10.123+0900");
+        int result = DBManager.getInstance().insertNotify(5161363399770112L, "usebylimitiscoming", "2016-09-01T10:10:10.123+0900");
     }
 
     @Override

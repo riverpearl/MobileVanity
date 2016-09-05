@@ -26,6 +26,7 @@ import com.vanity.mobilevanity.data.Sale;
 import com.vanity.mobilevanity.manager.DBManager;
 import com.vanity.mobilevanity.manager.NetworkManager;
 import com.vanity.mobilevanity.manager.NetworkRequest;
+import com.vanity.mobilevanity.request.CosmeticItemRequest;
 import com.vanity.mobilevanity.request.CosmeticItemsRequest;
 import com.vanity.mobilevanity.request.CosmeticListRequest;
 import com.vanity.mobilevanity.request.ProductListRequest;
@@ -91,68 +92,15 @@ public class CosmeticDetailActivity extends AppCompatActivity implements DatePic
     @BindView(R.id.btn_cancel)
     Button cancelView;
 
-    private Intent intent;
+    private CosmeticItem cosmeticItem;
 
     public static final String TAG_COSMETIC_ITEM_ID = "cosmeticitemid";
-    public static final String TAG_COSMETIC_ID = "cosmeticid";
-    public static final String TAG_PRODUCT_ID = "productid";
-    public static final String TAG_IMAGE = "image";
-    public static final String TAG_BRAND = "brandname";
-    public static final String TAG_COLOR_CODE = "colorcode";
-    public static final String TAG_COLOR_NAME = "colorname";
-    public static final String TAG_NAME = "name";
-    public static final String TAG_REG_DATE = "regdate";
-    public static final String TAG_USEBY = "useby";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cosmetic_detail);
         ButterKnife.bind(this);
-
-        intent = getIntent();
-        setCosmeticView();
-        setDateView(intent.getStringExtra(TAG_REG_DATE), intent.getIntExtra(TAG_USEBY, 0));
-        getSaleInfoList(intent.getLongExtra(TAG_PRODUCT_ID, 0));
-
-        updateView.setVisibility(View.GONE);
-        cancelView.setVisibility(View.GONE);
-    }
-
-    public void getSaleInfoList(long productid) {
-        if (productid == 0)
-            return;
-
-        String type = SaleInfoRequest.TAG_TYPE_PRODUCT;
-        SaleInfoRequest saleRequest = new SaleInfoRequest(getBaseContext(), type, "" + productid);
-        NetworkManager.getInstance().getNetworkData(saleRequest, new NetworkManager.OnResultListener<NetworkResult<List<Sale>>>() {
-            @Override
-            public void onSuccess(NetworkRequest<NetworkResult<List<Sale>>> request, NetworkResult<List<Sale>> result) {
-                if (result.getCode() == 1) {
-                    List<Sale> sales = result.getResult();
-                    DateCalculator calculator = new DateCalculator();
-                    StringBuffer buffer = new StringBuffer();
-
-                    for (int i = 0; i < sales.size(); i++) {
-                        Calendar startDay = calculator.StrToCal(sales.get(i).getStartDay());
-                        Calendar endDay = calculator.StrToCal(sales.get(i).getEndDay());
-
-                        String title = sales.get(i).getTitle();
-                        String start = startDay.get(Calendar.YEAR) + "/" + startDay.get(Calendar.MONTH) + "/" + startDay.get(Calendar.DATE);
-                        String end = endDay.get(Calendar.YEAR) + "/" + endDay.get(Calendar.MONTH) + "/" + endDay.get(Calendar.DATE);
-
-                        buffer.append(title + " : " + start + " ~ " + end + "\n");
-                    }
-
-                    saleView.setText(buffer.toString());
-                }
-            }
-
-            @Override
-            public void onFail(NetworkRequest<NetworkResult<List<Sale>>> request, int errorCode, String errorMessage, Throwable e) {
-                Toast.makeText(CosmeticDetailActivity.this, "fail", Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
     @OnClick(R.id.text_sale_info)
@@ -186,21 +134,17 @@ public class CosmeticDetailActivity extends AppCompatActivity implements DatePic
         calendar.set(Calendar.MONTH, monthOfYear);
         calendar.set(Calendar.DATE, dayOfMonth);
 
-        registerYearView.setText(year + "");
-        registerMonthView.setText((monthOfYear + 1) + "");
-        registerDayView.setText(dayOfMonth + "");
+        DateCalculator calculator = new DateCalculator();
+        String dateAdded = calculator.CalToStr(calendar);
 
-        calendar.add(Calendar.DATE, intent.getIntExtra(TAG_USEBY, 0));
-        usebyYearView.setText(calendar.get(Calendar.YEAR) + "");
-        usebyMonthView.setText((calendar.get(Calendar.MONTH) + 1) + "");
-        usebyDayView.setText(calendar.get(Calendar.DATE) + "");
+        setDateView(dateAdded, cosmeticItem.getCosmeticTerm());
     }
 
     @OnClick(R.id.btn_update)
     public void onUpdateClick(View view) {
-        long ciid = intent.getLongExtra(TAG_COSMETIC_ITEM_ID, 0);
-        long cid = intent.getLongExtra(TAG_COSMETIC_ID, 0);
-        int term = intent.getIntExtra(TAG_USEBY, 0);
+        long ciid = cosmeticItem.getId();
+        long cid = cosmeticItem.getCosmetic().getId();
+        int term = cosmeticItem.getCosmeticTerm();
 
         Calendar cal = Calendar.getInstance();
         cal.set(Calendar.YEAR, Integer.parseInt(registerYearView.getText().toString()));
@@ -215,15 +159,17 @@ public class CosmeticDetailActivity extends AppCompatActivity implements DatePic
             @Override
             public void onSuccess(NetworkRequest<NetworkResult<CosmeticItem>> request, NetworkResult<CosmeticItem> result) {
                 if (result.getCode() == 1) {
+                    cosmeticItem = result.getResult();
+
+                    setDateView(cosmeticItem.getDateAdded(), cosmeticItem.getCosmeticTerm());
+                    long id = cosmeticItem.getId();
+                    String dateAdded = cosmeticItem.getDateAdded();
+                    int term = cosmeticItem.getCosmeticTerm();
+                    DBManager.getInstance().updateCosmeticItem(id, dateAdded, term);
+
+                    Toast.makeText(CosmeticDetailActivity.this, "수정되었습니다.", Toast.LENGTH_SHORT).show();
                     updateView.setVisibility(View.GONE);
                     cancelView.setVisibility(View.GONE);
-                    Toast.makeText(CosmeticDetailActivity.this, "수정되었습니다.", Toast.LENGTH_SHORT).show();
-                    CosmeticItem item = result.getResult();
-                    setDateView(item.getDateAdded(), item.getCosmeticTerm());
-                    long id = item.getId();
-                    String dateAdded = item.getDateAdded();
-                    int term = item.getCosmeticTerm();
-                    DBManager.getInstance().updateCosmeticItem(id, dateAdded, term);
                 }
             }
 
@@ -238,7 +184,7 @@ public class CosmeticDetailActivity extends AppCompatActivity implements DatePic
     public void onCancelClick(View view) {
         updateView.setVisibility(View.GONE);
         cancelView.setVisibility(View.GONE);
-        setDateView(intent.getStringExtra(TAG_REG_DATE), intent.getIntExtra(TAG_USEBY, 0));
+        setDateView(cosmeticItem.getDateAdded(), cosmeticItem.getCosmeticTerm());
     }
 
     @Override
@@ -257,12 +203,47 @@ public class CosmeticDetailActivity extends AppCompatActivity implements DatePic
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        Intent intent = getIntent();
+        long cosmeticItemId = intent.getLongExtra(TAG_COSMETIC_ITEM_ID, 0);
+
+        CosmeticItemRequest request = new CosmeticItemRequest(this, cosmeticItemId + "");
+        NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<CosmeticItem>>() {
+            @Override
+            public void onSuccess(NetworkRequest<NetworkResult<CosmeticItem>> request, NetworkResult<CosmeticItem> result) {
+                if (result.getCode() == 1) {
+                    cosmeticItem = result.getResult();
+                    setCosmeticView();
+                    setDateView(cosmeticItem.getDateAdded(), cosmeticItem.getCosmeticTerm());
+                    getSaleInfoList();
+
+                    updateView.setVisibility(View.GONE);
+                    cancelView.setVisibility(View.GONE);
+                } else { Toast.makeText(CosmeticDetailActivity.this, "...", Toast.LENGTH_SHORT).show(); }
+            }
+
+            @Override
+            public void onFail(NetworkRequest<NetworkResult<CosmeticItem>> request, int errorCode, String errorMessage, Throwable e) {
+                Toast.makeText(CosmeticDetailActivity.this, errorCode + " : " + errorMessage, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
     private void setCosmeticView() {
-        Glide.with(this).load(intent.getStringExtra(TAG_IMAGE)).into(cosmeticImage);
-        brandView.setText(intent.getStringExtra(TAG_BRAND));
-        colorCodeView.setText(intent.getStringExtra(TAG_COLOR_CODE));
-        colorNameView.setText(intent.getStringExtra(TAG_COLOR_NAME));
-        cosmeticView.setText(intent.getStringExtra(TAG_NAME));
+        String image = cosmeticItem.getCosmetic().getImage();
+        String brand = cosmeticItem.getCosmetic().getProduct().getName();
+        String cCode = cosmeticItem.getCosmetic().getColorCode();
+        String cName = cosmeticItem.getCosmetic().getColorName();
+        String cosmeticName = cosmeticItem.getCosmetic().getProduct().getName();
+
+        Glide.with(this).load(image).into(cosmeticImage);
+        brandView.setText(brand);
+        colorCodeView.setText(cCode);
+        colorNameView.setText(cName);
+        cosmeticView.setText(cosmeticName);
     }
 
     private void setDateView(String date, int term) {
@@ -276,5 +257,40 @@ public class CosmeticDetailActivity extends AppCompatActivity implements DatePic
         usebyYearView.setText(regDate.get(Calendar.YEAR) + "");
         usebyMonthView.setText((regDate.get(Calendar.MONTH) + 1) + "");
         usebyDayView.setText(regDate.get(Calendar.DATE) + "");
+    }
+
+    public void getSaleInfoList() {
+        long productid = cosmeticItem.getCosmetic().getProduct().getId();
+
+        String type = SaleInfoRequest.TAG_TYPE_PRODUCT;
+        SaleInfoRequest saleRequest = new SaleInfoRequest(getBaseContext(), type, "" + productid);
+        NetworkManager.getInstance().getNetworkData(saleRequest, new NetworkManager.OnResultListener<NetworkResult<List<Sale>>>() {
+            @Override
+            public void onSuccess(NetworkRequest<NetworkResult<List<Sale>>> request, NetworkResult<List<Sale>> result) {
+                if (result.getCode() == 1) {
+                    List<Sale> sales = result.getResult();
+                    DateCalculator calculator = new DateCalculator();
+                    StringBuffer buffer = new StringBuffer();
+
+                    for (int i = 0; i < sales.size(); i++) {
+                        Calendar startDay = calculator.StrToCal(sales.get(i).getStartDay());
+                        Calendar endDay = calculator.StrToCal(sales.get(i).getEndDay());
+
+                        String title = sales.get(i).getTitle();
+                        String start = startDay.get(Calendar.YEAR) + "/" + startDay.get(Calendar.MONTH) + "/" + startDay.get(Calendar.DATE);
+                        String end = endDay.get(Calendar.YEAR) + "/" + endDay.get(Calendar.MONTH) + "/" + endDay.get(Calendar.DATE);
+
+                        buffer.append(title + " : " + start + " ~ " + end + "\n");
+                    }
+
+                    saleView.setText(buffer.toString());
+                }
+            }
+
+            @Override
+            public void onFail(NetworkRequest<NetworkResult<List<Sale>>> request, int errorCode, String errorMessage, Throwable e) {
+                Toast.makeText(CosmeticDetailActivity.this, "fail", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }
