@@ -157,10 +157,11 @@ public class RegisterDetailActivity extends AppCompatActivity implements DatePic
             public void onSuccess(NetworkRequest<NetworkResult<CosmeticItem>> request, NetworkResult<CosmeticItem> result) {
                 if (result.getCode() == 1) {
                     CosmeticItem citem = result.getResult();
-                    long id = citem.getId();
+                    long sid = citem.getId();
+                    long cid = citem.getId();
                     String dateAdded = citem.getDateAdded();
                     int term = citem.getCosmeticTerm();
-                    DBManager.getInstance().insertCosmeticItem(id, dateAdded, term);
+                    DBManager.getInstance().insertCosmeticItem(sid, cid, dateAdded, term);
                     Toast.makeText(RegisterDetailActivity.this, "등록되었습니다.", Toast.LENGTH_SHORT).show();
                     finish();
                 }

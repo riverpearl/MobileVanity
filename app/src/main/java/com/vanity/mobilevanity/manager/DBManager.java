@@ -9,6 +9,7 @@ import com.vanity.mobilevanity.MyApplication;
 import com.vanity.mobilevanity.data.Cosmetic;
 import com.vanity.mobilevanity.data.CosmeticItem;
 import com.vanity.mobilevanity.data.DBContract;
+import com.vanity.mobilevanity.util.DateCalculator;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -43,7 +44,8 @@ public class DBManager extends SQLiteOpenHelper {
                 DBContract.CosmeticItem.COLUMN_SERVER_ID + " INTEGER," +
                 DBContract.CosmeticItem.COLUMN_COSMETIC_ID + " INTEGER," +
                 DBContract.CosmeticItem.COLUMN_REG_DATE + " TEXT," +
-                DBContract.CosmeticItem.COLUMN_USEBY_DATE + " TEXT);";
+                DBContract.CosmeticItem.COLUMN_USEBY_DATE + " TEXT," +
+                DBContract.CosmeticItem.COLUMN_TERM + " INTEGER);";
         db.execSQL(sql);
 
         sql = "CREATE TABLE "+ DBContract.Notify.TABLE + " (" +
@@ -59,22 +61,28 @@ public class DBManager extends SQLiteOpenHelper {
 
     }
 
-    public int insertCosmeticItem(long cid, String dateAdded, int term) {
+    public long insertCosmeticItem(long sid, long cid, String dateAdded, int term) {
         SQLiteDatabase db = getWritableDatabase();
+        DateCalculator calculator = new DateCalculator();
+        String useby = calculator.calculateUseby(dateAdded, term);
+
         values.clear();
+        values.put(DBContract.CosmeticItem.COLUMN_SERVER_ID, sid);
         values.put(DBContract.CosmeticItem.COLUMN_COSMETIC_ID, cid);
         values.put(DBContract.CosmeticItem.COLUMN_REG_DATE, dateAdded);
-        values.put(DBContract.CosmeticItem.COLUMN_USEBY_DATE, calculateUseby(dateAdded, term));
-        if (db.insert(DBContract.CosmeticItem.TABLE, null, values) == -1)
-            return -1;
-        else return 1;
+        values.put(DBContract.CosmeticItem.COLUMN_USEBY_DATE, useby);
+        values.put(DBContract.CosmeticItem.COLUMN_TERM, term);
+        return db.insert(DBContract.CosmeticItem.TABLE, null, values);
     }
 
     public int updateCosmeticItem(long sid, String dateAdded, int term) {
         SQLiteDatabase db = getWritableDatabase();
+        DateCalculator calculator = new DateCalculator();
+        String useby = calculator.calculateUseby(dateAdded, term);
+
         values.clear();
         values.put(DBContract.CosmeticItem.COLUMN_REG_DATE, dateAdded);
-        values.put(DBContract.CosmeticItem.COLUMN_USEBY_DATE, calculateUseby(dateAdded, term));
+        values.put(DBContract.CosmeticItem.COLUMN_USEBY_DATE, useby);
         String where = DBContract.CosmeticItem.COLUMN_COSMETIC_ID + " = ?";
         String[] args = { sid + "" };
         return db.update(DBContract.CosmeticItem.TABLE, values, where, args);
@@ -87,17 +95,12 @@ public class DBManager extends SQLiteOpenHelper {
         return db.delete(DBContract.CosmeticItem.TABLE, where, args);
     }
 
-    private String calculateUseby(String start, int term) {
-        Calendar addedDate = Calendar.getInstance();
-        SimpleDateFormat form = new SimpleDateFormat("yyyy-MM-dd'T'kk:mm:ss.SSSZ");
-        try {
-            addedDate.setTime(form.parse(start));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        addedDate.add(Calendar.DATE, term);
-        String usebyDate = form.format(addedDate.getTime());
-        return usebyDate;
+    public Cursor selectCosmeticItem() {
+        SQLiteDatabase db = getReadableDatabase();
+        String[] columns = { DBContract.CosmeticItem.COLUMN_SERVER_ID, DBContract.CosmeticItem.COLUMN_COSMETIC_ID,
+                DBContract.CosmeticItem.COLUMN_REG_DATE, DBContract.CosmeticItem.COLUMN_USEBY_DATE, DBContract.CosmeticItem.COLUMN_TERM };
+        Cursor c = db.query(DBContract.CosmeticItem.TABLE, columns, null, null, null, null, null);
+        return c;
     }
 
     public int insertNotify(long cid, String message, String date) {

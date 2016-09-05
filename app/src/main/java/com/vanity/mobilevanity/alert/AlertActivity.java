@@ -59,6 +59,8 @@ public class AlertActivity extends AppCompatActivity {
             public void onAdapterItemClick(View view, Notify item, int position) {
                 if (item.getType().equals("useby")) {
                     Intent intent = new Intent(AlertActivity.this, CosmeticDetailActivity.class);
+                    intent.putExtra(CosmeticDetailActivity.TAG_COSMETIC_ITEM_ID, item.getId());
+                    intent.putExtra(CosmeticDetailActivity.TAG_COSMETIC_ID, item.getCosmeticItemId());
                     intent.putExtra("cosmeticitemid", item.getCosmeticItemId());
                     startActivity(intent);
                 } else {

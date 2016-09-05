@@ -1,8 +1,10 @@
 package com.vanity.mobilevanity.cosmetic;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -23,11 +25,13 @@ import com.vanity.mobilevanity.data.Cosmetic;
 import com.vanity.mobilevanity.data.CosmeticItem;
 import com.vanity.mobilevanity.data.NetworkResult;
 import com.vanity.mobilevanity.data.Product;
+import com.vanity.mobilevanity.manager.DBManager;
 import com.vanity.mobilevanity.manager.NetworkManager;
 import com.vanity.mobilevanity.manager.NetworkRequest;
 import com.vanity.mobilevanity.register.RegisterBarcodeActivity;
 import com.vanity.mobilevanity.request.CosmeticItemsRequest;
 import com.vanity.mobilevanity.request.CosmeticListRequest;
+import com.vanity.mobilevanity.request.DeleteCosmeticItemRequest;
 import com.vanity.mobilevanity.request.SearchCosmeticListRequest;
 import java.util.ArrayList;
 import java.util.List;
@@ -70,6 +74,31 @@ public class CosmeticListActivity extends AppCompatActivity {
                 intent.putExtra(CosmeticDetailActivity.TAG_REG_DATE, data.getDateAdded());
                 intent.putExtra(CosmeticDetailActivity.TAG_USEBY, data.getCosmeticTerm());
                 startActivity(intent);
+            }
+        });
+        mAdapter.setOnAdapterItemLongClickListener(new CosmeticAdapter.OnAdapterItemLongClickListener() {
+            @Override
+            public void onAdapterItemLongClick(View view, CosmeticItem data, int position) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(CosmeticListActivity.this);
+                builder.setTitle("등록된 제품 삭제");
+                builder.setMessage("삭제하시겠습니까?");
+
+                final long id = data.getId();
+                builder.setPositiveButton("예", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        deleteCosmeticItemRequest(id);
+                        int a = DBManager.getInstance().deleteCosmeticItem(id);
+                        Log.d("dbresult", a+"");
+                    }
+                });
+                builder.setNegativeButton("아니오", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                });
+                builder.create().show();
             }
         });
         listView.setAdapter(mAdapter);
@@ -193,5 +222,26 @@ public class CosmeticListActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         getCosmeticItemList(tabs.getSelectedTabPosition());
+    }
+
+    private void deleteCosmeticItemRequest(long id) {
+        final long cid = id;
+        DeleteCosmeticItemRequest request = new DeleteCosmeticItemRequest(this, cid + "");
+        NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<CosmeticItem>>() {
+            @Override
+            public void onSuccess(NetworkRequest<NetworkResult<CosmeticItem>> request, NetworkResult<CosmeticItem> result) {
+                if (result.getCode() == 1) {
+                    DBManager.getInstance().deleteCosmeticItem(cid);
+                    Toast.makeText(CosmeticListActivity.this, "삭제되었습니다.", Toast.LENGTH_SHORT).show();
+                    getCosmeticItemList(tabs.getSelectedTabPosition());
+                }
+            }
+
+            @Override
+            public void onFail(NetworkRequest<NetworkResult<CosmeticItem>> request, int errorCode, String errorMessage, Throwable e) {
+
+            }
+        });
+
     }
 }

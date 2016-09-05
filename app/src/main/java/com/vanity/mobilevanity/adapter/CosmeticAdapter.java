@@ -15,7 +15,8 @@ import java.util.List;
 /**
  * Created by Tacademy on 2016-08-26.
  */
-public class CosmeticAdapter extends RecyclerView.Adapter<MyCosmeticViewHolder> implements MyCosmeticViewHolder.OnCosmeticListItemClickListener {
+public class CosmeticAdapter extends RecyclerView.Adapter<MyCosmeticViewHolder>
+        implements MyCosmeticViewHolder.OnCosmeticListItemClickListener, MyCosmeticViewHolder.OnCosmeticListItemLongClickListener {
     List<CosmeticItem> items = new ArrayList<>();
 
     public void clear() {
@@ -38,6 +39,7 @@ public class CosmeticAdapter extends RecyclerView.Adapter<MyCosmeticViewHolder> 
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_my_cosmetic, parent, false);
         MyCosmeticViewHolder holder = new MyCosmeticViewHolder(view);
         holder.setOnCosmeticListItemClickListener(this);
+        holder.setOnCosmeticListItemLongClickListener(this);
         return holder;
     }
 
@@ -65,5 +67,20 @@ public class CosmeticAdapter extends RecyclerView.Adapter<MyCosmeticViewHolder> 
     public void onCosmeticListItemClick(View view, CosmeticItem data, int position) {
         if (mListener != null)
             mListener.onAdapterItemClick(view, data, position);
+    }
+
+    public interface  OnAdapterItemLongClickListener {
+        public void onAdapterItemLongClick(View view, CosmeticItem data, int position);
+    }
+
+    OnAdapterItemLongClickListener longClickListener;
+    public void setOnAdapterItemLongClickListener(OnAdapterItemLongClickListener listener) {
+        longClickListener = listener;
+    }
+
+    @Override
+    public void onCosmeticListItemLongClick(View view, CosmeticItem data, int position) {
+        if (longClickListener != null)
+            longClickListener.onAdapterItemLongClick(view, data, position);
     }
 }

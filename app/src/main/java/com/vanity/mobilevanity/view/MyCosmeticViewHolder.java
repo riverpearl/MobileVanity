@@ -7,7 +7,6 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.vanity.mobilevanity.R;
-import com.vanity.mobilevanity.data.Cosmetic;
 import com.vanity.mobilevanity.data.CosmeticItem;
 import com.vanity.mobilevanity.util.DateCalculator;
 
@@ -53,6 +52,17 @@ public class MyCosmeticViewHolder extends RecyclerView.ViewHolder {
                     mListener.onCosmeticListItemClick(view, data, getAdapterPosition());
             }
         });
+
+        itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                if (longClickListener != null) {
+                    longClickListener.onCosmeticListItemLongClick(view, data, getAdapterPosition());
+                    return true;
+                }
+                return false;
+            }
+        });
     }
 
     public void setCosmeticList(CosmeticItem item) {
@@ -82,5 +92,14 @@ public class MyCosmeticViewHolder extends RecyclerView.ViewHolder {
 
     public void setOnCosmeticListItemClickListener(OnCosmeticListItemClickListener cosmeticlistListener) {
         mListener = cosmeticlistListener;
+    }
+
+    public interface OnCosmeticListItemLongClickListener {
+        public void onCosmeticListItemLongClick(View view, CosmeticItem data, int position);
+    }
+
+    OnCosmeticListItemLongClickListener longClickListener;
+    public void setOnCosmeticListItemLongClickListener(OnCosmeticListItemLongClickListener listener) {
+        longClickListener = listener;
     }
 }

@@ -12,6 +12,7 @@ public class DBContract {
         public static final String COLUMN_COSMETIC_ID = "cid";
         public static final String COLUMN_REG_DATE = "regdate";
         public static final String COLUMN_USEBY_DATE = "usebydate";
+        public static final String COLUMN_TERM = "term";
     }
 
     public interface Notify extends BaseColumns {

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -199,8 +200,15 @@ public class CosmeticDetailActivity extends AppCompatActivity implements DatePic
     public void onUpdateClick(View view) {
         long ciid = intent.getLongExtra(TAG_COSMETIC_ITEM_ID, 0);
         long cid = intent.getLongExtra(TAG_COSMETIC_ID, 0);
-        String dateAdded = intent.getStringExtra(TAG_REG_DATE);
         int term = intent.getIntExtra(TAG_USEBY, 0);
+
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.YEAR, Integer.parseInt(registerYearView.getText().toString()));
+        cal.set(Calendar.MONTH, Integer.parseInt(registerMonthView.getText().toString()) - 1);
+        cal.set(Calendar.DATE, Integer.parseInt(registerDayView.getText().toString()));
+
+        DateCalculator calculator = new DateCalculator();
+        String dateAdded = calculator.CalToStr(cal);
 
         UpdateCosmeticItemRequest request = new UpdateCosmeticItemRequest(this, ciid + "", cid + "", dateAdded, term + "");
         NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<CosmeticItem>>() {
