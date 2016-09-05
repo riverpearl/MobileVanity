@@ -22,6 +22,7 @@ import com.vanity.mobilevanity.data.CosmeticItem;
 import com.vanity.mobilevanity.data.NetworkResult;
 import com.vanity.mobilevanity.data.Product;
 import com.vanity.mobilevanity.data.Sale;
+import com.vanity.mobilevanity.manager.DBManager;
 import com.vanity.mobilevanity.manager.NetworkManager;
 import com.vanity.mobilevanity.manager.NetworkRequest;
 import com.vanity.mobilevanity.request.CosmeticItemsRequest;
@@ -111,7 +112,7 @@ public class CosmeticDetailActivity extends AppCompatActivity implements DatePic
         intent = getIntent();
         setCosmeticView();
         setDateView(intent.getStringExtra(TAG_REG_DATE), intent.getIntExtra(TAG_USEBY, 0));
-        getSaleInfoList(intent.getLongExtra(TAG_PRODUCT_ID , 0));
+        getSaleInfoList(intent.getLongExtra(TAG_PRODUCT_ID, 0));
 
         updateView.setVisibility(View.GONE);
         cancelView.setVisibility(View.GONE);
@@ -209,9 +210,12 @@ public class CosmeticDetailActivity extends AppCompatActivity implements DatePic
                     updateView.setVisibility(View.GONE);
                     cancelView.setVisibility(View.GONE);
                     Toast.makeText(CosmeticDetailActivity.this, "수정되었습니다.", Toast.LENGTH_SHORT).show();
-
                     CosmeticItem item = result.getResult();
                     setDateView(item.getDateAdded(), item.getCosmeticTerm());
+                    long id = item.getId();
+                    String dateAdded = item.getDateAdded();
+                    int term = item.getCosmeticTerm();
+                    DBManager.getInstance().updateCosmeticItem(id, dateAdded, term);
                 }
             }
 
