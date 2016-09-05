@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">MobileVanity</string>
+    <string name="facebook_app_id">1752956318306018</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
