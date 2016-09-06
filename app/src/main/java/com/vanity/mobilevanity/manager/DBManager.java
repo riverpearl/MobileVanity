@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import com.vanity.mobilevanity.MyApplication;
 import com.vanity.mobilevanity.data.Cosmetic;
@@ -39,16 +40,17 @@ public class DBManager extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String sql = "CREATE TABLE "+ DBContract.CosmeticItem.TABLE + " (" +
+        String sql = "CREATE TABLE " + DBContract.CosmeticItem.TABLE + " (" +
                 DBContract.CosmeticItem._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                 DBContract.CosmeticItem.COLUMN_SERVER_ID + " INTEGER," +
                 DBContract.CosmeticItem.COLUMN_COSMETIC_ID + " INTEGER," +
+                DBContract.CosmeticItem.COLUMN_COSMETIC_NAME + " TEXT," +
                 DBContract.CosmeticItem.COLUMN_REG_DATE + " TEXT," +
                 DBContract.CosmeticItem.COLUMN_USEBY_DATE + " TEXT," +
                 DBContract.CosmeticItem.COLUMN_TERM + " INTEGER);";
         db.execSQL(sql);
 
-        sql = "CREATE TABLE "+ DBContract.Notify.TABLE + " (" +
+        sql = "CREATE TABLE " + DBContract.Notify.TABLE + " (" +
                 DBContract.Notify._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                 DBContract.Notify.COLUMN_COSMETIC_ITEM_ID + " INTEGER," +
                 DBContract.Notify.COLUMN_MESSAGE + " TEXT," +
@@ -61,7 +63,7 @@ public class DBManager extends SQLiteOpenHelper {
 
     }
 
-    public long insertCosmeticItem(long sid, long cid, String dateAdded, int term) {
+    public long insertCosmeticItem(long sid, long cid, String name, String dateAdded, int term) {
         SQLiteDatabase db = getWritableDatabase();
         DateCalculator calculator = new DateCalculator();
         String useby = calculator.calculateUseby(dateAdded, term);
@@ -69,37 +71,41 @@ public class DBManager extends SQLiteOpenHelper {
         values.clear();
         values.put(DBContract.CosmeticItem.COLUMN_SERVER_ID, sid);
         values.put(DBContract.CosmeticItem.COLUMN_COSMETIC_ID, cid);
+        values.put(DBContract.CosmeticItem.COLUMN_COSMETIC_NAME, name);
         values.put(DBContract.CosmeticItem.COLUMN_REG_DATE, dateAdded);
         values.put(DBContract.CosmeticItem.COLUMN_USEBY_DATE, useby);
         values.put(DBContract.CosmeticItem.COLUMN_TERM, term);
-        return db.insert(DBContract.CosmeticItem.TABLE, null, values);
+        long result = db.insert(DBContract.CosmeticItem.TABLE, null, values);
+        Log.d("result", result + "");
+        return result;
     }
 
-    public int updateCosmeticItem(long sid, String dateAdded, int term) {
+    public int updateCosmeticItem(long sid, String name, String dateAdded, int term) {
         SQLiteDatabase db = getWritableDatabase();
         DateCalculator calculator = new DateCalculator();
         String useby = calculator.calculateUseby(dateAdded, term);
 
         values.clear();
+        values.put(DBContract.CosmeticItem.COLUMN_COSMETIC_NAME, name);
         values.put(DBContract.CosmeticItem.COLUMN_REG_DATE, dateAdded);
         values.put(DBContract.CosmeticItem.COLUMN_USEBY_DATE, useby);
         String where = DBContract.CosmeticItem.COLUMN_COSMETIC_ID + " = ?";
-        String[] args = { sid + "" };
+        String[] args = {sid + ""};
         return db.update(DBContract.CosmeticItem.TABLE, values, where, args);
     }
 
     public int deleteCosmeticItem(long sid) {
         SQLiteDatabase db = getWritableDatabase();
         String where = DBContract.CosmeticItem.COLUMN_SERVER_ID + " = ?";
-        String[] args = { sid + "" };
+        String[] args = {sid + ""};
         return db.delete(DBContract.CosmeticItem.TABLE, where, args);
     }
 
     public Cursor selectCosmeticItem() {
         SQLiteDatabase db = getReadableDatabase();
-        String[] columns = { DBContract.CosmeticItem.COLUMN_SERVER_ID, DBContract.CosmeticItem.COLUMN_COSMETIC_ID,
-                DBContract.CosmeticItem.COLUMN_REG_DATE, DBContract.CosmeticItem.COLUMN_USEBY_DATE, DBContract.CosmeticItem.COLUMN_TERM };
-        Cursor c = db.query(DBContract.CosmeticItem.TABLE, columns, null, null, null, null, null);
+        String[] columns = {DBContract.CosmeticItem.COLUMN_SERVER_ID, DBContract.CosmeticItem.COLUMN_COSMETIC_ID, DBContract.CosmeticItem.COLUMN_COSMETIC_NAME,
+                DBContract.CosmeticItem.COLUMN_REG_DATE, DBContract.CosmeticItem.COLUMN_USEBY_DATE, DBContract.CosmeticItem.COLUMN_TERM};
+        Cursor c = db.query(DBContract.CosmeticItem.TABLE, columns, null, null, null, null, null, null);
         return c;
     }
 
@@ -116,7 +122,7 @@ public class DBManager extends SQLiteOpenHelper {
 
     public Cursor selectNotify() {
         SQLiteDatabase db = getReadableDatabase();
-        String[] columns = { DBContract.Notify.COLUMN_COSMETIC_ITEM_ID, DBContract.Notify.COLUMN_MESSAGE, DBContract.Notify.COLUMN_DATE };
+        String[] columns = {DBContract.Notify.COLUMN_COSMETIC_ITEM_ID, DBContract.Notify.COLUMN_MESSAGE, DBContract.Notify.COLUMN_DATE};
         Cursor c = db.query(DBContract.Notify.TABLE, columns, null, null, null, null, null);
         return c;
     }

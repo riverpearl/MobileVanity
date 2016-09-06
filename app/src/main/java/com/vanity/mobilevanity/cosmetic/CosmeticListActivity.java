@@ -1,5 +1,8 @@
 package com.vanity.mobilevanity.cosmetic;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.design.widget.TabLayout;
@@ -33,8 +36,10 @@ import com.vanity.mobilevanity.request.CosmeticItemsRequest;
 import com.vanity.mobilevanity.request.CosmeticListRequest;
 import com.vanity.mobilevanity.request.DeleteCosmeticItemRequest;
 import com.vanity.mobilevanity.request.SearchCosmeticListRequest;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -46,6 +51,7 @@ public class CosmeticListActivity extends AppCompatActivity {
     @BindView(R.id.rv_cosmetic)
     RecyclerView listView;
 
+    AlarmManager alarmManager;
     CosmeticAdapter mAdapter;
     int category;
 
@@ -80,7 +86,7 @@ public class CosmeticListActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialogInterface, int i) {
                         deleteCosmeticItemRequest(id);
                         int a = DBManager.getInstance().deleteCosmeticItem(id);
-                        Log.d("dbresult", a+"");
+                        Log.d("dbresult", a + "");
                     }
                 });
                 builder.setNegativeButton("아니오", new DialogInterface.OnClickListener() {
@@ -116,6 +122,7 @@ public class CosmeticListActivity extends AppCompatActivity {
                 getCosmeticItemList(tab.getPosition());
             }
         });
+        alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
     }
 
     public void getCosmeticItemList(int tabPos) {

@@ -3,6 +3,7 @@ package com.vanity.mobilevanity.register;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -158,10 +159,11 @@ public class RegisterDetailActivity extends AppCompatActivity implements DatePic
                 if (result.getCode() == 1) {
                     CosmeticItem citem = result.getResult();
                     long sid = citem.getId();
-                    long cid = citem.getId();
+                    long cid = citem.getCosmetic().getId();
                     String dateAdded = citem.getDateAdded();
                     int term = citem.getCosmeticTerm();
-                    DBManager.getInstance().insertCosmeticItem(sid, cid, dateAdded, term);
+                    String productName = citem.getCosmetic().getProduct().getName();
+                    DBManager.getInstance().insertCosmeticItem(sid, cid, productName, dateAdded, term);
                     Toast.makeText(RegisterDetailActivity.this, "등록되었습니다.", Toast.LENGTH_SHORT).show();
                     finish();
                 }

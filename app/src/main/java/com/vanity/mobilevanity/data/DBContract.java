@@ -10,6 +10,7 @@ public class DBContract {
         public static final String TABLE = "cosmeticitem";
         public static final String COLUMN_SERVER_ID = "sid";
         public static final String COLUMN_COSMETIC_ID = "cid";
+        public static final String COLUMN_COSMETIC_NAME = "name";
         public static final String COLUMN_REG_DATE = "regdate";
         public static final String COLUMN_USEBY_DATE = "usebydate";
         public static final String COLUMN_TERM = "term";
