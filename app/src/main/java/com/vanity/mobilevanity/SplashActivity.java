@@ -1,5 +1,6 @@
 package com.vanity.mobilevanity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,7 +10,10 @@ import android.widget.Toast;
 
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
 import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.vanity.mobilevanity.data.NetworkResult;
 import com.vanity.mobilevanity.data.User;
@@ -32,6 +36,8 @@ public class SplashActivity extends AppCompatActivity {
     @BindView(R.id.login_button)
     LoginButton loginButton;
 
+    private final static int RC_SIGN_UP = 100;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,18 +59,81 @@ public class SplashActivity extends AppCompatActivity {
                 else if (result.getCode() == -1) {
                     if (isFacebookLogin())
                         processFacebookLogin();
-                    else loginButton.setVisibility(View.VISIBLE);
+                    else resetFacebookAndMoveLoginActivity();
                 }
             }
 
             @Override
             public void onFail(NetworkRequest<NetworkResult<User>> request, int errorCode, String errorMessage, Throwable e) {
+                resetFacebookAndMoveLoginActivity();
+            }
+        });
+
+        loginButton.setReadPermissions("email");
+        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                processAfterFacebookLogin();
+            }
+
+            @Override
+            public void onCancel() {
+
+            }
+
+            @Override
+            public void onError(FacebookException error) {
 
             }
         });
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == RC_SIGN_UP)
+                moveMainActivity();
+            else callbackManager.onActivityResult(requestCode, resultCode, data);
+        }
+    }
+
+    private void processAfterFacebookLogin() {
+        final AccessToken accessToken = AccessToken.getCurrentAccessToken();
+
+        if (accessToken != null) {
+            String token = accessToken.getToken();
+            String regid = PropertyManager.getInstance().getRegistrationId();
+            FacebookLoginRequest request = new FacebookLoginRequest(this, token, regid);
+            NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<User>>() {
+                @Override
+                public void onSuccess(NetworkRequest<NetworkResult<User>> request, NetworkResult<User> result) {
+                    if (result.getCode() == 1) {
+                        String facebookId = accessToken.getUserId();
+                        PropertyManager.getInstance().setFacebookId(facebookId);
+                        moveMainActivity();
+                    } else if (result.getCode() == 2) {
+                        User user = result.getResult();
+                        Intent intent = new Intent(SplashActivity.this, FacebookSignUpActivity.class);
+                        intent.putExtra(FacebookSignUpActivity.TAG_FACEBOOK_ID, user.getFacebookId());
+                        intent.putExtra(FacebookSignUpActivity.TAG_EMAIL, user.getEmail());
+                        startActivityForResult(intent, RC_SIGN_UP);
+                    } else Toast.makeText(SplashActivity.this, result.getError(), Toast.LENGTH_SHORT).show();
+                }
+
+                @Override
+                public void onFail(NetworkRequest<NetworkResult<User>> request, int errorCode, String errorMessage, Throwable e) {
+                    Toast.makeText(SplashActivity.this, "sign up fail", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+    }
+
     private void moveMainActivity() {
+        Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     private boolean isFacebookLogin() {
@@ -78,8 +147,7 @@ public class SplashActivity extends AppCompatActivity {
         AccessToken accessToken = AccessToken.getCurrentAccessToken();
 
         if (!accessToken.getUserId().equals(PropertyManager.getInstance().getFacebookId())) {
-            loginManager.logOut();
-            PropertyManager.getInstance().setFacebookId("");
+            resetFacebookAndMoveLoginActivity();
             return;
         }
 
@@ -87,20 +155,22 @@ public class SplashActivity extends AppCompatActivity {
             String token = accessToken.getToken();
             String regId = PropertyManager.getInstance().getRegistrationId();
             FacebookLoginRequest request = new FacebookLoginRequest(this, token, regId);
-            NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<Object>>() {
+            NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<User>>() {
                 @Override
-                public void onSuccess(NetworkRequest<NetworkResult<Object>> request, NetworkResult<Object> result) {
-                    if (result.getCode() == 1) {
+                public void onSuccess(NetworkRequest<NetworkResult<User>> request, NetworkResult<User> result) {
+                    if (result.getCode() == 1)
                         moveMainActivity();
-                    }
-                    else if (result.getCode() == -1) {
-                        loginManager.logOut();
-                        PropertyManager.getInstance().setFacebookId("");
+                    else if (result.getCode() == -1)
+                        resetFacebookAndMoveLoginActivity();
+                    else if (result.getCode() == 2) {
+                        //Toast.makeText(SplashActivity.this, "가입되지 않은 회원입니다.", Toast.LENGTH_SHORT).show();
+                        resetFacebookAndMoveLoginActivity();
                     }
                 }
 
                 @Override
-                public void onFail(NetworkRequest<NetworkResult<Object>> request, int errorCode, String errorMessage, Throwable e) {
+                public void onFail(NetworkRequest<NetworkResult<User>> request, int errorCode, String errorMessage, Throwable e) {
+                    resetFacebookAndMoveLoginActivity();
                 }
             });
         } else {
@@ -113,35 +183,27 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void onSuccess(LoginResult result) {
                 AccessToken accessToken = AccessToken.getCurrentAccessToken();
+
                 if (!accessToken.getUserId().equals(PropertyManager.getInstance().getFacebookId())) {
-                    loginManager.logOut();
-                    PropertyManager.getInstance().setFacebookId("");
-                    moveLoginActivity();
+                    resetFacebookAndMoveLoginActivity();
                     return;
                 }
-                FacebookLoginRequest request = new FacebookLoginRequest(SplashActivity.this, accessToken.getToken(),
-                        PropertyManager.getInstance().getRegistrationId());
 
-                NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<Object>>() {
+                FacebookLoginRequest request = new FacebookLoginRequest(SplashActivity.this, accessToken.getToken(), PropertyManager.getInstance().getRegistrationId());
+
+                NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<User>>() {
                     @Override
-                    public void onSuccess(NetworkRequest<NetworkResult<Object>> request, NetworkResult<Object> result) {
-                        if (result.getCode() == 1) {
+                    public void onSuccess(NetworkRequest<NetworkResult<User>> request, NetworkResult<User> result) {
+                        if (result.getCode() == 1)
                             moveMainActivity();
-                        } else {
-                            loginManager.logOut();
-                            PropertyManager.getInstance().setFacebookId("");
-                            moveLoginActivity();
-                        }
+                        else resetFacebookAndMoveLoginActivity();
                     }
 
                     @Override
-                    public void onFail(NetworkRequest<NetworkResult<Object>> request, int errorCode, String errorMessage, Throwable e) {
-                        loginManager.logOut();
-                        PropertyManager.getInstance().setFacebookId("");
-                        moveLoginActivity();
+                    public void onFail(NetworkRequest<NetworkResult<User>> request, int errorCode, String errorMessage, Throwable e) {
+                        resetFacebookAndMoveLoginActivity();
                     }
                 });
-
             }
 
             @Override
@@ -154,34 +216,14 @@ public class SplashActivity extends AppCompatActivity {
 
             }
         });
+
         loginManager.logInWithReadPermissions(this, null);
     }
 
-    private void processAfterFacebookLogin() {
-        final AccessToken accessToken = AccessToken.getCurrentAccessToken();
-        if (accessToken != null) {
-            String token = accessToken.getToken();
-            String regid = PropertyManager.getInstance().getRegistrationId();
-            FacebookLoginRequest request = new FacebookLoginRequest(getContext(), token, regid);
-            NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<Object>>() {
-                @Override
-                public void onSuccess(NetworkRequest<NetworkResult<Object>> request, NetworkResult<Object> result) {
-                    if (result.getCode() == 1) {
-                        String facebookId = accessToken.getUserId();
-                        PropertyManager.getInstance().setFacebookId(facebookId);
-                        ((SimpleLoginActivity)getActivity()).moveMainActivity();
-                    } else if (result.getCode() == 3){
-                        FacebookUser user = (FacebookUser)result.getResult();
-                        ((SimpleLoginActivity)getActivity()).changeFacebookSignup(user);
-                    }
-                }
-
-                @Override
-                public void onFail(NetworkRequest<NetworkResult<Object>> request, int errorCode, String errorMessage, Throwable e) {
-                    Toast.makeText(getContext(), "login fail", Toast.LENGTH_SHORT).show();
-                }
-            });
-        }
+    private void resetFacebookAndMoveLoginActivity() {
+        loginManager.logOut();
+        PropertyManager.getInstance().setFacebookId("");
+        loginButton.setVisibility(View.VISIBLE);
     }
 
     @OnClick(R.id.btn_fb_login)

@@ -16,7 +16,7 @@ import okhttp3.RequestBody;
 /**
  * Created by Tacademy on 2016-08-29.
  */
-public class FacebookLoginRequest extends AbstractRequest<NetworkResult<Object>> {
+public class FacebookLoginRequest extends AbstractRequest<NetworkResult<User>> {
 
     Request mRequest;
     public FacebookLoginRequest(Context context, String access_token, String registrationId) {
