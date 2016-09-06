@@ -25,6 +25,7 @@ public class PropertyManager {
     private static final String KEY_IS_ALARM_CREATED = "isAlarmCreated";
     private static final String KEY_REGISTRATION_ID = "regid";
     private static final String KEY_FACEBOOK_ID = "facebookid";
+    private static final String KEY_LAST_NOTIFY_DATE = "lastDate";
 
     private PropertyManager() {
         Context context = MyApplication.getContext();
@@ -57,5 +58,14 @@ public class PropertyManager {
 
     public boolean getIsAlarmCreated() {
         return mPrefs.getBoolean(KEY_IS_ALARM_CREATED, false);
+    }
+
+    public void setLastNotifyDate(String lastDate) {
+        mEditor.putString(KEY_LAST_NOTIFY_DATE, lastDate);
+        mEditor.commit();
+    }
+
+    public String getLastNotifyDate() {
+        return mPrefs.getString(KEY_LAST_NOTIFY_DATE, "");
     }
 }

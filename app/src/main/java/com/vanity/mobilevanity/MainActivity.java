@@ -19,8 +19,10 @@ import com.vanity.mobilevanity.alert.AlertActivity;
 import com.vanity.mobilevanity.beautytip.BeautyTipFragment;
 import com.vanity.mobilevanity.cosmetic.CosmeticReceiver;
 import com.vanity.mobilevanity.cosmetic.HomeFragment;
+import com.vanity.mobilevanity.manager.PropertyManager;
 import com.vanity.mobilevanity.mypage.MyPageFragment;
 import com.vanity.mobilevanity.sale.SaleFragment;
+import com.vanity.mobilevanity.util.DateCalculator;
 
 import java.util.Calendar;
 
@@ -66,7 +68,16 @@ public class MainActivity extends AppCompatActivity {
         } else {
             tabHost.setCurrentTab(0);
         }
-        onAlarm();
+
+        if (!PropertyManager.getInstance().getIsAlarmCreated()) {
+            onAlarm();
+            PropertyManager.getInstance().setIsAlarmCreated(true);
+            Calendar nowCal = Calendar.getInstance();
+            DateCalculator calculator = new DateCalculator();
+            String nowStr = calculator.CalToStr(nowCal);
+            PropertyManager.getInstance().setLastNotifyDate(nowStr);
+        }
+
     }
 
     public void onAlarm() {
@@ -85,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
 
         Log.d("c", ""+calendar.getTime());
 
-        alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), 24 * 60 * 60 * 1000, pendingIntent);
     }
 
     @Override

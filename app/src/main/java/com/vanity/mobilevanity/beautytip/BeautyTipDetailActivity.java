@@ -168,9 +168,9 @@ public class BeautyTipDetailActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         intent = getIntent();
-        id = intent.getLongExtra("beautytipid", 0);
+        id = intent.getLongExtra(DETAIL_ID, 0);
 
-        BeautyTipInfoRequest request = new BeautyTipInfoRequest(getBaseContext(), "" + id);
+        BeautyTipInfoRequest request = new BeautyTipInfoRequest(BeautyTipDetailActivity.this, "" + id);
         NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<BeautyTip>>() {
             @Override
             public void onSuccess(NetworkRequest<NetworkResult<BeautyTip>> request, NetworkResult<BeautyTip> result) {

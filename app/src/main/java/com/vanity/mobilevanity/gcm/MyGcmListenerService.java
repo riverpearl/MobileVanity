@@ -29,6 +29,17 @@ import android.util.Log;
 import com.google.android.gms.gcm.GcmListenerService;
 import com.vanity.mobilevanity.MainActivity;
 import com.vanity.mobilevanity.R;
+import com.vanity.mobilevanity.beautytip.BeautyTipDetailActivity;
+import com.vanity.mobilevanity.data.NetworkResult;
+import com.vanity.mobilevanity.data.Notify;
+import com.vanity.mobilevanity.manager.NetworkManager;
+import com.vanity.mobilevanity.manager.NetworkRequest;
+import com.vanity.mobilevanity.manager.PropertyManager;
+import com.vanity.mobilevanity.request.NotifyListRequest;
+import com.vanity.mobilevanity.util.DateCalculator;
+
+import java.util.Calendar;
+import java.util.List;
 
 public class MyGcmListenerService extends GcmListenerService {
 
@@ -44,50 +55,62 @@ public class MyGcmListenerService extends GcmListenerService {
     // [START receive_message]
     @Override
     public void onMessageReceived(String from, Bundle data) {
+        final String type = data.getString("type");
         String message = data.getString("message");
+        long beautyTipId = Long.parseLong(data.getString("beautytipid"));
+        Log.d(TAG, "type: " + data.getString("type"));
         Log.d(TAG, "From: " + from);
         Log.d(TAG, "Message: " + message);
 
         if (from.startsWith("/topics/")) {
             // message received from some topic.
         } else {
-            // normal downstream message.
+            String lastDate = PropertyManager.getInstance().getLastNotifyDate();
+
+            NotifyListRequest request = new NotifyListRequest(this, lastDate);
+            NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<List<Notify>>>() {
+                @Override
+                public void onSuccess(NetworkRequest<NetworkResult<List<Notify>>> request, NetworkResult<List<Notify>> result) {
+                    if (result.getCode() == 1) {
+                        List<Notify> notifies = result.getResult();
+                        Notify notify = notifies.get(notifies.size() - 1);
+                        sendNotification(notify);
+
+                        Calendar newLastDateTemp = Calendar.getInstance();
+                        DateCalculator calculator = new DateCalculator();
+                        String newLastDate = calculator.CalToStr(newLastDateTemp);
+                        PropertyManager.getInstance().setLastNotifyDate(newLastDate);
+                    }
+                }
+
+                @Override
+                public void onFail(NetworkRequest<NetworkResult<List<Notify>>> request, int errorCode, String errorMessage, Throwable e) {
+
+                }
+            });
         }
 
-        // [START_EXCLUDE]
-        /**
-         * Production applications would usually process the message here.
-         * Eg: - Syncing with server.
-         *     - Store message in local database.
-         *     - Update UI.
-         */
-
-        /**
-         * In some cases it may be useful to show a notification indicating to the user
-         * that a message was received.
-         */
-        sendNotification(message);
-        // [END_EXCLUDE]
+        //sendNotification(type, message, beautyTipId);
     }
-    // [END receive_message]
 
-    /**
-     * Create and show a simple notification containing the received GCM message.
-     *
-     * @param message GCM message received.
-     */
-    private void sendNotification(String message) {
-        Intent intent = new Intent(this, MainActivity.class);
+    private void sendNotification(Notify notify) {
+        Intent intent = new Intent(this, BeautyTipDetailActivity.class);
+        intent.putExtra(BeautyTipDetailActivity.DETAIL_ID, notify.getBeautyTipId().getKey().getRaw().getId());
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
                 PendingIntent.FLAG_ONE_SHOT);
+
+        String title;
+
+        if (notify.getType() == "like") title = "좋아요 알림";
+        else title = "댓글 알림";
 
         Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setTicker("GCM Message")
-                .setContentTitle("GCM Message")
-                .setContentText(message)
+                .setContentTitle(title)
+                .setContentText(notify.getMessage())
                 .setAutoCancel(true)
                 .setSound(defaultSoundUri)
                 .setContentIntent(pendingIntent);
