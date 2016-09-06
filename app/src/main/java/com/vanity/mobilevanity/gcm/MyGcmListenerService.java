@@ -56,11 +56,8 @@ public class MyGcmListenerService extends GcmListenerService {
     @Override
     public void onMessageReceived(String from, Bundle data) {
         final String type = data.getString("type");
-        String message = data.getString("message");
-        long beautyTipId = Long.parseLong(data.getString("beautytipid"));
         Log.d(TAG, "type: " + data.getString("type"));
         Log.d(TAG, "From: " + from);
-        Log.d(TAG, "Message: " + message);
 
         if (from.startsWith("/topics/")) {
             // message received from some topic.

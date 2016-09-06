@@ -46,8 +46,6 @@ import butterknife.OnClick;
  */
 public class BeautyTipCommentFragment extends DialogFragment {
 
-    @BindView(R.id.text_real)
-    TextView textView;
     @BindView(R.id.edit_comment)
     EditText inputView;
     @BindView(R.id.image_profile)
@@ -63,6 +61,9 @@ public class BeautyTipCommentFragment extends DialogFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        extra = getArguments();
+        args = extra.getLong("commentid");
     }
 
     @Nullable
@@ -70,6 +71,7 @@ public class BeautyTipCommentFragment extends DialogFragment {
     public View onCreateView(final LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_beauty_tip_pop_up, container, false);
         ButterKnife.bind(this, view);
+
         mAdapter = new BeautyTipPopUpAdapter();
         listView.setAdapter(mAdapter);
 
@@ -81,14 +83,13 @@ public class BeautyTipCommentFragment extends DialogFragment {
 
     @OnClick(R.id.image_profile)
     public void onProfile() {
-        extra = getArguments();
-        args = extra.getLong("commentid");
-
         InsertCommentRequest request = new InsertCommentRequest(getContext(), "" + args, inputView.getText().toString());
         NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<Comment>>() {
             @Override
             public void onSuccess(NetworkRequest<NetworkResult<Comment>> request, NetworkResult<Comment> result) {
                 Comment comment = result.getResult();
+                inputView.setText("");
+                getCommentList();
             }
 
             @Override
@@ -114,22 +115,18 @@ public class BeautyTipCommentFragment extends DialogFragment {
     @Override
     public void onStart() {
         super.onStart();
-        extra = getArguments();
-        args = extra.getLong("commentid");
 
+        getCommentList();
+    }
+
+    private void getCommentList() {
         CommentListRequest request = new CommentListRequest(getContext(), "" + args);
         NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<List<Comment>>>() {
             @Override
             public void onSuccess(NetworkRequest<NetworkResult<List<Comment>>> request, NetworkResult<List<Comment>> result) {
-                List<Comment> comment = result.getResult();
-                for (int j = 0; j < comment.size(); j++) {
-                    String text = comment.get(j).getContent();
-                    comment.get(j).setContent(text);
-                    Glide.with(userImage.getContext())
-                            .load(comment.get(j).getWriter().getUserProfile())
-                            .into(userImage);
-                    mAdapter.add(comment.get(j));
-                }
+                List<Comment> comments = result.getResult();
+                mAdapter.clear();
+                mAdapter.addAll(comments);
             }
 
             @Override
