@@ -40,4 +40,7 @@ dependencies {
     compile 'com.wdullaer:materialdatetimepicker:2.5.0'
     compile 'com.github.sundeepk:compact-calendar-view:1.8.9'
     compile 'com.facebook.android:facebook-android-sdk:[4,5)'
+    compile "com.google.android.gms:play-services-gcm:9.4.0"
 }
+
+apply plugin: 'com.google.gms.google-services'

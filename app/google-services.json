@@ -1,0 +1,35 @@
+{
+  "project_info": {
+    "project_number": "397304751662",
+    "project_id": "mobilevanityserver"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:397304751662:android:fe927fc5b910c3ff",
+        "android_client_info": {
+          "package_name": "com.vanity.mobilevanity"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAMCP0u6Vdjoe_9NnHt0Z9OSHRQiIawW30"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

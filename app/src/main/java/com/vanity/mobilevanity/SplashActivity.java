@@ -1,7 +1,13 @@
 package com.vanity.mobilevanity;
 
 import android.app.Activity;
+import android.app.Dialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -15,8 +21,11 @@ import com.facebook.FacebookException;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
 import com.vanity.mobilevanity.data.NetworkResult;
 import com.vanity.mobilevanity.data.User;
+import com.vanity.mobilevanity.gcm.RegistrationIntentService;
 import com.vanity.mobilevanity.manager.NetworkManager;
 import com.vanity.mobilevanity.manager.NetworkRequest;
 import com.vanity.mobilevanity.manager.PropertyManager;
@@ -38,6 +47,9 @@ public class SplashActivity extends AppCompatActivity {
 
     private final static int RC_SIGN_UP = 100;
 
+    private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
+    private BroadcastReceiver mRegistrationBroadcastReceiver;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +61,48 @@ public class SplashActivity extends AppCompatActivity {
         loginManager = LoginManager.getInstance();
         callbackManager = CallbackManager.Factory.create();
 
+        loginButton.setReadPermissions("email");
+        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                processAfterFacebookLogin();
+            }
+
+            @Override
+            public void onCancel() {
+                Toast.makeText(SplashActivity.this, "cancel", Toast.LENGTH_SHORT).show();
+
+            }
+
+            @Override
+            public void onError(FacebookException error) {
+                Toast.makeText(SplashActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        mRegistrationBroadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                doRealStart();
+            }
+        };
+
+        setUpIfNeeded();
+    }
+
+    private void setUpIfNeeded() {
+        if (checkPlayServices()) {
+            String regId = PropertyManager.getInstance().getRegistrationId();
+            if (!regId.equals("")) {
+                doRealStart();
+            } else {
+                Intent intent = new Intent(this, RegistrationIntentService.class);
+                startService(intent);
+            }
+        }
+    }
+
+    private void doRealStart() {
         MyInfoRequest request = new MyInfoRequest(this);
         NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<User>>() {
             @Override
@@ -68,24 +122,41 @@ public class SplashActivity extends AppCompatActivity {
                 resetFacebookAndMoveLoginActivity();
             }
         });
+    }
 
-        loginButton.setReadPermissions("email");
-        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-            @Override
-            public void onSuccess(LoginResult loginResult) {
-                processAfterFacebookLogin();
+    private boolean checkPlayServices() {
+        GoogleApiAvailability apiAvailability = GoogleApiAvailability.getInstance();
+        int resultCode = apiAvailability.isGooglePlayServicesAvailable(this);
+        if (resultCode != ConnectionResult.SUCCESS) {
+            if (apiAvailability.isUserResolvableError(resultCode)) {
+                Dialog dialog = apiAvailability.getErrorDialog(this, resultCode, PLAY_SERVICES_RESOLUTION_REQUEST);
+                dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+
+                    @Override
+                    public void onCancel(DialogInterface dialog) {
+                        finish();
+                    }
+                });
+                dialog.show();
+            } else {
+                finish();
             }
+            return false;
+        }
+        return true;
+    }
 
-            @Override
-            public void onCancel() {
+    @Override
+    protected void onResume() {
+        super.onResume();
+        LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
+                new IntentFilter(RegistrationIntentService.REGISTRATION_COMPLETE));
+    }
 
-            }
-
-            @Override
-            public void onError(FacebookException error) {
-
-            }
-        });
+    @Override
+    protected void onPause() {
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mRegistrationBroadcastReceiver);
+        super.onPause();
     }
 
     @Override
@@ -95,8 +166,11 @@ public class SplashActivity extends AppCompatActivity {
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == RC_SIGN_UP)
                 moveMainActivity();
+            else if (requestCode == PLAY_SERVICES_RESOLUTION_REQUEST)
+                setUpIfNeeded();
             else callbackManager.onActivityResult(requestCode, resultCode, data);
         }
+
     }
 
     private void processAfterFacebookLogin() {
@@ -208,12 +282,12 @@ public class SplashActivity extends AppCompatActivity {
 
             @Override
             public void onCancel() {
-
+                Toast.makeText(SplashActivity.this, "cancel", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onError(FacebookException error) {
-
+                Toast.makeText(SplashActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
 
