@@ -4,8 +4,10 @@
     android:layout_height="wrap_content">
 
     <ImageView
-        android:layout_width="wrap_content"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:id="@+id/image_banner"
-        android:layout_gravity="center_horizontal" />
+        android:scaleType="fitCenter"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="10dp"/>
 </LinearLayout>

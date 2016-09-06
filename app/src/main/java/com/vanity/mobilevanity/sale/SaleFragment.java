@@ -76,8 +76,8 @@ public class SaleFragment extends Fragment {
         });
         bannerListView.setAdapter(saleAdapter);
 
-        //StaggeredGridLayoutManager manager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
-        GridLayoutManager manager = new GridLayoutManager(getContext(), 2, GridLayoutManager.VERTICAL, false);
+        StaggeredGridLayoutManager manager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        //GridLayoutManager manager = new GridLayoutManager(getContext(), 2, GridLayoutManager.VERTICAL, false);
         bannerListView.setLayoutManager(manager);
 
         calendarView.setLocale(Locale.KOREA);

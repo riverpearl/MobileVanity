@@ -37,7 +37,9 @@ public class BannerViewHolder extends RecyclerView.ViewHolder {
     public void setData(Sale data) {
         this.data = data;
 
-        Glide.with(bannerView.getContext()).load(data.getBanner()).into(bannerView);
+        Glide.with(bannerView.getContext())
+                .load(data.getBanner())
+                .into(bannerView);
     }
 
     public interface OnBannerItemClickListener {
