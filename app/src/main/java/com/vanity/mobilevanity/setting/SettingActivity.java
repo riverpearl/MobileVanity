@@ -3,14 +3,18 @@ package com.vanity.mobilevanity.setting;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.SwitchCompat;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.CompoundButton;
 import android.widget.ListView;
+import android.widget.Switch;
 
 import com.vanity.mobilevanity.R;
 import com.vanity.mobilevanity.adapter.SettingAdapter;
+import com.vanity.mobilevanity.manager.PropertyManager;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -21,6 +25,8 @@ public class SettingActivity extends AppCompatActivity {
     @BindView(R.id.list_setting)
     ListView settingView;
 
+    Switch switchView;
+
     SettingAdapter sAdapter;
 
     @Override
@@ -28,12 +34,22 @@ public class SettingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
 
-        ButterKnife.bind(this);
-
         View versionView = getLayoutInflater().inflate(R.layout.view_version, null);
         View alertView = getLayoutInflater().inflate(R.layout.view_alert, null);
+
+        ButterKnife.bind(this);
+
         settingView.addHeaderView(versionView, null, false);
         settingView.addHeaderView(alertView, null, false);
+
+        switchView = (Switch)findViewById(R.id.switch_alert);
+        switchView.setChecked(PropertyManager.getInstance().getIsAlertReceptible());
+        switchView.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                PropertyManager.getInstance().setIsAlertReceptible(isChecked);
+            }
+        });
 
         sAdapter = new SettingAdapter();
         settingView.setAdapter(sAdapter);
@@ -42,16 +58,16 @@ public class SettingActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 Intent intent;
-                switch(position) {
-                    case 2 :
+                switch (position) {
+                    case 2:
                         intent = new Intent(SettingActivity.this, AccessTermActivity.class);
                         startActivity(intent);
                         break;
-                    case 3 :
+                    case 3:
                         intent = new Intent(SettingActivity.this, FAQActivity.class);
                         startActivity(intent);
                         break;
-                    case 4 :
+                    case 4:
                         intent = new Intent(SettingActivity.this, PartnershipActivity.class);
                         startActivity(intent);
                         break;

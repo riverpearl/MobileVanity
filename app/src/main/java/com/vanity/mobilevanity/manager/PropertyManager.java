@@ -26,6 +26,7 @@ public class PropertyManager {
     private static final String KEY_REGISTRATION_ID = "regid";
     private static final String KEY_FACEBOOK_ID = "facebookid";
     private static final String KEY_LAST_NOTIFY_DATE = "lastDate";
+    private static final String KEY_IS_ALERT_RECEPTIBLE = "isAlertReceptible";
 
     private PropertyManager() {
         Context context = MyApplication.getContext();
@@ -67,5 +68,14 @@ public class PropertyManager {
 
     public String getLastNotifyDate() {
         return mPrefs.getString(KEY_LAST_NOTIFY_DATE, "");
+    }
+
+    public void setIsAlertReceptible(boolean isAlertReceptible) {
+        mEditor.putBoolean(KEY_IS_ALERT_RECEPTIBLE, isAlertReceptible);
+        mEditor.commit();
+    }
+
+    public boolean getIsAlertReceptible() {
+        return mPrefs.getBoolean(KEY_IS_ALERT_RECEPTIBLE, false);
     }
 }
