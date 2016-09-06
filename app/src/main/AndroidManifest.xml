@@ -41,6 +41,11 @@
             </intent-filter>
         </activity>
         <activity android:name=".FacebookSignUpActivity"></activity>
+
+        <receiver
+            android:name=".cosmetic.CosmeticReceiver"
+            android:enabled="true"
+            android:exported="true"></receiver>
     </application>
 
 </manifest>
