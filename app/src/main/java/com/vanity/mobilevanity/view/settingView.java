@@ -6,11 +6,8 @@ import android.widget.TextView;
 
 import com.vanity.mobilevanity.R;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-
 /**
- * Created by Tacademy on 2016-08-26.
+ * Created by Tacademy on 2016-09-06.
  */
 public class SettingView extends FrameLayout {
 
