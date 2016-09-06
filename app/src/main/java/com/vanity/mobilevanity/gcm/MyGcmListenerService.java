@@ -55,6 +55,9 @@ public class MyGcmListenerService extends GcmListenerService {
     // [START receive_message]
     @Override
     public void onMessageReceived(String from, Bundle data) {
+        if (!PropertyManager.getInstance().getIsAlertReceptible())
+            return;
+
         final String type = data.getString("type");
         Log.d(TAG, "type: " + data.getString("type"));
         Log.d(TAG, "From: " + from);
