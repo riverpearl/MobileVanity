@@ -17,7 +17,10 @@ import butterknife.ButterKnife;
  */
 public class BeautyTipPopUpViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.image_userprofile)
-    ImageView userImage;
+    ImageView profileView;
+
+    @BindView(R.id.text_nickname)
+    TextView nicknameView;
 
     @BindView(R.id.text_comment)
     TextView commentView;
@@ -31,10 +34,11 @@ public class BeautyTipPopUpViewHolder extends RecyclerView.ViewHolder {
 
     public void setPopUp(Comment item) {
         this.data = item;
-        Glide.with(userImage.getContext())
+        Glide.with(profileView.getContext())
                 .load(item.getWriter().getUserProfile())
-                .into(userImage);
+                .into(profileView);
 
+        nicknameView.setText(item.getWriter().getUserNickName());
         commentView.setText(item.getContent());
     }
 }

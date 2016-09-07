@@ -51,21 +51,25 @@ public class BeautyTipCommentFragment extends DialogFragment {
     @BindView(R.id.edit_comment)
     EditText inputView;
     @BindView(R.id.image_profile)
-    ImageView userImage;
-    @BindView(R.id.popup_list)
+    ImageView profileView;
+    @BindView(R.id.rv_comment)
     RecyclerView listView;
 
     BeautyTipPopUpAdapter mAdapter;
 
     Bundle extra;
-    long args;
+    private long beautyTipId = 0;
+    private String userProfile = "";
+    private String userNickname = "";
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         extra = getArguments();
-        args = extra.getLong("commentid");
+        beautyTipId = extra.getLong(BeautyTipFragment.TAG_BEAUTY_TIP_ID);
+        userProfile = extra.getString(BeautyTipFragment.TAG_USER_PROFILE);
+        userNickname = extra.getString(BeautyTipFragment.TAG_USER_NICKNAME);
     }
 
     @Nullable
@@ -83,17 +87,58 @@ public class BeautyTipCommentFragment extends DialogFragment {
         return view;
     }
 
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        Dialog d = getDialog();
+        WindowManager.LayoutParams params = d.getWindow().getAttributes();
+        params.gravity = Gravity.CENTER;
+        params.x = 100;
+        params.y = 100;
+        d.getWindow().setAttributes(params);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        Glide.with(profileView.getContext())
+                .load(userProfile)
+                .into(profileView);
+        getCommentList();
+    }
+
+    private void getCommentList() {
+        CommentListRequest request = new CommentListRequest(getContext(), "" + beautyTipId);
+        NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<List<Comment>>>() {
+            @Override
+            public void onSuccess(NetworkRequest<NetworkResult<List<Comment>>> request, NetworkResult<List<Comment>> result) {
+                if (result.getCode() == 1) {
+                    List<Comment> comments = result.getResult();
+                    mAdapter.clear();
+                    mAdapter.addAll(comments);
+                }
+            }
+
+            @Override
+            public void onFail(NetworkRequest<NetworkResult<List<Comment>>> request, int errorCode, String errorMessage, Throwable e) {
+                Toast.makeText(getContext(), "댓글 불러오기에 실패했습니다.", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
     @OnClick(R.id.btn_send)
     public void onSendButton() {
         Message msg = mHandler.obtainMessage(0);
         mHandler.removeMessages(0);
         mHandler.sendMessageDelayed(msg, 1000);
     }
+
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            InsertCommentRequest request = new InsertCommentRequest(getContext(), "" + args, inputView.getText().toString());
+            InsertCommentRequest request = new InsertCommentRequest(getContext(), "" + beautyTipId, inputView.getText().toString());
             NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<Comment>>() {
                 @Override
                 public void onSuccess(NetworkRequest<NetworkResult<Comment>> request, NetworkResult<Comment> result) {
@@ -114,43 +159,8 @@ public class BeautyTipCommentFragment extends DialogFragment {
 
     };
 
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        Dialog d = getDialog();
-        WindowManager.LayoutParams params = d.getWindow().getAttributes();
-        params.gravity = Gravity.CENTER;
-        params.x = 100;
-        params.y = 100;
-        d.getWindow().setAttributes(params);
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-
-        getCommentList();
-    }
-
-    private void getCommentList() {
-        CommentListRequest request = new CommentListRequest(getContext(), "" + args);
-        NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<List<Comment>>>() {
-            @Override
-            public void onSuccess(NetworkRequest<NetworkResult<List<Comment>>> request, NetworkResult<List<Comment>> result) {
-                if (result.getCode() == 1) {
-                    List<Comment> comments = result.getResult();
-                    Glide.with(userImage.getContext())
-                            .load(comments.get(0).getWriter().getUserProfile())
-                            .into(userImage);
-                    mAdapter.clear();
-                    mAdapter.addAll(comments);
-                }
-            }
-
-            @Override
-            public void onFail(NetworkRequest<NetworkResult<List<Comment>>> request, int errorCode, String errorMessage, Throwable e) {
-                Toast.makeText(getContext(), "댓글 불러오기에 실패했습니다.", Toast.LENGTH_SHORT).show();
-            }
-        });
+    @OnClick(R.id.btn_cancel)
+    public void onCancelClick(View view) {
+        this.dismiss();
     }
 }

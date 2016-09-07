@@ -30,6 +30,7 @@ import com.vanity.mobilevanity.data.User;
 import com.vanity.mobilevanity.manager.NetworkManager;
 import com.vanity.mobilevanity.manager.NetworkRequest;
 import com.vanity.mobilevanity.request.BeautyTipInfoRequest;
+import com.vanity.mobilevanity.request.MyInfoRequest;
 import com.vanity.mobilevanity.request.SearchBeautyTipRequest;
 import com.vanity.mobilevanity.request.UpdateBeautyTipRequest;
 import com.vanity.mobilevanity.request.UpdateLikeRequest;
@@ -55,11 +56,13 @@ public class BeautyTipFragment extends Fragment {
     RecyclerView listView;
     BeautyTipAdapter mAdapter;
 
-    Intent intent;
-    long id;
     String order;
+    private User user;
 
-    public static final String TAG_FRAGMENT = "fragment";
+    public static final String TAG_COMMENT = "commentdialog";
+    public static final String TAG_BEAUTY_TIP_ID = "beautytipid";
+    public static final String TAG_USER_PROFILE = "userprofile";
+    public static final String TAG_USER_NICKNAME = "usernickname";
 
     public BeautyTipFragment() {
         // Required empty public constructor
@@ -118,7 +121,7 @@ public class BeautyTipFragment extends Fragment {
             public void onAdapterItemClick(View view, BeautyTip beautyTip, int position) {
                 //   BeautyTipInfoRequest request = new BeautyTipInfoRequest(getContext(),mAdapter.getItemId(position))
                 Intent intent = new Intent(getContext(), BeautyTipDetailActivity.class);
-                intent.putExtra("beautytipid", beautyTip.getId());
+                intent.putExtra("TAG_BEAUTY_TIP_ID", beautyTip.getId());
                 startActivity(intent);
             }
         });
@@ -129,9 +132,30 @@ public class BeautyTipFragment extends Fragment {
                 FragmentManager fm = getFragmentManager();
                 BeautyTipCommentFragment dialog = new BeautyTipCommentFragment();
                 Bundle args = new Bundle();
-                args.putLong("commentid", beautyTip.getId());
-                dialog.setArguments(args);
-                dialog.show(fm, "dialog");
+                final long BeautyTipId = beautyTip.getId();
+
+                MyInfoRequest request = new MyInfoRequest(getContext());
+                NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<User>>() {
+                    @Override
+                    public void onSuccess(NetworkRequest<NetworkResult<User>> request, NetworkResult<User> result) {
+                        if (result.getCode() == 1)
+                            user = result.getResult();
+                    }
+
+                    @Override
+                    public void onFail(NetworkRequest<NetworkResult<User>> request, int errorCode, String errorMessage, Throwable e) {
+
+                    }
+                });
+
+                if (user != null) {
+                    args.putLong(TAG_BEAUTY_TIP_ID, BeautyTipId);
+                    args.putString(TAG_USER_PROFILE, user.getUserProfile());
+                    args.putString(TAG_USER_NICKNAME, user.getUserNickName());
+                    dialog.setArguments(args);
+                    dialog.show(fm, TAG_COMMENT);
+
+                }
             }
         });
 
