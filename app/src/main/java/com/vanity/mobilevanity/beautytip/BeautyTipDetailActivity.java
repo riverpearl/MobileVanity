@@ -22,6 +22,7 @@ import android.os.Bundle;
 import android.support.v7.app.WindowDecorActionBar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -40,12 +41,15 @@ import com.vanity.mobilevanity.adapter.BeautyTipAdapter;
 import com.vanity.mobilevanity.data.BeautyTip;
 import com.vanity.mobilevanity.data.Comment;
 import com.vanity.mobilevanity.data.NetworkResult;
+import com.vanity.mobilevanity.data.User;
 import com.vanity.mobilevanity.manager.NetworkManager;
 import com.vanity.mobilevanity.manager.NetworkRequest;
+import com.vanity.mobilevanity.manager.PropertyManager;
 import com.vanity.mobilevanity.request.BeautyTipInfoRequest;
 import com.vanity.mobilevanity.request.CommentListRequest;
 import com.vanity.mobilevanity.request.DeleteBeautyTipRequest;
 import com.vanity.mobilevanity.request.LikeBeautyTipListRequest;
+import com.vanity.mobilevanity.request.MyInfoRequest;
 import com.vanity.mobilevanity.request.SearchBeautyTipRequest;
 import com.vanity.mobilevanity.request.UpdateBeautyTipRequest;
 import com.vanity.mobilevanity.request.UpdateLikeRequest;
@@ -73,28 +77,37 @@ public class BeautyTipDetailActivity extends AppCompatActivity {
     @BindView(R.id.btn_like)
     Button likeButton;
 
-    Intent intent;
-    long id;
-    boolean like;
+    long beautyTipId = 0;
+    boolean like = false;
 
-    public static final String TAG_DETAIL = "detail";
-    public static final String DETAIL_ID = "beautytipid";
+    public static final String TAG_BEAUTY_TIP_ID = "beautytipid";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_beauty_tip_detail);
+
         ButterKnife.bind(this);
+
+        Intent intent = getIntent();
+        beautyTipId = intent.getLongExtra(TAG_BEAUTY_TIP_ID, 0);
+
+        getBeautyTipInfo();
     }
+
+    MenuItem updateMenuItem;
+    MenuItem deleteMenuItem;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.actionbar_update, menu);
         getMenuInflater().inflate(R.menu.actionbar_delete, menu);
         getMenuInflater().inflate(R.menu.actionbar_cancel, menu);
-        return true;
-    }
 
+        updateMenuItem = menu.findItem(R.id.menu_update);
+        deleteMenuItem = menu.findItem(R.id.menu_delete);
+        return super.onCreateOptionsMenu(menu);
+    }
 
     @OnClick(R.id.btn_like)
     public void onLikeClick() {
@@ -107,19 +120,15 @@ public class BeautyTipDetailActivity extends AppCompatActivity {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
+
             String isLike;
             if (like) isLike = "false";
             else isLike = "true";
 
-            id = intent.getLongExtra("beautytipid", 0);
-
-            UpdateLikeRequest request = new UpdateLikeRequest(getBaseContext(), "" + id, isLike);
+            UpdateLikeRequest request = new UpdateLikeRequest(getBaseContext(), "" + beautyTipId, isLike);
             NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<BeautyTip>>() {
                 @Override
                 public void onSuccess(NetworkRequest<NetworkResult<BeautyTip>> request, NetworkResult<BeautyTip> result) {
-                    if (result.getCode() == 1) {
-                        BeautyTip beautyTip = result.getResult();
-                    }
                 }
 
                 @Override
@@ -128,6 +137,7 @@ public class BeautyTipDetailActivity extends AppCompatActivity {
             });
         }
     };
+
 
     @OnClick(R.id.btn_comment)
     public void onCommentClick() {
@@ -143,45 +153,40 @@ public class BeautyTipDetailActivity extends AppCompatActivity {
             FragmentManager fm = getSupportFragmentManager();
             BeautyTipCommentFragment dialog = new BeautyTipCommentFragment();
             Bundle args = new Bundle();
-            args.putLong("commentid", id);
+            args.putLong("commentid", beautyTipId);
             dialog.setArguments(args);
             dialog.show(fm, "dialog");
         }
     };
 
-    File updateImage = null;
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.menu_cancel) {
-            finish();
-            return true;
-        }
-
-        if (item.getItemId() == R.id.menu_update) {
-            Intent intent = new Intent(BeautyTipDetailActivity.this, BeautyTipWriteActivity.class);
-            intent.putExtra(BeautyTipWriteActivity.TAG_SEARCH_TYPE, BeautyTipWriteActivity.INDEX_TYPE_DETAIL);
-            intent.putExtra(DETAIL_ID, id);
-            startActivity(intent);
-            return true;
-        }
-
-        if (item.getItemId() == R.id.menu_delete) {
-            DeleteBeautyTipRequest request = new DeleteBeautyTipRequest(getBaseContext(), "" + id);
-            NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<BeautyTip>>() {
-                @Override
-                public void onSuccess(NetworkRequest<NetworkResult<BeautyTip>> request, NetworkResult<BeautyTip> result) {
-                    if (result.getCode() == 1) {
-                        BeautyTip beautyTip = result.getResult();
-                        finish();
+        switch (item.getItemId()) {
+            case R.id.menu_cancel :
+                finish();
+                return true;
+            case R.id.menu_update :
+                Intent intent = new Intent(BeautyTipDetailActivity.this, BeautyTipWriteActivity.class);
+                intent.putExtra(BeautyTipWriteActivity.TAG_SEARCH_TYPE, BeautyTipWriteActivity.INDEX_TYPE_DETAIL);
+                intent.putExtra(TAG_BEAUTY_TIP_ID, beautyTipId);
+                startActivity(intent);
+                return true;
+            case R.id.menu_delete :
+                DeleteBeautyTipRequest request = new DeleteBeautyTipRequest(getBaseContext(), "" + beautyTipId);
+                NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<BeautyTip>>() {
+                    @Override
+                    public void onSuccess(NetworkRequest<NetworkResult<BeautyTip>> request, NetworkResult<BeautyTip> result) {
+                        if (result.getCode() == 1) {
+                            Toast.makeText(BeautyTipDetailActivity.this, "삭제되었습니다.", Toast.LENGTH_SHORT).show();
+                            finish();
+                        }
                     }
-                }
 
-                @Override
-                public void onFail(NetworkRequest<NetworkResult<BeautyTip>> request, int errorCode, String errorMessage, Throwable e) {
-                }
-            });
-            return true;
+                    @Override
+                    public void onFail(NetworkRequest<NetworkResult<BeautyTip>> request, int errorCode, String errorMessage, Throwable e) {
+                    }
+                });
+                return true;
         }
 
         return super.onOptionsItemSelected(item);
@@ -190,10 +195,12 @@ public class BeautyTipDetailActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        intent = getIntent();
-        id = intent.getLongExtra(DETAIL_ID, 0);
 
-        BeautyTipInfoRequest request = new BeautyTipInfoRequest(BeautyTipDetailActivity.this, "" + id);
+
+    }
+
+    private void getBeautyTipInfo() {
+        BeautyTipInfoRequest request = new BeautyTipInfoRequest(BeautyTipDetailActivity.this, "" + beautyTipId);
         NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<BeautyTip>>() {
             @Override
             public void onSuccess(NetworkRequest<NetworkResult<BeautyTip>> request, NetworkResult<BeautyTip> result) {
@@ -205,8 +212,15 @@ public class BeautyTipDetailActivity extends AppCompatActivity {
                     Glide.with(beautytipImage.getContext())
                             .load(beautyTip.getPreviewImage())
                             .into(beautytipImage);
-
                     like = beautyTip.isLike();
+
+                    if (Long.parseLong(PropertyManager.getInstance().getFacebookId()) == beautyTip.getUser().getId()) {
+                        updateMenuItem.setVisible(true);
+                        deleteMenuItem.setChecked(true);
+                    } else {
+                        updateMenuItem.setVisible(false);
+                        deleteMenuItem.setVisible(false);
+                    }
                 } else {
                     Toast.makeText(BeautyTipDetailActivity.this, "삭제된 게시물입니다.", Toast.LENGTH_SHORT).show();
                     finish();
@@ -218,5 +232,4 @@ public class BeautyTipDetailActivity extends AppCompatActivity {
             }
         });
     }
-
 }

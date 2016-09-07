@@ -104,7 +104,7 @@ public class BeautyTipWriteActivity extends AppCompatActivity {
                     return;
 
                 case INDEX_TYPE_DETAIL:
-                    id = intent.getLongExtra(BeautyTipDetailActivity.DETAIL_ID, 0);
+                    id = intent.getLongExtra(BeautyTipDetailActivity.TAG_BEAUTY_TIP_ID, 0);
 
                     UpdateBeautyTipRequest request = new UpdateBeautyTipRequest(getBaseContext(), "" + id, titleView.getText().toString(), contentView.getText().toString(), uploadFile);
                     NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<BeautyTip>>() {

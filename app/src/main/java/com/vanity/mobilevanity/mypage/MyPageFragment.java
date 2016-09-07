@@ -23,6 +23,8 @@ import com.vanity.mobilevanity.data.NetworkResult;
 import com.vanity.mobilevanity.data.User;
 import com.vanity.mobilevanity.manager.NetworkManager;
 import com.vanity.mobilevanity.manager.NetworkRequest;
+import com.vanity.mobilevanity.manager.PropertyManager;
+import com.vanity.mobilevanity.request.LogOutRequest;
 import com.vanity.mobilevanity.request.MyInfoRequest;
 import com.vanity.mobilevanity.setting.SettingActivity;
 
@@ -95,9 +97,27 @@ public class MyPageFragment extends Fragment {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            Intent intent = new Intent(getContext(), SplashActivity.class);
-            startActivity(intent);
-            getActivity().finish();
+
+            LogOutRequest request = new LogOutRequest(getContext());
+            NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<String>>() {
+                @Override
+                public void onSuccess(NetworkRequest<NetworkResult<String>> request, NetworkResult<String> result) {
+                    Intent intent = new Intent(getContext(), SplashActivity.class);
+                    startActivity(intent);
+                    getActivity().finish();
+
+                    PropertyManager.getInstance().setFacebookId("");
+                    PropertyManager.getInstance().setIsAlarmCreated(false);
+                    PropertyManager.getInstance().setRegistrationId("");
+                    PropertyManager.getInstance().setLastNotifyDate("");
+                    PropertyManager.getInstance().setIsAlarmCreated(false);
+                }
+
+                @Override
+                public void onFail(NetworkRequest<NetworkResult<String>> request, int errorCode, String errorMessage, Throwable e) {
+
+                }
+            });
         }
     };
 

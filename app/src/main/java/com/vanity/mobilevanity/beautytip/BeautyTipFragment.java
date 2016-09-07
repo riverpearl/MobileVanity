@@ -54,6 +54,7 @@ public class BeautyTipFragment extends Fragment {
 
     @BindView(R.id.beautytiplist)
     RecyclerView listView;
+
     BeautyTipAdapter mAdapter;
 
     String order;
@@ -121,7 +122,7 @@ public class BeautyTipFragment extends Fragment {
             public void onAdapterItemClick(View view, BeautyTip beautyTip, int position) {
                 //   BeautyTipInfoRequest request = new BeautyTipInfoRequest(getContext(),mAdapter.getItemId(position))
                 Intent intent = new Intent(getContext(), BeautyTipDetailActivity.class);
-                intent.putExtra("TAG_BEAUTY_TIP_ID", beautyTip.getId());
+                intent.putExtra(TAG_BEAUTY_TIP_ID, beautyTip.getId());
                 startActivity(intent);
             }
         });

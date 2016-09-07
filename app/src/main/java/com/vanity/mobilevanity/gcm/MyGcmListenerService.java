@@ -95,7 +95,7 @@ public class MyGcmListenerService extends GcmListenerService {
 
     private void sendNotification(Notify notify) {
         Intent intent = new Intent(this, BeautyTipDetailActivity.class);
-        intent.putExtra(BeautyTipDetailActivity.DETAIL_ID, notify.getBeautyTipId().getKey().getRaw().getId());
+        intent.putExtra(BeautyTipDetailActivity.TAG_BEAUTY_TIP_ID, notify.getBeautyTipId().getKey().getRaw().getId());
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
                 PendingIntent.FLAG_ONE_SHOT);

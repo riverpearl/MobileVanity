@@ -64,7 +64,7 @@ public class AlertActivity extends AppCompatActivity {
                     startActivity(intent);
                 } else {
                     Intent intent = new Intent(AlertActivity.this, BeautyTipDetailActivity.class);
-                    intent.putExtra(BeautyTipDetailActivity.DETAIL_ID, item.getBeautyTipId().getKey().getRaw().getId());
+                    intent.putExtra(BeautyTipDetailActivity.TAG_BEAUTY_TIP_ID, item.getBeautyTipId().getKey().getRaw().getId());
                     startActivity(intent);
                 }
             }
