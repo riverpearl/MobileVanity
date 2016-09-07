@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.google.zxing.Result;
 import com.vanity.mobilevanity.R;
+import com.vanity.mobilevanity.cosmetic.CosmeticListActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -31,6 +32,10 @@ public class RegisterBarcodeActivity extends AppCompatActivity implements ZXingS
     public final static String TAG_BARCODE = "barcode";
     private final static int RC_PERMISSION = 500;
 
+    private int requestCode = 0;
+    private int category = 0;
+    private int tabpos = -1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +43,11 @@ public class RegisterBarcodeActivity extends AppCompatActivity implements ZXingS
 
         ButterKnife.bind(this);
         checkPermission();
+
+        Intent intent = getIntent();
+        requestCode = intent.getIntExtra(RegisterSearchActivity.TAG_REQUEST_CODE, 0);
+        category = intent.getIntExtra(CosmeticListActivity.TAG_CATEGORY, 0);
+        tabpos = intent.getIntExtra(CosmeticListActivity.TAG_TAB_POS, -1);
     }
 
     @Override
@@ -121,16 +131,22 @@ public class RegisterBarcodeActivity extends AppCompatActivity implements ZXingS
     @OnClick(R.id.btn_register_myself)
     public void onRegisterMyselfClick(View view) {
         Intent intent = new Intent(RegisterBarcodeActivity.this, RegisterSearchActivity.class);
+        intent.putExtra(RegisterSearchActivity.TAG_REQUEST_CODE, requestCode);
+
+        if (category != 0 && tabpos != -1) {
+            intent.putExtra(CosmeticListActivity.TAG_CATEGORY, category);
+            intent.putExtra(CosmeticListActivity.TAG_TAB_POS, tabpos);
+        }
+
         startActivity(intent);
-        finish();
     }
 
     @Override
     public void handleResult(Result result) {
         Intent intent = new Intent(RegisterBarcodeActivity.this, RegisterDetailActivity.class);
+        intent.putExtra(RegisterDetailActivity.TAG_REQUEST_CODE, requestCode);
         intent.putExtra(RegisterDetailActivity.TAG_SEARCH_TYPE, RegisterDetailActivity.INDEX_TYPE_BARCODE);
         intent.putExtra(TAG_BARCODE, "1234567890");
         startActivity(intent);
-        finish();
     }
 }

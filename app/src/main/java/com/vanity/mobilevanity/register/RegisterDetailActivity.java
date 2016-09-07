@@ -14,8 +14,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.vanity.mobilevanity.MainActivity;
 import com.vanity.mobilevanity.R;
 import com.vanity.mobilevanity.cosmetic.CosmeticListActivity;
+import com.vanity.mobilevanity.cosmetic.HomeFragment;
 import com.vanity.mobilevanity.data.Brand;
 import com.vanity.mobilevanity.data.Cosmetic;
 import com.vanity.mobilevanity.data.CosmeticItem;
@@ -74,7 +76,11 @@ public class RegisterDetailActivity extends AppCompatActivity implements DatePic
     TextView usebyDayView;
 
     Cosmetic cosmetic;
+    private int requestCode = 0;
+    private int category = 0;
+    private int tabpos = -1;
 
+    public final static String TAG_REQUEST_CODE = "requestcode";
     public final static String TAG_SEARCH_TYPE = "searchtype";
     public final static int INDEX_TYPE_NONE = 0;
     public final static int INDEX_TYPE_BARCODE = 1;
@@ -86,6 +92,12 @@ public class RegisterDetailActivity extends AppCompatActivity implements DatePic
         setContentView(R.layout.activity_register_detail);
 
         ButterKnife.bind(this);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        Intent intent = getIntent();
+        requestCode = intent.getIntExtra(TAG_REQUEST_CODE, 0);
+        category = intent.getIntExtra(CosmeticListActivity.TAG_CATEGORY, 0);
+        tabpos = intent.getIntExtra(CosmeticListActivity.TAG_TAB_POS, -1);
     }
 
     @Override
@@ -96,9 +108,23 @@ public class RegisterDetailActivity extends AppCompatActivity implements DatePic
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.menu_cancel) {
-            finish();
-            return true;
+        switch (item.getItemId()) {
+            case R.id.menu_cancel :
+                if (requestCode == HomeFragment.KEY_HOME) {
+                    Intent intent = new Intent(RegisterDetailActivity.this, MainActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                } else if (requestCode == CosmeticListActivity.KEY_COSMETIC_LIST) {
+                    Intent intent = new Intent(RegisterDetailActivity.this, CosmeticListActivity.class);
+                    intent.putExtra(CosmeticListActivity.TAG_CATEGORY, category);
+                    intent.putExtra(CosmeticListActivity.TAG_TAB_POS, tabpos);
+                    intent.addFlags(intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                }
+                return true;
+            case android.R.id.home :
+                finish();
+                return true;
         }
 
         return super.onOptionsItemSelected(item);
@@ -186,7 +212,18 @@ public class RegisterDetailActivity extends AppCompatActivity implements DatePic
                         String productName = citem.getCosmetic().getProduct().getName();
                         DBManager.getInstance().insertCosmeticItem(sid, cid, productName, dateAdded, term);
                         Toast.makeText(RegisterDetailActivity.this, "등록되었습니다.", Toast.LENGTH_SHORT).show();
-                        finish();
+
+                        if (requestCode == HomeFragment.KEY_HOME) {
+                            Intent intent = new Intent(RegisterDetailActivity.this, MainActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(intent);
+                        } else if (requestCode == CosmeticListActivity.KEY_COSMETIC_LIST) {
+                            Intent intent = new Intent(RegisterDetailActivity.this, CosmeticListActivity.class);
+                            intent.putExtra(CosmeticListActivity.TAG_CATEGORY, category);
+                            intent.putExtra(CosmeticListActivity.TAG_TAB_POS, tabpos);
+                            intent.addFlags(intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(intent);
+                        }
                     }
                 }
 

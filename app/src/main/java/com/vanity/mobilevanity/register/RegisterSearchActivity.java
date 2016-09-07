@@ -18,8 +18,11 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.vanity.mobilevanity.MainActivity;
 import com.vanity.mobilevanity.R;
 import com.vanity.mobilevanity.adapter.SearchResultAdapter;
+import com.vanity.mobilevanity.cosmetic.CosmeticListActivity;
+import com.vanity.mobilevanity.cosmetic.HomeFragment;
 import com.vanity.mobilevanity.data.Brand;
 import com.vanity.mobilevanity.data.Constant;
 import com.vanity.mobilevanity.data.Cosmetic;
@@ -63,6 +66,11 @@ public class RegisterSearchActivity extends AppCompatActivity {
     ArrayAdapter<String> itemAdapter;
     List<Brand> brands;
 
+    private int requestCode = 0;
+    private int category = 0;
+    private int tabpos = -1;
+
+    public final static String TAG_REQUEST_CODE = "requestcode";
     public final static String TAG_COSMETIC_ID = "cid";
     public final static String TAG_IMAGE = "image";
     public final static String TAG_BRAND = "brand";
@@ -78,6 +86,11 @@ public class RegisterSearchActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        Intent intent = getIntent();
+        requestCode = intent.getIntExtra(TAG_REQUEST_CODE, 0);
+        category = intent.getIntExtra(CosmeticListActivity.TAG_CATEGORY, 0);
+        tabpos = intent.getIntExtra(CosmeticListActivity.TAG_TAB_POS, 0);
 
         brandView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -138,6 +151,13 @@ public class RegisterSearchActivity extends AppCompatActivity {
             @Override
             public void onAdapterItemClick(View view, Cosmetic data, int position) {
                 Intent intent = new Intent(RegisterSearchActivity.this, RegisterDetailActivity.class);
+                intent.putExtra(RegisterDetailActivity.TAG_REQUEST_CODE, requestCode);
+
+                if (category != 0 && tabpos != -1) {
+                    intent.putExtra(CosmeticListActivity.TAG_CATEGORY, category);
+                    intent.putExtra(CosmeticListActivity.TAG_TAB_POS, tabpos);
+                }
+
                 intent.putExtra(RegisterDetailActivity.TAG_SEARCH_TYPE, RegisterDetailActivity.INDEX_TYPE_SEARCH);
                 intent.putExtra(TAG_COSMETIC_ID, data.getId());
                 intent.putExtra(TAG_IMAGE, data.getImage());
@@ -147,7 +167,6 @@ public class RegisterSearchActivity extends AppCompatActivity {
                 intent.putExtra(TAG_BRAND, data.getProduct().getBrand().getName());
                 intent.putExtra(TAG_USEBY, data.getProduct().getUseBy());
                 startActivity(intent);
-                finish();
             }
         });
         listView.setAdapter(resultAdapter);
@@ -166,25 +185,23 @@ public class RegisterSearchActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_cancel :
-                finish();
+                if (requestCode == HomeFragment.KEY_HOME) {
+                    Intent intent = new Intent(RegisterSearchActivity.this, MainActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                } else if (requestCode == CosmeticListActivity.KEY_COSMETIC_LIST) {
+                    Intent intent = new Intent(RegisterSearchActivity.this, CosmeticListActivity.class);
+                    intent.putExtra(CosmeticListActivity.TAG_CATEGORY, category);
+                    intent.putExtra(CosmeticListActivity.TAG_TAB_POS, tabpos);
+                    intent.addFlags(intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                }
                 return true;
             case android.R.id.home :
-                goRegisterBarcodeActivity();
+                finish();
                 return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        goRegisterBarcodeActivity();
-    }
-
-    private void goRegisterBarcodeActivity() {
-        Intent intent = new Intent(RegisterSearchActivity.this, RegisterBarcodeActivity.class);
-        startActivity(intent);
-        finish();
     }
 
     @Override

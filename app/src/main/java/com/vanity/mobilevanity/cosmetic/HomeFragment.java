@@ -17,6 +17,7 @@ import com.vanity.mobilevanity.beautytip.BeautyTipFragment;
 import com.vanity.mobilevanity.data.Constant;
 import com.vanity.mobilevanity.mypage.MyPageFragment;
 import com.vanity.mobilevanity.register.RegisterBarcodeActivity;
+import com.vanity.mobilevanity.register.RegisterSearchActivity;
 import com.vanity.mobilevanity.sale.SaleFragment;
 
 import butterknife.ButterKnife;
@@ -28,7 +29,8 @@ import butterknife.OnClick;
  */
 public class HomeFragment extends Fragment {
 
-    public final static String TAG_CATEGORY = "category";
+
+    public final static int KEY_HOME = 1;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -55,7 +57,7 @@ public class HomeFragment extends Fragment {
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             Intent intent = new Intent(getContext(), CosmeticListActivity.class);
-            intent.putExtra(TAG_CATEGORY, Constant.INDEX_CATEGORY_EYE);
+            intent.putExtra(CosmeticListActivity.TAG_CATEGORY, Constant.INDEX_CATEGORY_EYE);
             startActivity(intent);
         }
     };
@@ -72,7 +74,7 @@ public class HomeFragment extends Fragment {
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             Intent intent = new Intent(getContext(), CosmeticListActivity.class);
-            intent.putExtra(TAG_CATEGORY, Constant.INDEX_CATEGORY_LIP);
+            intent.putExtra(CosmeticListActivity.TAG_CATEGORY, Constant.INDEX_CATEGORY_LIP);
             startActivity(intent);
         }
     };
@@ -89,7 +91,7 @@ public class HomeFragment extends Fragment {
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             Intent intent = new Intent(getContext(), CosmeticListActivity.class);
-            intent.putExtra(TAG_CATEGORY, Constant.INDEX_CATEGORY_SKIN);
+            intent.putExtra(CosmeticListActivity.TAG_CATEGORY, Constant.INDEX_CATEGORY_SKIN);
             startActivity(intent);
         }
     };
@@ -106,7 +108,7 @@ public class HomeFragment extends Fragment {
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             Intent intent = new Intent(getContext(), CosmeticListActivity.class);
-            intent.putExtra(TAG_CATEGORY, Constant.INDEX_CATEGORY_FACE);
+            intent.putExtra(CosmeticListActivity.TAG_CATEGORY, Constant.INDEX_CATEGORY_FACE);
             startActivity(intent);
         }
     };
@@ -123,7 +125,7 @@ public class HomeFragment extends Fragment {
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             Intent intent = new Intent(getContext(), CosmeticListActivity.class);
-            intent.putExtra(TAG_CATEGORY, Constant.INDEX_CATEGORY_CLEANSING);
+            intent.putExtra(CosmeticListActivity.TAG_CATEGORY, Constant.INDEX_CATEGORY_CLEANSING);
             startActivity(intent);
         }
     };
@@ -140,7 +142,7 @@ public class HomeFragment extends Fragment {
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             Intent intent = new Intent(getContext(), CosmeticListActivity.class);
-            intent.putExtra(TAG_CATEGORY, Constant.INDEX_CATEGORY_TOOL);
+            intent.putExtra(CosmeticListActivity.TAG_CATEGORY, Constant.INDEX_CATEGORY_TOOL);
             startActivity(intent);
         }
     };
@@ -157,6 +159,7 @@ public class HomeFragment extends Fragment {
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             Intent intent = new Intent(getContext(), RegisterBarcodeActivity.class);
+            intent.putExtra(RegisterSearchActivity.TAG_REQUEST_CODE, KEY_HOME);
             startActivity(intent);
         }
     };

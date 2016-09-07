@@ -74,7 +74,7 @@ public class AlertActivity extends AppCompatActivity {
         LinearLayoutManager manager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         listView.setLayoutManager(manager);
 
-        int result = DBManager.getInstance().insertNotify(5161363399770112L, "usebylimitiscoming", "2016-09-01T10:10:10.123+0900");
+        //int result = DBManager.getInstance().insertNotify(5161363399770112L, "usebylimitiscoming", "2016-09-01T10:10:10.123+0900");
     }
 
     @Override

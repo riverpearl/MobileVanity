@@ -34,6 +34,7 @@ import com.vanity.mobilevanity.manager.DBManager;
 import com.vanity.mobilevanity.manager.NetworkManager;
 import com.vanity.mobilevanity.manager.NetworkRequest;
 import com.vanity.mobilevanity.register.RegisterBarcodeActivity;
+import com.vanity.mobilevanity.register.RegisterSearchActivity;
 import com.vanity.mobilevanity.request.CosmeticItemsRequest;
 import com.vanity.mobilevanity.request.CosmeticListRequest;
 import com.vanity.mobilevanity.request.DeleteCosmeticItemRequest;
@@ -53,9 +54,14 @@ public class CosmeticListActivity extends AppCompatActivity {
     @BindView(R.id.rv_cosmetic)
     RecyclerView listView;
 
-    AlarmManager alarmManager;
     CosmeticAdapter mAdapter;
-    int category;
+
+    int category = 0;
+    int tabpos = 0;
+
+    public final static String TAG_CATEGORY = "category";
+    public final static String TAG_TAB_POS = "tabpos";
+    public final static int KEY_COSMETIC_LIST = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +70,8 @@ public class CosmeticListActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         Intent intent = getIntent();
-        category = intent.getIntExtra(HomeFragment.TAG_CATEGORY, 0);
+        category = intent.getIntExtra(TAG_CATEGORY, 0);
+        tabpos = intent.getIntExtra(TAG_TAB_POS, 0);
 
         mAdapter = new CosmeticAdapter();
         mAdapter.setOnAdapterItemClickListener(new CosmeticAdapter.OnAdapterItemClickListener() {
@@ -104,31 +111,10 @@ public class CosmeticListActivity extends AppCompatActivity {
 
         LinearLayoutManager manager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         listView.setLayoutManager(manager);
-
-        initTab();
-        tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                mAdapter.clear();
-                getCosmeticItemList(tab.getPosition());
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-                mAdapter.clear();
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-                mAdapter.clear();
-                getCosmeticItemList(tab.getPosition());
-            }
-        });
-        alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
     }
 
-    public void getCosmeticItemList(int tabPos) {
-        CosmeticItemsRequest request = new CosmeticItemsRequest(CosmeticListActivity.this, "" + category, "" + (tabPos + 1));
+    public void getCosmeticItemList() {
+        CosmeticItemsRequest request = new CosmeticItemsRequest(CosmeticListActivity.this, "" + category, "" + tabpos);
         NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<List<CosmeticItem>>>() {
             @Override
             public void onSuccess(NetworkRequest<NetworkResult<List<CosmeticItem>>> request, NetworkResult<List<CosmeticItem>> result) {
@@ -149,6 +135,10 @@ public class CosmeticListActivity extends AppCompatActivity {
     private void initTab() {
         List<String> tabName = new ArrayList<>();
         switch (category) {
+            case Constant.INDEX_CATEGROY_NONE:
+                finish();
+                break;
+
             case Constant.INDEX_CATEGORY_EYE:
                 tabName.add("섀도우");
                 tabName.add("마스카라");
@@ -194,6 +184,9 @@ public class CosmeticListActivity extends AppCompatActivity {
             tabs.addTab(tabs.newTab().setText(tabName.get(i)).setTag(tabName.get(i)));
         }
 
+        if (tabpos != -1)
+            tabs.getTabAt(tabpos).select();
+        else tabs.getTabAt(0).select();
     }
 
     @OnClick(R.id.fab_add_cosmetic)
@@ -208,6 +201,9 @@ public class CosmeticListActivity extends AppCompatActivity {
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             Intent intent = new Intent(CosmeticListActivity.this, RegisterBarcodeActivity.class);
+            intent.putExtra(RegisterSearchActivity.TAG_REQUEST_CODE, KEY_COSMETIC_LIST);
+            intent.putExtra(TAG_CATEGORY, category);
+            intent.putExtra(TAG_TAB_POS, tabpos);
             startActivity(intent);
         }
     };
@@ -231,7 +227,31 @@ public class CosmeticListActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        getCosmeticItemList(tabs.getSelectedTabPosition());
+
+        initTab();
+
+        tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                mAdapter.clear();
+                tabpos = tab.getPosition();
+                getCosmeticItemList();
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+                mAdapter.clear();
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+                mAdapter.clear();
+                tabpos = tab.getPosition();
+                getCosmeticItemList();
+            }
+        });
+
+        getCosmeticItemList();
     }
 
     private void deleteCosmeticItemRequest(long id) {
@@ -243,7 +263,7 @@ public class CosmeticListActivity extends AppCompatActivity {
                 if (result.getCode() == 1) {
                     DBManager.getInstance().deleteCosmeticItem(cid);
                     Toast.makeText(CosmeticListActivity.this, "삭제되었습니다.", Toast.LENGTH_SHORT).show();
-                    getCosmeticItemList(tabs.getSelectedTabPosition());
+                    getCosmeticItemList();
                 }
             }
 
