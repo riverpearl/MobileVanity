@@ -85,22 +85,24 @@ public class BeautyTipWriteActivity extends AppCompatActivity {
 
             case INDEX_TYPE_DETAIL:
                 id = intent.getLongExtra(BeautyTipDetailActivity.DETAIL_ID, 0);
+
                 UpdateBeautyTipRequest request = new UpdateBeautyTipRequest(getBaseContext(), "" + id, titleView.getText().toString(), contentView.getText().toString(), uploadFile);
                 NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<BeautyTip>>() {
                     @Override
                     public void onSuccess(NetworkRequest<NetworkResult<BeautyTip>> request, NetworkResult<BeautyTip> result) {
-                        BeautyTip beautyTip = result.getResult();
-                        titleView.setText(beautyTip.getTitle());
-                        contentView.setText(beautyTip.getContent());
-                        Glide.with(imageView.getContext())
-                                .load(uploadFile)
-                                .into(imageView);
-                        finish();
+                        if (result.getCode() == 1) {
+                            BeautyTip beautyTip = result.getResult();
+                            titleView.setText(beautyTip.getTitle());
+                            contentView.setText(beautyTip.getContent());
+                            Glide.with(imageView.getContext())
+                                    .load(uploadFile)
+                                    .into(imageView);
+                            finish();
+                        }
                     }
 
                     @Override
                     public void onFail(NetworkRequest<NetworkResult<BeautyTip>> request, int errorCode, String errorMessage, Throwable e) {
-                        Toast.makeText(BeautyTipWriteActivity.this, "fail", Toast.LENGTH_SHORT).show();
                     }
                 });
                 return;
@@ -110,13 +112,14 @@ public class BeautyTipWriteActivity extends AppCompatActivity {
                 NetworkManager.getInstance().getNetworkData(beautyTipRequest, new NetworkManager.OnResultListener<NetworkResult<BeautyTip>>() {
                     @Override
                     public void onSuccess(NetworkRequest<NetworkResult<BeautyTip>> request, NetworkResult<BeautyTip> result) {
-                        BeautyTip tip = result.getResult();
-                        finish();
+                        if (result.getCode() == 1) {
+                            BeautyTip tip = result.getResult();
+                            finish();
+                        }
                     }
 
                     @Override
                     public void onFail(NetworkRequest<NetworkResult<BeautyTip>> request, int errorCode, String errorMessage, Throwable e) {
-                        Toast.makeText(BeautyTipWriteActivity.this, "fail", Toast.LENGTH_SHORT).show();
                     }
                 });
 

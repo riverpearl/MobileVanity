@@ -109,9 +109,11 @@ public class MyBeautyTipActivity extends AppCompatActivity {
         NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<List<BeautyTip>>>() {
             @Override
             public void onSuccess(NetworkRequest<NetworkResult<List<BeautyTip>>> request, NetworkResult<List<BeautyTip>> result) {
-                List<BeautyTip> tips = result.getResult();
-                mAdapter.clear();
-                mAdapter.addAll(tips);
+                if (result.getCode() == 1) {
+                    List<BeautyTip> tips = result.getResult();
+                    mAdapter.clear();
+                    mAdapter.addAll(tips);
+                }
             }
 
             @Override

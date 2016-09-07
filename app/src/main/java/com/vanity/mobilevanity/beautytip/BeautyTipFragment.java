@@ -87,15 +87,16 @@ public class BeautyTipFragment extends Fragment {
                 NetworkManager.getInstance().getNetworkData(searchRequest, new NetworkManager.OnResultListener<NetworkResult<List<BeautyTip>>>() {
                     @Override
                     public void onSuccess(NetworkRequest<NetworkResult<List<BeautyTip>>> request, NetworkResult<List<BeautyTip>> result) {
-                        List<BeautyTip> beautySpinner = result.getResult();
-                        Collections.reverse(beautySpinner);
-                        mAdapter.clear();
-                        mAdapter.addAll(beautySpinner);
+                        if (result.getCode() == 1) {
+                            List<BeautyTip> beautySpinner = result.getResult();
+                            Collections.reverse(beautySpinner);
+                            mAdapter.clear();
+                            mAdapter.addAll(beautySpinner);
+                        }
                     }
 
                     @Override
                     public void onFail(NetworkRequest<NetworkResult<List<BeautyTip>>> request, int errorCode, String errorMessage, Throwable e) {
-                        Toast.makeText(getContext(), "spinnerError", Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -143,13 +144,14 @@ public class BeautyTipFragment extends Fragment {
                 NetworkManager.getInstance().getNetworkData(likeRequest, new NetworkManager.OnResultListener<NetworkResult<BeautyTip>>() {
                     @Override
                     public void onSuccess(NetworkRequest<NetworkResult<BeautyTip>> request, NetworkResult<BeautyTip> result) {
-                        BeautyTip beauty = result.getResult();
-                        mAdapter.set(position, beauty);
+                        if (result.getCode() == 1) {
+                            BeautyTip beauty = result.getResult();
+                            mAdapter.set(position, beauty);
+                        }
                     }
 
                     @Override
                     public void onFail(NetworkRequest<NetworkResult<BeautyTip>> request, int errorCode, String errorMessage, Throwable e) {
-                        Toast.makeText(getContext(), "like fail", Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -189,15 +191,16 @@ public class BeautyTipFragment extends Fragment {
         NetworkManager.getInstance().getNetworkData(searchRequest, new NetworkManager.OnResultListener<NetworkResult<List<BeautyTip>>>() {
             @Override
             public void onSuccess(NetworkRequest<NetworkResult<List<BeautyTip>>> request, NetworkResult<List<BeautyTip>> result) {
-                List<BeautyTip> beautySpinner = result.getResult();
-                Collections.reverse(beautySpinner);
-                mAdapter.clear();
-                mAdapter.addAll(beautySpinner);
+                if (result.getCode() == 1) {
+                    List<BeautyTip> beautySpinner = result.getResult();
+                    Collections.reverse(beautySpinner);
+                    mAdapter.clear();
+                    mAdapter.addAll(beautySpinner);
+                }
             }
 
             @Override
             public void onFail(NetworkRequest<NetworkResult<List<BeautyTip>>> request, int errorCode, String errorMessage, Throwable e) {
-                Toast.makeText(getContext(), "spinnerError", Toast.LENGTH_SHORT).show();
             }
         });
 

@@ -106,13 +106,13 @@ public class BeautyTipDetailActivity extends AppCompatActivity {
         NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<BeautyTip>>() {
             @Override
             public void onSuccess(NetworkRequest<NetworkResult<BeautyTip>> request, NetworkResult<BeautyTip> result) {
-                BeautyTip beautyTip = result.getResult();
-
+                if (result.getCode() == 1) {
+                    BeautyTip beautyTip = result.getResult();
+                }
             }
 
             @Override
             public void onFail(NetworkRequest<NetworkResult<BeautyTip>> request, int errorCode, String errorMessage, Throwable e) {
-                Toast.makeText(BeautyTipDetailActivity.this, "fail", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -149,13 +149,14 @@ public class BeautyTipDetailActivity extends AppCompatActivity {
             NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<BeautyTip>>() {
                 @Override
                 public void onSuccess(NetworkRequest<NetworkResult<BeautyTip>> request, NetworkResult<BeautyTip> result) {
-                    BeautyTip beautyTip = result.getResult();
-                    finish();
+                    if (result.getCode() == 1) {
+                        BeautyTip beautyTip = result.getResult();
+                        finish();
+                    }
                 }
 
                 @Override
                 public void onFail(NetworkRequest<NetworkResult<BeautyTip>> request, int errorCode, String errorMessage, Throwable e) {
-                    Toast.makeText(BeautyTipDetailActivity.this, "fail", Toast.LENGTH_SHORT).show();
                 }
             });
             return true;
@@ -192,7 +193,6 @@ public class BeautyTipDetailActivity extends AppCompatActivity {
 
             @Override
             public void onFail(NetworkRequest<NetworkResult<BeautyTip>> request, int errorCode, String errorMessage, Throwable e) {
-                Toast.makeText(BeautyTipDetailActivity.this, "fail", Toast.LENGTH_SHORT).show();
             }
         });
     }

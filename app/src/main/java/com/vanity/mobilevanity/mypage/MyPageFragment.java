@@ -76,7 +76,7 @@ public class MyPageFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view =  inflater.inflate(R.layout.fragment_my_page, container, false);
+        View view = inflater.inflate(R.layout.fragment_my_page, container, false);
         ButterKnife.bind(this, view);
 
         return view;
@@ -163,18 +163,20 @@ public class MyPageFragment extends Fragment {
         NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<User>>() {
             @Override
             public void onSuccess(NetworkRequest<NetworkResult<User>> request, NetworkResult<User> result) {
-                User user = result.getResult();
-                Glide.with(getContext()).load(user.getUserProfile()).into(profileView);
-                nicknameView.setText(user.getUserNickName());
-                setGenderView(user.getGender());
-                setSkinTypeView(user.getSkinType());
-                setSkinToneView(user.getSkinTone());
-                eyeCountView.setText(user.getEyeNum() + "");
-                lipCountView.setText(user.getLipNum() + "");
-                skinCountView.setText(user.getSkinNum() + "");
-                faceCountView.setText(user.getFaceNum() + "");
-                cleansingCountView.setText(user.getCleansingNum() + "");
-                toolCountView.setText(user.getToolNum() + "");
+                if (result.getCode() == 1) {
+                    User user = result.getResult();
+                    Glide.with(getContext()).load(user.getUserProfile()).into(profileView);
+                    nicknameView.setText(user.getUserNickName());
+                    setGenderView(user.getGender());
+                    setSkinTypeView(user.getSkinType());
+                    setSkinToneView(user.getSkinTone());
+                    eyeCountView.setText(user.getEyeNum() + "");
+                    lipCountView.setText(user.getLipNum() + "");
+                    skinCountView.setText(user.getSkinNum() + "");
+                    faceCountView.setText(user.getFaceNum() + "");
+                    cleansingCountView.setText(user.getCleansingNum() + "");
+                    toolCountView.setText(user.getToolNum() + "");
+                }
             }
 
             @Override
@@ -193,10 +195,11 @@ public class MyPageFragment extends Fragment {
 
     private void setGenderView(int gender) {
         switch (gender) {
-            case 1 : default :
+            case 1:
+            default:
                 genderView.setText("남성");
                 break;
-            case 2 :
+            case 2:
                 genderView.setText("여성");
                 break;
         }
@@ -215,16 +218,17 @@ public class MyPageFragment extends Fragment {
 
     private void setSkinTypeView(int type) {
         switch (type) {
-            case 1 : default :
+            case 1:
+            default:
                 skinTypeView.setText("건성");
                 break;
-            case 2 :
+            case 2:
                 skinTypeView.setText("중성");
                 break;
-            case 3 :
+            case 3:
                 skinTypeView.setText("지성");
                 break;
-            case 4 :
+            case 4:
                 skinTypeView.setText("복합성");
                 break;
         }
@@ -241,13 +245,14 @@ public class MyPageFragment extends Fragment {
 
     private void setSkinToneView(int tone) {
         switch (tone) {
-            case 1 : default :
+            case 1:
+            default:
                 skinToneView.setText("13호");
                 break;
-            case 2 :
+            case 2:
                 skinToneView.setText("21호");
                 break;
-            case 3 :
+            case 3:
                 skinToneView.setText("23호");
                 break;
         }

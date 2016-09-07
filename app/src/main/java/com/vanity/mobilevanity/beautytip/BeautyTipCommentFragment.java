@@ -87,14 +87,16 @@ public class BeautyTipCommentFragment extends DialogFragment {
         NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<Comment>>() {
             @Override
             public void onSuccess(NetworkRequest<NetworkResult<Comment>> request, NetworkResult<Comment> result) {
-                Comment comment = result.getResult();
-                inputView.setText("");
-                getCommentList();
+                if (result.getCode() == 1) {
+                    Comment comment = result.getResult();
+                    inputView.setText("");
+                    getCommentList();
+                }
             }
 
             @Override
             public void onFail(NetworkRequest<NetworkResult<Comment>> request, int errorCode, String errorMessage, Throwable e) {
-                Toast.makeText(getContext(), "fail", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "댓글 입력하기에 실패했습니다.", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -124,14 +126,16 @@ public class BeautyTipCommentFragment extends DialogFragment {
         NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<List<Comment>>>() {
             @Override
             public void onSuccess(NetworkRequest<NetworkResult<List<Comment>>> request, NetworkResult<List<Comment>> result) {
-                List<Comment> comments = result.getResult();
-                mAdapter.clear();
-                mAdapter.addAll(comments);
+                if (result.getCode() == 1) {
+                    List<Comment> comments = result.getResult();
+                    mAdapter.clear();
+                    mAdapter.addAll(comments);
+                }
             }
 
             @Override
             public void onFail(NetworkRequest<NetworkResult<List<Comment>>> request, int errorCode, String errorMessage, Throwable e) {
-
+                Toast.makeText(getContext(), "댓글 불러오기에 실패했습니다.", Toast.LENGTH_SHORT).show();
             }
         });
     }

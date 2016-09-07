@@ -290,7 +290,7 @@ public class CosmeticDetailActivity extends AppCompatActivity implements DatePic
 
             @Override
             public void onFail(NetworkRequest<NetworkResult<List<Sale>>> request, int errorCode, String errorMessage, Throwable e) {
-                Toast.makeText(CosmeticDetailActivity.this, "fail", Toast.LENGTH_SHORT).show();
+                Toast.makeText(CosmeticDetailActivity.this, "세일정보를 불러오는것에 실패했습니다.", Toast.LENGTH_SHORT).show();
             }
         });
     }

@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.vanity.mobilevanity.R;
 import com.vanity.mobilevanity.adapter.AlertAdapter;
@@ -112,7 +113,7 @@ public class AlertActivity extends AppCompatActivity {
                     Cursor c = DBManager.getInstance().selectNotify();
 
                     if (c != null && c.getCount() > 0) {
-                        while(c.moveToNext()) {
+                        while (c.moveToNext()) {
                             String tempDate = c.getString(c.getColumnIndex(DBContract.Notify.COLUMN_DATE));
                             Calendar cal = Calendar.getInstance();
                             SimpleDateFormat form = new SimpleDateFormat("yyyy-MM-dd'T'kk:mm:ss.SSSZ");
@@ -159,7 +160,6 @@ public class AlertActivity extends AppCompatActivity {
 
             @Override
             public void onFail(NetworkRequest<NetworkResult<List<Notify>>> request, int errorCode, String errorMessage, Throwable e) {
-
             }
         });
 

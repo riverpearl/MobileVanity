@@ -102,7 +102,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
     }
 
     private void requestPermission() {
-        ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.READ_EXTERNAL_STORAGE}, RC_PERMISSION);
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, RC_PERMISSION);
     }
 
     @Override
@@ -123,12 +123,14 @@ public class UpdateProfileActivity extends AppCompatActivity {
         NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<User>>() {
             @Override
             public void onSuccess(NetworkRequest<NetworkResult<User>> request, NetworkResult<User> result) {
-                User user = result.getResult();
-                Glide.with(UpdateProfileActivity.this).load(user.getUserProfile()).into(profileView);
-                nicknameView.setText(user.getUserNickName());
-                setGroupGenderView(user.getGender());
-                setGroupSkinTypeView(user.getSkinType());
-                setGroupSkinToneView(user.getSkinTone());
+                if (result.getCode() == 1) {
+                    User user = result.getResult();
+                    Glide.with(UpdateProfileActivity.this).load(user.getUserProfile()).into(profileView);
+                    nicknameView.setText(user.getUserNickName());
+                    setGroupGenderView(user.getGender());
+                    setGroupSkinTypeView(user.getSkinType());
+                    setGroupSkinToneView(user.getSkinTone());
+                }
             }
 
             @Override
@@ -140,20 +142,20 @@ public class UpdateProfileActivity extends AppCompatActivity {
 
     private int getGroupGenderView() {
         switch (groupGenderView.getCheckedRadioButtonId()) {
-            case R.id.radio_male :
-            default :
+            case R.id.radio_male:
+            default:
                 return 1;
-            case R.id.radio_female :
+            case R.id.radio_female:
                 return 2;
         }
     }
 
     private void setGroupGenderView(int gender) {
         switch (gender) {
-            case 1 :
+            case 1:
                 groupGenderView.check(R.id.radio_male);
                 break;
-            case 2 :
+            case 2:
                 groupGenderView.check(R.id.radio_female);
                 break;
         }
@@ -161,30 +163,30 @@ public class UpdateProfileActivity extends AppCompatActivity {
 
     private int getGroupSkinTypeView() {
         switch (groupSkinTypeView.getCheckedRadioButtonId()) {
-            case R.id.radio_dry :
-            default :
+            case R.id.radio_dry:
+            default:
                 return 1;
-            case R.id.radio_normal :
+            case R.id.radio_normal:
                 return 2;
-            case R.id.radio_oily :
+            case R.id.radio_oily:
                 return 3;
-            case R.id.radio_complex :
+            case R.id.radio_complex:
                 return 4;
         }
     }
 
     private void setGroupSkinTypeView(int type) {
         switch (type) {
-            case 1 :
+            case 1:
                 groupSkinTypeView.check(R.id.radio_dry);
                 break;
-            case 2 :
+            case 2:
                 groupSkinTypeView.check(R.id.radio_normal);
                 break;
-            case 3 :
+            case 3:
                 groupSkinTypeView.check(R.id.radio_oily);
                 break;
-            case 4 :
+            case 4:
                 groupSkinTypeView.check(R.id.radio_complex);
                 break;
         }
@@ -192,25 +194,25 @@ public class UpdateProfileActivity extends AppCompatActivity {
 
     private int getGroupSkinToneView() {
         switch (groupSkinToneView.getCheckedRadioButtonId()) {
-            case R.id.radio_13 :
-            default :
+            case R.id.radio_13:
+            default:
                 return 1;
-            case R.id.radio_21 :
+            case R.id.radio_21:
                 return 2;
-            case R.id.radio_23 :
+            case R.id.radio_23:
                 return 3;
         }
     }
 
     private void setGroupSkinToneView(int tone) {
         switch (tone) {
-            case 1 :
+            case 1:
                 groupSkinToneView.check(R.id.radio_13);
                 break;
-            case 2 :
+            case 2:
                 groupSkinToneView.check(R.id.radio_21);
                 break;
-            case 3 :
+            case 3:
                 groupSkinToneView.check(R.id.radio_23);
                 break;
         }
@@ -230,7 +232,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
         if (requestCode == RC_GET_IMAGE) {
             if (resultCode == Activity.RESULT_OK) {
                 Uri uri = data.getData();
-                Cursor c = getContentResolver().query(uri, new String[] { MediaStore.Images.Media.DATA }, null, null, null);
+                Cursor c = getContentResolver().query(uri, new String[]{MediaStore.Images.Media.DATA}, null, null, null);
                 c.moveToFirst();
 
                 String path = c.getString(c.getColumnIndex(MediaStore.Images.Media.DATA));
@@ -254,8 +256,10 @@ public class UpdateProfileActivity extends AppCompatActivity {
         NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<User>>() {
             @Override
             public void onSuccess(NetworkRequest<NetworkResult<User>> request, NetworkResult<User> result) {
-                Toast.makeText(UpdateProfileActivity.this, "회원정보가 수정되었습니다.", Toast.LENGTH_SHORT).show();
-                finish();
+                if (result.getCode() == 1) {
+                    Toast.makeText(UpdateProfileActivity.this, "회원정보가 수정되었습니다.", Toast.LENGTH_SHORT).show();
+                    finish();
+                }
             }
 
             @Override
