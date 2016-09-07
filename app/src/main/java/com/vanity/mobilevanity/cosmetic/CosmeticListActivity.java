@@ -5,6 +5,8 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Handler;
+import android.os.Message;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
@@ -196,9 +198,19 @@ public class CosmeticListActivity extends AppCompatActivity {
 
     @OnClick(R.id.fab_add_cosmetic)
     public void onFloatingClick(View view) {
-        Intent intent = new Intent(this, RegisterBarcodeActivity.class);
-        startActivity(intent);
+        Message msg = addCosmeticHandler.obtainMessage(0);
+        addCosmeticHandler.removeMessages(0);
+        addCosmeticHandler.sendMessageDelayed(msg, 1000);
     }
+
+    private Handler addCosmeticHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            Intent intent = new Intent(CosmeticListActivity.this, RegisterBarcodeActivity.class);
+            startActivity(intent);
+        }
+    };
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

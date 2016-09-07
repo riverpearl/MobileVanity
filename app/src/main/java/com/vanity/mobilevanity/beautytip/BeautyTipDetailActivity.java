@@ -10,6 +10,8 @@ import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
+import android.os.Handler;
+import android.os.Message;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -96,36 +98,56 @@ public class BeautyTipDetailActivity extends AppCompatActivity {
 
     @OnClick(R.id.btn_like)
     public void onLikeClick() {
-        String isLike;
-        if (like) isLike = "false";
-        else isLike = "true";
-
-        id = intent.getLongExtra("beautytipid", 0);
-
-        UpdateLikeRequest request = new UpdateLikeRequest(getBaseContext(), "" + id, isLike);
-        NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<BeautyTip>>() {
-            @Override
-            public void onSuccess(NetworkRequest<NetworkResult<BeautyTip>> request, NetworkResult<BeautyTip> result) {
-                if (result.getCode() == 1) {
-                    BeautyTip beautyTip = result.getResult();
-                }
-            }
-
-            @Override
-            public void onFail(NetworkRequest<NetworkResult<BeautyTip>> request, int errorCode, String errorMessage, Throwable e) {
-            }
-        });
+        Message msg = likeHandler.obtainMessage(0);
+        likeHandler.removeMessages(0);
+        likeHandler.sendMessageDelayed(msg, 1000);
     }
+
+    private Handler likeHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            String isLike;
+            if (like) isLike = "false";
+            else isLike = "true";
+
+            id = intent.getLongExtra("beautytipid", 0);
+
+            UpdateLikeRequest request = new UpdateLikeRequest(getBaseContext(), "" + id, isLike);
+            NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<BeautyTip>>() {
+                @Override
+                public void onSuccess(NetworkRequest<NetworkResult<BeautyTip>> request, NetworkResult<BeautyTip> result) {
+                    if (result.getCode() == 1) {
+                        BeautyTip beautyTip = result.getResult();
+                    }
+                }
+
+                @Override
+                public void onFail(NetworkRequest<NetworkResult<BeautyTip>> request, int errorCode, String errorMessage, Throwable e) {
+                }
+            });
+        }
+    };
 
     @OnClick(R.id.btn_comment)
     public void onCommentClick() {
-        FragmentManager fm = getSupportFragmentManager();
-        BeautyTipCommentFragment dialog = new BeautyTipCommentFragment();
-        Bundle args = new Bundle();
-        args.putLong("commentid", id);
-        dialog.setArguments(args);
-        dialog.show(fm, "dialog");
+        Message msg = commentHandler.obtainMessage(0);
+        commentHandler.removeMessages(0);
+        commentHandler.sendMessageDelayed(msg, 1000);
     }
+
+    private Handler commentHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            FragmentManager fm = getSupportFragmentManager();
+            BeautyTipCommentFragment dialog = new BeautyTipCommentFragment();
+            Bundle args = new Bundle();
+            args.putLong("commentid", id);
+            dialog.setArguments(args);
+            dialog.show(fm, "dialog");
+        }
+    };
 
     File updateImage = null;
 

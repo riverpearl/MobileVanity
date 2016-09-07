@@ -4,6 +4,8 @@ package com.vanity.mobilevanity.mypage;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -84,76 +86,186 @@ public class MyPageFragment extends Fragment {
 
     @OnClick(R.id.btn_logout)
     public void onLogoutClick(View view) {
-        Intent intent = new Intent(getContext(), SplashActivity.class);
-        startActivity(intent);
-        getActivity().finish();
+        Message msg = logoutHandler.obtainMessage(0);
+        logoutHandler.removeMessages(0);
+        logoutHandler.sendMessageDelayed(msg, 1000);
     }
+
+    private Handler logoutHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            Intent intent = new Intent(getContext(), SplashActivity.class);
+            startActivity(intent);
+            getActivity().finish();
+        }
+    };
 
     @OnClick(R.id.btn_modification)
     public void onModificationClick(View view) {
-        Intent intent = new Intent(getContext(), UpdateProfileActivity.class);
-        startActivity(intent);
+        Message msg = modifyHandler.obtainMessage(0);
+        modifyHandler.removeMessages(0);
+        modifyHandler.sendMessageDelayed(msg, 1000);
     }
+
+    private Handler modifyHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            Intent intent = new Intent(getContext(), UpdateProfileActivity.class);
+            startActivity(intent);
+        }
+    };
 
     @OnClick(R.id.btn_setting)
     public void onSettingClick(View view) {
-        Intent intent = new Intent(getContext(), SettingActivity.class);
-        startActivity(intent);
+        Message msg = settingHandler.obtainMessage(0);
+        settingHandler.removeMessages(0);
+        settingHandler.sendMessageDelayed(msg, 1000);
     }
+
+    private Handler settingHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            Intent intent = new Intent(getContext(), SettingActivity.class);
+            startActivity(intent);
+        }
+    };
 
     @OnClick(R.id.text_eye_count)
     public void onEyeCountClick(View view) {
-        Intent intent = new Intent(getContext(), CosmeticListActivity.class);
-        intent.putExtra(TAG_CATEGORY, Constant.INDEX_CATEGORY_EYE);
-        startActivity(intent);
+        Message msg = eyeCountHandler.obtainMessage(0);
+        eyeCountHandler.removeMessages(0);
+        eyeCountHandler.sendMessageDelayed(msg, 1000);
     }
+
+    private Handler eyeCountHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            Intent intent = new Intent(getContext(), CosmeticListActivity.class);
+            intent.putExtra(TAG_CATEGORY, Constant.INDEX_CATEGORY_EYE);
+            startActivity(intent);
+        }
+    };
 
     @OnClick(R.id.text_lip_count)
     public void onLipCountClick(View view) {
-        Intent intent = new Intent(getContext(), CosmeticListActivity.class);
-        intent.putExtra(TAG_CATEGORY, Constant.INDEX_CATEGORY_LIP);
-        startActivity(intent);
+        Message msg = lipCountHandler.obtainMessage(0);
+        lipCountHandler.removeMessages(0);
+        lipCountHandler.sendMessageDelayed(msg, 1000);
     }
+
+    private Handler lipCountHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            Intent intent = new Intent(getContext(), CosmeticListActivity.class);
+            intent.putExtra(TAG_CATEGORY, Constant.INDEX_CATEGORY_LIP);
+            startActivity(intent);
+        }
+    };
 
     @OnClick(R.id.text_skin_count)
     public void onSkinCountClick(View view) {
-        Intent intent = new Intent(getContext(), CosmeticListActivity.class);
-        intent.putExtra(TAG_CATEGORY, Constant.INDEX_CATEGORY_SKIN);
-        startActivity(intent);
+        Message msg = skinCountHandler.obtainMessage(0);
+        skinCountHandler.removeMessages(0);
+        skinCountHandler.sendMessageDelayed(msg, 1000);
     }
+
+    private Handler skinCountHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            Intent intent = new Intent(getContext(), CosmeticListActivity.class);
+            intent.putExtra(TAG_CATEGORY, Constant.INDEX_CATEGORY_SKIN);
+            startActivity(intent);
+        }
+    };
 
     @OnClick(R.id.text_face_count)
     public void onBaseCountClick(View view) {
-        Intent intent = new Intent(getContext(), CosmeticListActivity.class);
-        intent.putExtra(TAG_CATEGORY, Constant.INDEX_CATEGORY_FACE);
-        startActivity(intent);
+        Message msg = faceCountHandler.obtainMessage(0);
+        faceCountHandler.removeMessages(0);
+        faceCountHandler.sendMessageDelayed(msg, 1000);
     }
+
+    private Handler faceCountHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            Intent intent = new Intent(getContext(), CosmeticListActivity.class);
+            intent.putExtra(TAG_CATEGORY, Constant.INDEX_CATEGORY_FACE);
+            startActivity(intent);
+        }
+    };
 
     @OnClick(R.id.text_cleansing_count)
     public void onCleansingCountClick(View view) {
-        Intent intent = new Intent(getContext(), CosmeticListActivity.class);
-        intent.putExtra(TAG_CATEGORY, Constant.INDEX_CATEGORY_CLEANSING);
-        startActivity(intent);
+        Message msg = cleansingCountHandler.obtainMessage(0);
+        cleansingCountHandler.removeMessages(0);
+        cleansingCountHandler.sendMessageDelayed(msg, 1000);
     }
+
+    private Handler cleansingCountHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            Intent intent = new Intent(getContext(), CosmeticListActivity.class);
+            intent.putExtra(TAG_CATEGORY, Constant.INDEX_CATEGORY_CLEANSING);
+            startActivity(intent);
+        }
+    };
 
     @OnClick(R.id.text_tool_count)
     public void onToolCountClick(View view) {
-        Intent intent = new Intent(getContext(), CosmeticListActivity.class);
-        intent.putExtra(TAG_CATEGORY, Constant.INDEX_CATEGORY_TOOL);
-        startActivity(intent);
+        Message msg = toolCountHandler.obtainMessage(0);
+        toolCountHandler.removeMessages(0);
+        toolCountHandler.sendMessageDelayed(msg, 1000);
     }
+
+    private Handler toolCountHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            Intent intent = new Intent(getContext(), CosmeticListActivity.class);
+            intent.putExtra(TAG_CATEGORY, Constant.INDEX_CATEGORY_TOOL);
+            startActivity(intent);
+        }
+    };
 
     @OnClick(R.id.btn_tip)
     public void onTipClick(View view) {
-        Intent intent = new Intent(getContext(), MyBeautyTipActivity.class);
-        startActivity(intent);
+        Message msg = tipHandler.obtainMessage(0);
+        tipHandler.removeMessages(0);
+        tipHandler.sendMessageDelayed(msg, 1000);
     }
+
+    private Handler tipHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            Intent intent = new Intent(getContext(), MyBeautyTipActivity.class);
+            startActivity(intent);
+        }
+    };
 
     @OnClick(R.id.btn_like)
     public void onLikeClick(View view) {
-        Intent intent = new Intent(getContext(), LikeActivity.class);
-        startActivity(intent);
+        Message msg = likeHandler.obtainMessage(0);
+        likeHandler.removeMessages(0);
+        likeHandler.sendMessageDelayed(msg, 1000);
     }
+
+    private Handler likeHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            Intent intent = new Intent(getContext(), LikeActivity.class);
+            startActivity(intent);
+        }
+    };
 
     @Override
     public void onStart() {

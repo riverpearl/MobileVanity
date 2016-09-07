@@ -89,9 +89,9 @@ public class MainActivity extends AppCompatActivity {
 
         calendar.set(Calendar.YEAR, 2016);
         calendar.set(Calendar.MONTH, 8);
-        calendar.set(Calendar.DATE, 6);
-        calendar.set(Calendar.HOUR_OF_DAY, 11);
-        calendar.set(Calendar.MINUTE, 38);
+        calendar.set(Calendar.DATE, 7);
+        calendar.set(Calendar.HOUR_OF_DAY, 10);
+        calendar.set(Calendar.MINUTE, 14);
         calendar.set(Calendar.SECOND, 30);
 
         Log.d("c", ""+calendar.getTime());

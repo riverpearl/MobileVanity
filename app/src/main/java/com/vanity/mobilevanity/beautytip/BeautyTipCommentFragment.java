@@ -5,6 +5,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.print.PageRange;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -81,27 +83,36 @@ public class BeautyTipCommentFragment extends DialogFragment {
         return view;
     }
 
-    @OnClick(R.id.image_profile)
-    public void onProfile() {
-        InsertCommentRequest request = new InsertCommentRequest(getContext(), "" + args, inputView.getText().toString());
-        NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<Comment>>() {
-            @Override
-            public void onSuccess(NetworkRequest<NetworkResult<Comment>> request, NetworkResult<Comment> result) {
-                if (result.getCode() == 1) {
-                    Comment comment = result.getResult();
-                    inputView.setText("");
-                    getCommentList();
-                }
-            }
-
-            @Override
-            public void onFail(NetworkRequest<NetworkResult<Comment>> request, int errorCode, String errorMessage, Throwable e) {
-                Toast.makeText(getContext(), "댓글 입력하기에 실패했습니다.", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        onStart();
+    @OnClick(R.id.btn_send)
+    public void onSendButton() {
+        Message msg = mHandler.obtainMessage(0);
+        mHandler.removeMessages(0);
+        mHandler.sendMessageDelayed(msg, 1000);
     }
+    private Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            InsertCommentRequest request = new InsertCommentRequest(getContext(), "" + args, inputView.getText().toString());
+            NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<Comment>>() {
+                @Override
+                public void onSuccess(NetworkRequest<NetworkResult<Comment>> request, NetworkResult<Comment> result) {
+                    if (result.getCode() == 1) {
+                        Comment comment = result.getResult();
+                        inputView.setText("");
+                        getCommentList();
+                    }
+                }
+
+                @Override
+                public void onFail(NetworkRequest<NetworkResult<Comment>> request, int errorCode, String errorMessage, Throwable e) {
+                    Toast.makeText(getContext(), "댓글 입력하기에 실패했습니다.", Toast.LENGTH_SHORT).show();
+                }
+            });
+            onStart();
+        }
+
+    };
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -128,6 +139,9 @@ public class BeautyTipCommentFragment extends DialogFragment {
             public void onSuccess(NetworkRequest<NetworkResult<List<Comment>>> request, NetworkResult<List<Comment>> result) {
                 if (result.getCode() == 1) {
                     List<Comment> comments = result.getResult();
+                    Glide.with(userImage.getContext())
+                            .load(comments.get(0).getWriter().getUserProfile())
+                            .into(userImage);
                     mAdapter.clear();
                     mAdapter.addAll(comments);
                 }

@@ -1,6 +1,8 @@
 package com.vanity.mobilevanity.cosmetic;
 
 import android.content.Intent;
+import android.os.Handler;
+import android.os.Message;
 import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -105,27 +107,48 @@ public class CosmeticDetailActivity extends AppCompatActivity implements DatePic
 
     @OnClick(R.id.text_sale_info)
     public void onSaleClick() {
-        Intent intent = new Intent(CosmeticDetailActivity.this, MainActivity.class);
-        intent.putExtra("saletab", 3);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
+        Message msg = saleInfoHandler.obtainMessage(0);
+        saleInfoHandler.removeMessages(0);
+        saleInfoHandler.sendMessageDelayed(msg, 1000);
     }
+
+    private Handler saleInfoHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            Intent intent = new Intent(CosmeticDetailActivity.this, MainActivity.class);
+            intent.putExtra("saletab", 3);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+        }
+    };
+
 
     @OnClick(R.id.btn_edit_register)
     public void onEditRegisterClick(View view) {
-        updateView.setVisibility(View.VISIBLE);
-        cancelView.setVisibility(View.VISIBLE);
-
-        Calendar now = Calendar.getInstance();
-        DatePickerDialog dpd = DatePickerDialog.newInstance(
-                CosmeticDetailActivity.this,
-                now.get(Calendar.YEAR),
-                now.get(Calendar.MONTH),
-                now.get(Calendar.DAY_OF_MONTH)
-        );
-
-        dpd.show(getFragmentManager(), "Datepickerdialog");
+        Message msg = registerHandler.obtainMessage(0);
+        registerHandler.removeMessages(0);
+        registerHandler.sendMessageDelayed(msg, 1000);
     }
+
+    private Handler registerHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            updateView.setVisibility(View.VISIBLE);
+            cancelView.setVisibility(View.VISIBLE);
+
+            Calendar now = Calendar.getInstance();
+            DatePickerDialog dpd = DatePickerDialog.newInstance(
+                    CosmeticDetailActivity.this,
+                    now.get(Calendar.YEAR),
+                    now.get(Calendar.MONTH),
+                    now.get(Calendar.DAY_OF_MONTH)
+            );
+
+            dpd.show(getFragmentManager(), "Datepickerdialog");
+        }
+    };
 
     @Override
     public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
@@ -142,51 +165,72 @@ public class CosmeticDetailActivity extends AppCompatActivity implements DatePic
 
     @OnClick(R.id.btn_update)
     public void onUpdateClick(View view) {
-        long ciid = cosmeticItem.getId();
-        long cid = cosmeticItem.getCosmetic().getId();
-        int term = cosmeticItem.getCosmeticTerm();
-
-        Calendar cal = Calendar.getInstance();
-        cal.set(Calendar.YEAR, Integer.parseInt(registerYearView.getText().toString()));
-        cal.set(Calendar.MONTH, Integer.parseInt(registerMonthView.getText().toString()) - 1);
-        cal.set(Calendar.DATE, Integer.parseInt(registerDayView.getText().toString()));
-
-        DateCalculator calculator = new DateCalculator();
-        String dateAdded = calculator.CalToStr(cal);
-
-        UpdateCosmeticItemRequest request = new UpdateCosmeticItemRequest(this, ciid + "", cid + "", dateAdded, term + "");
-        NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<CosmeticItem>>() {
-            @Override
-            public void onSuccess(NetworkRequest<NetworkResult<CosmeticItem>> request, NetworkResult<CosmeticItem> result) {
-                if (result.getCode() == 1) {
-                    cosmeticItem = result.getResult();
-
-                    setDateView(cosmeticItem.getDateAdded(), cosmeticItem.getCosmeticTerm());
-                    long id = cosmeticItem.getId();
-                    String name = cosmeticItem.getCosmetic().getProduct().getName();
-                    String dateAdded = cosmeticItem.getDateAdded();
-                    int term = cosmeticItem.getCosmeticTerm();
-                    DBManager.getInstance().updateCosmeticItem(id, name, dateAdded, term);
-
-                    Toast.makeText(CosmeticDetailActivity.this, "수정되었습니다.", Toast.LENGTH_SHORT).show();
-                    updateView.setVisibility(View.GONE);
-                    cancelView.setVisibility(View.GONE);
-                }
-            }
-
-            @Override
-            public void onFail(NetworkRequest<NetworkResult<CosmeticItem>> request, int errorCode, String errorMessage, Throwable e) {
-                Toast.makeText(CosmeticDetailActivity.this, errorCode + " : " + errorMessage, Toast.LENGTH_SHORT).show();
-            }
-        });
+        Message msg = updateHandler.obtainMessage(0);
+        updateHandler.removeMessages(0);
+        updateHandler.sendMessageDelayed(msg, 1000);
     }
+
+    private Handler updateHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            long ciid = cosmeticItem.getId();
+            long cid = cosmeticItem.getCosmetic().getId();
+            int term = cosmeticItem.getCosmeticTerm();
+
+            Calendar cal = Calendar.getInstance();
+            cal.set(Calendar.YEAR, Integer.parseInt(registerYearView.getText().toString()));
+            cal.set(Calendar.MONTH, Integer.parseInt(registerMonthView.getText().toString()) - 1);
+            cal.set(Calendar.DATE, Integer.parseInt(registerDayView.getText().toString()));
+
+            DateCalculator calculator = new DateCalculator();
+            String dateAdded = calculator.CalToStr(cal);
+
+            UpdateCosmeticItemRequest request = new UpdateCosmeticItemRequest(CosmeticDetailActivity.this, ciid + "", cid + "", dateAdded, term + "");
+            NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<CosmeticItem>>() {
+                @Override
+                public void onSuccess(NetworkRequest<NetworkResult<CosmeticItem>> request, NetworkResult<CosmeticItem> result) {
+                    if (result.getCode() == 1) {
+                        cosmeticItem = result.getResult();
+
+                        setDateView(cosmeticItem.getDateAdded(), cosmeticItem.getCosmeticTerm());
+                        long id = cosmeticItem.getId();
+                        String name = cosmeticItem.getCosmetic().getProduct().getName();
+                        String dateAdded = cosmeticItem.getDateAdded();
+                        int term = cosmeticItem.getCosmeticTerm();
+                        DBManager.getInstance().updateCosmeticItem(id, name, dateAdded, term);
+
+                        Toast.makeText(CosmeticDetailActivity.this, "수정되었습니다.", Toast.LENGTH_SHORT).show();
+                        updateView.setVisibility(View.GONE);
+                        cancelView.setVisibility(View.GONE);
+                    }
+                }
+
+                @Override
+                public void onFail(NetworkRequest<NetworkResult<CosmeticItem>> request, int errorCode, String errorMessage, Throwable e) {
+                    Toast.makeText(CosmeticDetailActivity.this, errorCode + " : " + errorMessage, Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+    };
+
 
     @OnClick(R.id.btn_cancel)
     public void onCancelClick(View view) {
-        updateView.setVisibility(View.GONE);
-        cancelView.setVisibility(View.GONE);
-        setDateView(cosmeticItem.getDateAdded(), cosmeticItem.getCosmeticTerm());
+        Message msg = cancelHandler.obtainMessage(0);
+        cancelHandler.removeMessages(0);
+        cancelHandler.sendMessageDelayed(msg, 1000);
     }
+
+    private Handler cancelHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            updateView.setVisibility(View.GONE);
+            cancelView.setVisibility(View.GONE);
+            setDateView(cosmeticItem.getDateAdded(), cosmeticItem.getCosmeticTerm());
+        }
+    };
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -223,7 +267,9 @@ public class CosmeticDetailActivity extends AppCompatActivity implements DatePic
 
                     updateView.setVisibility(View.GONE);
                     cancelView.setVisibility(View.GONE);
-                } else { Toast.makeText(CosmeticDetailActivity.this, "...", Toast.LENGTH_SHORT).show(); }
+                } else {
+                    Toast.makeText(CosmeticDetailActivity.this, "...", Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override

@@ -1,6 +1,8 @@
 package com.vanity.mobilevanity.register;
 
 import android.content.Intent;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -104,16 +106,26 @@ public class RegisterDetailActivity extends AppCompatActivity implements DatePic
 
     @OnClick(R.id.btn_edit_register)
     public void onEditClick(View view) {
-        Calendar now = Calendar.getInstance();
-        DatePickerDialog dpd = DatePickerDialog.newInstance(
-                RegisterDetailActivity.this,
-                now.get(Calendar.YEAR),
-                now.get(Calendar.MONTH),
-                now.get(Calendar.DAY_OF_MONTH)
-        );
-
-        dpd.show(getFragmentManager(), "Datepickerdialog");
+        Message msg = editRegisterHandler.obtainMessage(0);
+        editRegisterHandler.removeMessages(0);
+        editRegisterHandler.sendMessageDelayed(msg, 1000);
     }
+
+    private Handler editRegisterHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            Calendar now = Calendar.getInstance();
+            DatePickerDialog dpd = DatePickerDialog.newInstance(
+                    RegisterDetailActivity.this,
+                    now.get(Calendar.YEAR),
+                    now.get(Calendar.MONTH),
+                    now.get(Calendar.DAY_OF_MONTH)
+            );
+
+            dpd.show(getFragmentManager(), "Datepickerdialog");
+        }
+    };
 
     @Override
     public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
@@ -135,46 +147,56 @@ public class RegisterDetailActivity extends AppCompatActivity implements DatePic
 
     @OnClick(R.id.btn_register)
     public void onRegisterClick(View view) {
-        if (cosmetic == null) {
-            Toast.makeText(RegisterDetailActivity.this, "올바른 접근이 아닙니다.", Toast.LENGTH_SHORT).show();
-            finish();
-        }
-
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.YEAR, Integer.parseInt(registerYearView.getText().toString()));
-        calendar.set(Calendar.MONTH, Integer.parseInt(registerMonthView.getText().toString()) - 1);
-        calendar.set(Calendar.DATE, Integer.parseInt(registerDayView.getText().toString()));
-
-        SimpleDateFormat form = new SimpleDateFormat("yyyy-MM-dd'T'kk:mm:ss.SSSZ");
-        String parseDate = form.format(calendar.getTime());
-
-        String id = cosmetic.getId() + "";
-        String dateAdded = parseDate;
-        String cosmeticTerm = cosmetic.getProduct().getUseBy() + "";
-
-        InsertCosmeticItemRequest request = new InsertCosmeticItemRequest(this, id, dateAdded, cosmeticTerm);
-        NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<CosmeticItem>>() {
-            @Override
-            public void onSuccess(NetworkRequest<NetworkResult<CosmeticItem>> request, NetworkResult<CosmeticItem> result) {
-                if (result.getCode() == 1) {
-                    CosmeticItem citem = result.getResult();
-                    long sid = citem.getId();
-                    long cid = citem.getCosmetic().getId();
-                    String dateAdded = citem.getDateAdded();
-                    int term = citem.getCosmeticTerm();
-                    String productName = citem.getCosmetic().getProduct().getName();
-                    DBManager.getInstance().insertCosmeticItem(sid, cid, productName, dateAdded, term);
-                    Toast.makeText(RegisterDetailActivity.this, "등록되었습니다.", Toast.LENGTH_SHORT).show();
-                    finish();
-                }
-            }
-
-            @Override
-            public void onFail(NetworkRequest<NetworkResult<CosmeticItem>> request, int errorCode, String errorMessage, Throwable e) {
-                Toast.makeText(RegisterDetailActivity.this, errorCode + " : " + errorMessage, Toast.LENGTH_SHORT).show();
-            }
-        });
+        Message msg = registerHandler.obtainMessage(0);
+        registerHandler.removeMessages(0);
+        registerHandler.sendMessageDelayed(msg, 1000);
     }
+
+    private Handler registerHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            if (cosmetic == null) {
+                Toast.makeText(RegisterDetailActivity.this, "올바른 접근이 아닙니다.", Toast.LENGTH_SHORT).show();
+                finish();
+            }
+
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(Calendar.YEAR, Integer.parseInt(registerYearView.getText().toString()));
+            calendar.set(Calendar.MONTH, Integer.parseInt(registerMonthView.getText().toString()) - 1);
+            calendar.set(Calendar.DATE, Integer.parseInt(registerDayView.getText().toString()));
+
+            SimpleDateFormat form = new SimpleDateFormat("yyyy-MM-dd'T'kk:mm:ss.SSSZ");
+            String parseDate = form.format(calendar.getTime());
+
+            String id = cosmetic.getId() + "";
+            String dateAdded = parseDate;
+            String cosmeticTerm = cosmetic.getProduct().getUseBy() + "";
+
+            InsertCosmeticItemRequest request = new InsertCosmeticItemRequest(RegisterDetailActivity.this, id, dateAdded, cosmeticTerm);
+            NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<CosmeticItem>>() {
+                @Override
+                public void onSuccess(NetworkRequest<NetworkResult<CosmeticItem>> request, NetworkResult<CosmeticItem> result) {
+                    if (result.getCode() == 1) {
+                        CosmeticItem citem = result.getResult();
+                        long sid = citem.getId();
+                        long cid = citem.getCosmetic().getId();
+                        String dateAdded = citem.getDateAdded();
+                        int term = citem.getCosmeticTerm();
+                        String productName = citem.getCosmetic().getProduct().getName();
+                        DBManager.getInstance().insertCosmeticItem(sid, cid, productName, dateAdded, term);
+                        Toast.makeText(RegisterDetailActivity.this, "등록되었습니다.", Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
+                }
+
+                @Override
+                public void onFail(NetworkRequest<NetworkResult<CosmeticItem>> request, int errorCode, String errorMessage, Throwable e) {
+                    Toast.makeText(RegisterDetailActivity.this, errorCode + " : " + errorMessage, Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+    };
 
     @Override
     protected void onStart() {
@@ -184,16 +206,16 @@ public class RegisterDetailActivity extends AppCompatActivity implements DatePic
         int code = intent.getIntExtra(TAG_SEARCH_TYPE, 0);
 
         switch (code) {
-            case INDEX_TYPE_NONE :
-            default :
+            case INDEX_TYPE_NONE:
+            default:
                 Toast.makeText(RegisterDetailActivity.this, "잘못된 접근입니다.", Toast.LENGTH_SHORT).show();
                 finish();
                 return;
-            case INDEX_TYPE_BARCODE :
+            case INDEX_TYPE_BARCODE:
                 String barcode = intent.getStringExtra(RegisterBarcodeActivity.TAG_BARCODE);
                 getDetailInfoByBarcode(barcode);
                 return;
-            case INDEX_TYPE_SEARCH :
+            case INDEX_TYPE_SEARCH:
                 getDetailInfoByIntent(intent);
                 return;
         }

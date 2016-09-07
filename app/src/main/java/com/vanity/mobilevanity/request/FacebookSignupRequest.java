@@ -37,7 +37,7 @@ public class FacebookSignupRequest extends AbstractRequest<NetworkResult<User>> 
                 .addFormDataPart("gender", gender);
 
         if (userProfile != null) {
-            builder.addFormDataPart("userprofile", userProfile.getName(),
+            builder.addFormDataPart("userProfile", userProfile.getName(),
                     RequestBody.create(jpeg, userProfile));
         }
 

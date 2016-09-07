@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Handler;
+import android.os.Message;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -107,7 +109,7 @@ public class FacebookSignUpActivity extends AppCompatActivity {
     }
 
     private void requestPermission() {
-        ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.READ_EXTERNAL_STORAGE}, RC_PERMISSION);
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, RC_PERMISSION);
     }
 
     @Override
@@ -125,10 +127,20 @@ public class FacebookSignUpActivity extends AppCompatActivity {
 
     @OnClick(R.id.image_profile)
     public void onProfileClick(View view) {
-        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        intent.setType("image/*");
-        startActivityForResult(intent, RC_GET_IMAGE);
+        Message msg = imageProfileHandler.obtainMessage(0);
+        imageProfileHandler.removeMessages(0);
+        imageProfileHandler.sendMessageDelayed(msg, 1000);
     }
+
+    private Handler imageProfileHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            intent.setType("image/*");
+            startActivityForResult(intent, RC_GET_IMAGE);
+        }
+    };
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -137,7 +149,7 @@ public class FacebookSignUpActivity extends AppCompatActivity {
         if (requestCode == RC_GET_IMAGE) {
             if (resultCode == Activity.RESULT_OK) {
                 Uri uri = data.getData();
-                Cursor c = getContentResolver().query(uri, new String[] { MediaStore.Images.Media.DATA }, null, null, null);
+                Cursor c = getContentResolver().query(uri, new String[]{MediaStore.Images.Media.DATA}, null, null, null);
                 c.moveToFirst();
 
                 String path = c.getString(c.getColumnIndex(MediaStore.Images.Media.DATA));
@@ -149,68 +161,78 @@ public class FacebookSignUpActivity extends AppCompatActivity {
 
     @OnClick(R.id.btn_sign_up)
     public void onSignUpClick(View view) {
-        if (profile == null)
-            return; // default 프로필 이미지를 넣어준다
-
-        String nickname = nicknameView.getText().toString();
-        String gender = getGroupGenderView() + "";
-        String skinType = getGroupSkinTypeView() + "";
-        String skinTone = getGroupSkinToneView() + "";
-
-        if (!TextUtils.isEmpty(nickname)) {
-            FacebookSignupRequest request = new FacebookSignupRequest(this, nickname, email, skinType, skinTone, gender, profile);
-            NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<User>>() {
-                @Override
-                public void onSuccess(NetworkRequest<NetworkResult<User>> request, NetworkResult<User> result) {
-                    if (result.getCode() == 1) {
-                        PropertyManager.getInstance().setFacebookId(facebookId);
-                        setResult(Activity.RESULT_OK);
-                        finish();
-                    } else {
-                        Toast.makeText(FacebookSignUpActivity.this, result.getError(), Toast.LENGTH_SHORT).show();
-                    }
-                }
-
-                @Override
-                public void onFail(NetworkRequest<NetworkResult<User>> request, int errorCode, String errorMessage, Throwable e) {
-                    Toast.makeText(FacebookSignUpActivity.this, "sign up fail", Toast.LENGTH_SHORT).show();
-                }
-            });
-        }
+        Message msg = signUpHandler.obtainMessage(0);
+        signUpHandler.removeMessages(0);
+        signUpHandler.sendMessageDelayed(msg, 1000);
     }
+
+    private Handler signUpHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            if (profile == null)
+                return; // default 프로필 이미지를 넣어준다
+
+            String nickname = nicknameView.getText().toString();
+            String gender = getGroupGenderView() + "";
+            String skinType = getGroupSkinTypeView() + "";
+            String skinTone = getGroupSkinToneView() + "";
+
+            if (!TextUtils.isEmpty(nickname)) {
+                FacebookSignupRequest request = new FacebookSignupRequest(FacebookSignUpActivity.this, nickname, email, skinType, skinTone, gender, profile);
+                NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<User>>() {
+                    @Override
+                    public void onSuccess(NetworkRequest<NetworkResult<User>> request, NetworkResult<User> result) {
+                        if (result.getCode() == 1) {
+                            PropertyManager.getInstance().setFacebookId(facebookId);
+                            setResult(Activity.RESULT_OK);
+                            finish();
+                        } else {
+                            Toast.makeText(FacebookSignUpActivity.this, result.getError(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFail(NetworkRequest<NetworkResult<User>> request, int errorCode, String errorMessage, Throwable e) {
+                        Toast.makeText(FacebookSignUpActivity.this, "sign up fail", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        }
+    };
 
     private int getGroupGenderView() {
         switch (groupGenderView.getCheckedRadioButtonId()) {
-            case R.id.radio_male :
-            default :
+            case R.id.radio_male:
+            default:
                 return 1;
-            case R.id.radio_female :
+            case R.id.radio_female:
                 return 2;
         }
     }
 
     private int getGroupSkinTypeView() {
         switch (groupSkinTypeView.getCheckedRadioButtonId()) {
-            case R.id.radio_dry :
-            default :
+            case R.id.radio_dry:
+            default:
                 return 1;
-            case R.id.radio_normal :
+            case R.id.radio_normal:
                 return 2;
-            case R.id.radio_oily :
+            case R.id.radio_oily:
                 return 3;
-            case R.id.radio_complex :
+            case R.id.radio_complex:
                 return 4;
         }
     }
 
     private int getGroupSkinToneView() {
         switch (groupSkinToneView.getCheckedRadioButtonId()) {
-            case R.id.radio_13 :
-            default :
+            case R.id.radio_13:
+            default:
                 return 1;
-            case R.id.radio_21 :
+            case R.id.radio_21:
                 return 2;
-            case R.id.radio_23 :
+            case R.id.radio_23:
                 return 3;
         }
     }

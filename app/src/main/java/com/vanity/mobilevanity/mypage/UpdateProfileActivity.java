@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Handler;
+import android.os.Message;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -220,10 +222,20 @@ public class UpdateProfileActivity extends AppCompatActivity {
 
     @OnClick(R.id.image_profile)
     public void onProfileClick(View view) {
-        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        intent.setType("image/*");
-        startActivityForResult(intent, RC_GET_IMAGE);
+        Message msg = imageProfileHandler.obtainMessage(0);
+        imageProfileHandler.removeMessages(0);
+        imageProfileHandler.sendMessageDelayed(msg, 1000);
     }
+
+    private Handler imageProfileHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            intent.setType("image/*");
+            startActivityForResult(intent, RC_GET_IMAGE);
+        }
+    };
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -244,30 +256,40 @@ public class UpdateProfileActivity extends AppCompatActivity {
 
     @OnClick(R.id.btn_update)
     public void onUpdateClick(View view) {
-        if (profile == null)
-            return; // default 프로필 이미지를 넣어준다
-
-        String nickname = nicknameView.getText().toString();
-        String gender = getGroupGenderView() + "";
-        String skinType = getGroupSkinTypeView() + "";
-        String skinTone = getGroupSkinToneView() + "";
-
-        UpdateMyInfoRequest request = new UpdateMyInfoRequest(this, profile, nickname, skinType, skinTone, gender);
-        NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<User>>() {
-            @Override
-            public void onSuccess(NetworkRequest<NetworkResult<User>> request, NetworkResult<User> result) {
-                if (result.getCode() == 1) {
-                    Toast.makeText(UpdateProfileActivity.this, "회원정보가 수정되었습니다.", Toast.LENGTH_SHORT).show();
-                    finish();
-                }
-            }
-
-            @Override
-            public void onFail(NetworkRequest<NetworkResult<User>> request, int errorCode, String errorMessage, Throwable e) {
-                Toast.makeText(UpdateProfileActivity.this, errorCode + " : " + errorMessage, Toast.LENGTH_SHORT).show();
-            }
-        });
+        Message msg = updateHandler.obtainMessage(0);
+        updateHandler.removeMessages(0);
+        updateHandler.sendMessageDelayed(msg, 1000);
     }
+
+    private Handler updateHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            if (profile == null)
+                return; // default 프로필 이미지를 넣어준다
+
+            String nickname = nicknameView.getText().toString();
+            String gender = getGroupGenderView() + "";
+            String skinType = getGroupSkinTypeView() + "";
+            String skinTone = getGroupSkinToneView() + "";
+
+            UpdateMyInfoRequest request = new UpdateMyInfoRequest(UpdateProfileActivity.this, profile, nickname, skinType, skinTone, gender);
+            NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<User>>() {
+                @Override
+                public void onSuccess(NetworkRequest<NetworkResult<User>> request, NetworkResult<User> result) {
+                    if (result.getCode() == 1) {
+                        Toast.makeText(UpdateProfileActivity.this, "회원정보가 수정되었습니다.", Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
+                }
+
+                @Override
+                public void onFail(NetworkRequest<NetworkResult<User>> request, int errorCode, String errorMessage, Throwable e) {
+                    Toast.makeText(UpdateProfileActivity.this, errorCode + " : " + errorMessage, Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+    };
 
     @OnClick(R.id.btn_withdraw)
     public void onWithdrawClick(View view) {

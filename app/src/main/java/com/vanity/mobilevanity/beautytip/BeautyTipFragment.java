@@ -4,6 +4,8 @@ package com.vanity.mobilevanity.beautytip;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
@@ -171,10 +173,20 @@ public class BeautyTipFragment extends Fragment {
 
     @OnClick(R.id.btn_set)
     public void onSetClick(View view) {
-        Intent intent = new Intent(getContext(), BeautyTipWriteActivity.class);
-        intent.putExtra(BeautyTipWriteActivity.TAG_SEARCH_TYPE, BeautyTipWriteActivity.INDEX_TYPE_FRAGMENT);
-        startActivity(intent);
+        Message msg = setHandler.obtainMessage(0);
+        setHandler.removeMessages(0);
+        setHandler.sendMessageDelayed(msg, 1000);
     }
+
+    private Handler setHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            Intent intent = new Intent(getContext(), BeautyTipWriteActivity.class);
+            intent.putExtra(BeautyTipWriteActivity.TAG_SEARCH_TYPE, BeautyTipWriteActivity.INDEX_TYPE_FRAGMENT);
+            startActivity(intent);
+        }
+    };
 
     public static final String keyword = "keyword";
     public static final String query = "";
@@ -203,6 +215,5 @@ public class BeautyTipFragment extends Fragment {
             public void onFail(NetworkRequest<NetworkResult<List<BeautyTip>>> request, int errorCode, String errorMessage, Throwable e) {
             }
         });
-
     }
 }

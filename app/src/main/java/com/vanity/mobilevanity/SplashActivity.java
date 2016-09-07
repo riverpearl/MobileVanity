@@ -7,6 +7,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -109,8 +111,7 @@ public class SplashActivity extends AppCompatActivity {
             public void onSuccess(NetworkRequest<NetworkResult<User>> request, NetworkResult<User> result) {
                 if (result.getCode() == 1) {
                     moveMainActivity();
-                }
-                else if (result.getCode() == -1) {
+                } else if (result.getCode() == -1) {
                     if (isFacebookLogin())
                         processFacebookLogin();
                     else resetFacebookAndMoveLoginActivity();
@@ -193,7 +194,8 @@ public class SplashActivity extends AppCompatActivity {
                         intent.putExtra(FacebookSignUpActivity.TAG_FACEBOOK_ID, user.getFacebookId());
                         intent.putExtra(FacebookSignUpActivity.TAG_EMAIL, user.getEmail());
                         startActivityForResult(intent, RC_SIGN_UP);
-                    } else Toast.makeText(SplashActivity.this, result.getError(), Toast.LENGTH_SHORT).show();
+                    } else
+                        Toast.makeText(SplashActivity.this, result.getError(), Toast.LENGTH_SHORT).show();
                 }
 
                 @Override
@@ -302,28 +304,37 @@ public class SplashActivity extends AppCompatActivity {
 
     @OnClick(R.id.btn_fb_login)
     public void onLoginClick(View view) {
-        String email = "admin@mobilevanity.com";
-        String password = "pwd";
-        String regId = "1234";
-
-        LoginRequest request = new LoginRequest(this, email, password, regId);
-        NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<User>>() {
-            @Override
-            public void onSuccess(NetworkRequest<NetworkResult<User>> request, NetworkResult<User> result) {
-                if (result.getCode() == 1) {
-                    Intent intent = new Intent(SplashActivity.this, MainActivity.class);
-                    startActivity(intent);
-                    finish();
-                }
-            }
-
-            @Override
-            public void onFail(NetworkRequest<NetworkResult<User>> request, int errorCode, String errorMessage, Throwable e) {
-                Toast.makeText(SplashActivity.this, errorCode + " : " + errorMessage, Toast.LENGTH_SHORT).show();
-            }
-        });
-
+        Message msg = fbLoginHandler.obtainMessage(0);
+        fbLoginHandler.removeMessages(0);
+        fbLoginHandler.sendMessageDelayed(msg, 1000);
     }
+
+    private Handler fbLoginHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            String email = "admin@mobilevanity.com";
+            String password = "pwd";
+            String regId = "1234";
+
+            LoginRequest request = new LoginRequest(SplashActivity.this, email, password, regId);
+            NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<User>>() {
+                @Override
+                public void onSuccess(NetworkRequest<NetworkResult<User>> request, NetworkResult<User> result) {
+                    if (result.getCode() == 1) {
+                        Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                }
+
+                @Override
+                public void onFail(NetworkRequest<NetworkResult<User>> request, int errorCode, String errorMessage, Throwable e) {
+                    Toast.makeText(SplashActivity.this, errorCode + " : " + errorMessage, Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+    };
 
     @Override
     protected void onDestroy() {

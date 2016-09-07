@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Handler;
+import android.os.Message;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -60,10 +62,20 @@ public class BeautyTipWriteActivity extends AppCompatActivity {
         camera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                intent.setType("image/*");
-                startActivityForResult(intent, RC_GET_IMAGE);
+                Message msg = cameraHandler.obtainMessage(0);
+                cameraHandler.removeMessages(0);
+                cameraHandler.sendMessageDelayed(msg, 1000);
             }
+
+            private Handler cameraHandler = new Handler() {
+                @Override
+                public void handleMessage(Message msg) {
+                    super.handleMessage(msg);
+                    Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    intent.setType("image/*");
+                    startActivityForResult(intent, RC_GET_IMAGE);
+                }
+            };
         });
     }
 
@@ -72,60 +84,67 @@ public class BeautyTipWriteActivity extends AppCompatActivity {
 
     @OnClick(R.id.btn_set)
     public void onSetClick(View view) {
-
-        Intent intent = getIntent();
-        int code = intent.getIntExtra(TAG_SEARCH_TYPE, 0);
-
-        switch (code) {
-            case INDEX_TYPE_NONE:
-            default:
-                Toast.makeText(BeautyTipWriteActivity.this, "잘못된 접근입니다.", Toast.LENGTH_SHORT).show();
-                finish();
-                return;
-
-            case INDEX_TYPE_DETAIL:
-                id = intent.getLongExtra(BeautyTipDetailActivity.DETAIL_ID, 0);
-
-                UpdateBeautyTipRequest request = new UpdateBeautyTipRequest(getBaseContext(), "" + id, titleView.getText().toString(), contentView.getText().toString(), uploadFile);
-                NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<BeautyTip>>() {
-                    @Override
-                    public void onSuccess(NetworkRequest<NetworkResult<BeautyTip>> request, NetworkResult<BeautyTip> result) {
-                        if (result.getCode() == 1) {
-                            BeautyTip beautyTip = result.getResult();
-                            titleView.setText(beautyTip.getTitle());
-                            contentView.setText(beautyTip.getContent());
-                            Glide.with(imageView.getContext())
-                                    .load(uploadFile)
-                                    .into(imageView);
-                            finish();
-                        }
-                    }
-
-                    @Override
-                    public void onFail(NetworkRequest<NetworkResult<BeautyTip>> request, int errorCode, String errorMessage, Throwable e) {
-                    }
-                });
-                return;
-
-            case INDEX_TYPE_FRAGMENT:
-                InsertBeautyTipRequest beautyTipRequest = new InsertBeautyTipRequest(getBaseContext(), titleView.getText().toString(), contentView.getText().toString(), uploadFile);
-                NetworkManager.getInstance().getNetworkData(beautyTipRequest, new NetworkManager.OnResultListener<NetworkResult<BeautyTip>>() {
-                    @Override
-                    public void onSuccess(NetworkRequest<NetworkResult<BeautyTip>> request, NetworkResult<BeautyTip> result) {
-                        if (result.getCode() == 1) {
-                            BeautyTip tip = result.getResult();
-                            finish();
-                        }
-                    }
-
-                    @Override
-                    public void onFail(NetworkRequest<NetworkResult<BeautyTip>> request, int errorCode, String errorMessage, Throwable e) {
-                    }
-                });
-
-        }
-
+        Message msg = setHandler.obtainMessage(0);
+        setHandler.removeMessages(0);
+        setHandler.sendMessageDelayed(msg, 1000);
     }
+
+    private Handler setHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            Intent intent = getIntent();
+            int code = intent.getIntExtra(TAG_SEARCH_TYPE, 0);
+
+            switch (code) {
+                case INDEX_TYPE_NONE:
+                default:
+                    Toast.makeText(BeautyTipWriteActivity.this, "잘못된 접근입니다.", Toast.LENGTH_SHORT).show();
+                    finish();
+                    return;
+
+                case INDEX_TYPE_DETAIL:
+                    id = intent.getLongExtra(BeautyTipDetailActivity.DETAIL_ID, 0);
+
+                    UpdateBeautyTipRequest request = new UpdateBeautyTipRequest(getBaseContext(), "" + id, titleView.getText().toString(), contentView.getText().toString(), uploadFile);
+                    NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<BeautyTip>>() {
+                        @Override
+                        public void onSuccess(NetworkRequest<NetworkResult<BeautyTip>> request, NetworkResult<BeautyTip> result) {
+                            if (result.getCode() == 1) {
+                                BeautyTip beautyTip = result.getResult();
+                                titleView.setText(beautyTip.getTitle());
+                                contentView.setText(beautyTip.getContent());
+                                Glide.with(imageView.getContext())
+                                        .load(uploadFile)
+                                        .into(imageView);
+                                finish();
+                            }
+                        }
+
+                        @Override
+                        public void onFail(NetworkRequest<NetworkResult<BeautyTip>> request, int errorCode, String errorMessage, Throwable e) {
+                        }
+                    });
+                    return;
+
+                case INDEX_TYPE_FRAGMENT:
+                    InsertBeautyTipRequest beautyTipRequest = new InsertBeautyTipRequest(getBaseContext(), titleView.getText().toString(), contentView.getText().toString(), uploadFile);
+                    NetworkManager.getInstance().getNetworkData(beautyTipRequest, new NetworkManager.OnResultListener<NetworkResult<BeautyTip>>() {
+                        @Override
+                        public void onSuccess(NetworkRequest<NetworkResult<BeautyTip>> request, NetworkResult<BeautyTip> result) {
+                            if (result.getCode() == 1) {
+                                BeautyTip tip = result.getResult();
+                                finish();
+                            }
+                        }
+
+                        @Override
+                        public void onFail(NetworkRequest<NetworkResult<BeautyTip>> request, int errorCode, String errorMessage, Throwable e) {
+                        }
+                    });
+            }
+        }
+    };
 
     File uploadFile = null;
 
@@ -168,7 +187,6 @@ public class BeautyTipWriteActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-
 
     }
 }
