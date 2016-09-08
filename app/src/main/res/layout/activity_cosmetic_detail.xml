@@ -41,9 +41,9 @@
             android:layout_height="wrap_content"
             android:text="Color Code"
             android:id="@+id/text_color_code"
-            android:layout_below="@+id/text_brand_name"
-            android:layout_alignLeft="@+id/text_brand_name"
-            android:layout_alignStart="@+id/text_brand_name" />
+            android:layout_below="@+id/text_cosmetic_name"
+            android:layout_toRightOf="@+id/image_cosmetic"
+            android:layout_toEndOf="@+id/image_cosmetic" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -59,7 +59,7 @@
             android:layout_height="wrap_content"
             android:text="Cosmetic Name"
             android:id="@+id/text_cosmetic_name"
-            android:layout_below="@+id/text_color_code"
+            android:layout_below="@+id/text_brand_name"
             android:layout_toRightOf="@+id/image_cosmetic"
             android:layout_toEndOf="@+id/image_cosmetic" />
 

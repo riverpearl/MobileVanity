@@ -29,6 +29,7 @@ import com.vanity.mobilevanity.manager.NetworkRequest;
 import com.vanity.mobilevanity.request.InsertCosmeticItemRequest;
 import com.vanity.mobilevanity.request.SearchCosmeticByBarcodeRequest;
 import com.vanity.mobilevanity.request.SearchCosmeticListRequest;
+import com.vanity.mobilevanity.util.DateCalculator;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 import java.text.ParseException;
@@ -156,19 +157,8 @@ public class RegisterDetailActivity extends AppCompatActivity implements DatePic
     @Override
     public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
         Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.YEAR, year);
-        calendar.set(Calendar.MONTH, monthOfYear);
-        calendar.set(Calendar.DATE, dayOfMonth);
-
-        registerYearView.setText(year + "");
-        registerMonthView.setText((monthOfYear + 1) + "");
-        registerDayView.setText(dayOfMonth + "");
-
-        calendar.add(Calendar.DATE, cosmetic.getProduct().getUseBy());
-
-        usebyYearView.setText(calendar.get(Calendar.YEAR) + "");
-        usebyMonthView.setText((calendar.get(Calendar.MONTH) + 1) + "");
-        usebyDayView.setText(calendar.get(Calendar.DATE) + "");
+        calendar.set(year, monthOfYear, dayOfMonth);
+        setDateView(calendar, cosmetic.getProduct().getUseBy());
     }
 
     @OnClick(R.id.btn_register)
@@ -182,21 +172,22 @@ public class RegisterDetailActivity extends AppCompatActivity implements DatePic
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
+
             if (cosmetic == null) {
                 Toast.makeText(RegisterDetailActivity.this, "올바른 접근이 아닙니다.", Toast.LENGTH_SHORT).show();
                 finish();
+                return;
             }
 
             Calendar calendar = Calendar.getInstance();
-            calendar.set(Calendar.YEAR, Integer.parseInt(registerYearView.getText().toString()));
-            calendar.set(Calendar.MONTH, Integer.parseInt(registerMonthView.getText().toString()) - 1);
-            calendar.set(Calendar.DATE, Integer.parseInt(registerDayView.getText().toString()));
+            int year = Integer.parseInt(registerYearView.getText().toString());
+            int month = Integer.parseInt(registerMonthView.getText().toString()) - 1;
+            int date = Integer.parseInt(registerDayView.getText().toString());
+            calendar.set(year, month, date);
 
-            SimpleDateFormat form = new SimpleDateFormat("yyyy-MM-dd'T'kk:mm:ss.SSSZ");
-            String parseDate = form.format(calendar.getTime());
-
+            DateCalculator calculator = new DateCalculator();
+            String dateAdded = calculator.CalToStr(calendar);
             String id = cosmetic.getId() + "";
-            String dateAdded = parseDate;
             String cosmeticTerm = cosmetic.getProduct().getUseBy() + "";
 
             InsertCosmeticItemRequest request = new InsertCosmeticItemRequest(RegisterDetailActivity.this, id, dateAdded, cosmeticTerm);
@@ -265,7 +256,8 @@ public class RegisterDetailActivity extends AppCompatActivity implements DatePic
             public void onSuccess(NetworkRequest<NetworkResult<Cosmetic>> request, NetworkResult<Cosmetic> result) {
                 if (result.getCode() == 1) {
                     cosmetic = result.getResult();
-                    setView();
+                    setCosmeticInfoView();
+                    setDateView(Calendar.getInstance(), cosmetic.getProduct().getUseBy());
                 } else {
                     Toast.makeText(RegisterDetailActivity.this, "검색 결과가 없습니다.", Toast.LENGTH_SHORT).show();
                     finish();
@@ -305,7 +297,8 @@ public class RegisterDetailActivity extends AppCompatActivity implements DatePic
             cosmetic.setColorName(colorName);
             cosmetic.setImage(image);
 
-            setView();
+            setCosmeticInfoView();
+            setDateView(Calendar.getInstance(), useby);
         } else {
             Toast.makeText(RegisterDetailActivity.this, "잘못된 접근입니다.", Toast.LENGTH_SHORT).show();
             finish();
@@ -313,21 +306,20 @@ public class RegisterDetailActivity extends AppCompatActivity implements DatePic
         }
     }
 
-    private void setView() {
-        Glide.with(RegisterDetailActivity.this).load(cosmetic.getImage()).into(imageView);
+    private void setCosmeticInfoView() {
+        Glide.with(RegisterDetailActivity.this).load(cosmetic.getProduct().getImage()).into(imageView);
         brandView.setText(cosmetic.getProduct().getBrand().getName());
         colorCodeView.setText(cosmetic.getColorCode());
         colorNameView.setText(cosmetic.getColorName());
         cosmeticView.setText(cosmetic.getProduct().getName());
+    }
 
-        Calendar calendar = Calendar.getInstance();
-        Date date = new Date();
-        calendar.setTime(date);
+    private void setDateView(Calendar calendar, int term) {
         registerYearView.setText(calendar.get(Calendar.YEAR) + "");
         registerMonthView.setText((calendar.get(Calendar.MONTH) + 1) + "");
         registerDayView.setText(calendar.get(Calendar.DATE) + "");
 
-        calendar.add(Calendar.DATE, cosmetic.getProduct().getUseBy());
+        calendar.add(Calendar.DATE, term);
         usebyYearView.setText(calendar.get(Calendar.YEAR) + "");
         usebyMonthView.setText((calendar.get(Calendar.MONTH) + 1) + "");
         usebyDayView.setText(calendar.get(Calendar.DATE) + "");

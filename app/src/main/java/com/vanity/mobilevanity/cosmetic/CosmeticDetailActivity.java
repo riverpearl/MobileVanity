@@ -281,7 +281,7 @@ public class CosmeticDetailActivity extends AppCompatActivity implements DatePic
 
     private void setCosmeticView() {
         String image = cosmeticItem.getCosmetic().getImage();
-        String brand = cosmeticItem.getCosmetic().getProduct().getName();
+        String brand = cosmeticItem.getCosmetic().getProduct().getBrand().getName();
         String cCode = cosmeticItem.getCosmetic().getColorCode();
         String cName = cosmeticItem.getCosmetic().getColorName();
         String cosmeticName = cosmeticItem.getCosmetic().getProduct().getName();

@@ -21,57 +21,52 @@
             android:id="@+id/text_color_code"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_toEndOf="@+id/image_cosmetic"
-            android:layout_toRightOf="@+id/image_cosmetic"
             android:text="ColorCode"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+            android:layout_below="@+id/text_product_name"
+            android:layout_toRightOf="@+id/image_cosmetic"
+            android:layout_toEndOf="@+id/image_cosmetic" />
 
         <TextView
             android:id="@+id/text_color_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_toEndOf="@+id/text_color_code"
-            android:layout_toRightOf="@+id/text_color_code"
             android:text="ColorName"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+            android:layout_alignTop="@+id/text_color_code"
+            android:layout_toRightOf="@+id/text_color_code"
+            android:layout_toEndOf="@+id/text_color_code" />
 
         <TextView
             android:id="@+id/text_product_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/text_color_code"
-            android:layout_toEndOf="@+id/image_cosmetic"
-            android:layout_toRightOf="@+id/image_cosmetic"
             android:text="productName"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:layout_below="@+id/text_brand_name"
+            android:layout_toRightOf="@+id/image_cosmetic"
+            android:layout_toEndOf="@+id/image_cosmetic" />
 
         <TextView
             android:id="@+id/text_brand_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/image_cosmetic"
-            android:layout_toEndOf="@+id/image_cosmetic"
-            android:layout_toRightOf="@+id/image_cosmetic"
             android:text="BrandName"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/image_cosmetic"
+            android:layout_toEndOf="@+id/image_cosmetic" />
 
         <ImageView
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
             android:id="@+id/image_new"
+            android:src="@android:drawable/btn_star_big_on"
             android:layout_alignParentTop="true"
-            android:layout_toRightOf="@+id/text_color_name"
-            android:layout_toEndOf="@+id/text_color_name"
-            android:src="@android:drawable/btn_star_big_on" />
+            android:layout_toRightOf="@+id/text_brand_name"
+            android:layout_toEndOf="@+id/text_brand_name" />
 
     </RelativeLayout>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="D-Day"
         android:id="@+id/text_dday"
         android:layout_gravity="center_vertical|right|end"/>
