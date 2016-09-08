@@ -27,6 +27,7 @@ import com.vanity.mobilevanity.manager.DBManager;
 import com.vanity.mobilevanity.manager.NetworkManager;
 import com.vanity.mobilevanity.manager.NetworkRequest;
 import com.vanity.mobilevanity.request.NotifyListRequest;
+import com.vanity.mobilevanity.util.DateCalculator;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -46,7 +47,7 @@ public class AlertActivity extends AppCompatActivity {
 
     AlertAdapter mAdapter;
     List<Notify> notifyList = new ArrayList<>();
-    SimpleDateFormat form = new SimpleDateFormat("yyyy-MM-dd'T'kk:mm:ss.SSSZ");
+    DateCalculator calculator = new DateCalculator();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,7 +103,7 @@ public class AlertActivity extends AppCompatActivity {
         final Calendar aWeekAgo = Calendar.getInstance();
         aWeekAgo.add(Calendar.DATE, -7);
 
-        String date = form.format(aWeekAgo.getTime());
+        String date = calculator.CalToStr(aWeekAgo);
 
         NotifyListRequest request = new NotifyListRequest(this, date);
         NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<List<Notify>>>() {
@@ -114,15 +115,7 @@ public class AlertActivity extends AppCompatActivity {
 
                     if (c != null && c.getCount() > 0) {
                         while (c.moveToNext()) {
-                            String tempDate = c.getString(c.getColumnIndex(DBContract.Notify.COLUMN_DATE));
-                            Calendar cal = Calendar.getInstance();
-                            SimpleDateFormat form = new SimpleDateFormat("yyyy-MM-dd'T'kk:mm:ss.SSSZ");
-
-                            try {
-                                cal.setTime(form.parse(tempDate));
-                            } catch (ParseException e) {
-                                e.printStackTrace();
-                            }
+                            Calendar cal = calculator.StrToCal(c.getString(c.getColumnIndex(DBContract.Notify.COLUMN_DATE)));
 
                             if (cal.before(aWeekAgo))
                                 continue;
@@ -139,15 +132,8 @@ public class AlertActivity extends AppCompatActivity {
                     Collections.sort(notifyList, new Comparator<Notify>() {
                         @Override
                         public int compare(Notify noti1, Notify noti2) {
-                            Calendar noti1cal = Calendar.getInstance();
-                            Calendar noti2cal = Calendar.getInstance();
-
-                            try {
-                                noti1cal.setTime(form.parse(noti1.getDate()));
-                                noti2cal.setTime(form.parse(noti2.getDate()));
-                            } catch (ParseException e) {
-                                e.printStackTrace();
-                            }
+                            Calendar noti1cal = calculator.StrToCal(noti1.getDate());
+                            Calendar noti2cal = calculator.StrToCal(noti2.getDate());
 
                             return (noti1cal.before(noti2cal)) ? -1 : 1;
                         }

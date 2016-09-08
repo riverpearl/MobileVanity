@@ -88,6 +88,13 @@ public class BeautyTipCommentFragment extends DialogFragment {
         final LinearLayoutManager manager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         listView.setLayoutManager(manager);
 
+        listView.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+            @Override
+            public void onLayoutChange(View view, int i, int i1, int i2, int i3, int i4, int i5, int i6, int i7) {
+                listView.scrollToPosition(mAdapter.getItemCount() - 1);
+            }
+        });
+
         return view;
     }
 

@@ -79,6 +79,7 @@ public class BeautyTipDetailActivity extends AppCompatActivity {
 
     long beautyTipId = 0;
     boolean like = false;
+    User user;
 
     public static final String TAG_BEAUTY_TIP_ID = "beautytipid";
 
@@ -153,12 +154,33 @@ public class BeautyTipDetailActivity extends AppCompatActivity {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            FragmentManager fm = getSupportFragmentManager();
-            BeautyTipCommentFragment dialog = new BeautyTipCommentFragment();
-            Bundle args = new Bundle();
-            args.putLong("beautytipid", beautyTipId);
-            dialog.setArguments(args);
-            dialog.show(fm, "dialog");
+
+            MyInfoRequest request = new MyInfoRequest(BeautyTipDetailActivity.this);
+            NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<User>>() {
+                @Override
+                public void onSuccess(NetworkRequest<NetworkResult<User>> request, NetworkResult<User> result) {
+                    if (result.getCode() == 1) {
+                        user = result.getResult();
+
+                        FragmentManager fm = getSupportFragmentManager();
+                        BeautyTipCommentFragment dialog = new BeautyTipCommentFragment();
+
+                        Bundle args = new Bundle();
+                        args.putLong(TAG_BEAUTY_TIP_ID, beautyTipId);
+                        args.putString(BeautyTipFragment.TAG_USER_PROFILE, user.getUserProfile());
+                        args.putString(BeautyTipFragment.TAG_USER_NICKNAME, user.getUserNickName());
+
+                        dialog.setArguments(args);
+                        dialog.show(fm, BeautyTipFragment.TAG_COMMENT);
+                    }
+
+                }
+
+                @Override
+                public void onFail(NetworkRequest<NetworkResult<User>> request, int errorCode, String errorMessage, Throwable e) {
+
+                }
+            });
         }
     };
 

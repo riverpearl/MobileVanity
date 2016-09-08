@@ -130,8 +130,7 @@ public class BeautyTipFragment extends Fragment {
         mAdapter.setOnAdapterCommentClickListener(new BeautyTipAdapter.OnAdapterCommentClickListener() {
             @Override
             public void onAdapterCommentClick(View view, BeautyTip beautyTip, Comment comment) {
-
-                final long BeautyTipId = beautyTip.getId();
+                final long beautyTipId = beautyTip.getId();
 
                 MyInfoRequest request = new MyInfoRequest(getContext());
                 NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<User>>() {
@@ -144,7 +143,7 @@ public class BeautyTipFragment extends Fragment {
                             BeautyTipCommentFragment dialog = new BeautyTipCommentFragment();
 
                             Bundle args = new Bundle();
-                            args.putLong(TAG_BEAUTY_TIP_ID, BeautyTipId);
+                            args.putLong(TAG_BEAUTY_TIP_ID, beautyTipId);
                             args.putString(TAG_USER_PROFILE, user.getUserProfile());
                             args.putString(TAG_USER_NICKNAME, user.getUserNickName());
 
