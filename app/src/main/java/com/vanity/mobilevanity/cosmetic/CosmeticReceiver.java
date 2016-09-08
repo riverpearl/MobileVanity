@@ -13,6 +13,7 @@ import com.vanity.mobilevanity.MainActivity;
 import com.vanity.mobilevanity.alert.AlertActivity;
 import com.vanity.mobilevanity.data.DBContract;
 import com.vanity.mobilevanity.manager.DBManager;
+import com.vanity.mobilevanity.manager.PropertyManager;
 import com.vanity.mobilevanity.util.DateCalculator;
 
 public class CosmeticReceiver extends BroadcastReceiver {
@@ -20,8 +21,9 @@ public class CosmeticReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        // TODO: This method is called when the BroadcastReceiver is receiving
-        // an Intent broadcast.
+        if (!PropertyManager.getInstance().getIsAlertReceptible())
+            return;
+
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, new Intent(context, CosmeticDetailActivity.class), PendingIntent.FLAG_UPDATE_CURRENT);
         Notification.Builder builder = new Notification.Builder(context);

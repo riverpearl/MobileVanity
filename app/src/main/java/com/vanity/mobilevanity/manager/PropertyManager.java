@@ -25,6 +25,7 @@ public class PropertyManager {
     private static final String KEY_IS_ALARM_CREATED = "isAlarmCreated";
     private static final String KEY_REGISTRATION_ID = "regid";
     private static final String KEY_FACEBOOK_ID = "facebookid";
+    private static final String KEY_USER_ID = "userid";
     private static final String KEY_LAST_NOTIFY_DATE = "lastDate";
     private static final String KEY_IS_ALERT_RECEPTIBLE = "isAlertReceptible";
 
@@ -50,6 +51,15 @@ public class PropertyManager {
 
     public String getFacebookId() {
         return mPrefs.getString(KEY_FACEBOOK_ID, "");
+    }
+
+    public void setUserId(long id) {
+        mEditor.putLong(KEY_USER_ID, id);
+        mEditor.commit();
+    }
+
+    public long getUserId() {
+        return mPrefs.getLong(KEY_USER_ID, 0);
     }
 
     public void setIsAlarmCreated(boolean isAlarmCreated) {

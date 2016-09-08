@@ -107,6 +107,7 @@ public class MyPageFragment extends Fragment {
                     getActivity().finish();
 
                     PropertyManager.getInstance().setFacebookId("");
+                    PropertyManager.getInstance().setUserId(0);
                     PropertyManager.getInstance().setIsAlarmCreated(false);
                     PropertyManager.getInstance().setRegistrationId("");
                     PropertyManager.getInstance().setLastNotifyDate("");

@@ -106,6 +106,9 @@ public class BeautyTipDetailActivity extends AppCompatActivity {
 
         updateMenuItem = menu.findItem(R.id.menu_update);
         deleteMenuItem = menu.findItem(R.id.menu_delete);
+
+        updateMenuItem.setVisible(false);
+        deleteMenuItem.setVisible(false);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -214,9 +217,9 @@ public class BeautyTipDetailActivity extends AppCompatActivity {
                             .into(beautytipImage);
                     like = beautyTip.isLike();
 
-                    if (Long.parseLong(PropertyManager.getInstance().getFacebookId()) == beautyTip.getUser().getId()) {
+                    if (PropertyManager.getInstance().getUserId() == beautyTip.getUser().getId()) {
                         updateMenuItem.setVisible(true);
-                        deleteMenuItem.setChecked(true);
+                        deleteMenuItem.setVisible(true);
                     } else {
                         updateMenuItem.setVisible(false);
                         deleteMenuItem.setVisible(false);

@@ -186,7 +186,10 @@ public class SplashActivity extends AppCompatActivity {
                 public void onSuccess(NetworkRequest<NetworkResult<User>> request, NetworkResult<User> result) {
                     if (result.getCode() == 1) {
                         String facebookId = accessToken.getUserId();
+                        Long userId = result.getResult().getId();
                         PropertyManager.getInstance().setFacebookId(facebookId);
+                        PropertyManager.getInstance().setUserId(userId);
+                        PropertyManager.getInstance().setIsAlertReceptible(true);
                         moveMainActivity();
                     } else if (result.getCode() == 2) {
                         User user = result.getResult();
