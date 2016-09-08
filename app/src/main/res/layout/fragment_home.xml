@@ -7,63 +7,6 @@
     <!-- TODO: Update blank fragment layout -->
 
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="EYE MAKEUP"
-        android:id="@+id/btn_eye"
-        android:layout_gravity="left|top" />
-
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="LIP MAKEUP"
-        android:id="@+id/btn_lip"
-        android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/btn_eye"
-        android:layout_toEndOf="@+id/btn_eye" />
-
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="SKIN CARE"
-        android:id="@+id/btn_skin"
-        android:layout_below="@+id/btn_eye"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="FACE MAKEUP"
-        android:id="@+id/btn_face"
-        android:layout_alignTop="@+id/btn_skin"
-        android:layout_toRightOf="@+id/btn_skin"
-        android:layout_toEndOf="@+id/btn_skin" />
-
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="CLEANSING"
-        android:id="@+id/btn_cleansing"
-        android:layout_below="@+id/btn_skin"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="MAKEUP TOOL"
-        android:id="@+id/btn_tool"
-        android:layout_alignTop="@+id/btn_cleansing"
-        android:layout_toRightOf="@+id/btn_eye"
-        android:layout_toEndOf="@+id/btn_eye" />
-
     <android.support.design.widget.FloatingActionButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -71,5 +14,68 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="16dp"
         android:src="@android:drawable/ic_input_add" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_skin"
+        android:src="@drawable/btn_skin"
+        android:background="@android:color/transparent"
+        android:layout_below="@+id/btn_eye"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_face"
+        android:src="@drawable/btn_face"
+        android:background="@android:color/transparent"
+        android:layout_alignTop="@+id/btn_skin"
+        android:layout_toRightOf="@+id/btn_skin"
+        android:layout_toEndOf="@+id/btn_skin" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_eye"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:src="@drawable/btn_eye"
+        android:background="@android:color/transparent" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_lip"
+        android:layout_alignTop="@+id/btn_eye"
+        android:layout_toRightOf="@+id/btn_eye"
+        android:layout_toEndOf="@+id/btn_eye"
+        android:src="@drawable/btn_lip"
+        android:background="@android:color/transparent" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_cleansing"
+        android:src="@drawable/btn_cleansign"
+        android:background="@android:color/transparent"
+        android:layout_below="@+id/btn_skin"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_tool"
+        android:src="@drawable/btn_tool"
+        android:duplicateParentState="true"
+        android:background="@android:color/transparent"
+        android:layout_alignTop="@+id/btn_cleansing"
+        android:layout_toRightOf="@+id/btn_cleansing"
+        android:layout_toEndOf="@+id/btn_cleansing" />
+
 </RelativeLayout>
