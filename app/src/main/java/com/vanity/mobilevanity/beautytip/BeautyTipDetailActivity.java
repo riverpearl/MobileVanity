@@ -156,7 +156,7 @@ public class BeautyTipDetailActivity extends AppCompatActivity {
             FragmentManager fm = getSupportFragmentManager();
             BeautyTipCommentFragment dialog = new BeautyTipCommentFragment();
             Bundle args = new Bundle();
-            args.putLong("commentid", beautyTipId);
+            args.putLong("beautytipid", beautyTipId);
             dialog.setArguments(args);
             dialog.show(fm, "dialog");
         }

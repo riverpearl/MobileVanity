@@ -1,6 +1,7 @@
 package com.vanity.mobilevanity.beautytip;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -21,6 +22,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -70,6 +72,8 @@ public class BeautyTipCommentFragment extends DialogFragment {
         beautyTipId = extra.getLong(BeautyTipFragment.TAG_BEAUTY_TIP_ID);
         userProfile = extra.getString(BeautyTipFragment.TAG_USER_PROFILE);
         userNickname = extra.getString(BeautyTipFragment.TAG_USER_NICKNAME);
+
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
     }
 
     @Nullable
@@ -90,11 +94,12 @@ public class BeautyTipCommentFragment extends DialogFragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
         Dialog d = getDialog();
         WindowManager.LayoutParams params = d.getWindow().getAttributes();
         params.gravity = Gravity.CENTER;
-        params.x = 100;
-        params.y = 100;
+        params.width = ViewGroup.LayoutParams.MATCH_PARENT;
+        params.height = ViewGroup.LayoutParams.MATCH_PARENT;
         d.getWindow().setAttributes(params);
     }
 
@@ -117,6 +122,7 @@ public class BeautyTipCommentFragment extends DialogFragment {
                     List<Comment> comments = result.getResult();
                     mAdapter.clear();
                     mAdapter.addAll(comments);
+                    listView.scrollToPosition(mAdapter.getItemCount() - 1);
                 }
             }
 
@@ -143,8 +149,9 @@ public class BeautyTipCommentFragment extends DialogFragment {
                 @Override
                 public void onSuccess(NetworkRequest<NetworkResult<Comment>> request, NetworkResult<Comment> result) {
                     if (result.getCode() == 1) {
-                        Comment comment = result.getResult();
                         inputView.setText("");
+                        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.hideSoftInputFromWindow(getView().getWindowToken(), 0);
                         getCommentList();
                     }
                 }
@@ -154,7 +161,6 @@ public class BeautyTipCommentFragment extends DialogFragment {
                     Toast.makeText(getContext(), "댓글 입력하기에 실패했습니다.", Toast.LENGTH_SHORT).show();
                 }
             });
-            onStart();
         }
 
     };

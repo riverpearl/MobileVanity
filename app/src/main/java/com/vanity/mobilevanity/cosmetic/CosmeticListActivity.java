@@ -114,7 +114,7 @@ public class CosmeticListActivity extends AppCompatActivity {
     }
 
     public void getCosmeticItemList() {
-        CosmeticItemsRequest request = new CosmeticItemsRequest(CosmeticListActivity.this, "" + category, "" + tabpos);
+        CosmeticItemsRequest request = new CosmeticItemsRequest(CosmeticListActivity.this, "" + category, "" + (tabpos + 1));
         NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<List<CosmeticItem>>>() {
             @Override
             public void onSuccess(NetworkRequest<NetworkResult<List<CosmeticItem>>> request, NetworkResult<List<CosmeticItem>> result) {
@@ -241,6 +241,7 @@ public class CosmeticListActivity extends AppCompatActivity {
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
                 mAdapter.clear();
+                NetworkManager.getInstance().cancelAll();
             }
 
             @Override

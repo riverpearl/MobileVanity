@@ -130,17 +130,28 @@ public class BeautyTipFragment extends Fragment {
         mAdapter.setOnAdapterCommentClickListener(new BeautyTipAdapter.OnAdapterCommentClickListener() {
             @Override
             public void onAdapterCommentClick(View view, BeautyTip beautyTip, Comment comment) {
-                FragmentManager fm = getFragmentManager();
-                BeautyTipCommentFragment dialog = new BeautyTipCommentFragment();
-                Bundle args = new Bundle();
+
                 final long BeautyTipId = beautyTip.getId();
 
                 MyInfoRequest request = new MyInfoRequest(getContext());
                 NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<User>>() {
                     @Override
                     public void onSuccess(NetworkRequest<NetworkResult<User>> request, NetworkResult<User> result) {
-                        if (result.getCode() == 1)
+                        if (result.getCode() == 1) {
                             user = result.getResult();
+
+                            FragmentManager fm = getFragmentManager();
+                            BeautyTipCommentFragment dialog = new BeautyTipCommentFragment();
+
+                            Bundle args = new Bundle();
+                            args.putLong(TAG_BEAUTY_TIP_ID, BeautyTipId);
+                            args.putString(TAG_USER_PROFILE, user.getUserProfile());
+                            args.putString(TAG_USER_NICKNAME, user.getUserNickName());
+
+                            dialog.setArguments(args);
+                            dialog.show(fm, TAG_COMMENT);
+                        }
+
                     }
 
                     @Override
@@ -148,15 +159,6 @@ public class BeautyTipFragment extends Fragment {
 
                     }
                 });
-
-                if (user != null) {
-                    args.putLong(TAG_BEAUTY_TIP_ID, BeautyTipId);
-                    args.putString(TAG_USER_PROFILE, user.getUserProfile());
-                    args.putString(TAG_USER_NICKNAME, user.getUserNickName());
-                    dialog.setArguments(args);
-                    dialog.show(fm, TAG_COMMENT);
-
-                }
             }
         });
 

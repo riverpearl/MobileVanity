@@ -87,6 +87,8 @@ public class RegisterSearchActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        setSpinners();
+
         Intent intent = getIntent();
         requestCode = intent.getIntExtra(TAG_REQUEST_CODE, 0);
         category = intent.getIntExtra(CosmeticListActivity.TAG_CATEGORY, 0);
@@ -137,6 +139,7 @@ public class RegisterSearchActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                NetworkManager.getInstance().cancelAll();
                 searchRequest();
             }
 
@@ -204,10 +207,7 @@ public class RegisterSearchActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-
+    private void setSpinners() {
         BrandListRequest request = new BrandListRequest(this);
         NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<List<Brand>>>() {
             @Override
