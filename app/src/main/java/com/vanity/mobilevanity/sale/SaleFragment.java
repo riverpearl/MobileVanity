@@ -23,6 +23,7 @@ import com.vanity.mobilevanity.data.Sale;
 import com.vanity.mobilevanity.manager.NetworkManager;
 import com.vanity.mobilevanity.manager.NetworkRequest;
 import com.vanity.mobilevanity.request.SaleInfoRequest;
+import com.vanity.mobilevanity.util.DateCalculator;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -59,6 +60,7 @@ public class SaleFragment extends Fragment {
 
     SaleAdapter saleAdapter;
     List<Event> events = new ArrayList<>();
+    DateCalculator calculator = new DateCalculator();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -84,8 +86,10 @@ public class SaleFragment extends Fragment {
         calendarView.setListener(new CompactCalendarView.CompactCalendarViewListener() {
             @Override
             public void onDayClick(Date dateClicked) {
-                setSaleInfoView(dateClicked);
-                setBannerListView(dateClicked);
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(dateClicked);
+                setSaleInfoView(calendar);
+                setBannerListView(calendar);
             }
 
             @Override
@@ -112,10 +116,9 @@ public class SaleFragment extends Fragment {
         calendar.set(Calendar.SECOND, 0);
         calendar.set(Calendar.MILLISECOND, 0);
 
-        SimpleDateFormat form = new SimpleDateFormat("yyyy-MM-dd'T'kk:mm:ss.SSSZ");
-        String parseDate = form.format(calendar.getTime());
+        String endDate = calculator.CalToStr(calendar);
 
-        SaleInfoRequest request = new SaleInfoRequest(getContext(), type, datetype, parseDate);
+        SaleInfoRequest request = new SaleInfoRequest(getContext(), type, datetype, endDate);
         NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<List<Sale>>>() {
             @Override
             public void onSuccess(NetworkRequest<NetworkResult<List<Sale>>> request, NetworkResult<List<Sale>> result) {
@@ -123,36 +126,24 @@ public class SaleFragment extends Fragment {
                     List<Sale> sales = result.getResult();
                     events.clear();
 
-                    for (int i = 0; i < sales.size(); i++) {
-                        SimpleDateFormat form = new SimpleDateFormat("yyyy-MM-dd'T'kk:mm:ss.SSSZ");
+                    for (Sale s : sales) {
+                        Calendar startDay = calculator.StrToCal(s.getStartDay());
+                        Calendar endDay = calculator.StrToCal(s.getEndDay());
+                        Calendar temp = startDay;
 
-                        try {
-                            Date startDay = form.parse(sales.get(i).getStartDay());
-                            Date endDay = form.parse(sales.get(i).getEndDay());
-                            Date temp = startDay;
-
-                            while (temp.compareTo(endDay) <= 0) {
-                                long millis = temp.getTime();
-
-                                Event e = new Event(Color.RED, millis, sales.get(i));
-                                events.add(e);
-
-                                Calendar tomorrow = Calendar.getInstance();
-                                tomorrow.setTime(temp);
-                                tomorrow.add(Calendar.DATE, 1);
-
-                                temp = tomorrow.getTime();
-                            }
-                        } catch (ParseException e) {
-                            e.printStackTrace();
+                        while (temp.compareTo(endDay) <= 0) {
+                            Event e = new Event(Color.RED, temp.getTimeInMillis(), s);
+                            events.add(e);
+                            temp.add(Calendar.DATE, 1);
                         }
                     }
 
                     calendarView.removeAllEvents();
                     calendarView.addEvents(events);
+
                     setMonthView(Calendar.getInstance());
-                    setSaleInfoView(Calendar.getInstance().getTime());
-                    setBannerListView(Calendar.getInstance().getTime());
+                    setSaleInfoView(Calendar.getInstance());
+                    setBannerListView(Calendar.getInstance());
                 }
 
             }
@@ -170,43 +161,33 @@ public class SaleFragment extends Fragment {
         monthView.setText(year + "년 " + month + "월의 세일정보");
     }
 
-    private void setSaleInfoView(Date date) {
-        List<Event> clickedDayEvent = calendarView.getEvents(date);
+    private void setSaleInfoView(Calendar calendar) {
+        List<Event> clickedDayEvent = calendarView.getEvents(calendar.getTime());
         StringBuffer buffer = new StringBuffer();
-        SimpleDateFormat form = new SimpleDateFormat("yyyy-MM-dd'T'kk:mm:ss.SSSZ");
 
-        for (int i = 0; i < clickedDayEvent.size(); i++) {
-            Sale data = (Sale)(clickedDayEvent.get(i).getData());
+        for (Event e : clickedDayEvent) {
+            Sale data = (Sale)(e.getData());
 
-            try {
-                Date startDay = form.parse(data.getStartDay());
-                Date endDay = form.parse(data.getEndDay());
+            Calendar startCal = calculator.StrToCal(data.getStartDay());
+            Calendar endCal = calculator.StrToCal(data.getEndDay());
 
-                Calendar startCal = Calendar.getInstance();
-                startCal.setTime(startDay);
+            String brandName = data.getProduct().getBrand().getName();
+            String saleTitle = data.getTitle();
+            String start = startCal.get(Calendar.YEAR) + "/" + startCal.get(Calendar.MONTH) + "/" + startCal.get(Calendar.DATE);
+            String end = endCal.get(Calendar.YEAR) + "/" + endCal.get(Calendar.MONTH) + "/" + endCal.get(Calendar.DATE);
 
-                Calendar endCal = Calendar.getInstance();
-                endCal.setTime(endDay);
-
-                String brandName = data.getProduct().getBrand().getName();
-                String start = startCal.get(Calendar.YEAR) + "/" + startCal.get(Calendar.MONTH) + "/" + startCal.get(Calendar.DATE);
-                String end = endCal.get(Calendar.YEAR) + "/" + endCal.get(Calendar.MONTH) + "/" + endCal.get(Calendar.DATE);
-
-                buffer.append(brandName + " 세일 : " + start + " ~ " + end + "\n");
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
+            buffer.append("[" + brandName + "] " + saleTitle  + " : " + start + " ~ " + end + "\n");
         }
 
         saleInfoView.setText(buffer);
     }
 
-    private void setBannerListView(Date date) {
-        List<Event> clickedDayEvent = calendarView.getEvents(date);
+    private void setBannerListView(Calendar calendar) {
+        List<Event> clickedDayEvent = calendarView.getEvents(calendar.getTime());
         saleAdapter.clear();
 
-        for (int i = 0; i < clickedDayEvent.size(); i++) {
-            Sale data = (Sale)(clickedDayEvent.get(i).getData());
+        for (Event e : clickedDayEvent) {
+            Sale data = (Sale)(e.getData());
             saleAdapter.add(data);
         }
     }

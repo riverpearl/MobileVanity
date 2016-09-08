@@ -319,15 +319,16 @@ public class CosmeticDetailActivity extends AppCompatActivity implements DatePic
                     DateCalculator calculator = new DateCalculator();
                     StringBuffer buffer = new StringBuffer();
 
-                    for (int i = 0; i < sales.size(); i++) {
-                        Calendar startDay = calculator.StrToCal(sales.get(i).getStartDay());
-                        Calendar endDay = calculator.StrToCal(sales.get(i).getEndDay());
+                    for (Sale s : sales) {
+                        Calendar startDay = calculator.StrToCal(s.getStartDay());
+                        Calendar endDay = calculator.StrToCal(s.getEndDay());
 
-                        String title = sales.get(i).getTitle();
+                        String brandName = cosmeticItem.getCosmetic().getProduct().getBrand().getName();
+                        String saleTitle = s.getTitle();
                         String start = startDay.get(Calendar.YEAR) + "/" + startDay.get(Calendar.MONTH) + "/" + startDay.get(Calendar.DATE);
                         String end = endDay.get(Calendar.YEAR) + "/" + endDay.get(Calendar.MONTH) + "/" + endDay.get(Calendar.DATE);
 
-                        buffer.append(title + " : " + start + " ~ " + end + "\n");
+                        buffer.append("[" + brandName + "] " + saleTitle  + " : " + start + " ~ " + end + "\n");
                     }
 
                     saleView.setText(buffer.toString());
