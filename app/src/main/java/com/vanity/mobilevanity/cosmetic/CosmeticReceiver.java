@@ -7,14 +7,22 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.media.RingtoneManager;
+import android.net.Uri;
+import android.support.v4.app.NotificationCompat;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.vanity.mobilevanity.MainActivity;
+import com.vanity.mobilevanity.MyApplication;
+import com.vanity.mobilevanity.R;
 import com.vanity.mobilevanity.alert.AlertActivity;
 import com.vanity.mobilevanity.data.DBContract;
 import com.vanity.mobilevanity.manager.DBManager;
 import com.vanity.mobilevanity.manager.PropertyManager;
 import com.vanity.mobilevanity.util.DateCalculator;
+
+import java.util.Calendar;
 
 public class CosmeticReceiver extends BroadcastReceiver {
     String INTENT_ACTION = Intent.ACTION_BOOT_COMPLETED;
@@ -24,36 +32,54 @@ public class CosmeticReceiver extends BroadcastReceiver {
         if (!PropertyManager.getInstance().getIsAlertReceptible())
             return;
 
-        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, new Intent(context, CosmeticDetailActivity.class), PendingIntent.FLAG_UPDATE_CURRENT);
-        Notification.Builder builder = new Notification.Builder(context);
-
         Cursor c = DBManager.getInstance().selectCosmeticItem();
 
-        Log.d("c count", c.getCount() + "");
+        long cosmeticId = 0;
+        String notiMessage = "";
 
         while (c.moveToNext()) {
             String regDate = c.getString(c.getColumnIndex(DBContract.CosmeticItem.COLUMN_REG_DATE));
-            int cosmeticTerm = c.getColumnIndex(DBContract.CosmeticItem.COLUMN_TERM);
+            int useby = c.getInt(c.getColumnIndex(DBContract.CosmeticItem.COLUMN_TERM));
 
             DateCalculator calculator = new DateCalculator();
-            int term = calculator.calculateDDay(regDate, cosmeticTerm);
+            int dday = calculator.calculateDDay(regDate, useby);
 
-            int cid = c.getColumnIndex(DBContract.CosmeticItem.COLUMN_COSMETIC_ID);
+            long cid = c.getLong(c.getColumnIndex(DBContract.CosmeticItem.COLUMN_SERVER_ID));
             String name = c.getString(c.getColumnIndex(DBContract.CosmeticItem.COLUMN_COSMETIC_NAME));
-            String message = name + "의 사용기한이 " + cosmeticTerm + "일 남았습니다.";
-            String date = c.getString(c.getColumnIndex(DBContract.CosmeticItem.COLUMN_USEBY_DATE));
+            String message = name + "의 사용기한이 " + dday + "일 남았습니다.";
+            String date = calculator.CalToStr(Calendar.getInstance());
 
-            if (term == 240 || term == 10 || term == 3 || term == 1) {
-                DBManager.getInstance().insertNotify(cid, message, date);
+            if (dday == 30 || dday == 10 || dday == 3 || dday == 1) {
+                DBManager.getInstance().insertNotify("useby", cid, message, date);
+                cosmeticId = cid;
+                notiMessage = message;
             }
-            builder.setSmallIcon(android.R.drawable.star_on).setTicker("COSMETIC").setWhen(System.currentTimeMillis())
-                    .setNumber(1).setContentTitle("Vanity").setContentText(message)
-                    .setDefaults(Notification.DEFAULT_SOUND | Notification.DEFAULT_VIBRATE).setContentIntent(pendingIntent).setAutoCancel(true);
-
-            notificationManager.notify(1, builder.build());
-
         }
 
+        if (!TextUtils.isEmpty(notiMessage) && cosmeticId > 0)
+            sendNotification(cosmeticId, notiMessage);
+
+    }
+
+    private void sendNotification(long cid, String message)
+    {
+        Intent intent = new Intent(MyApplication.getContext(), CosmeticDetailActivity.class);
+        intent.putExtra(CosmeticDetailActivity.TAG_COSMETIC_ITEM_ID, cid);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        PendingIntent pendingIntent = PendingIntent.getActivity(MyApplication.getContext(), 1, intent, PendingIntent.FLAG_ONE_SHOT);
+
+        Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(MyApplication.getContext())
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setTicker("Useby Message")
+                .setContentTitle("Vanity")
+                .setContentText(message)
+                .setAutoCancel(true)
+                .setSound(defaultSoundUri)
+                .setContentIntent(pendingIntent);
+
+        NotificationManager notificationManager =
+                (NotificationManager)MyApplication.getContext().getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.notify(1, notificationBuilder.build());
     }
 }

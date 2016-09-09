@@ -197,7 +197,7 @@ public class CosmeticDetailActivity extends AppCompatActivity implements DatePic
                         long id = cosmeticItem.getId();
                         String name = cosmeticItem.getCosmetic().getProduct().getName();
                         String dateAdded = cosmeticItem.getDateAdded();
-                        int term = cosmeticItem.getCosmeticTerm();
+                        int term = cosmeticItem.getCosmetic().getProduct().getUseBy();
                         DBManager.getInstance().updateCosmeticItem(id, name, dateAdded, term);
 
                         Toast.makeText(CosmeticDetailActivity.this, "수정되었습니다.", Toast.LENGTH_SHORT).show();

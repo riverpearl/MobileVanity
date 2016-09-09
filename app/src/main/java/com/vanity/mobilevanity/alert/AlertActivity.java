@@ -98,57 +98,38 @@ public class AlertActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        notifyList.clear();
-
-        final Calendar aWeekAgo = Calendar.getInstance();
+        Calendar aWeekAgo = Calendar.getInstance();
         aWeekAgo.add(Calendar.DATE, -7);
 
-        String date = calculator.CalToStr(aWeekAgo);
+        Cursor c = DBManager.getInstance().selectNotifyList();
 
-        NotifyListRequest request = new NotifyListRequest(this, date);
-        NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<List<Notify>>>() {
-            @Override
-            public void onSuccess(NetworkRequest<NetworkResult<List<Notify>>> request, NetworkResult<List<Notify>> result) {
-                if (result.getCode() == 1) {
-                    notifyList.addAll(result.getResult());
-                    Cursor c = DBManager.getInstance().selectNotify();
+        if (c != null && c.getCount() > 0) {
+            while (c.moveToNext()) {
+                Calendar cal = calculator.StrToCal(c.getString(c.getColumnIndex(DBContract.Notify.COLUMN_DATE)));
 
-                    if (c != null && c.getCount() > 0) {
-                        while (c.moveToNext()) {
-                            Calendar cal = calculator.StrToCal(c.getString(c.getColumnIndex(DBContract.Notify.COLUMN_DATE)));
+                if (cal.before(aWeekAgo))
+                    continue;
 
-                            if (cal.before(aWeekAgo))
-                                continue;
+                Notify notify = new Notify();
+                notify.setType(c.getString(c.getColumnIndex(DBContract.Notify.COLUMN_TYPE)));
+                notify.setCosmeticItemId(c.getLong(c.getColumnIndex(DBContract.Notify.COLUMN_CONTENT_ID)));
+                notify.setMessage(c.getString(c.getColumnIndex(DBContract.Notify.COLUMN_MESSAGE)));
+                notify.setDate(c.getString(c.getColumnIndex(DBContract.Notify.COLUMN_DATE)));
+                notifyList.add(notify);
+            }
 
-                            Notify temp = new Notify();
-                            temp.setType("useby");
-                            temp.setCosmeticItemId(c.getLong(c.getColumnIndex(DBContract.Notify.COLUMN_COSMETIC_ITEM_ID)));
-                            temp.setMessage(c.getString(c.getColumnIndex(DBContract.Notify.COLUMN_MESSAGE)));
-                            temp.setDate(c.getString(c.getColumnIndex(DBContract.Notify.COLUMN_DATE)));
-                            notifyList.add(temp);
-                        }
-                    }
+            Collections.sort(notifyList, new Comparator<Notify>() {
+                @Override
+                public int compare(Notify noti1, Notify noti2) {
+                    Calendar noti1cal = calculator.StrToCal(noti1.getDate());
+                    Calendar noti2cal = calculator.StrToCal(noti2.getDate());
 
-                    Collections.sort(notifyList, new Comparator<Notify>() {
-                        @Override
-                        public int compare(Notify noti1, Notify noti2) {
-                            Calendar noti1cal = calculator.StrToCal(noti1.getDate());
-                            Calendar noti2cal = calculator.StrToCal(noti2.getDate());
-
-                            return (noti1cal.before(noti2cal)) ? -1 : 1;
-                        }
-                    });
-
-                    mAdapter.clear();
-                    mAdapter.addAll(notifyList);
+                    return (noti1cal.before(noti2cal)) ? -1 : 1;
                 }
-            }
+            });
 
-            @Override
-            public void onFail(NetworkRequest<NetworkResult<List<Notify>>> request, int errorCode, String errorMessage, Throwable e) {
-            }
-        });
-
-
+            mAdapter.clear();
+            mAdapter.addAll(notifyList);
+        }
     }
 }

@@ -199,7 +199,7 @@ public class RegisterDetailActivity extends AppCompatActivity implements DatePic
                         long sid = citem.getId();
                         long cid = citem.getCosmetic().getId();
                         String dateAdded = citem.getDateAdded();
-                        int term = citem.getCosmeticTerm();
+                        int term = citem.getCosmetic().getProduct().getUseBy();
                         String productName = citem.getCosmetic().getProduct().getName();
                         DBManager.getInstance().insertCosmeticItem(sid, cid, productName, dateAdded, term);
                         Toast.makeText(RegisterDetailActivity.this, "등록되었습니다.", Toast.LENGTH_SHORT).show();

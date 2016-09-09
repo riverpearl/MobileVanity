@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if (!PropertyManager.getInstance().getIsAlarmCreated()) {
-            onAlarm();
+            setAlarmManager();
             PropertyManager.getInstance().setIsAlarmCreated(true);
             Calendar nowCal = Calendar.getInstance();
             DateCalculator calculator = new DateCalculator();
@@ -92,23 +92,15 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void onAlarm() {
+    public void setAlarmManager() {
         alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(MainActivity.this, CosmeticReceiver.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0, intent, 0);
 
         Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
 
-        calendar.set(Calendar.YEAR, 2016);
-        calendar.set(Calendar.MONTH, 8);
-        calendar.set(Calendar.DATE, 7);
-        calendar.set(Calendar.HOUR_OF_DAY, 10);
-        calendar.set(Calendar.MINUTE, 14);
-        calendar.set(Calendar.SECOND, 30);
-
-        Log.d("c", ""+calendar.getTime());
-
-        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), 24 * 60 * 60 * 1000, pendingIntent);
+        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
     }
 
     @Override

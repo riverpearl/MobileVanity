@@ -32,6 +32,7 @@ import com.vanity.mobilevanity.R;
 import com.vanity.mobilevanity.beautytip.BeautyTipDetailActivity;
 import com.vanity.mobilevanity.data.NetworkResult;
 import com.vanity.mobilevanity.data.Notify;
+import com.vanity.mobilevanity.manager.DBManager;
 import com.vanity.mobilevanity.manager.NetworkManager;
 import com.vanity.mobilevanity.manager.NetworkRequest;
 import com.vanity.mobilevanity.manager.PropertyManager;
@@ -59,8 +60,6 @@ public class MyGcmListenerService extends GcmListenerService {
             return;
 
         final String type = data.getString("type");
-        Log.d(TAG, "type: " + data.getString("type"));
-        Log.d(TAG, "From: " + from);
 
         if (from.startsWith("/topics/")) {
             // message received from some topic.
@@ -73,6 +72,11 @@ public class MyGcmListenerService extends GcmListenerService {
                 public void onSuccess(NetworkRequest<NetworkResult<List<Notify>>> request, NetworkResult<List<Notify>> result) {
                     if (result.getCode() == 1) {
                         List<Notify> notifies = result.getResult();
+
+                        for (Notify n : notifies) {
+                            DBManager.getInstance().insertNotify(type, n.getBeautyTipId().getKey().getRaw().getId(), n.getMessage(), n.getDate());
+                        }
+
                         Notify notify = notifies.get(notifies.size() - 1);
                         sendNotification(notify);
 
@@ -97,19 +101,13 @@ public class MyGcmListenerService extends GcmListenerService {
         Intent intent = new Intent(this, BeautyTipDetailActivity.class);
         intent.putExtra(BeautyTipDetailActivity.TAG_BEAUTY_TIP_ID, notify.getBeautyTipId().getKey().getRaw().getId());
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
-                PendingIntent.FLAG_ONE_SHOT);
-
-        String title;
-
-        if (notify.getType() == "like") title = "좋아요 알림";
-        else title = "댓글 알림";
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent, PendingIntent.FLAG_ONE_SHOT);
 
         Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setTicker("GCM Message")
-                .setContentTitle(title)
+                .setContentTitle("Vanity")
                 .setContentText(notify.getMessage())
                 .setAutoCancel(true)
                 .setSound(defaultSoundUri)

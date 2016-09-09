@@ -52,7 +52,8 @@ public class DBManager extends SQLiteOpenHelper {
 
         sql = "CREATE TABLE " + DBContract.Notify.TABLE + " (" +
                 DBContract.Notify._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
-                DBContract.Notify.COLUMN_COSMETIC_ITEM_ID + " INTEGER," +
+                DBContract.Notify.COLUMN_TYPE + " TEXT," +
+                DBContract.Notify.COLUMN_CONTENT_ID + " INTEGER," +
                 DBContract.Notify.COLUMN_MESSAGE + " TEXT," +
                 DBContract.Notify.COLUMN_DATE + " TEXT);";
         db.execSQL(sql);
@@ -109,20 +110,20 @@ public class DBManager extends SQLiteOpenHelper {
         return c;
     }
 
-    public int insertNotify(long cid, String message, String date) {
+    public long insertNotify(String type, long cid, String message, String date) {
         SQLiteDatabase db = getWritableDatabase();
         values.clear();
-        values.put(DBContract.Notify.COLUMN_COSMETIC_ITEM_ID, cid);
+        values.put(DBContract.Notify.COLUMN_TYPE, type);
+        values.put(DBContract.Notify.COLUMN_CONTENT_ID, cid);
         values.put(DBContract.Notify.COLUMN_MESSAGE, message);
         values.put(DBContract.Notify.COLUMN_DATE, date);
-        if (db.insert(DBContract.Notify.TABLE, null, values) == -1)
-            return -1;
-        else return 1;
+        return db.insert(DBContract.Notify.TABLE, null, values);
     }
 
-    public Cursor selectNotify() {
+    public Cursor selectNotifyList() {
         SQLiteDatabase db = getReadableDatabase();
-        String[] columns = {DBContract.Notify.COLUMN_COSMETIC_ITEM_ID, DBContract.Notify.COLUMN_MESSAGE, DBContract.Notify.COLUMN_DATE};
+        String[] columns = { DBContract.Notify.COLUMN_TYPE, DBContract.Notify.COLUMN_CONTENT_ID,
+                DBContract.Notify.COLUMN_MESSAGE, DBContract.Notify.COLUMN_DATE };
         Cursor c = db.query(DBContract.Notify.TABLE, columns, null, null, null, null, null);
         return c;
     }
