@@ -24,7 +24,6 @@
         android:hint="@string/activity_beauty_tip_write_title_hint"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:text="@string/activity_beauty_tip_write_title"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="60dp" />
@@ -38,8 +37,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignRight="@+id/text_title"
-        android:layout_alignEnd="@+id/text_title"
-        android:text="@string/activity_beauty_tip_write_content"/>
+        android:layout_alignEnd="@+id/text_title"/>
 
     <Button
         style="?android:attr/buttonStyleSmall"

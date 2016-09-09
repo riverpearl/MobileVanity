@@ -4,26 +4,23 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <!-- view_alert_comment-->
-    <string name="view_alert_comment_sentence">comment</string>
-    <!-- view_alert_like-->
-    <string name="view_alert_like_sentence">Like</string>
-    <!--view_alert_useby-->
-    <string name="view_alert_useby_sentence">Useby</string>
-    <!--view_alert_useby-->
-    <string name="view_alert_useby_sentence_two">Remain</string>
 
-    <!-- view_like.xml -->
-    <string name="view_like_sentence">Like</string>
-    <!--activity_beauty_tip_write -->
-    <string name="activity_beauty_tip_write_title"></string>
-    <!--activity_beauty_tip_write-->
+    <!-- toolbar -->
+    <string name="toolbar_title_alert">Alert</string>
+
+    <!-- activity beauty tip detail -->
+    <string name="actionbar_delete">Delete</string>
+    <string name="actionbar_update">Update</string>
+
+    <!-- fragment beauty tip -->
+    <string name="latest">latest</string>
+    <string name="popularity">popularity</string>
+
+    <!-- activity beauty tip write -->
     <string name="activity_beauty_tip_write_title_hint">TitleHint</string>
-    <!--activity_beauty_tip_write-->
-    <string name="activity_beauty_tip_write_content"></string>
-    <!--activity_beauty_tip_write-->
     <string name="activity_beauty_tip_write_content_hint">ContentHint</string>
-    <!--activity_cosmetic_detail-->
+
+    <!-- activity cosmetic detail -->
     <string name="activity_cosmetic_detail_unit">Unit</string>
     <string name="activity_cosmetic_detail_register">RegisterDate</string>
     <string name="activity_cosmetic_detail_register_year">Y</string>
@@ -36,7 +33,10 @@
     <string name="activity_cosmetic_detail_sale_information">SaleInformation</string>
     <string name="activity_cosmetic_detail_sale_text">salestart</string>
 
-    <!-- fragment_my_page.xml -->
+    <!-- view like -->
+    <string name="view_like_sentence">Like</string>
+
+    <!-- fragment my page -->
     <string name="fragment_my_page_my_cosmetics">My Cosmetics</string>
     <string name="fragment_my_page_eye_title">Eye</string>
     <string name="fragment_my_page_lip_title">Lip</string>
@@ -46,7 +46,7 @@
     <string name="fragment_my_page_tool_title">Tool</string>
     <string name="fragment_my_page_my_activities">My Activities</string>
 
-    <!-- activity_update_profile.xml -->
+    <!-- activity update profile -->
     <string name="activity_update_profile_detail_info">Detail Info.</string>
     <string name="activity_update_profile_gender">Gender</string>
     <string name="activity_update_profile_gender_male">Male</string>
@@ -61,24 +61,11 @@
     <string name="activity_update_profile_21">21</string>
     <string name="activity_update_profile_23">23</string>
 
-    <!-- BeautyTipFragment의 Spinner부분 -->
-    <string name="latest">latest</string>
-    <string name="popularity">popularity</string>
-
-    <!-- actionbar_delete.xml -->
-    <string name="actionbar_delete">Delete</string>
-
-    <!-- actionbar_update.xml -->
-    <string name="actionbar_update">Update</string>
-
-    <!-- activity_register_detail.xml -->
+    <!-- activity register detail -->
     <string name="activity_register_detail_register_date">Register Date :</string>
     <string name="activity_register_detail_register_year">Y</string>
     <string name="activity_register_detail_register_month">M</string>
     <string name="activity_register_detail_register_day">D</string>
     <string name="activity_register_detail_useby_date">Use By Date :</string>
-
-    <!-- activity_register_search.xml -->
-    <string name="activity_register_search">Find Cosmetic!</string>
 
 </resources>

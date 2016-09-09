@@ -6,9 +6,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.vanity.mobilevanity.R;
@@ -45,6 +47,12 @@ public class AlertActivity extends AppCompatActivity {
     @BindView(R.id.alert_list)
     RecyclerView listView;
 
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+
+    @BindView(R.id.text_toolbar_title)
+    TextView titleView;
+
     AlertAdapter mAdapter;
     List<Notify> notifyList = new ArrayList<>();
     DateCalculator calculator = new DateCalculator();
@@ -53,7 +61,12 @@ public class AlertActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alert);
+
         ButterKnife.bind(this);
+
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        titleView.setText(getResources().getString(R.string.toolbar_title_alert));
 
         mAdapter = new AlertAdapter();
         mAdapter.setOnAdapterItemClickListener(new AlertAdapter.OnAdapterItemClickListener() {

@@ -3,6 +3,14 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
 
+    <!-- font size -->
     <dimen name="toolbar_font_size">19sp</dimen>
+    <dimen name="button_font_size">16sp</dimen>
+
+    <!-- default dimes -->
     <dimen name="default_margin">16dp</dimen>
+    <dimen name="default_padding">16dp</dimen>
+
+
+
 </resources>

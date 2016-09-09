@@ -1,25 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- view_alert_comment-->
-    <string name="view_alert_comment_sentence">님이 회원님의 메이크업 게시물에 댓글을 남겼습니다.</string>
-    <!-- view_alert_like-->
-    <string name="view_alert_like_sentence">님이 회원님의 게시물을 좋아합니다.</string>
-    <!--view_alert_useby-->
-    <string name="view_alert_useby_sentence">의 사용기한이 </string>
-    <!--view_alert_useby-->
-    <string name="view_alert_useby_sentence_two">일 남았습니다.</string>
-    <!-- view_like.xml -->
-    <string name="view_like_sentence">게시물을 좋아합니다.</string>
-    <!--activity_beauty_tip_write -->
-    <string name="activity_beauty_tip_write_title"></string>
-    <!--activity_beauty_tip_write-->
-    <string name="activity_beauty_tip_write_title_hint">TitleHint</string>
-    <!--activity_beauty_tip_write-->
-    <string name="activity_beauty_tip_write_content"></string>
-    <!--activity_beauty_tip_write-->
-    <string name="activity_beauty_tip_write_content_hint">ContentHint</string>
+    <!-- toolbar -->
+    <string name="toolbar_title_alert">알람</string>
 
-    <!-- fragment_my_page_my_cosmetics -->
+    <!-- activity beauty tip detail -->
+    <string name="actionbar_delete">삭제</string>
+    <string name="actionbar_update">수정</string>
+
+    <!-- fragment beauty tip -->
+    <string name="latest">최신순</string>
+    <string name="popularity">인기순</string>
+
+    <!-- activity beauty tip write -->
+    <string name="activity_beauty_tip_write_title_hint">제목을 입력하세요.</string>
+    <string name="activity_beauty_tip_write_content_hint">내용을 입력하세요.</string>
+
+    <!-- activity cosmetic detail -->
+    <string name="activity_cosmetic_detail_unit">용량</string>
+    <string name="activity_cosmetic_detail_register">등록날짜</string>
+    <string name="activity_cosmetic_detail_register_year">년</string>
+    <string name="activity_cosmetic_detail_register_month">월</string>
+    <string name="activity_cosmetic_detail_register_date">일</string>
+    <string name="activity_cosmetic_detail_usebydate">사용기한</string>
+    <string name="activity_cosmetic_detail_usebydate_year">년</string>
+    <string name="activity_cosmetic_detail_usebydate_month">월</string>
+    <string name="activity_cosmetic_detail_usebydate_date">일</string>
+    <string name="activity_cosmetic_detail_sale_information">세일정보</string>
+    <string name="activity_cosmetic_detail_sale_text">까지 세일이 진행됩니다</string>
+
+    <!-- view like -->
+    <string name="view_like_sentence">게시물을 좋아합니다.</string>
+
+    <!-- fragment my page -->
     <string name="fragment_my_page_my_cosmetics">내가 등록한 제품</string>
     <string name="fragment_my_page_eye_title">Eye</string>
     <string name="fragment_my_page_lip_title">Lip</string>
@@ -29,7 +41,7 @@
     <string name="fragment_my_page_tool_title">Tool</string>
     <string name="fragment_my_page_my_activities">나의 활동</string>
 
-    <!-- activity_update_profile.xml -->
+    <!-- activity update profile -->
     <string name="activity_update_profile_detail_info">상세정보</string>
     <string name="activity_update_profile_gender">성별</string>
     <string name="activity_update_profile_gender_male">남성</string>
@@ -44,36 +56,11 @@
     <string name="activity_update_profile_21">21호</string>
     <string name="activity_update_profile_23">23호</string>
 
-    <!--activity_cosmetic_detail-->
-    <string name="activity_cosmetic_detail_unit">용량</string>
-    <string name="activity_cosmetic_detail_register">등록날짜</string>
-    <string name="activity_cosmetic_detail_register_year">년</string>
-    <string name="activity_cosmetic_detail_register_month">월</string>
-    <string name="activity_cosmetic_detail_register_date">일</string>
-    <string name="activity_cosmetic_detail_usebydate">사용기한</string>
-    <string name="activity_cosmetic_detail_usebydate_year">년</string>
-    <string name="activity_cosmetic_detail_usebydate_month">월</string>
-    <string name="activity_cosmetic_detail_usebydate_date">일</string>
-    <string name="activity_cosmetic_detail_sale_information">세일정보</string>
-    <string name="activity_cosmetic_detail_sale_text">까지 세일이 진행됩니다</string>
-
-    <!-- BeautyTipFragment의 Spinner부분 -->
-    <string name="latest">최신순</string>
-    <string name="popularity">인기순</string>
-
-    <!-- actionbar_delete.xml -->
-    <string name="actionbar_delete">삭제</string>
-
-    <!-- actionbar_update.xml -->
-    <string name="actionbar_update">수정</string>
-
-    <!-- activity_register_detail.xml -->
+    <!-- activity register detail -->
     <string name="activity_register_detail_register_date">등록날짜 :</string>
     <string name="activity_register_detail_register_year">년</string>
     <string name="activity_register_detail_register_month">월</string>
     <string name="activity_register_detail_register_day">일</string>
     <string name="activity_register_detail_useby_date">사용기한 :</string>
 
-    <!-- activity_register_search.xml -->
-    <string name="activity_register_search">화장품을 찾아보세요!</string>
 </resources>
