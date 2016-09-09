@@ -9,10 +9,12 @@ import android.support.v4.app.FragmentTabHost;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.vanity.mobilevanity.alert.AlertActivity;
@@ -35,15 +37,13 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.tabhost)
     FragmentTabHost tabHost;
 
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+
     public final static String TAG_TAB_HOME = "home";
     public final static String TAG_TAB_BEAUTYTIP = "beautytip";
     public final static String TAG_TAB_SALE = "sale";
     public final static String TAG_TAB_MYPAGE = "mypage";
-
-    public final static String LABEL_TAB_HOME = "홈";
-    public final static String LABEL_TAB_BEAUTYTIP = "뷰티팁";
-    public final static String LABEL_TAB_SALE = "세일";
-    public final static String LABEL_TAB_MYPAGE = "마이페이지";
 
     AlarmManager alarmManager;
 
@@ -54,11 +54,23 @@ public class MainActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+        ImageView homeTabIndicator = new ImageView(this);
+        homeTabIndicator.setImageResource(R.drawable.selector_main_tab_home);
+        ImageView beautytipTabIndicator = new ImageView(this);
+        beautytipTabIndicator.setImageResource(R.drawable.selector_main_tab_beautytip);
+        ImageView saleTabIndicator = new ImageView(this);
+        saleTabIndicator.setImageResource(R.drawable.selector_main_tab_sale);
+        ImageView mypageTabIndicator = new ImageView(this);
+        mypageTabIndicator.setImageResource(R.drawable.selector_main_tab_mypage);
+
         tabHost.setup(this, getSupportFragmentManager(), android.R.id.tabcontent);
-        tabHost.addTab(tabHost.newTabSpec(TAG_TAB_HOME).setIndicator(LABEL_TAB_HOME), HomeFragment.class, null);
-        tabHost.addTab(tabHost.newTabSpec(TAG_TAB_BEAUTYTIP).setIndicator(LABEL_TAB_BEAUTYTIP), BeautyTipFragment.class, null);
-        tabHost.addTab(tabHost.newTabSpec(TAG_TAB_SALE).setIndicator(LABEL_TAB_SALE), SaleFragment.class, null);
-        tabHost.addTab(tabHost.newTabSpec(TAG_TAB_MYPAGE).setIndicator(LABEL_TAB_MYPAGE), MyPageFragment.class, null);
+        tabHost.addTab(tabHost.newTabSpec(TAG_TAB_HOME).setIndicator(homeTabIndicator), HomeFragment.class, null);
+        tabHost.addTab(tabHost.newTabSpec(TAG_TAB_BEAUTYTIP).setIndicator(beautytipTabIndicator), BeautyTipFragment.class, null);
+        tabHost.addTab(tabHost.newTabSpec(TAG_TAB_SALE).setIndicator(saleTabIndicator), SaleFragment.class, null);
+        tabHost.addTab(tabHost.newTabSpec(TAG_TAB_MYPAGE).setIndicator(mypageTabIndicator), MyPageFragment.class, null);
 
         Intent intent = getIntent();
         int tab = intent.getIntExtra("saletab", 1);
@@ -114,5 +126,10 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @OnClick(R.id.logo)
+    public void onLogoClick(View view) {
+        tabHost.setCurrentTabByTag(TAG_TAB_HOME);
     }
 }
