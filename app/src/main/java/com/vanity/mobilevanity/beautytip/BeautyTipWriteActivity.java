@@ -9,6 +9,7 @@ import android.os.Message;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,6 +17,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -34,6 +36,12 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class BeautyTipWriteActivity extends AppCompatActivity {
+
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+
+    @BindView(R.id.text_toolbar_title)
+    TextView toolbarTitleView;
 
     @BindView(R.id.text_title)
     EditText titleView;
@@ -56,7 +64,12 @@ public class BeautyTipWriteActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_beauty_tip_write);
+
         ButterKnife.bind(this);
+
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        toolbarTitleView.setText(getResources().getString(R.string.toolbar_title_beauty_tip_write));
 
         Button camera = (Button) findViewById(R.id.btn_camera);
         camera.setOnClickListener(new View.OnClickListener() {

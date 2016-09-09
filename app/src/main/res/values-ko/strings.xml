@@ -2,6 +2,8 @@
 <resources>
     <!-- toolbar -->
     <string name="toolbar_title_alert">알람</string>
+    <string name="toolbar_title_beauty_tip_detail">뷰티팁보기</string>
+    <string name="toolbar_title_beauty_tip_write">뷰티팁쓰기</string>
 
     <!-- activity beauty tip detail -->
     <string name="actionbar_delete">삭제</string>

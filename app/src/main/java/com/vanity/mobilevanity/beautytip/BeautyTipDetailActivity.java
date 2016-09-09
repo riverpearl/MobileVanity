@@ -22,6 +22,7 @@ import android.os.Bundle;
 import android.support.v7.app.WindowDecorActionBar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
@@ -65,6 +66,12 @@ import butterknife.OnClick;
 
 public class BeautyTipDetailActivity extends AppCompatActivity {
 
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+
+    @BindView(R.id.text_toolbar_title)
+    TextView toolbarTitleView;
+
     @BindView(R.id.text_title)
     TextView titleView;
 
@@ -89,6 +96,10 @@ public class BeautyTipDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_beauty_tip_detail);
 
         ButterKnife.bind(this);
+
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        toolbarTitleView.setText(getResources().getString(R.string.toolbar_title_beauty_tip_detail));
 
         Intent intent = getIntent();
         beautyTipId = intent.getLongExtra(TAG_BEAUTY_TIP_ID, 0);

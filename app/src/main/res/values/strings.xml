@@ -7,6 +7,8 @@
 
     <!-- toolbar -->
     <string name="toolbar_title_alert">Alert</string>
+    <string name="toolbar_title_beauty_tip_detail">Read Beauty tip</string>
+    <string name="toolbar_title_beauty_tip_write">Write Beauty tip</string>
 
     <!-- activity beauty tip detail -->
     <string name="actionbar_delete">Delete</string>

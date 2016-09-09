@@ -57,8 +57,6 @@ public class RegisterSearchActivity extends AppCompatActivity {
     @BindView(R.id.rv_cosmetic)
     RecyclerView listView;
 
-    @BindView(R.id.text_guide)
-    TextView guideView;
 
     SearchResultAdapter resultAdapter;
     ArrayAdapter<String> brandAdapter;
