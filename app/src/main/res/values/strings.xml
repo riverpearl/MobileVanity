@@ -27,6 +27,7 @@
     <string name="toolbar_title_faq">FAQ</string>
     <string name="toolbar_title_partnership">Partnership</string>
     <string name="toolbar_title_setting">Setting</string>
+    <string name="toolbar_title_insert_profile">Register My Info</string>
 
     <!-- activity beauty tip detail -->
     <string name="actionbar_delete">Delete</string>

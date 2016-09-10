@@ -12,5 +12,10 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
+    
+    <style name="TabLayoutTextStyle">
+        <item name="android:textSize">@dimen/activity_cosmetic_list_tab_font_size</item>
+        <item name="android:textColor">@color/colorSub</item>
+    </style>
 
 </resources>

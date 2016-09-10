@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:layout_marginBottom="@dimen/view_my_cosmetic_divider_height">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -10,8 +11,8 @@
 
         <ImageView
             android:id="@+id/image_cosmetic"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="@dimen/view_my_cosmetic_image_size"
+            android:layout_height="@dimen/view_my_cosmetic_image_size"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
@@ -22,15 +23,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="ColorCode"
+            android:textSize="@dimen/list_color_font_size"
+            android:textColor="@color/colorSub"
             android:layout_below="@+id/text_product_name"
-            android:layout_toRightOf="@+id/image_cosmetic"
-            android:layout_toEndOf="@+id/image_cosmetic" />
+            android:layout_alignLeft="@+id/text_product_name"
+            android:layout_alignStart="@+id/text_product_name" />
 
         <TextView
             android:id="@+id/text_color_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="ColorName"
+            android:textSize="@dimen/list_color_font_size"
+            android:textColor="@color/colorSub"
             android:layout_alignTop="@+id/text_color_code"
             android:layout_toRightOf="@+id/text_color_code"
             android:layout_toEndOf="@+id/text_color_code" />
@@ -40,27 +45,36 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="productName"
-            android:layout_below="@+id/text_brand_name"
+            android:textSize="@dimen/list_cosmetic_name_font_size"
+            android:textColor="@color/colorSub"
+            android:layout_alignParentTop="true"
             android:layout_toRightOf="@+id/image_cosmetic"
-            android:layout_toEndOf="@+id/image_cosmetic" />
+            android:layout_toEndOf="@+id/image_cosmetic"
+            android:layout_marginTop="@dimen/default_list_margin"
+            android:layout_marginLeft="@dimen/default_margin"
+            android:layout_marginStart="@dimen/default_margin" />
 
         <TextView
             android:id="@+id/text_brand_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="BrandName"
-            android:layout_alignParentTop="true"
+            android:textSize="@dimen/list_brand_font_size"
+            android:layout_alignBottom="@+id/image_cosmetic"
             android:layout_toRightOf="@+id/image_cosmetic"
-            android:layout_toEndOf="@+id/image_cosmetic" />
+            android:layout_toEndOf="@+id/image_cosmetic"
+            android:layout_marginLeft="@dimen/default_margin"
+            android:layout_marginStart="@dimen/default_margin"
+            android:layout_marginBottom="@dimen/default_list_margin"/>
 
         <ImageView
             android:layout_width="16dp"
             android:layout_height="16dp"
             android:id="@+id/image_new"
             android:src="@android:drawable/btn_star_big_on"
-            android:layout_alignParentTop="true"
-            android:layout_toRightOf="@+id/text_brand_name"
-            android:layout_toEndOf="@+id/text_brand_name" />
+            android:layout_alignTop="@+id/text_product_name"
+            android:layout_toRightOf="@+id/text_product_name"
+            android:layout_toEndOf="@+id/text_product_name" />
 
     </RelativeLayout>
 
@@ -68,6 +82,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="D-Day"
+        android:textColor="@android:color/white"
         android:id="@+id/text_dday"
-        android:layout_gravity="center_vertical|right|end"/>
+        android:layout_gravity="center_vertical|right|end"
+        android:gravity="center"
+        android:background="@drawable/icon_dday"
+        android:layout_marginRight="@dimen/default_margin"
+        android:layout_marginEnd="@dimen/default_margin" />
 </FrameLayout>

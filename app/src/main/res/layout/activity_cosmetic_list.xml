@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/white"
     tools:context="com.vanity.mobilevanity.cosmetic.CosmeticListActivity">
 
     <include
@@ -13,38 +14,37 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true" />
 
-    <RelativeLayout
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tabs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/toolbar_cosmetic_list">
+        android:layout_below="@id/toolbar_cosmetic_list"
+        app:tabMinWidth="@dimen/activity_cosmetic_list_tab_min_width"
+        app:tabMode="scrollable"
+        app:tabBackground="@android:color/white"
+        app:tabIndicatorColor="@color/colorMain"
+        app:tabIndicatorHeight="@dimen/activity_cosmetic_list_tab_indicator_height"
+        app:tabTextAppearance="@style/TabLayoutTextStyle" />
 
-        <android.support.design.widget.TabLayout
-            android:id="@+id/tabs"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:tabMinWidth="75dp"
-            app:tabMode="scrollable" />
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_cosmetic"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tabs"
+        android:background="@color/colorDivider"
+        android:paddingTop="1dp"/>
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_cosmetic"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingBottom="@dimen/activity_vertical_margin"
-            android:paddingLeft="@dimen/activity_horizontal_margin"
-            android:paddingRight="@dimen/activity_horizontal_margin"
-            android:paddingTop="@dimen/activity_vertical_margin"
-            android:layout_alignParentTop="true" />
-
-
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fab_add_cosmetic"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:src="@android:drawable/ic_input_add" />
-
-    </RelativeLayout>
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_add_cosmetic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/default_margin"
+        android:layout_marginEnd="@dimen/default_margin"
+        android:layout_marginBottom="@dimen/default_margin"
+        android:src="@android:drawable/ic_input_add"
+        app:backgroundTint="@color/colorMain"/>
 
 </RelativeLayout>

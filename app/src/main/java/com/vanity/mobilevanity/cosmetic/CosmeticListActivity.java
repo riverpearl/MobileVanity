@@ -85,6 +85,28 @@ public class CosmeticListActivity extends AppCompatActivity {
         category = intent.getIntExtra(TAG_CATEGORY, 0);
         tabpos = intent.getIntExtra(TAG_TAB_POS, 0);
 
+        tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                mAdapter.clear();
+                tabpos = tab.getPosition();
+                getCosmeticItemList();
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+                mAdapter.clear();
+                NetworkManager.getInstance().cancelAll();
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+                mAdapter.clear();
+                tabpos = tab.getPosition();
+                getCosmeticItemList();
+            }
+        });
+
         mAdapter = new CosmeticAdapter();
         mAdapter.setOnAdapterItemClickListener(new CosmeticAdapter.OnAdapterItemClickListener() {
             @Override
@@ -144,72 +166,48 @@ public class CosmeticListActivity extends AppCompatActivity {
         });
     }
 
-    private void initTab() {
-        List<String> tabName = new ArrayList<>();
+    private void initTabAndToolbarTitle() {
+        String[] tabName = new String[6];
         switch (category) {
-            case Constant.INDEX_CATEGROY_NONE:
+            case Constant.INDEX_CATEGROY_NONE :
                 finish();
                 break;
 
-            case Constant.INDEX_CATEGORY_EYE:
-                tabName.add("섀도우");
-                tabName.add("마스카라");
-                tabName.add("아이라이너");
-                tabName.add("아이브로우");
-                tabName.add("프라이머");
-
+            case Constant.INDEX_CATEGORY_EYE :
+                tabName = getResources().getStringArray(R.array.items_eye);
                 toolbarTitleView.setText(getResources().getString(R.string.toolbar_title_cosmetic_list_eye_makeup));
                 break;
 
-            case Constant.INDEX_CATEGORY_LIP: {
-                tabName.add("립스틱");
-                tabName.add("립글로스");
-                tabName.add("립틴트");
-                tabName.add("립케어");
-
+            case Constant.INDEX_CATEGORY_LIP :
+                tabName = getResources().getStringArray(R.array.items_lips);
                 toolbarTitleView.setText(getResources().getString(R.string.toolbar_title_cosmetic_list_lip_makeup));
                 break;
-            }
-            case Constant.INDEX_CATEGORY_SKIN: {
-                tabName.add("스킨/토너");
-                tabName.add("로션/크림");
-                tabName.add("에센스/세럼");
-                tabName.add("선케어");
 
+            case Constant.INDEX_CATEGORY_SKIN :
+                tabName = getResources().getStringArray(R.array.items_skin);
                 toolbarTitleView.setText(getResources().getString(R.string.toolbar_title_cosmetic_list_skin_care));
                 break;
-            }
-            case Constant.INDEX_CATEGORY_FACE: {
-                tabName.add("BB/파운데이션");
-                tabName.add("파우더/팩트");
-                tabName.add("프라이머/베이스");
-                tabName.add("치크/하이라이터");
 
+            case Constant.INDEX_CATEGORY_FACE :
+                tabName = getResources().getStringArray(R.array.items_face);
                 toolbarTitleView.setText(getResources().getString(R.string.toolbar_title_cosmetic_list_face));
                 break;
-            }
-            case Constant.INDEX_CATEGORY_CLEANSING: {
-                tabName.add("클렌징");
-                tabName.add("폼클렌징");
 
+            case Constant.INDEX_CATEGORY_CLEANSING :
+                tabName = getResources().getStringArray(R.array.items_cleansing);
                 toolbarTitleView.setText(getResources().getString(R.string.toolbar_title_cosmetic_list_cleansing));
                 break;
-            }
-            case Constant.INDEX_CATEGORY_TOOL: {
-                tabName.add("브러쉬");
-                tabName.add("퍼프");
 
+            case Constant.INDEX_CATEGORY_TOOL :
+                tabName = getResources().getStringArray(R.array.items_tool);
                 toolbarTitleView.setText(getResources().getString(R.string.toolbar_title_cosmetic_list_tool));
                 break;
-            }
         }
 
-        for (int i = 0; i < tabName.size(); i++) {
-            tabs.addTab(tabs.newTab().setText(tabName.get(i)).setTag(tabName.get(i)));
-        }
+        for (int i = 1; i < tabName.length; i++)
+            tabs.addTab(tabs.newTab().setText(tabName[i]).setTag(tabName[i]));
 
-        if (tabpos != -1)
-            tabs.getTabAt(tabpos).select();
+        if (tabpos != -1) tabs.getTabAt(tabpos).select();
         else tabs.getTabAt(0).select();
     }
 
@@ -252,30 +250,7 @@ public class CosmeticListActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        initTab();
-
-        tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                mAdapter.clear();
-                tabpos = tab.getPosition();
-                getCosmeticItemList();
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-                mAdapter.clear();
-                NetworkManager.getInstance().cancelAll();
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-                mAdapter.clear();
-                tabpos = tab.getPosition();
-                getCosmeticItemList();
-            }
-        });
-
+        initTabAndToolbarTitle();
         getCosmeticItemList();
     }
 
