@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.SwitchCompat;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.CompoundButton;
 import android.widget.ListView;
 import android.widget.Switch;
+import android.widget.TextView;
 
 import com.vanity.mobilevanity.R;
 import com.vanity.mobilevanity.adapter.SettingAdapter;
@@ -21,6 +23,12 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class SettingActivity extends AppCompatActivity {
+
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+
+    @BindView(R.id.text_toolbar_title)
+    TextView toolbarTitleView;
 
     @BindView(R.id.list_setting)
     ListView settingView;
@@ -38,6 +46,9 @@ public class SettingActivity extends AppCompatActivity {
         View alertView = getLayoutInflater().inflate(R.layout.view_alert, null);
 
         ButterKnife.bind(this);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        toolbarTitleView.setText(getResources().getString(R.string.toolbar_title_setting));
 
         settingView.addHeaderView(versionView, null, false);
         settingView.addHeaderView(alertView, null, false);

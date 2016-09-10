@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -41,6 +42,12 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class RegisterSearchActivity extends AppCompatActivity {
+
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+
+    @BindView(R.id.text_toolbar_title)
+    TextView toolbarTitleView;
 
     @BindView(R.id.spinner_brand)
     Spinner brandView;
@@ -83,7 +90,9 @@ public class RegisterSearchActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register_search);
 
         ButterKnife.bind(this);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        toolbarTitleView.setText(getResources().getString(R.string.toolbar_title_register_search));
 
         setSpinners();
 

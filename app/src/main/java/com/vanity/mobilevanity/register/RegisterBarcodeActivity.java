@@ -10,9 +10,11 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.zxing.Result;
@@ -25,6 +27,12 @@ import butterknife.OnClick;
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
 public class RegisterBarcodeActivity extends AppCompatActivity implements ZXingScannerView.ResultHandler {
+
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+
+    @BindView(R.id.text_toolbar_title)
+    TextView toolbarTitleView;
 
     @BindView(R.id.view_scanner)
     ZXingScannerView scannerView;
@@ -43,6 +51,10 @@ public class RegisterBarcodeActivity extends AppCompatActivity implements ZXingS
 
         ButterKnife.bind(this);
         checkPermission();
+
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        toolbarTitleView.setText(getResources().getString(R.string.toolbar_title_register_barcode));
 
         Intent intent = getIntent();
         requestCode = intent.getIntExtra(RegisterSearchActivity.TAG_REQUEST_CODE, 0);
@@ -96,7 +108,7 @@ public class RegisterBarcodeActivity extends AppCompatActivity implements ZXingS
     }
 
     private void requestPermission() {
-        ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.CAMERA}, RC_PERMISSION);
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, RC_PERMISSION);
     }
 
     @Override

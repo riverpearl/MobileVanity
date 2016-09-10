@@ -4,8 +4,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.vanity.mobilevanity.R;
@@ -24,6 +26,12 @@ import butterknife.ButterKnife;
 
 public class FAQActivity extends AppCompatActivity {
 
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+
+    @BindView(R.id.text_toolbar_title)
+    TextView toolbarTitleView;
+
     @BindView(R.id.rv_faq)
     RecyclerView listView;
 
@@ -35,6 +43,9 @@ public class FAQActivity extends AppCompatActivity {
         setContentView(R.layout.activity_faq);
 
         ButterKnife.bind(this);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        toolbarTitleView.setText(getResources().getString(R.string.toolbar_title_faq));
 
         FAQListRequest request = new FAQListRequest(this);
         NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<List<FAQ>>>() {

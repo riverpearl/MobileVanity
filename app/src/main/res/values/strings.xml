@@ -9,6 +9,24 @@
     <string name="toolbar_title_alert">Alert</string>
     <string name="toolbar_title_beauty_tip_detail">Read Beauty tip</string>
     <string name="toolbar_title_beauty_tip_write">Write Beauty tip</string>
+    <string name="toolbar_title_cosmetic_detail">My Cosmetic Information</string>
+    <string name="toolbar_title_cosmetic_list_eye_makeup">EYE MAKE-UP</string>
+    <string name="toolbar_title_cosmetic_list_lip_makeup">LIP MAKE-UP</string>
+    <string name="toolbar_title_cosmetic_list_skin_care">SKIN CARE</string>
+    <string name="toolbar_title_cosmetic_list_face">FACE</string>
+    <string name="toolbar_title_cosmetic_list_cleansing">CLEANSING</string>
+    <string name="toolbar_title_cosmetic_list_tool">TOOL</string>
+    <string name="toolbar_title_like">Like</string>
+    <string name="toolbar_title_my_beauty_tip">My BeautyTip</string>
+    <string name="toolbar_title_my_page">My Page</string>
+    <string name="toolbar_title_update_profile">My Profile Update</string>
+    <string name="toolbar_title_register_barcode">Register Barcode</string>
+    <string name="toolbar_title_register_detail">Register Detail</string>
+    <string name="toolbar_title_register_search">Register</string>
+    <string name="toolbar_title_access_term">Access Terms</string>
+    <string name="toolbar_title_faq">FAQ</string>
+    <string name="toolbar_title_partnership">Partnership</string>
+    <string name="toolbar_title_setting">Setting</string>
 
     <!-- activity beauty tip detail -->
     <string name="actionbar_delete">Delete</string>

@@ -14,12 +14,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TabHost;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.vanity.mobilevanity.R;
@@ -48,6 +50,13 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class CosmeticListActivity extends AppCompatActivity {
+
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+
+    @BindView(R.id.text_toolbar_title)
+    TextView toolbarTitleView;
+
     @BindView(R.id.tabs)
     TabLayout tabs;
 
@@ -68,6 +77,9 @@ public class CosmeticListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cosmetic_list);
         ButterKnife.bind(this);
+
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         Intent intent = getIntent();
         category = intent.getIntExtra(TAG_CATEGORY, 0);
@@ -145,6 +157,8 @@ public class CosmeticListActivity extends AppCompatActivity {
                 tabName.add("아이라이너");
                 tabName.add("아이브로우");
                 tabName.add("프라이머");
+
+                toolbarTitleView.setText(getResources().getString(R.string.toolbar_title_cosmetic_list_eye_makeup));
                 break;
 
             case Constant.INDEX_CATEGORY_LIP: {
@@ -152,6 +166,8 @@ public class CosmeticListActivity extends AppCompatActivity {
                 tabName.add("립글로스");
                 tabName.add("립틴트");
                 tabName.add("립케어");
+
+                toolbarTitleView.setText(getResources().getString(R.string.toolbar_title_cosmetic_list_lip_makeup));
                 break;
             }
             case Constant.INDEX_CATEGORY_SKIN: {
@@ -159,6 +175,8 @@ public class CosmeticListActivity extends AppCompatActivity {
                 tabName.add("로션/크림");
                 tabName.add("에센스/세럼");
                 tabName.add("선케어");
+
+                toolbarTitleView.setText(getResources().getString(R.string.toolbar_title_cosmetic_list_skin_care));
                 break;
             }
             case Constant.INDEX_CATEGORY_FACE: {
@@ -166,16 +184,22 @@ public class CosmeticListActivity extends AppCompatActivity {
                 tabName.add("파우더/팩트");
                 tabName.add("프라이머/베이스");
                 tabName.add("치크/하이라이터");
+
+                toolbarTitleView.setText(getResources().getString(R.string.toolbar_title_cosmetic_list_face));
                 break;
             }
             case Constant.INDEX_CATEGORY_CLEANSING: {
                 tabName.add("클렌징");
                 tabName.add("폼클렌징");
+
+                toolbarTitleView.setText(getResources().getString(R.string.toolbar_title_cosmetic_list_cleansing));
                 break;
             }
             case Constant.INDEX_CATEGORY_TOOL: {
                 tabName.add("브러쉬");
                 tabName.add("퍼프");
+
+                toolbarTitleView.setText(getResources().getString(R.string.toolbar_title_cosmetic_list_tool));
                 break;
             }
         }

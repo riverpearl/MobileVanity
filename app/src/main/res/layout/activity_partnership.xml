@@ -9,20 +9,33 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".setting.PartnershipActivity">
 
-    <ImageView
-        android:layout_width="wrap_content"
+    <include
+        android:id="@+id/toolbar_partnership"
+        layout="@layout/view_toolbar"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/imageView6"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:src="@mipmap/ic_launcher" />
+        android:layout_alignParentTop="true" />
 
-    <TextView
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="New Text"
-        android:id="@+id/text_partnership"
-        android:layout_below="@+id/imageView6"
-        android:layout_centerHorizontal="true"
-        android:gravity="center_horizontal" />
+        android:layout_below="@+id/toolbar_partnership">
+
+        <ImageView
+            android:id="@+id/imageView6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:src="@mipmap/ic_launcher" />
+
+        <TextView
+            android:id="@+id/text_partnership"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/imageView6"
+            android:layout_centerHorizontal="true"
+            android:gravity="center_horizontal"
+            android:text="New Text" />
+    </RelativeLayout>
 </RelativeLayout>

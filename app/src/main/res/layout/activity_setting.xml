@@ -9,10 +9,18 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.vanity.mobilevanity.setting.SettingActivity">
 
+    <include
+        android:id="@+id/toolbar_setting"
+        layout="@layout/view_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true" />
+
     <ListView
+        android:layout_below="@+id/toolbar_setting"
+        android:id="@+id/list_setting"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/list_setting"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 

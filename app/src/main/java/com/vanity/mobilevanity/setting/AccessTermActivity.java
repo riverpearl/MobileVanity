@@ -2,6 +2,7 @@ package com.vanity.mobilevanity.setting;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -13,6 +14,12 @@ import butterknife.ButterKnife;
 
 public class AccessTermActivity extends AppCompatActivity {
 
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+
+    @BindView(R.id.text_toolbar_title)
+    TextView toolbarTitleView;
+
     @BindView(R.id.text_accessterm)
     TextView accesstermView;
 
@@ -22,6 +29,9 @@ public class AccessTermActivity extends AppCompatActivity {
         setContentView(R.layout.activity_access_term);
 
         ButterKnife.bind(this);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        toolbarTitleView.setText(getResources().getString(R.string.toolbar_title_access_term));
 
         init();
     }

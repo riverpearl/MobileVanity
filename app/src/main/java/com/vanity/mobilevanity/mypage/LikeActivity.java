@@ -7,9 +7,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.vanity.mobilevanity.R;
@@ -30,6 +32,12 @@ import butterknife.ButterKnife;
 
 public class LikeActivity extends AppCompatActivity {
 
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+
+    @BindView(R.id.text_toolbar_title)
+    TextView toolbarTitleView;
+
     @BindView(R.id.rv_like)
     RecyclerView listView;
 
@@ -41,6 +49,10 @@ public class LikeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_like);
 
         ButterKnife.bind(this);
+
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        toolbarTitleView.setText(getResources().getString(R.string.toolbar_title_like));
 
         mAdapter = new LikeAdapter();
         mAdapter.setOnAdapterItemClickListener(new LikeAdapter.OnAdapterItemClickListener() {

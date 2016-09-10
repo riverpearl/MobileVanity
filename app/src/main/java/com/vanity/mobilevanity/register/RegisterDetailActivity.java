@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -42,6 +43,12 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class RegisterDetailActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
+
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+
+    @BindView(R.id.text_toolbar_title)
+    TextView toolbarTitleView;
 
     @BindView(R.id.image_cosmetic)
     ImageView imageView;
@@ -93,7 +100,9 @@ public class RegisterDetailActivity extends AppCompatActivity implements DatePic
         setContentView(R.layout.activity_register_detail);
 
         ButterKnife.bind(this);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        toolbarTitleView.setText(getResources().getString(R.string.toolbar_title_register_detail));
 
         Intent intent = getIntent();
         requestCode = intent.getIntExtra(TAG_REQUEST_CODE, 0);

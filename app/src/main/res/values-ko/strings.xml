@@ -4,6 +4,25 @@
     <string name="toolbar_title_alert">알람</string>
     <string name="toolbar_title_beauty_tip_detail">뷰티팁보기</string>
     <string name="toolbar_title_beauty_tip_write">뷰티팁쓰기</string>
+    <string name="toolbar_title_cosmetic_detail">내 화장품 정보</string>
+    <string name="toolbar_title_cosmetic_list_eye_makeup">아이메이크업</string>
+    <string name="toolbar_title_cosmetic_list_lip_makeup">립메이크업</string>
+    <string name="toolbar_title_cosmetic_list_skin_care">스킨케어</string>
+    <string name="toolbar_title_cosmetic_list_face">페이스</string>
+    <string name="toolbar_title_cosmetic_list_cleansing">클렌징</string>
+    <string name="toolbar_title_cosmetic_list_tool">도구관리</string>
+    <string name="toolbar_title_like">좋아요</string>
+    <string name="toolbar_title_my_beauty_tip">내가 쓴 팁</string>
+    <string name="toolbar_title_my_page">마이페이지</string>
+    <string name="toolbar_title_update_profile">내정보수정</string>
+    <string name="toolbar_title_register_barcode">바코드등록하기</string>
+    <string name="toolbar_title_register_detail">등록하기</string>
+    <string name="toolbar_title_register_search">등록하기</string>
+    <string name="toolbar_title_access_term">이용약관</string>
+    <string name="toolbar_title_faq">FAQ</string>
+    <string name="toolbar_title_partnership">제휴문의</string>
+    <string name="toolbar_title_setting">설정하기</string>
+
 
     <!-- activity beauty tip detail -->
     <string name="actionbar_delete">삭제</string>

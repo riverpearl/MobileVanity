@@ -6,6 +6,7 @@ import android.os.Message;
 import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -51,6 +52,12 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class CosmeticDetailActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
+
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+
+    @BindView(R.id.text_toolbar_title)
+    TextView toolbarTitleView;
 
     @BindView(R.id.text_brand_name)
     TextView brandView;
@@ -103,6 +110,10 @@ public class CosmeticDetailActivity extends AppCompatActivity implements DatePic
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cosmetic_detail);
         ButterKnife.bind(this);
+
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        toolbarTitleView.setText(getResources().getString(R.string.toolbar_title_cosmetic_detail));
     }
 
     @OnClick(R.id.text_sale_info)
