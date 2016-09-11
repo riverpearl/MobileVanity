@@ -84,6 +84,9 @@ public class BeautyTipDetailActivity extends AppCompatActivity {
     @BindView(R.id.btn_like)
     Button likeButton;
 
+    @BindView(R.id.btn_comment)
+    Button commentButton;
+
     long beautyTipId = 0;
     boolean like = false;
     User user;
@@ -126,9 +129,12 @@ public class BeautyTipDetailActivity extends AppCompatActivity {
 
     @OnClick(R.id.btn_like)
     public void onLikeClick() {
+        likeButton.setSelected(true);
+
         Message msg = likeHandler.obtainMessage(0);
         likeHandler.removeMessages(0);
         likeHandler.sendMessageDelayed(msg, 1000);
+
     }
 
     private Handler likeHandler = new Handler() {
@@ -156,9 +162,13 @@ public class BeautyTipDetailActivity extends AppCompatActivity {
 
     @OnClick(R.id.btn_comment)
     public void onCommentClick() {
+        commentButton.setSelected(true);
+
         Message msg = commentHandler.obtainMessage(0);
         commentHandler.removeMessages(0);
         commentHandler.sendMessageDelayed(msg, 1000);
+
+        commentButton.setSelected(false);
     }
 
     private Handler commentHandler = new Handler() {
@@ -198,16 +208,16 @@ public class BeautyTipDetailActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.menu_cancel :
+            case R.id.menu_cancel:
                 finish();
                 return true;
-            case R.id.menu_update :
+            case R.id.menu_update:
                 Intent intent = new Intent(BeautyTipDetailActivity.this, BeautyTipWriteActivity.class);
                 intent.putExtra(BeautyTipWriteActivity.TAG_SEARCH_TYPE, BeautyTipWriteActivity.INDEX_TYPE_DETAIL);
                 intent.putExtra(TAG_BEAUTY_TIP_ID, beautyTipId);
                 startActivity(intent);
                 return true;
-            case R.id.menu_delete :
+            case R.id.menu_delete:
                 DeleteBeautyTipRequest request = new DeleteBeautyTipRequest(getBaseContext(), "" + beautyTipId);
                 NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<BeautyTip>>() {
                     @Override

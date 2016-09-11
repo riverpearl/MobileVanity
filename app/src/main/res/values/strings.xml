@@ -36,6 +36,7 @@
     <!-- fragment beauty tip -->
     <string name="latest">latest</string>
     <string name="popularity">popularity</string>
+    <string name="button_text">register</string>
 
     <!-- activity beauty tip write -->
     <string name="activity_beauty_tip_write_title_hint">TitleHint</string>

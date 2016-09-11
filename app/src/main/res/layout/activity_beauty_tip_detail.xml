@@ -2,22 +2,23 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     tools:context="com.vanity.mobilevanity.beautytip.BeautyTipDetailActivity">
 
     <include
         android:id="@+id/toolbar_beauty_tip_detail"
+        layout="@layout/view_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        layout="@layout/view_toolbar"
-        android:layout_alignParentTop="true" />
+        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="false" />
 
     <ScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/toolbar_beauty_tip_detail"
-        android:layout_above="@+id/btn_like"
+        android:background="@color/colorBackground"
         android:orientation="vertical">
 
         <LinearLayout
@@ -40,7 +41,12 @@
                 android:layout_alignParentRight="true"
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/btn_before"
-                android:text="Title" />
+                android:layout_marginLeft="@dimen/activity_beauty_tip_detail_margin_left"
+                android:layout_marginStart="@dimen/activity_beauty_tip_detail_margin_left"
+                android:layout_marginTop="@dimen/activity_beauty_tip_detail_title_margin_top"
+                android:text="Title"
+                android:textColor="@color/colorSub"
+                android:textSize="@dimen/activity_beauty_tip_detail_title_font" />
 
             <TextView
                 android:id="@+id/text_content"
@@ -51,38 +57,55 @@
                 android:layout_alignParentStart="true"
                 android:layout_alignRight="@+id/text_title"
                 android:layout_below="@+id/text_title"
-                android:text="Content" />
+                android:layout_marginBottom="@dimen/activity_beauty_tip_detail_content_margin_bottom"
+                android:layout_marginLeft="@dimen/activity_beauty_tip_detail_margin_left"
+                android:layout_marginStart="@dimen/activity_beauty_tip_detail_margin_left"
+                android:layout_marginTop="@dimen/activity_beauty_tip_detail_content_margin_top"
+                android:text="Content"
+                android:textColor="@color/colorSub"
+                android:textSize="@dimen/view_beauty_tip_item_default_font_size" />
 
             <ImageView
                 android:id="@+id/image_beauty_tip"
                 android:layout_width="match_parent"
-                android:layout_height="300dp"
+                android:layout_height="@dimen/activity_beauty_tip_detail_image_height"
                 android:layout_alignBottom="@+id/scrollView"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
-                android:src="@android:drawable/sym_def_app_icon" />
+                android:src="@android:drawable/sym_def_app_icon"
+                android:layout_weight="0.16" />
         </LinearLayout>
     </ScrollView>
 
-
-    <Button
-        android:id="@+id/btn_like"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/activity_beauty_tip_detail_button_margin_top"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:text="Like" />
+        android:layout_alignParentStart="true">
 
-    <Button
-        android:id="@+id/btn_comment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignTop="@+id/btn_like"
-        android:layout_below="@+id/scrollView"
-        android:text="Coment" />
+        <Button
+            android:id="@+id/btn_like"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/mdtp_done_button_height"
+            android:layout_weight="1"
+            android:background="@android:color/white"
+            android:drawableLeft="@drawable/selector_beauty_tip_like"
+            android:drawableStart="@drawable/selector_beauty_tip_like"
+            android:paddingLeft="@dimen/activity_beauty_tip_detail_btn_like_comment_margin" />
+
+        <Button
+            android:id="@+id/btn_comment"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/mdtp_done_button_height"
+            android:layout_weight="1"
+            android:background="@android:color/white"
+            android:drawableEnd="@drawable/selector_beauty_tip_comment"
+            android:drawableRight="@drawable/selector_beauty_tip_comment"
+            android:paddingRight="@dimen/activity_beauty_tip_detail_btn_like_comment_margin" />
+    </LinearLayout>
 
 
 </RelativeLayout>

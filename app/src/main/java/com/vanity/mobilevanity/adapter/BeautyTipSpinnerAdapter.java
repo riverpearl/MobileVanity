@@ -42,6 +42,7 @@ public class BeautyTipSpinnerAdapter extends BaseAdapter {
         TextView view;
         if (convertView == null) {
             view = (TextView) LayoutInflater.from(parent.getContext()).inflate(android.R.layout.simple_list_item_1, parent, false);
+            view.setTextColor(Color.BLACK);
         } else {
             view = (TextView) convertView;
         }

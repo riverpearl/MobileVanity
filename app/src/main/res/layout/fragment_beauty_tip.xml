@@ -2,6 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginTop="@dimen/default_list_margin"
+    android:layout_marginBottom="@dimen/default_list_margin"
     tools:context=".beautytip.BeautyTipFragment">
 
     <!-- TODO: Update blank fragment layout -->
@@ -10,24 +12,28 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
+        android:layout_marginBottom="@dimen/default_list_margin"
         android:orientation="horizontal">
 
         <Spinner
             android:id="@+id/spinner"
-            android:layout_width="156dp"
-            android:layout_height="30dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true" />
+            android:layout_width="@dimen/view_beauty_tip_item_spinner_width"
+            android:layout_height="@dimen/view_beauty_tip_item_spinner_height"
+            android:layout_marginLeft="@dimen/default_margin"
+            android:paddingLeft="@dimen/view_beauty_tip_item_spinner_margin"/>
 
         <Button
             android:id="@+id/btn_set"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/view_beauty_tip_item_button_width"
+            android:layout_height="@dimen/view_beauty_tip_item_button_height"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
-            android:text="set" />
+            android:layout_marginRight="@dimen/default_margin"
+            android:text="@string/button_text"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/button_font_size"
+            android:background="@drawable/btn_default"/>
 
     </RelativeLayout>
 

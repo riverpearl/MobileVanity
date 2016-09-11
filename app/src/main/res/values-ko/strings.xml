@@ -32,6 +32,7 @@
     <!-- fragment beauty tip -->
     <string name="latest">최신순</string>
     <string name="popularity">인기순</string>
+    <string name="button_text">등록하기</string>
 
     <!-- activity beauty tip write -->
     <string name="activity_beauty_tip_write_title_hint">제목을 입력하세요.</string>
