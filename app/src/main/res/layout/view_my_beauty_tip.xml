@@ -1,20 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:gravity="center_vertical">
+    android:layout_marginBottom="@dimen/view_like_margin_bottom"
+    android:background="@color/colorAlert">
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/imageView2"
-        android:src="@drawable/abc_btn_radio_material" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/view_like_height"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:background="@android:color/white">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Beauty Tip Title"
-        android:id="@+id/text_my_beauty_tip_title" />
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/default_margin"
+            android:layout_marginStart="@dimen/default_margin"
+            android:layout_marginRight="@dimen/view_like_image_margin_right"
+            android:layout_marginEnd="@dimen/view_like_image_margin_right"
+            android:src="@drawable/icon_circel_tip" />
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/text_my_beauty_tip_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorAlert"
+            android:textSize="@dimen/list_alert_font_size"
+            android:text="Beauty Tip Title" />
+
+    </LinearLayout>
+
+</FrameLayout>

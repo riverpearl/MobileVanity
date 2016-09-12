@@ -74,11 +74,11 @@ public class AlertActivity extends AppCompatActivity {
             public void onAdapterItemClick(View view, Notify item, int position) {
                 if (item.getType().equals("useby")) {
                     Intent intent = new Intent(AlertActivity.this, CosmeticDetailActivity.class);
-                    intent.putExtra(CosmeticDetailActivity.TAG_COSMETIC_ITEM_ID, item.getCosmeticItemId());
+                    intent.putExtra(CosmeticDetailActivity.TAG_COSMETIC_ITEM_ID, item.getContentId());
                     startActivity(intent);
                 } else {
                     Intent intent = new Intent(AlertActivity.this, BeautyTipDetailActivity.class);
-                    intent.putExtra(BeautyTipDetailActivity.TAG_BEAUTY_TIP_ID, item.getBeautyTipId().getKey().getRaw().getId());
+                    intent.putExtra(BeautyTipDetailActivity.TAG_BEAUTY_TIP_ID, item.getContentId());
                     startActivity(intent);
                 }
             }
@@ -115,6 +115,7 @@ public class AlertActivity extends AppCompatActivity {
         aWeekAgo.add(Calendar.DATE, -7);
 
         Cursor c = DBManager.getInstance().selectNotifyList();
+        notifyList.clear();
 
         if (c != null && c.getCount() > 0) {
             while (c.moveToNext()) {
@@ -125,7 +126,7 @@ public class AlertActivity extends AppCompatActivity {
 
                 Notify notify = new Notify();
                 notify.setType(c.getString(c.getColumnIndex(DBContract.Notify.COLUMN_TYPE)));
-                notify.setCosmeticItemId(c.getLong(c.getColumnIndex(DBContract.Notify.COLUMN_CONTENT_ID)));
+                notify.setContentId(c.getLong(c.getColumnIndex(DBContract.Notify.COLUMN_CONTENT_ID)));
                 notify.setMessage(c.getString(c.getColumnIndex(DBContract.Notify.COLUMN_MESSAGE)));
                 notify.setDate(c.getString(c.getColumnIndex(DBContract.Notify.COLUMN_DATE)));
                 notifyList.add(notify);

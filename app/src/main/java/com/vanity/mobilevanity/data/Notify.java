@@ -7,7 +7,7 @@ public class Notify {
     private long id;
     private String type;
     private BeautyTipId beautyTipId;
-    private long cosmeticItemId;
+    private long contentId;
     private String message;
     private String date;
 
@@ -35,12 +35,12 @@ public class Notify {
         this.beautyTipId = beautyTipId;
     }
 
-    public long getCosmeticItemId() {
-        return cosmeticItemId;
+    public long getContentId() {
+        return contentId;
     }
 
-    public void setCosmeticItemId(long cosmeticItemId) {
-        this.cosmeticItemId = cosmeticItemId;
+    public void setContentId(long contentId) {
+        this.contentId = contentId;
     }
 
     public String getMessage() {

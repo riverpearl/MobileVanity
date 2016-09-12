@@ -40,14 +40,15 @@ public class AlertListViewHolder extends RecyclerView.ViewHolder {
     public void setData(Notify data) {
         this.data = data;
 
-//        String url;
-//
-//        if (data.getType() == "like")
-//            url = "";
-//        else
-//            url = "";
-//
-//        Glide.with(alertView.getContext()).load(url).into(alertView);
+        int iconResId = 0;
+
+        if (data.getType().equals("like"))
+            iconResId = R.drawable.icon_circel_like;
+        else if (data.getType().equals("useby"))
+            iconResId = R.drawable.icon_circel_dday;
+        else iconResId = R.drawable.icon_circel_comment;
+
+        Glide.with(alertView.getContext()).load(iconResId).into(alertView);
         messageView.setText(data.getMessage());
     }
 
