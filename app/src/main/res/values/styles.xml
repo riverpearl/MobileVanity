@@ -18,4 +18,10 @@
         <item name="android:textColor">@color/colorSub</item>
     </style>
 
+    <style name="Theme.App.Base" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorControlNormal">@color/colorDivider</item>
+        <item name="colorControlActivated">@color/colorDivider</item>
+        <item name="colorControlHighlight">@color/colorDivider</item>
+    </style>
+
 </resources>

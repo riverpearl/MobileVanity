@@ -166,8 +166,8 @@
 
     <!-- activity update profile -->
     <dimen name="activity_update_profile_nickname_width">100dp</dimen>
-    <dimen name="activity_update_profile_radio_title_margin_right">30dp</dimen>
-    <dimen name="activity_update_profile_radio_margin_top">21dp</dimen>
+    <dimen name="activity_update_profile_gridlayout_height">41dp</dimen>
+    <dimen name="activity_update_profile_radio_title_padding_right">20dp</dimen>
     <dimen name="activity_update_profile_radio_margin_right">8dp</dimen>
     <dimen name="activity_update_profile_update_button_margin_bottom">60dp</dimen>
 
