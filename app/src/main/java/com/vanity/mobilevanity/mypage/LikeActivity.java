@@ -59,6 +59,7 @@ public class LikeActivity extends AppCompatActivity {
             @Override
             public void onAdapterItemClick(View view, BeautyTip data, int position) {
                 Intent intent = new Intent(LikeActivity.this, BeautyTipDetailActivity.class);
+                intent.putExtra(BeautyTipDetailActivity.TAG_BEAUTY_TIP_ID, data.getId());
                 startActivity(intent);
             }
         });
@@ -66,18 +67,18 @@ public class LikeActivity extends AppCompatActivity {
             @Override
             public void onAdapterLongItemClick(View view, BeautyTip data, int position) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(LikeActivity.this);
-                builder.setTitle("좋아요 취소");
-                builder.setMessage("취소하시겠습니까?");
+                builder.setTitle(getResources().getString(R.string.activity_like_dialog_title));
+                builder.setMessage((getResources().getString(R.string.activity_like_dialog_content)));
 
                 final long id = data.getId();
                 final int pos = position;
-                builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                builder.setPositiveButton(getResources().getString(R.string.positive_button), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         updateLikeRequest(id, pos);
                     }
                 });
-                builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                builder.setNegativeButton(R.string.negative_button, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
 

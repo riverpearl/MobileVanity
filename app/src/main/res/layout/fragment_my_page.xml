@@ -76,13 +76,13 @@
             android:layout_marginBottom="@dimen/default_margin"/>
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/fragment_mypage_user_info_box_width"
+            android:layout_height="@dimen/fragment_mypage_user_info_box_height"
             android:text="Gender"
             android:textColor="@color/colorSub"
             android:textSize="@dimen/fragment_mypage_default_font_size"
             android:id="@+id/text_gender"
-            android:background="@drawable/shape_mypage_user_info_box"
+            android:background="@drawable/shape_stroke_round_square"
             android:gravity="center"
             android:layout_marginRight="@dimen/fragment_mypage_user_info_margin"
             android:layout_below="@+id/text_nickname"
@@ -90,25 +90,25 @@
             android:layout_toStartOf="@+id/text_skin_type" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/fragment_mypage_user_info_box_width"
+            android:layout_height="@dimen/fragment_mypage_user_info_box_height"
             android:text="Skin Type"
             android:textColor="@color/colorSub"
             android:textSize="@dimen/fragment_mypage_default_font_size"
             android:id="@+id/text_skin_type"
-            android:background="@drawable/shape_mypage_user_info_box"
+            android:background="@drawable/shape_stroke_round_square"
             android:gravity="center"
             android:layout_below="@+id/text_nickname"
             android:layout_centerHorizontal="true" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/fragment_mypage_user_info_box_width"
+            android:layout_height="@dimen/fragment_mypage_user_info_box_height"
             android:text="Skin Tone"
             android:textColor="@color/colorSub"
             android:textSize="@dimen/fragment_mypage_default_font_size"
             android:id="@+id/text_skin_tone"
-            android:background="@drawable/shape_mypage_user_info_box"
+            android:background="@drawable/shape_stroke_round_square"
             android:gravity="center"
             android:layout_marginLeft="@dimen/fragment_mypage_user_info_margin"
             android:layout_below="@+id/text_nickname"
@@ -147,12 +147,12 @@
         <LinearLayout
             android:id="@+id/layout_eye"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/fragment_mypage_gridlayout_content_height"
             android:orientation="vertical"
             android:gravity="center"
             app:layout_columnWeight="1"
             app:layout_rowWeight="1"
-            android:background="@drawable/shape_mypage_stroke">
+            android:background="@drawable/shape_stroke_square">
 
             <TextView
                 android:id="@+id/text_eye_count"
@@ -176,12 +176,12 @@
 
          <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/fragment_mypage_gridlayout_content_height"
             android:orientation="vertical"
             android:gravity="center"
             app:layout_columnWeight="1"
             app:layout_rowWeight="1"
-            android:background="@drawable/shape_mypage_stroke">
+            android:background="@drawable/shape_stroke_square">
 
             <TextView
                 android:id="@+id/text_lip_count"
@@ -205,12 +205,12 @@
 
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/fragment_mypage_gridlayout_content_height"
             android:orientation="vertical"
             android:gravity="center"
             app:layout_columnWeight="1"
             app:layout_rowWeight="1"
-            android:background="@drawable/shape_mypage_stroke">
+            android:background="@drawable/shape_stroke_square">
 
             <TextView
                 android:id="@+id/text_skin_count"
@@ -234,12 +234,12 @@
 
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/fragment_mypage_gridlayout_content_height"
             android:orientation="vertical"
             android:gravity="center"
             app:layout_columnWeight="1"
             app:layout_rowWeight="1"
-            android:background="@drawable/shape_mypage_stroke">
+            android:background="@drawable/shape_stroke_square">
 
             <TextView
                 android:id="@+id/text_face_count"
@@ -263,12 +263,12 @@
 
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/fragment_mypage_gridlayout_content_height"
             android:orientation="vertical"
             android:gravity="center"
             app:layout_columnWeight="1"
             app:layout_rowWeight="1"
-            android:background="@drawable/shape_mypage_stroke">
+            android:background="@drawable/shape_stroke_square">
 
             <TextView
                 android:id="@+id/text_cleansing_count"
@@ -292,12 +292,12 @@
 
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/fragment_mypage_gridlayout_content_height"
             android:orientation="vertical"
             android:gravity="center"
             app:layout_columnWeight="1"
             app:layout_rowWeight="1"
-            android:background="@drawable/shape_mypage_stroke">
+            android:background="@drawable/shape_stroke_square">
 
             <TextView
                 android:id="@+id/text_tool_count"
@@ -334,11 +334,11 @@
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/fragment_mypage_gridlayout_content_height"
             android:orientation="vertical"
             android:gravity="center"
             android:id="@+id/btn_tip"
-            android:background="@drawable/shape_mypage_stroke"
+            android:background="@drawable/shape_stroke_square"
             app:layout_columnWeight="1"
             app:layout_columnSpan="3"
             app:layout_rowWeight="1">
@@ -361,11 +361,11 @@
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/fragment_mypage_gridlayout_content_height"
             android:orientation="vertical"
             android:gravity="center"
             android:id="@+id/btn_like"
-            android:background="@drawable/shape_mypage_stroke"
+            android:background="@drawable/shape_stroke_square"
             app:layout_columnWeight="1"
             app:layout_columnSpan="3"
             app:layout_rowWeight="1">

@@ -70,6 +70,6 @@
         android:src="@drawable/selector_button_default"
         android:text="@string/button_text"
         android:textSize="@dimen/button_font_size"
-        android:textColor="@color/colorWhite"
+        android:textColor="@android:color/white"
         android:layout_marginBottom="@dimen/activity_beauty_tip_write_button_margin_bottom"/>/>
 </RelativeLayout>

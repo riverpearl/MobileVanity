@@ -1,25 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:gravity="center_vertical">
+    android:layout_marginBottom="@dimen/view_like_margin_bottom"
+    android:background="@color/colorAlert">
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/imageView"
-        android:src="@drawable/abc_btn_radio_material" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="BeautyTip"
-        android:id="@+id/text_beauty_tip_title" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/view_like_sentence"
-        android:id="@+id/textView2" />
-</LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/view_like_height"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:background="@android:color/white">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/default_margin"
+            android:layout_marginStart="@dimen/default_margin"
+            android:layout_marginRight="@dimen/view_like_image_margin_right"
+            android:layout_marginEnd="@dimen/view_like_image_margin_right"
+            android:id="@+id/imageView"
+            android:src="@drawable/icon_circel_like" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="BeautyTip"
+            android:textColor="@color/colorAlert"
+            android:textSize="@dimen/list_alert_font_size"
+            android:id="@+id/text_beauty_tip_title" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/view_like_sentence"
+            android:textColor="@color/colorAlert"
+            android:textSize="@dimen/list_alert_font_size"
+            android:id="@+id/textView2" />
+
+    </LinearLayout>
+
+</FrameLayout>

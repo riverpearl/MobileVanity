@@ -55,7 +55,7 @@
     <string name="activity_cosmetic_detail_sale_text">까지 세일이 진행됩니다</string>
 
     <!-- view like -->
-    <string name="view_like_sentence">게시물을 좋아합니다.</string>
+    <string name="view_like_sentence">을(를) 좋아합니다.</string>
 
     <!-- fragment my page -->
     <string name="fragment_my_page_my_cosmetics">내가 등록한 제품</string>
@@ -91,5 +91,9 @@
     <string name="activity_register_detail_register_month">월</string>
     <string name="activity_register_detail_register_day">일</string>
     <string name="activity_register_detail_useby_date">사용기한 :</string>
+
+    <!-- activity like -->
+    <string name="activity_like_dialog_title">좋아요 </string>
+    <string name="activity_like_dialog_content">Do you want to cancel like?</string>
 
 </resources>

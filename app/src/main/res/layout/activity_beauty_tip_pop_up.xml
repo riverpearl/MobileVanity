@@ -54,7 +54,7 @@
             android:layout_height="@dimen/activity_beauty_tip_pop_up_button_size"
             android:background="@drawable/btn_default"
             android:text="@string/dialog_button_text"
-            android:textColor="@color/colorWhite"
+            android:textColor="@android:color/white"
             android:textSize="@dimen/activity_beauty_tip_pop_up_button_font_size"
             android:layout_gravity="center" />
 

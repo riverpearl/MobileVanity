@@ -5,6 +5,10 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
+    <!-- dialog -->
+    <string name="positive_button">YES</string>
+    <string name="negative_button">NO</string>
+
     <!-- toolbar -->
     <string name="toolbar_title_alert">Alert</string>
     <string name="toolbar_title_beauty_tip_detail">Read Beauty tip</string>
@@ -77,6 +81,10 @@
     <string name="fragment_my_page_my_tips">My Tips</string>
     <string name="fragment_my_page_likes">Likes</string>
     <string name="fragment_my_page_collection">Collection</string>
+
+    <!-- activity like -->
+    <string name="activity_like_dialog_title">Cancel Like</string>
+    <string name="activity_like_dialog_content">Do you want to cancel like?</string>
 
     <!-- activity update profile -->
     <string name="activity_update_profile_detail_info">Detail Info.</string>

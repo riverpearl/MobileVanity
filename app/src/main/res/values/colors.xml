@@ -7,7 +7,9 @@
     <color name="colorMain">#EF4B57</color>
     <color name="colorSub">#636262</color>
     <color name="colorDivider">#ececec</color>
+    <color name="colorAlert">#bcbcbc</color>
     <color name="colorBackground">#F7F7F7</color>
     <color name="colorWrite">#D2D0D0</color>
-    <color name="colorShadow">#9F9F9F</color>
+    <color name="colorShadow">#7dd1d1d1</color>
+    <color name="colorShadowSub">#0affffff</color>
 </resources>
