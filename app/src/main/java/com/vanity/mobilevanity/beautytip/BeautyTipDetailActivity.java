@@ -1,63 +1,31 @@
 package com.vanity.mobilevanity.beautytip;
 
-import android.Manifest;
-import android.app.Activity;
-import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.database.Cursor;
-import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
-import android.net.Uri;
 import android.os.Handler;
 import android.os.Message;
-import android.provider.MediaStore;
-import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.app.WindowDecorActionBar;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.vanity.mobilevanity.R;
-import com.vanity.mobilevanity.adapter.BeautyTipAdapter;
 import com.vanity.mobilevanity.data.BeautyTip;
-import com.vanity.mobilevanity.data.Comment;
 import com.vanity.mobilevanity.data.NetworkResult;
 import com.vanity.mobilevanity.data.User;
 import com.vanity.mobilevanity.manager.NetworkManager;
 import com.vanity.mobilevanity.manager.NetworkRequest;
 import com.vanity.mobilevanity.manager.PropertyManager;
 import com.vanity.mobilevanity.request.BeautyTipInfoRequest;
-import com.vanity.mobilevanity.request.CommentListRequest;
 import com.vanity.mobilevanity.request.DeleteBeautyTipRequest;
-import com.vanity.mobilevanity.request.LikeBeautyTipListRequest;
 import com.vanity.mobilevanity.request.MyInfoRequest;
-import com.vanity.mobilevanity.request.SearchBeautyTipRequest;
-import com.vanity.mobilevanity.request.UpdateBeautyTipRequest;
 import com.vanity.mobilevanity.request.UpdateLikeRequest;
-import com.vanity.mobilevanity.view.LikeViewHolder;
-
-import java.io.File;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -101,6 +69,7 @@ public class BeautyTipDetailActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         toolbarTitleView.setText(getResources().getString(R.string.toolbar_title_beauty_tip_detail));
 
@@ -115,9 +84,8 @@ public class BeautyTipDetailActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.actionbar_update, menu);
-        getMenuInflater().inflate(R.menu.actionbar_delete, menu);
-        getMenuInflater().inflate(R.menu.actionbar_cancel, menu);
+        getMenuInflater().inflate(R.menu.actionbar_menu, menu);
+     //   getMenuInflater().inflate(R.menu.actionbar_home, menu);
 
         updateMenuItem = menu.findItem(R.id.menu_update);
         deleteMenuItem = menu.findItem(R.id.menu_delete);
@@ -208,9 +176,9 @@ public class BeautyTipDetailActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.menu_cancel:
-                finish();
-                return true;
+//            case R.id.menu_home:
+//                finish();
+//                return true;
             case R.id.menu_update:
                 Intent intent = new Intent(BeautyTipDetailActivity.this, BeautyTipWriteActivity.class);
                 intent.putExtra(BeautyTipWriteActivity.TAG_SEARCH_TYPE, BeautyTipWriteActivity.INDEX_TYPE_DETAIL);
@@ -261,6 +229,7 @@ public class BeautyTipDetailActivity extends AppCompatActivity {
                     like = beautyTip.isLike();
 
                     if (PropertyManager.getInstance().getUserId() == beautyTip.getUser().getId()) {
+
                         updateMenuItem.setVisible(true);
                         deleteMenuItem.setVisible(true);
                     } else {
