@@ -109,5 +109,6 @@
     <string name="activity_register_detail_register_month">M</string>
     <string name="activity_register_detail_register_day">D</string>
     <string name="activity_register_detail_useby_date">Use By Date :</string>
+    <string name="activity_register_detail_button_text">Register</string>
 
 </resources>

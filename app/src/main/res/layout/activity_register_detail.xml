@@ -16,7 +16,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/toolbar_register_detail">
+        android:layout_below="@+id/toolbar_register_detail"
+        android:id="@+id/relativeLayout2">
 
         <RelativeLayout
             android:id="@+id/relativeLayout"
@@ -24,34 +25,53 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true">
+            android:layout_alignParentTop="true"
+            android:layout_marginBottom="@dimen/activity_register_detail_layout_margin">
 
             <ImageView
                 android:id="@+id/image_cosmetic"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
+                android:layout_width="@dimen/activity_register_detail_image_size"
+                android:layout_height="@dimen/activity_register_detail_image_size"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
+                android:layout_marginBottom="@dimen/activity_register_detail_image_margin_bottom"
+                android:layout_marginLeft="@dimen/default_margin"
+                android:layout_marginRight="@dimen/activity_register_detail_image_margin_right"
+                android:layout_marginTop="@dimen/activity_register_detail_image_margin_top"
                 android:src="@mipmap/ic_launcher" />
+
+            <ImageView
+                android:id="@+id/image_brand_stick"
+                android:layout_width="@dimen/activity_register_detail_brand_bar_width"
+                android:layout_height="@dimen/activity_register_detail_brand_bar_height"
+                android:src="@drawable/icon_brand_stick"
+                android:layout_alignTop="@+id/image_cosmetic"
+                android:layout_alignLeft="@+id/text_brand_name"
+                android:layout_alignStart="@+id/text_brand_name" />
 
             <TextView
                 android:id="@+id/text_brand_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_toEndOf="@+id/image_cosmetic"
-                android:layout_toRightOf="@+id/image_cosmetic"
-                android:text="Brand Name" />
+                android:layout_alignLeft="@+id/text_color_code"
+                android:layout_alignStart="@+id/text_color_code"
+                android:layout_below="@+id/image_brand_stick"
+                android:layout_marginBottom="@dimen/activity_register_detail_cosmetic_name_margin_top"
+                android:text="Brand Name"
+                android:textColor="@color/colorSub"
+                android:textSize="@dimen/activity_register_detail_brand_name_font_size" />
 
             <TextView
                 android:id="@+id/text_color_code"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/text_cosmetic_name"
-                android:layout_toEndOf="@+id/image_cosmetic"
-                android:layout_toRightOf="@+id/image_cosmetic"
-                android:text="Color Code" />
+                android:layout_centerHorizontal="true"
+                android:layout_marginRight="@dimen/activity_register_detail_cosmetic_name_margin_right"
+                android:text="Color Code"
+                android:textSize="@dimen/activity_register_detail_cosmetic_color_font_size"
+                android:textColor="@color/colorSub"/>
 
             <TextView
                 android:id="@+id/text_color_name"
@@ -60,27 +80,31 @@
                 android:layout_alignTop="@+id/text_color_code"
                 android:layout_toEndOf="@+id/text_color_code"
                 android:layout_toRightOf="@+id/text_color_code"
-                android:text="Color Name" />
+                android:text="Color Name"
+                android:textSize="@dimen/activity_register_detail_cosmetic_color_font_size"
+                android:textColor="@color/colorSub"/>
 
             <TextView
                 android:id="@+id/text_cosmetic_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/text_color_code"
+                android:layout_alignStart="@+id/text_color_code"
                 android:layout_below="@+id/text_brand_name"
-                android:layout_toEndOf="@+id/image_cosmetic"
-                android:layout_toRightOf="@+id/image_cosmetic"
-                android:text="Cosmetic Name" />
+                android:layout_marginBottom="@dimen/activity_register_detail_cosmetic_color_name_margin_top"
+                android:text="Cosmetic Name"
+                android:textSize="@dimen/activity_register_detail_cosmetic_name_font_size"
+                android:textColor="@color/colorSub"/>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:src="@drawable/shape_toolbar_shadow" />
 
         </RelativeLayout>
-
-        <Button
-            android:id="@+id/btn_register"
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:text="REGISTER" />
 
         <android.support.v7.widget.GridLayout
             android:id="@+id/view"
@@ -95,10 +119,15 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/activity_register_detail_register_padding_value"
+                android:layout_marginLeft="@dimen/activity_register_detail_register_margin_left"
+                android:layout_marginTop="@dimen/activity_register_detail_register_padding_value"
                 android:text="@string/activity_register_detail_register_date"
                 app:layout_columnWeight="1"
                 app:layout_gravity="center_vertical"
-                app:layout_rowWeight="1" />
+                app:layout_rowWeight="1"
+                android:textColor="@color/colorSub"
+                android:textSize="@dimen/activity_register_detail_register_font_size"/>
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -112,12 +141,16 @@
                     android:id="@+id/text_register_year"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="0" />
+                    android:text="0"
+                    android:textColor="@color/colorSub"
+                    android:textSize="@dimen/activity_register_detail_register_font_size"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/activity_register_detail_register_year" />
+                    android:text="@string/activity_register_detail_register_year"
+                    android:textColor="@color/colorSub"
+                    android:textSize="@dimen/activity_register_detail_register_font_size"/>
 
             </LinearLayout>
 
@@ -134,12 +167,16 @@
                     android:id="@+id/text_register_month"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="0" />
+                    android:text="0"
+                    android:textColor="@color/colorSub"
+                    android:textSize="@dimen/activity_register_detail_register_font_size"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/activity_register_detail_register_month" />
+                    android:text="@string/activity_register_detail_register_month"
+                    android:textColor="@color/colorSub"
+                    android:textSize="@dimen/activity_register_detail_register_font_size"/>
 
             </LinearLayout>
 
@@ -156,21 +193,25 @@
                     android:id="@+id/text_register_day"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="0" />
+                    android:text="0"
+                    android:textColor="@color/colorSub"
+                    android:textSize="@dimen/activity_register_detail_register_font_size"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/activity_register_detail_register_day" />
+                    android:text="@string/activity_register_detail_register_day"
+                    android:textColor="@color/colorSub"
+                    android:textSize="@dimen/activity_register_detail_register_font_size"/>
 
             </LinearLayout>
 
             <ImageButton
                 android:id="@+id/btn_edit_register"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:background="@android:color/transparent"
-                android:src="@android:drawable/ic_menu_edit"
+                android:layout_width="@dimen/activity_register_detail_image_margin_bottom"
+                android:layout_height="@dimen/activity_register_detail_image_margin_bottom"
+                android:layout_marginRight="@dimen/activity_register_detail_layout_margin_bottom"
+                android:background="@drawable/icon_setting"
                 app:layout_columnWeight="1"
                 app:layout_gravity="center_vertical|right"
                 app:layout_rowWeight="1" />
@@ -178,10 +219,15 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/activity_register_detail_register_padding_value"
+                android:layout_marginLeft="@dimen/activity_register_detail_register_margin_left"
+                android:layout_marginTop="@dimen/activity_register_detail_register_padding_value"
                 android:text="@string/activity_register_detail_useby_date"
                 app:layout_columnWeight="1"
                 app:layout_gravity="center_vertical"
-                app:layout_rowWeight="1" />
+                app:layout_rowWeight="1"
+                android:textColor="@color/colorSub"
+                android:textSize="@dimen/activity_register_detail_register_font_size"/>
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -195,12 +241,16 @@
                     android:id="@+id/text_useby_year"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="0" />
+                    android:text="0"
+                    android:textColor="@color/colorSub"
+                    android:textSize="@dimen/activity_register_detail_register_font_size"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/activity_register_detail_register_year" />
+                    android:text="@string/activity_register_detail_register_year"
+                    android:textColor="@color/colorSub"
+                    android:textSize="@dimen/activity_register_detail_register_font_size"/>
             </LinearLayout>
 
             <LinearLayout
@@ -216,12 +266,17 @@
                     android:id="@+id/text_useby_month"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="0" />
+                    android:text="0"
+                    android:textColor="@color/colorSub"
+                    android:textSize="@dimen/activity_register_detail_register_font_size"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/activity_register_detail_register_month" />
+                    android:text="@string/activity_register_detail_register_month"
+                    android:textColor="@color/colorSub"
+                    android:textSize="@dimen/activity_register_detail_register_font_size"/>
+
             </LinearLayout>
 
             <LinearLayout
@@ -237,13 +292,28 @@
                     android:id="@+id/text_useby_day"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="0" />
+                    android:text="0"
+                    android:textColor="@color/colorSub"
+                    android:textSize="@dimen/activity_register_detail_register_font_size"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/activity_register_detail_register_day" />
+                    android:text="@string/activity_register_detail_register_day"
+                    android:textColor="@color/colorSub"
+                    android:textSize="@dimen/activity_register_detail_register_font_size"/>
+
             </LinearLayout>
+
+            <ImageButton
+                android:id="@+id/btn_edit_register_two"
+                android:layout_width="@dimen/activity_register_detail_image_margin_bottom"
+                android:layout_height="@dimen/activity_register_detail_image_margin_bottom"
+                android:layout_marginRight="@dimen/activity_register_detail_layout_margin_bottom"
+                android:background="@drawable/icon_setting"
+                app:layout_columnWeight="1"
+                app:layout_gravity="center_vertical|right"
+                app:layout_rowWeight="1" />
 
             <ImageView
                 android:id="@+id/imageButton2"
@@ -257,5 +327,32 @@
 
         </android.support.v7.widget.GridLayout>
 
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/relativeLayout"
+            android:src="@drawable/shape_stroke_line" />
+
     </RelativeLayout>
+
+    <Button
+        android:id="@+id/btn_register"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="@dimen/activity_beauty_tip_write_button_width"
+        android:layout_height="@dimen/activity_beauty_tip_write_button_height"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/activity_register_detail_register_button"
+        android:background="@drawable/selector_button_default"
+        android:text="@string/activity_register_detail_button_text" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/shape_stroke_line"
+        android:layout_below="@+id/relativeLayout2"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 </RelativeLayout>

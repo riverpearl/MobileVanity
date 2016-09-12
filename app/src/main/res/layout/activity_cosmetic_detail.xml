@@ -39,8 +39,7 @@
                 android:layout_marginLeft="@dimen/activity_cosmetic_detail_sale_margin"
                 android:layout_marginRight="@dimen/activity_cosmetic_detail_image_margin_right"
                 android:layout_marginTop="@dimen/activity_cosmetic_detail_image_margin_top"
-                android:src="@mipmap/ic_launcher"
-                android:background="@drawable/shape_stroke_square"/>
+                android:src="@mipmap/ic_launcher" />
 
             <ImageView
                 android:id="@+id/image_brand_stick"
