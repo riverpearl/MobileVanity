@@ -29,6 +29,11 @@
     <dimen name="fragment_mypage_default_font_size">12sp</dimen>
     <dimen name="fragment_mypage_title_font_size">15sp</dimen>
     <dimen name="fragment_mypage_cosmetic_title_font_size">10sp</dimen>
+    <dimen name="activity_cosmetic_detail_default_size">12sp</dimen>
+    <dimen name="activity_cosmetic_detail_cosmetic_color_font_size">18sp</dimen>
+    <dimen name="activity_cosmetic_detail_cosmetic_name_font_size">15sp</dimen>
+    <dimen name="activity_cosmetic_detail_register_font_size">16sp</dimen>
+
 
     <!-- default dimes -->
     <dimen name="default_margin">16dp</dimen>
@@ -127,6 +132,32 @@
     <dimen name="view_like_margin_bottom">4dp</dimen>
     <dimen name="view_like_image_margin_right">20dp</dimen>
 
-
+    <!-- activity_cosmetic_detail -->
+    <dimen name="activity_cosmetic_detail_image_margin_top">39dp</dimen>
+    <dimen name="activity_cosmetic_detail_image_size">110dp</dimen>
+    <dimen name="activity_cosmetic_detail_image_margin_right">30dp</dimen>
+    <dimen name="activity_cosmetic_detail_image_margin_bottom">24dp</dimen>
+    <dimen name="activity_cosmetic_detail_cosmetic_name_margin_top">28dp</dimen>
+    <dimen name="activity_cosmetic_detail_cosmetic_name_margin_right">10dp</dimen>
+    <dimen name="activity_cosmetic_detail_brand_bar_width">62dp</dimen>
+    <dimen name="activity_cosmetic_detail_brand_bar_height">2dp</dimen>
+    <dimen name="activity_cosmetic_detail_brand_bar_margin">4dp</dimen>
+    <dimen name="activity_cosmetic_detail_register_margin_top">1dp</dimen>
+    <dimen name="activity_cosmetic_detail_register_margin_left">35dp</dimen>
+    <dimen name="activity_cosmetic_detail_register_padding_value">18dp</dimen>
+    <dimen name="activity_cosmetic_detail_register_margin_right">70dp</dimen>
+    <dimen name="activity_cosmetic_detail_register_height">50dp</dimen>
+    <dimen name="activity_cosmetic_detail_useby_margin_top">16dp</dimen>
+    <dimen name="activity_cosmetic_detail_useby_margin_right">38dp</dimen>
+    <dimen name="activity_cosmetic_detail_brandname_margin_top">24dp</dimen>
+    <dimen name="activity_cosmetic_detail_brandname_margin_bottom">10dp</dimen>
+    <dimen name="activity_cosmetic_detail_sale_margin_top">45dp</dimen>
+    <dimen name="activity_cosmetic_detail_sale_height">35dp</dimen>
+    <dimen name="activity_cosmetic_detail_sale_width">350dp</dimen>
+    <dimen name="activity_cosmetic_detail_sale_margin">16dp</dimen>
+    <dimen name="activity_cosmetic_detail_sale_margin_bottom">190dp</dimen>
+    <dimen name="activity_cosmetic_detail_sale_padding">5dp</dimen>
+    <dimen name="activity_cosmetic_detail_sale_padding_left">12dp</dimen>
+    <dimen name="activity_cosmetic_detail_layout_margin_bottom">20dp</dimen>
 
 </resources>
