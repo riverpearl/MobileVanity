@@ -67,13 +67,16 @@
 
     <!-- fragment my page -->
     <string name="fragment_my_page_my_cosmetics">My Cosmetics</string>
-    <string name="fragment_my_page_eye_title">Eye</string>
-    <string name="fragment_my_page_lip_title">Lip</string>
-    <string name="fragment_my_page_skin_title">Skin</string>
-    <string name="fragment_my_page_face_title">Face</string>
-    <string name="fragment_my_page_cleansing_title">Cleansing</string>
-    <string name="fragment_my_page_tool_title">Tool</string>
+    <string name="fragment_my_page_eye_title">EYE</string>
+    <string name="fragment_my_page_lip_title">LIP</string>
+    <string name="fragment_my_page_skin_title">SKIN</string>
+    <string name="fragment_my_page_face_title">FACE</string>
+    <string name="fragment_my_page_cleansing_title">CLEANSING</string>
+    <string name="fragment_my_page_tool_title">TOOL</string>
     <string name="fragment_my_page_my_activities">My Activities</string>
+    <string name="fragment_my_page_my_tips">My Tips</string>
+    <string name="fragment_my_page_likes">Likes</string>
+    <string name="fragment_my_page_collection">Collection</string>
 
     <!-- activity update profile -->
     <string name="activity_update_profile_detail_info">Detail Info.</string>
