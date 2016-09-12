@@ -38,6 +38,13 @@
     <string name="popularity">popularity</string>
     <string name="button_text">register</string>
 
+    <!-- activity_beauty_tip_pop_up -->
+    <string name="dialog_button_text">send</string>
+
+    <!-- view_beauty_tip_pop_up -->
+    <string name="nickname_text">User Name</string>
+    <string name="comment_text">Comment</string>
+
     <!-- activity beauty tip write -->
     <string name="activity_beauty_tip_write_title_hint">TitleHint</string>
     <string name="activity_beauty_tip_write_content_hint">ContentHint</string>

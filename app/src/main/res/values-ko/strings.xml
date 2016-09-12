@@ -34,6 +34,9 @@
     <string name="popularity">인기순</string>
     <string name="button_text">등록하기</string>
 
+    <!-- activity_beauty_tip_pop_up -->
+    <string name="dialog_button_text">전송</string>
+
     <!-- activity beauty tip write -->
     <string name="activity_beauty_tip_write_title_hint">제목을 입력하세요.</string>
     <string name="activity_beauty_tip_write_content_hint">내용을 입력하세요.</string>
