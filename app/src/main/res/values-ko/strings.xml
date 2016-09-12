@@ -97,6 +97,6 @@
 
     <!-- activity like -->
     <string name="activity_like_dialog_title">좋아요 </string>
-    <string name="activity_like_dialog_content">Do you want to cancel like?</string>
+    <string name="activity_like_dialog_content">좋아요를 취소하시겠습니까?</string>
 
 </resources>

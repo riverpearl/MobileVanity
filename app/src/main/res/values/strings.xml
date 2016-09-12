@@ -111,4 +111,7 @@
     <string name="activity_register_detail_useby_date">Use By Date :</string>
     <string name="activity_register_detail_button_text">Register</string>
 
+    <!-- activity access term -->
+    <string name="activity_access_term_content"></string>
+
 </resources>
