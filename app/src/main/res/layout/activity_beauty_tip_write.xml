@@ -71,5 +71,12 @@
         android:text="@string/button_text"
         android:textSize="@dimen/button_font_size"
         android:textColor="@android:color/white"
-        android:layout_marginBottom="@dimen/activity_beauty_tip_write_button_margin_bottom"/>/>
+        android:layout_marginBottom="@dimen/activity_beauty_tip_write_button_margin_bottom"/>
+
+    <ImageView
+        android:layout_below="@+id/toolbar_beauty_tip_detail"
+        android:src="@drawable/shape_toolbar_shadow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
 </RelativeLayout>

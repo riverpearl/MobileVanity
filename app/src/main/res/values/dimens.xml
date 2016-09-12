@@ -127,4 +127,6 @@
     <dimen name="view_like_margin_bottom">4dp</dimen>
     <dimen name="view_like_image_margin_right">20dp</dimen>
 
+
+
 </resources>

@@ -132,10 +132,14 @@ public class BeautyTipWriteActivity extends AppCompatActivity {
                                         .into(imageView);
                                 finish();
                             }
+                            if (result.getCode() != 1) {
+                                Toast.makeText(BeautyTipWriteActivity.this, "수정할 내용을 입력하세요.", Toast.LENGTH_SHORT).show();
+                            }
                         }
 
                         @Override
                         public void onFail(NetworkRequest<NetworkResult<BeautyTip>> request, int errorCode, String errorMessage, Throwable e) {
+                            Toast.makeText(BeautyTipWriteActivity.this, "수정할 내용을 입력하세요.", Toast.LENGTH_SHORT).show();
                         }
                     });
                     return;
@@ -149,10 +153,14 @@ public class BeautyTipWriteActivity extends AppCompatActivity {
                                 BeautyTip tip = result.getResult();
                                 finish();
                             }
+                            if (result.getCode() != 1) {
+                                Toast.makeText(BeautyTipWriteActivity.this, "내용을 입력하세요.", Toast.LENGTH_SHORT).show();
+                            }
                         }
 
                         @Override
                         public void onFail(NetworkRequest<NetworkResult<BeautyTip>> request, int errorCode, String errorMessage, Throwable e) {
+                            Toast.makeText(BeautyTipWriteActivity.this, "내용을 입력하세요.", Toast.LENGTH_SHORT).show();
                         }
                     });
             }

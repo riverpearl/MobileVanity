@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
@@ -147,6 +148,7 @@ public class BeautyTipFragment extends Fragment {
                             args.putString(TAG_USER_PROFILE, user.getUserProfile());
                             args.putString(TAG_USER_NICKNAME, user.getUserNickName());
 
+                            dialog.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.mdtp_time_label);
                             dialog.setArguments(args);
                             dialog.show(fm, TAG_COMMENT);
                         }
