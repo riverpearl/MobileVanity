@@ -20,6 +20,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioGroup;
@@ -64,6 +65,9 @@ public class UpdateProfileActivity extends AppCompatActivity {
     @BindView(R.id.group_select_skin_tone)
     RadioGroup groupSkinToneView;
 
+    @BindView(R.id.btn_default_gray)
+    Button grayButton;
+
     private File profile;
 
     private final static int RC_GET_IMAGE = 100;
@@ -78,6 +82,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         toolbarTitleView.setText(getResources().getString(R.string.toolbar_title_update_profile));
+        grayButton.setText(getResources().getString(R.string.button_text));
 
         init();
         checkPermission();
@@ -302,11 +307,6 @@ public class UpdateProfileActivity extends AppCompatActivity {
             });
         }
     };
-
-    @OnClick(R.id.btn_withdraw)
-    public void onWithdrawClick(View view) {
-        //앱 종료
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
