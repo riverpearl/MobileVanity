@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     tools:context="com.vanity.mobilevanity.cosmetic.CosmeticDetailActivity">
 
     <include
@@ -14,9 +14,10 @@
         android:layout_alignParentTop="true" />
 
     <RelativeLayout
-        android:layout_below="@+id/toolbar_cosmetic_detail"
+        android:id="@+id/layout_cosmetic_information"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbar_cosmetic_detail">
 
         <RelativeLayout
             android:id="@+id/relativeLayout"
@@ -24,34 +25,57 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true">
+            android:layout_alignParentTop="true"
+            android:layout_marginBottom="@dimen/activity_cosmetic_detail_layout_margin_bottom">
 
             <ImageView
                 android:id="@+id/image_cosmetic"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
+                android:layout_width="@dimen/activity_cosmetic_detail_image_size"
+                android:layout_height="@dimen/activity_cosmetic_detail_image_size"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
-                android:src="@mipmap/ic_launcher" />
+                android:layout_marginBottom="@dimen/activity_cosmetic_detail_image_margin_bottom"
+                android:layout_marginLeft="@dimen/activity_cosmetic_detail_sale_margin"
+                android:layout_marginRight="@dimen/activity_cosmetic_detail_image_margin_right"
+                android:layout_marginTop="@dimen/activity_cosmetic_detail_image_margin_top"
+                android:src="@mipmap/ic_launcher"
+                android:background="@drawable/shape_stroke_square"/>
+
+            <ImageView
+                android:id="@+id/image_brand_stick"
+                android:layout_width="@dimen/activity_cosmetic_detail_brand_bar_width"
+                android:layout_height="@dimen/activity_cosmetic_detail_brand_bar_height"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="@dimen/activity_cosmetic_detail_image_margin_top"
+                android:layout_toEndOf="@+id/image_cosmetic"
+                android:layout_toRightOf="@+id/image_cosmetic"
+                android:src="@drawable/icon_brand_stick" />
 
             <TextView
                 android:id="@+id/text_brand_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_toEndOf="@+id/image_cosmetic"
-                android:layout_toRightOf="@+id/image_cosmetic"
-                android:text="Brand Name" />
+                android:layout_alignLeft="@+id/text_color_code"
+                android:layout_alignStart="@+id/text_color_code"
+                android:layout_below="@+id/image_brand_stick"
+                android:layout_marginBottom="@dimen/activity_cosmetic_detail_cosmetic_name_margin_top"
+                android:layout_marginTop="@dimen/activity_cosmetic_detail_brand_bar_margin"
+                android:text="Brand Name"
+                android:textColor="@color/colorSub"
+                android:textSize="@dimen/activity_cosmetic_detail_default_size" />
 
             <TextView
                 android:id="@+id/text_color_code"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/text_cosmetic_name"
+                android:layout_marginRight="@dimen/activity_cosmetic_detail_cosmetic_name_margin_right"
                 android:layout_toEndOf="@+id/image_cosmetic"
                 android:layout_toRightOf="@+id/image_cosmetic"
-                android:text="Color Code" />
+                android:text="Color Code"
+                android:textColor="@color/colorSub"
+                android:textSize="@dimen/activity_cosmetic_detail_cosmetic_name_font_size" />
 
             <TextView
                 android:id="@+id/text_color_name"
@@ -60,7 +84,9 @@
                 android:layout_alignTop="@+id/text_color_code"
                 android:layout_toEndOf="@+id/text_color_code"
                 android:layout_toRightOf="@+id/text_color_code"
-                android:text="Color Name" />
+                android:text="Color Name"
+                android:textColor="@color/colorSub"
+                android:textSize="@dimen/activity_cosmetic_detail_cosmetic_name_font_size" />
 
             <TextView
                 android:id="@+id/text_cosmetic_name"
@@ -69,7 +95,17 @@
                 android:layout_below="@+id/text_brand_name"
                 android:layout_toEndOf="@+id/image_cosmetic"
                 android:layout_toRightOf="@+id/image_cosmetic"
-                android:text="Cosmetic Name" />
+                android:text="Cosmetic Name"
+                android:textColor="@color/colorSub"
+                android:textSize="@dimen/activity_cosmetic_detail_cosmetic_color_font_size" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/shape_toolbar_shadow"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
 
         </RelativeLayout>
 
@@ -86,7 +122,12 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/activity_cosmetic_detail_register_padding_value"
+                android:layout_marginLeft="@dimen/activity_cosmetic_detail_register_margin_left"
+                android:layout_marginTop="@dimen/activity_cosmetic_detail_register_padding_value"
                 android:text="@string/activity_register_detail_register_date"
+                android:textColor="@color/colorSub"
+                android:textSize="@dimen/activity_cosmetic_detail_register_font_size"
                 app:layout_columnWeight="1"
                 app:layout_gravity="center_vertical"
                 app:layout_rowWeight="1" />
@@ -103,12 +144,16 @@
                     android:id="@+id/text_register_year"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="0" />
+                    android:text="0"
+                    android:textColor="@color/colorSub"
+                    android:textSize="@dimen/activity_cosmetic_detail_register_font_size" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/activity_register_detail_register_year" />
+                    android:text="@string/activity_register_detail_register_year"
+                    android:textColor="@color/colorSub"
+                    android:textSize="@dimen/activity_cosmetic_detail_register_font_size" />
 
             </LinearLayout>
 
@@ -125,12 +170,16 @@
                     android:id="@+id/text_register_month"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="0" />
+                    android:text="0"
+                    android:textColor="@color/colorSub"
+                    android:textSize="@dimen/activity_cosmetic_detail_register_font_size" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/activity_register_detail_register_month" />
+                    android:text="@string/activity_register_detail_register_month"
+                    android:textColor="@color/colorSub"
+                    android:textSize="@dimen/activity_cosmetic_detail_register_font_size" />
 
             </LinearLayout>
 
@@ -147,21 +196,26 @@
                     android:id="@+id/text_register_day"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="0" />
+                    android:text="0"
+                    android:textColor="@color/colorSub"
+                    android:textSize="@dimen/activity_cosmetic_detail_register_font_size" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/activity_register_detail_register_day" />
+                    android:layout_marginRight="@dimen/activity_cosmetic_detail_useby_margin_right"
+                    android:text="@string/activity_register_detail_register_day"
+                    android:textColor="@color/colorSub"
+                    android:textSize="@dimen/activity_cosmetic_detail_register_font_size" />
 
             </LinearLayout>
 
             <ImageButton
                 android:id="@+id/btn_edit_register"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:background="@android:color/transparent"
-                android:src="@android:drawable/ic_menu_edit"
+                android:layout_width="@dimen/activity_cosmetic_detail_image_margin_bottom"
+                android:layout_height="@dimen/activity_cosmetic_detail_image_margin_bottom"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/icon_setting"
                 app:layout_columnWeight="1"
                 app:layout_gravity="center_vertical|right"
                 app:layout_rowWeight="1" />
@@ -169,7 +223,12 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/activity_cosmetic_detail_register_padding_value"
+                android:layout_marginLeft="@dimen/activity_cosmetic_detail_register_margin_left"
+                android:layout_marginTop="@dimen/activity_cosmetic_detail_register_padding_value"
                 android:text="@string/activity_register_detail_useby_date"
+                android:textColor="@color/colorSub"
+                android:textSize="@dimen/activity_cosmetic_detail_register_font_size"
                 app:layout_columnWeight="1"
                 app:layout_gravity="center_vertical"
                 app:layout_rowWeight="1" />
@@ -186,12 +245,16 @@
                     android:id="@+id/text_useby_year"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="0" />
+                    android:text="0"
+                    android:textColor="@color/colorSub"
+                    android:textSize="@dimen/activity_cosmetic_detail_register_font_size" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/activity_register_detail_register_year" />
+                    android:text="@string/activity_register_detail_register_year"
+                    android:textColor="@color/colorSub"
+                    android:textSize="@dimen/activity_cosmetic_detail_register_font_size" />
             </LinearLayout>
 
             <LinearLayout
@@ -203,16 +266,25 @@
                 app:layout_gravity="left|center_vertical"
                 app:layout_rowWeight="1">
 
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/shape_stroke_line" />
+
                 <TextView
                     android:id="@+id/text_useby_month"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="0" />
+                    android:text="0"
+                    android:textColor="@color/colorSub"
+                    android:textSize="@dimen/activity_cosmetic_detail_register_font_size" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/activity_register_detail_register_month" />
+                    android:text="@string/activity_register_detail_register_month"
+                    android:textColor="@color/colorSub"
+                    android:textSize="@dimen/activity_cosmetic_detail_register_font_size" />
             </LinearLayout>
 
             <LinearLayout
@@ -228,12 +300,17 @@
                     android:id="@+id/text_useby_day"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="0" />
+                    android:text="0"
+                    android:textColor="@color/colorSub"
+                    android:textSize="@dimen/activity_cosmetic_detail_register_font_size" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/activity_register_detail_register_day" />
+                    android:layout_marginRight="@dimen/activity_cosmetic_detail_useby_margin_right"
+                    android:text="@string/activity_register_detail_register_day"
+                    android:textColor="@color/colorSub"
+                    android:textSize="@dimen/activity_cosmetic_detail_register_font_size" />
             </LinearLayout>
 
             <ImageView
@@ -255,16 +332,29 @@
             android:layout_alignLeft="@+id/layout_one"
             android:layout_alignStart="@+id/layout_one"
             android:layout_below="@+id/view"
-            android:text="@string/activity_cosmetic_detail_sale_information" />
+            android:layout_marginBottom="@dimen/activity_cosmetic_detail_brandname_margin_bottom"
+            android:layout_marginLeft="@dimen/activity_cosmetic_detail_sale_margin"
+            android:layout_marginTop="@dimen/activity_cosmetic_detail_brandname_margin_top"
+            android:text="@string/activity_cosmetic_detail_sale_information"
+            android:textSize="@dimen/activity_cosmetic_detail_default_size"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/text_sale_info"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/activity_cosmetic_detail_sale_width"
+            android:layout_height="@dimen/activity_cosmetic_detail_sale_height"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/textView13"
-            android:text="sale info." />
+            android:layout_marginBottom="@dimen/activity_cosmetic_detail_sale_margin_bottom"
+            android:layout_marginLeft="@dimen/activity_cosmetic_detail_sale_margin"
+            android:layout_marginRight="@dimen/activity_cosmetic_detail_sale_margin"
+            android:background="@color/colorSale"
+            android:paddingLeft="@dimen/activity_cosmetic_detail_sale_padding_left"
+            android:paddingTop="@dimen/activity_cosmetic_detail_sale_padding"
+            android:text="sale info."
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/list_color_font_size" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -277,23 +367,42 @@
             <Button
                 android:id="@+id/btn_update"
                 style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/activity_beauty_tip_write_button_width"
+                android:layout_height="@dimen/activity_beauty_tip_write_button_height"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
-                android:text="UPDATE" />
+                android:layout_marginRight="@dimen/activity_cosmetic_detail_image_margin_right"
+                android:background="@drawable/selector_button_default"
+                android:text="@string/activity_cosmetic_detail_button_update" />
 
             <Button
                 android:id="@+id/btn_cancel"
                 style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/activity_beauty_tip_write_button_width"
+                android:layout_height="@dimen/activity_beauty_tip_write_button_height"
                 android:layout_alignParentBottom="true"
                 android:layout_toEndOf="@+id/btn_register"
                 android:layout_toRightOf="@+id/btn_register"
-                android:text="CANCEL" />
+                android:background="@drawable/selector_button_default"
+                android:text="@string/activity_cosmetic_detail_button_cancel" />
         </LinearLayout>
 
-    </RelativeLayout>
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/view"
+            android:src="@drawable/shape_stroke_line" />
 
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/shape_stroke_line"
+            android:layout_above="@+id/view"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+
+    </RelativeLayout>
 </RelativeLayout>

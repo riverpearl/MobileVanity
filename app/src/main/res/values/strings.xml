@@ -65,6 +65,8 @@
     <string name="activity_cosmetic_detail_usebydate_date">D</string>
     <string name="activity_cosmetic_detail_sale_information">SaleInformation</string>
     <string name="activity_cosmetic_detail_sale_text">salestart</string>
+    <string name="activity_cosmetic_detail_button_update">update</string>
+    <string name="activity_cosmetic_detail_button_cancel">cancel</string>
 
     <!-- view like -->
     <string name="view_like_sentence">Like</string>
