@@ -8,4 +8,5 @@
     <color name="colorSub">#636262</color>
     <color name="colorDivider">#ececec</color>
     <color name="colorBackground">#F7F7F7</color>
+    <color name="colorShadow">#9F9F9F</color>
 </resources>

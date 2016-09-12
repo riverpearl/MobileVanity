@@ -86,42 +86,6 @@ public class MyPageFragment extends Fragment {
         return view;
     }
 
-    @OnClick(R.id.btn_logout)
-    public void onLogoutClick(View view) {
-        Message msg = logoutHandler.obtainMessage(0);
-        logoutHandler.removeMessages(0);
-        logoutHandler.sendMessageDelayed(msg, 1000);
-    }
-
-    private Handler logoutHandler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-
-            LogOutRequest request = new LogOutRequest(getContext());
-            NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<String>>() {
-                @Override
-                public void onSuccess(NetworkRequest<NetworkResult<String>> request, NetworkResult<String> result) {
-                    Intent intent = new Intent(getContext(), SplashActivity.class);
-                    startActivity(intent);
-                    getActivity().finish();
-
-                    PropertyManager.getInstance().setFacebookId("");
-                    PropertyManager.getInstance().setUserId(0);
-                    PropertyManager.getInstance().setIsAlarmCreated(false);
-                    PropertyManager.getInstance().setRegistrationId("");
-                    PropertyManager.getInstance().setLastNotifyDate("");
-                    PropertyManager.getInstance().setIsAlarmCreated(false);
-                }
-
-                @Override
-                public void onFail(NetworkRequest<NetworkResult<String>> request, int errorCode, String errorMessage, Throwable e) {
-
-                }
-            });
-        }
-    };
-
     @OnClick(R.id.btn_modification)
     public void onModificationClick(View view) {
         Message msg = modifyHandler.obtainMessage(0);
@@ -320,7 +284,7 @@ public class MyPageFragment extends Fragment {
     }
 
     private int getGender() {
-        if (genderView.getText().toString().equals("여성"))
+        if (genderView.getText().toString().equals(getResources().getString(R.string.activity_update_profile_gender_female)))
             return 2;
         else
             return 1;
@@ -330,20 +294,20 @@ public class MyPageFragment extends Fragment {
         switch (gender) {
             case 1:
             default:
-                genderView.setText("남성");
+                genderView.setText(getResources().getString(R.string.activity_update_profile_gender_male));
                 break;
             case 2:
-                genderView.setText("여성");
+                genderView.setText(getResources().getString(R.string.activity_update_profile_gender_female));
                 break;
         }
     }
 
     private int getSkinType() {
-        if (skinTypeView.getText().toString().equals("중성"))
+        if (skinTypeView.getText().toString().equals(getResources().getString(R.string.activity_update_profile_normal)))
             return 2;
-        else if (skinTypeView.getText().toString().equals("지성"))
+        else if (skinTypeView.getText().toString().equals(getResources().getString(R.string.activity_update_profile_oily)))
             return 3;
-        else if (skinTypeView.getText().toString().equals("복합성"))
+        else if (skinTypeView.getText().toString().equals(getResources().getString(R.string.activity_update_profile_complex)))
             return 4;
         else
             return 1;
@@ -353,24 +317,24 @@ public class MyPageFragment extends Fragment {
         switch (type) {
             case 1:
             default:
-                skinTypeView.setText("건성");
+                skinTypeView.setText(getResources().getString(R.string.activity_update_profile_dry));
                 break;
             case 2:
-                skinTypeView.setText("중성");
+                skinTypeView.setText(getResources().getString(R.string.activity_update_profile_normal));
                 break;
             case 3:
-                skinTypeView.setText("지성");
+                skinTypeView.setText(getResources().getString(R.string.activity_update_profile_oily));
                 break;
             case 4:
-                skinTypeView.setText("복합성");
+                skinTypeView.setText(getResources().getString(R.string.activity_update_profile_complex));
                 break;
         }
     }
 
     private int getSkinTone() {
-        if (skinToneView.getText().toString().equals("21호"))
+        if (skinToneView.getText().toString().equals(getResources().getString(R.string.activity_update_profile_21)))
             return 2;
-        else if (skinToneView.getText().toString().equals("23호"))
+        else if (skinToneView.getText().toString().equals(getResources().getString(R.string.activity_update_profile_23)))
             return 3;
         else
             return 1;
@@ -380,13 +344,13 @@ public class MyPageFragment extends Fragment {
         switch (tone) {
             case 1:
             default:
-                skinToneView.setText("13호");
+                skinToneView.setText(getResources().getString(R.string.activity_update_profile_13));
                 break;
             case 2:
-                skinToneView.setText("21호");
+                skinToneView.setText(getResources().getString(R.string.activity_update_profile_21));
                 break;
             case 3:
-                skinToneView.setText("23호");
+                skinToneView.setText(getResources().getString(R.string.activity_update_profile_23));
                 break;
         }
     }

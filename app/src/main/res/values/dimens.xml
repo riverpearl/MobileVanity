@@ -20,6 +20,9 @@
     <dimen name="view_beauty_tip_item_content_font_size">9sp</dimen>
     <dimen name="view_beauty_tip_item_hit_like_comment_font_size">7sp</dimen>
     <dimen name="activity_beauty_tip_detail_title_font">14sp</dimen>
+    <dimen name="fragment_mypage_default_font_size">12sp</dimen>
+    <dimen name="fragment_mypage_title_font_size">15sp</dimen>
+    <dimen name="fragment_mypage_cosmetic_title_font_size">10sp</dimen>
 
     <!-- default dimes -->
     <dimen name="default_margin">16dp</dimen>
@@ -68,5 +71,18 @@
     <dimen name="activity_beauty_tip_detail_button_margin">36dp</dimen>
     <dimen name="activity_beauty_tip_detail_button_margin_top">80dp</dimen>
     <dimen name="activity_beauty_tip_detail_btn_like_comment_margin">25dp</dimen>
+
+    <!-- fragment mypage -->
+    <dimen name="fragment_mypage_background_height">46dp</dimen>
+    <dimen name="fragment_mypage_btn_setting_margin_top">18dp</dimen>
+    <dimen name="fragment_mypage_btn_setting_margin_right">53dp</dimen>
+    <dimen name="fragment_mypage_layout_profile_height">210dp</dimen>
+    <dimen name="fragment_mypage_profile_image_size">96dp</dimen>
+    <dimen name="fragment_mypage_profile_image_margin_bottom">8dp</dimen>
+    <dimen name="fragment_mypage_user_info_box_width">48dp</dimen>
+    <dimen name="fragment_mypage_user_info_box_height">20dp</dimen>
+    <dimen name="fragment_mypage_user_info_margin">4dp</dimen>
+    <dimen name="fragment_mypage_gridlayout_title_height">28dp</dimen>
+    <dimen name="fragment_mypage_button_height">60dp</dimen>
 
 </resources>
