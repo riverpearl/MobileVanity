@@ -90,13 +90,15 @@ public class SettingActivity extends AppCompatActivity {
     }
 
     private void init() {
-        String accessTerm = "이용약관";
-        String faq = "FAQ";
-        String partnership = "제휴문의";
+        String accessTerm = getResources().getString(R.string.toolbar_title_access_term);
+        String faq = getResources().getString(R.string.toolbar_title_faq);
+        String partnership = getResources().getString(R.string.toolbar_title_partnership);
+        String logout = getResources().getString(R.string.activity_setting_title_logout);
 
         sAdapter.add(accessTerm);
         sAdapter.add(faq);
         sAdapter.add(partnership);
+        sAdapter.add(logout);
     }
 
     @Override

@@ -99,4 +99,9 @@
     <string name="activity_like_dialog_title">좋아요 </string>
     <string name="activity_like_dialog_content">좋아요를 취소하시겠습니까?</string>
 
+    <!-- activity setting -->
+    <string name="activity_setting_title_version">버전정보</string>
+    <string name="activity_setting_title_alert">알림설정</string>
+    <string name="activity_setting_title_logout">로그아웃</string>
+
 </resources>

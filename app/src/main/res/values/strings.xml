@@ -114,4 +114,9 @@
     <!-- activity access term -->
     <string name="activity_access_term_content"></string>
 
+    <!-- activity setting -->
+    <string name="activity_setting_title_version">Version</string>
+    <string name="activity_setting_title_alert">Alert</string>
+    <string name="activity_setting_title_logout">Log Out</string>
+
 </resources>
