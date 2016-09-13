@@ -21,34 +21,34 @@
             android:id="@+id/linearLayout3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_marginTop="@dimen/activity_register_search_spinner_margin_top">
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="@dimen/activity_register_search_spinner_margin_top"
+            android:orientation="horizontal">
 
             <Spinner
                 android:id="@+id/spinner_brand"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/activity_register_search_spinner_height"
+                android:layout_marginLeft="@dimen/default_margin"
                 android:layout_weight="1"
-                android:gravity="center"
-                android:layout_marginLeft="@dimen/default_margin"/>
+                android:gravity="center" />
 
             <Spinner
                 android:id="@+id/spinner_category"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/activity_register_search_spinner_height"
                 android:layout_weight="1"
-                android:gravity="center"/>
+                android:gravity="center" />
 
             <Spinner
                 android:id="@+id/spinner_item"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/activity_register_search_spinner_height"
-                android:layout_weight="1"
                 android:layout_marginRight="@dimen/default_margin"
-                android:gravity="center"/>
+                android:layout_weight="1"
+                android:gravity="center" />
         </LinearLayout>
 
         <LinearLayout
@@ -58,26 +58,26 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/linearLayout3"
+            android:layout_marginTop="@dimen/activity_register_search_spinner_margin_bottom"
             android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:layout_marginTop="@dimen/activity_register_search_spinner_margin_bottom">
+            android:orientation="horizontal">
 
             <EditText
                 android:id="@+id/edit_keyword"
                 android:layout_width="wrap_content"
-                android:textSize="@dimen/activity_register_search_edit_text_size"
-                android:textColor="@color/colorSub"
                 android:layout_height="50dp"
+                android:layout_marginLeft="@dimen/default_margin"
                 android:layout_weight="1"
-                android:layout_marginLeft="@dimen/default_margin"/>
+                android:textColor="@color/colorSub"
+                android:textSize="@dimen/activity_register_search_edit_text_size" />
 
             <Button
                 android:id="@+id/btn_search"
                 style="?android:attr/buttonStyleSmall"
                 android:layout_width="@dimen/activity_register_search_button_width"
                 android:layout_height="@dimen/activity_register_search_button_height"
-                android:background="@drawable/icon_search"
-                android:layout_marginRight="@dimen/default_margin" />
+                android:layout_marginRight="@dimen/default_margin"
+                android:background="@drawable/icon_search" />
 
         </LinearLayout>
 
@@ -88,17 +88,17 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/linearLayout4"
+            android:layout_marginBottom="@dimen/activity_register_search_spinner_margin_bottom"
             android:layout_marginLeft="@dimen/default_margin"
-            android:layout_marginRight="@dimen/default_margin"
-            android:layout_marginBottom="@dimen/activity_register_search_spinner_margin_bottom"/>
+            android:layout_marginRight="@dimen/default_margin" />
 
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/rv_cosmetic"
+            android:src="@drawable/shape_stroke_line"
+            android:layout_below="@+id/linearLayout3"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:src="@drawable/shape_stroke_line" />
+            android:layout_alignParentStart="true" />
 
         <ImageView
             android:id="@+id/toolbar_shadow"
@@ -109,5 +109,12 @@
             android:layout_alignParentTop="true"
             android:src="@drawable/shape_toolbar_shadow" />
 
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/image_cosmetic"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:src="@drawable/shape_stroke_line" />
     </RelativeLayout>
 </RelativeLayout>
