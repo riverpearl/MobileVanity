@@ -46,6 +46,7 @@
     <dimen name="view_cosmetic_brand_name_font_size">16sp</dimen>
     <dimen name="view_cosmetic_product_font_size">18sp</dimen>
     <dimen name="view_cosmetic_cosmetic_name_font_size">15sp</dimen>
+    <dimen name="fragment_sale_info_font_size">12sp</dimen>
 
 
     <!-- default dimes -->
@@ -234,5 +235,12 @@
     <dimen name="view_cosmetic_cosmetic_color_margin_top">8dp</dimen>
     <dimen name="view_cosmetic_cosmetic_color_margin_right">3dp</dimen>
     <dimen name="view_cosmetic_brand_name_margin_bottom">8dp</dimen>
+
+    <!-- fragment sale -->
+    <dimen name="fragment_sale_calendar_padding_top">30dp</dimen>
+
+    <!-- activity partnership -->
+    <dimen name="activity_partnership_logo_big_margin_top">67dp</dimen>
+    <dimen name="activity_partnership_logo_simple_margin_top">12dp</dimen>
 
 </resources>
