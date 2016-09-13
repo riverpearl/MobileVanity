@@ -104,4 +104,9 @@
     <string name="activity_register_barcode_title_text">QR코드/바코드를 자동으로 인식합니다.</string>
 
 
+    <!-- activity setting -->
+    <string name="activity_setting_title_version">버전정보</string>
+    <string name="activity_setting_title_alert">알림설정</string>
+    <string name="activity_setting_title_logout">로그아웃</string>
+
 </resources>

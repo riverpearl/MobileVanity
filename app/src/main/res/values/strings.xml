@@ -118,4 +118,9 @@
     <string name="activity_register_barcode_button_text">Direct Register</string>
     <string name="activity_register_barcode_title_text">We are going to recognize QR or barcode automatically</string>
 
+    <!-- activity setting -->
+    <string name="activity_setting_title_version">Version</string>
+    <string name="activity_setting_title_alert">Alert</string>
+    <string name="activity_setting_title_logout">Log Out</string>
+
 </resources>
