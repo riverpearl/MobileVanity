@@ -229,6 +229,7 @@ public class RegisterSearchActivity extends AppCompatActivity {
                     }
 
                     brandAdapter = new ArrayAdapter<String>(RegisterSearchActivity.this, android.R.layout.simple_list_item_1, brandList);
+                    brandAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     brandView.setAdapter(brandAdapter);
 
                     setCategoryView();

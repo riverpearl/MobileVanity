@@ -12,6 +12,19 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true" />
 
+    <me.dm7.barcodescanner.zxing.ZXingScannerView
+        android:id="@+id/view_scanner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/toolbar_register_barcode">
+
+    </me.dm7.barcodescanner.zxing.ZXingScannerView>
+
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
@@ -21,26 +34,14 @@
         android:layout_alignRight="@+id/view_scanner"
         android:layout_alignStart="@+id/view_scanner"
         android:layout_alignTop="@+id/imageView7"
-        android:text="@string/activity_register_barcode_title_text"
-        android:textSize="@dimen/activity_register_barcode_font_size"
-        android:textStyle="bold"
-        android:textColor="@color/colorSub"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:layout_marginTop="@dimen/activity_register_barcode_text_margin_top"
         android:layout_marginBottom="@dimen/activity_register_barcode_text_margin"
-        android:gravity="center" />
-
-    <me.dm7.barcodescanner.zxing.ZXingScannerView
-        android:id="@+id/view_scanner"
-        android:layout_width="@dimen/activity_register_barcode_screen_width"
-        android:layout_height="@dimen/activity_register_barcode_screen_height"
-        android:layout_above="@+id/btn_register_myself"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/toolbar_register_barcode"
-        android:layout_marginLeft="@dimen/activity_register_barcode_screen_margin"
-        android:layout_marginRight="@dimen/activity_register_barcode_screen_margin"
-        android:layout_marginTop="@dimen/activity_register_barcode_screen_margin_top" />
+        android:layout_marginTop="@dimen/activity_register_barcode_text_margin_top"
+        android:gravity="center"
+        android:text="@string/activity_register_barcode_title_text"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/activity_register_barcode_font_size"
+        android:textStyle="bold" />
 
     <Button
         android:id="@+id/btn_register_myself"

@@ -79,6 +79,8 @@ public class BeautyTipItemViewHolder extends RecyclerView.ViewHolder {
                 }
             }
         });
+
+
     }
 
     public void setBeautyTipItem(BeautyTip item) {
