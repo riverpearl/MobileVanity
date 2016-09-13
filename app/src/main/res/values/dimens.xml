@@ -137,6 +137,7 @@
     <dimen name="view_like_height">56dp</dimen>
     <dimen name="view_like_margin_bottom">4dp</dimen>
     <dimen name="view_like_image_margin_right">20dp</dimen>
+    <dimen name="view_like_image_size">30dp</dimen>
 
     <!-- activity_cosmetic_detail -->
     <dimen name="activity_cosmetic_detail_image_margin_top">39dp</dimen>
