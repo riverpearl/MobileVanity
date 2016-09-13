@@ -3,6 +3,7 @@ package com.vanity.mobilevanity.beautytip;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -18,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -166,6 +168,7 @@ public class BeautyTipFragment extends Fragment {
         mAdapter.setOnAdapterLikeClickListener(new BeautyTipAdapter.OnAdapterLikeClickListener() {
             @Override
             public void onAdapterLikeClick(View view, BeautyTip beautyTip, final int position) {
+                onLikeImageClick(view, beautyTip);
                 String like;
                 if (beautyTip.isLike()) like = "false";
                 else like = "true";
@@ -184,6 +187,7 @@ public class BeautyTipFragment extends Fragment {
                     public void onFail(NetworkRequest<NetworkResult<BeautyTip>> request, int errorCode, String errorMessage, Throwable e) {
                     }
                 });
+
             }
         });
 
@@ -191,7 +195,16 @@ public class BeautyTipFragment extends Fragment {
         listView.setLayoutManager(manager);
 
         init();
+
         return view;
+    }
+
+    public void onLikeImageClick(View view, BeautyTip beautyTip) {
+        if (beautyTip.isLike() == false) {
+            view.setSelected(true);
+        } else {
+            view.setSelected(false);
+        }
     }
 
     private void init() {

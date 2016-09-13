@@ -89,22 +89,24 @@
         <Button
             android:id="@+id/btn_like"
             android:layout_width="0dp"
-            android:layout_height="@dimen/mdtp_done_button_height"
+            android:layout_height="@dimen/activity_beauty_tip_detail_button_height"
             android:layout_weight="1"
             android:background="@android:color/white"
-            android:drawableLeft="@drawable/selector_beauty_tip_like"
-            android:drawableStart="@drawable/selector_beauty_tip_like"
+            android:drawableLeft="@drawable/selector_big_like"
+            android:drawableStart="@drawable/selector_big_like"
             android:paddingLeft="@dimen/activity_beauty_tip_detail_btn_like_comment_margin" />
 
         <Button
             android:id="@+id/btn_comment"
             android:layout_width="0dp"
-            android:layout_height="@dimen/mdtp_done_button_height"
+            android:layout_height="@dimen/activity_beauty_tip_detail_button_height"
             android:layout_weight="1"
             android:background="@android:color/white"
-            android:drawableEnd="@drawable/selector_beauty_tip_comment"
-            android:drawableRight="@drawable/selector_beauty_tip_comment"
-            android:paddingRight="@dimen/activity_beauty_tip_detail_btn_like_comment_margin" />
+            android:drawableEnd="@drawable/selector_big_comment"
+            android:drawableRight="@drawable/selector_big_comment"
+            android:paddingRight="@dimen/activity_beauty_tip_detail_btn_like_comment_margin"
+            android:paddingBottom="@dimen/activity_beauty_tip_detail_btn_like_comment_margin_top"
+            android:paddingTop="@dimen/activity_beauty_tip_detail_btn_like_comment_margin_top"/>
     </LinearLayout>
 
 

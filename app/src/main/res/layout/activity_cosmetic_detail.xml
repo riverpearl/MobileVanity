@@ -101,10 +101,10 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:src="@drawable/shape_toolbar_shadow"
-                android:layout_alignParentTop="true"
                 android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:src="@drawable/shape_toolbar_shadow" />
 
         </RelativeLayout>
 
@@ -115,6 +115,7 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/relativeLayout"
+            android:background="@drawable/shape_stroke_square"
             app:columnCount="5"
             app:orientation="horizontal">
 
@@ -219,108 +220,108 @@
                 app:layout_gravity="center_vertical|right"
                 app:layout_rowWeight="1" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/activity_cosmetic_detail_register_padding_value"
-                android:layout_marginLeft="@dimen/activity_cosmetic_detail_register_margin_left"
-                android:layout_marginTop="@dimen/activity_cosmetic_detail_register_padding_value"
-                android:text="@string/activity_register_detail_useby_date"
-                android:textColor="@color/colorSub"
-                android:textSize="@dimen/activity_cosmetic_detail_register_font_size"
-                app:layout_columnWeight="1"
-                app:layout_gravity="center_vertical"
-                app:layout_rowWeight="1" />
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_columnWeight="1"
-                app:layout_gravity="left|center_vertical"
-                app:layout_rowWeight="1">
-
-                <TextView
-                    android:id="@+id/text_useby_year"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="0"
-                    android:textColor="@color/colorSub"
-                    android:textSize="@dimen/activity_cosmetic_detail_register_font_size" />
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/activity_register_detail_register_year"
+                    android:layout_marginBottom="@dimen/activity_cosmetic_detail_register_padding_value"
+                    android:layout_marginLeft="@dimen/activity_cosmetic_detail_register_margin_left"
+                    android:layout_marginTop="@dimen/activity_cosmetic_detail_register_padding_value"
+                    android:text="@string/activity_register_detail_useby_date"
                     android:textColor="@color/colorSub"
-                    android:textSize="@dimen/activity_cosmetic_detail_register_font_size" />
-            </LinearLayout>
+                    android:textSize="@dimen/activity_cosmetic_detail_register_font_size"
+                    app:layout_columnWeight="1"
+                    app:layout_gravity="center_vertical"
+                    app:layout_rowWeight="1" />
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:orientation="horizontal"
-                app:layout_columnWeight="1"
-                app:layout_gravity="left|center_vertical"
-                app:layout_rowWeight="1">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_columnWeight="1"
+                    app:layout_gravity="left|center_vertical"
+                    app:layout_rowWeight="1">
+
+                    <TextView
+                        android:id="@+id/text_useby_year"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textColor="@color/colorSub"
+                        android:textSize="@dimen/activity_cosmetic_detail_register_font_size" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/activity_register_detail_register_year"
+                        android:textColor="@color/colorSub"
+                        android:textSize="@dimen/activity_cosmetic_detail_register_font_size" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:orientation="horizontal"
+                    app:layout_columnWeight="1"
+                    app:layout_gravity="left|center_vertical"
+                    app:layout_rowWeight="1">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/shape_stroke_line" />
+
+                    <TextView
+                        android:id="@+id/text_useby_month"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textColor="@color/colorSub"
+                        android:textSize="@dimen/activity_cosmetic_detail_register_font_size" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/activity_register_detail_register_month"
+                        android:textColor="@color/colorSub"
+                        android:textSize="@dimen/activity_cosmetic_detail_register_font_size" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:orientation="horizontal"
+                    app:layout_columnWeight="1"
+                    app:layout_gravity="left|center_vertical"
+                    app:layout_rowWeight="1">
+
+                    <TextView
+                        android:id="@+id/text_useby_day"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textColor="@color/colorSub"
+                        android:textSize="@dimen/activity_cosmetic_detail_register_font_size" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/activity_cosmetic_detail_useby_margin_right"
+                        android:text="@string/activity_register_detail_register_day"
+                        android:textColor="@color/colorSub"
+                        android:textSize="@dimen/activity_cosmetic_detail_register_font_size" />
+                </LinearLayout>
 
                 <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/shape_stroke_line" />
-
-                <TextView
-                    android:id="@+id/text_useby_month"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="0"
-                    android:textColor="@color/colorSub"
-                    android:textSize="@dimen/activity_cosmetic_detail_register_font_size" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/activity_register_detail_register_month"
-                    android:textColor="@color/colorSub"
-                    android:textSize="@dimen/activity_cosmetic_detail_register_font_size" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:orientation="horizontal"
-                app:layout_columnWeight="1"
-                app:layout_gravity="left|center_vertical"
-                app:layout_rowWeight="1">
-
-                <TextView
-                    android:id="@+id/text_useby_day"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="0"
-                    android:textColor="@color/colorSub"
-                    android:textSize="@dimen/activity_cosmetic_detail_register_font_size" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/activity_cosmetic_detail_useby_margin_right"
-                    android:text="@string/activity_register_detail_register_day"
-                    android:textColor="@color/colorSub"
-                    android:textSize="@dimen/activity_cosmetic_detail_register_font_size" />
-            </LinearLayout>
-
-            <ImageView
-                android:id="@+id/imageButton2"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:background="@android:color/transparent"
-                android:src="@android:color/transparent"
-                app:layout_columnWeight="1"
-                app:layout_gravity="center_vertical|right"
-                app:layout_rowWeight="1" />
+                    android:id="@+id/imageButton2"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:background="@android:color/transparent"
+                    android:src="@android:color/transparent"
+                    app:layout_columnWeight="1"
+                    app:layout_gravity="center_vertical|right"
+                    app:layout_rowWeight="1" />
 
         </android.support.v7.widget.GridLayout>
 
@@ -370,9 +371,12 @@
                 android:layout_height="@dimen/activity_beauty_tip_write_button_height"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
+                android:layout_marginBottom="@dimen/activity_cosmetic_detail_button_margin_bottom"
                 android:layout_marginRight="@dimen/activity_cosmetic_detail_image_margin_right"
-                android:background="@drawable/selector_button_default"
-                android:text="@string/activity_cosmetic_detail_button_update" />
+                android:background="@drawable/btn_default"
+                android:text="@string/activity_cosmetic_detail_button_update"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/button_font_size" />
 
             <Button
                 android:id="@+id/btn_cancel"
@@ -380,10 +384,13 @@
                 android:layout_width="@dimen/activity_beauty_tip_write_button_width"
                 android:layout_height="@dimen/activity_beauty_tip_write_button_height"
                 android:layout_alignParentBottom="true"
+                android:layout_marginBottom="@dimen/activity_cosmetic_detail_button_margin_bottom"
                 android:layout_toEndOf="@+id/btn_register"
                 android:layout_toRightOf="@+id/btn_register"
-                android:background="@drawable/selector_button_default"
-                android:text="@string/activity_cosmetic_detail_button_cancel" />
+                android:background="@drawable/btn_default"
+                android:text="@string/activity_cosmetic_detail_button_cancel"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/button_font_size" />
         </LinearLayout>
 
         <ImageView
@@ -397,11 +404,11 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@drawable/shape_stroke_line"
             android:layout_above="@+id/view"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
-
+            android:layout_alignParentStart="true"
+            android:src="@drawable/shape_stroke_line" />
 
     </RelativeLayout>
+
 </RelativeLayout>

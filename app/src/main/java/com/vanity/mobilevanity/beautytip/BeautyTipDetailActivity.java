@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -73,6 +74,14 @@ public class BeautyTipDetailActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         toolbarTitleView.setText(getResources().getString(R.string.toolbar_title_beauty_tip_detail));
 
+        toolbar.setNavigationIcon(R.drawable.btn_before);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
         Intent intent = getIntent();
         beautyTipId = intent.getLongExtra(TAG_BEAUTY_TIP_ID, 0);
 
@@ -85,7 +94,6 @@ public class BeautyTipDetailActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.actionbar_menu, menu);
-     //   getMenuInflater().inflate(R.menu.actionbar_home, menu);
 
         updateMenuItem = menu.findItem(R.id.menu_update);
         deleteMenuItem = menu.findItem(R.id.menu_delete);
@@ -97,12 +105,15 @@ public class BeautyTipDetailActivity extends AppCompatActivity {
 
     @OnClick(R.id.btn_like)
     public void onLikeClick() {
-        likeButton.setSelected(true);
+        if (likeButton.isSelected() == false) {
+            likeButton.setSelected(true);
 
-        Message msg = likeHandler.obtainMessage(0);
-        likeHandler.removeMessages(0);
-        likeHandler.sendMessageDelayed(msg, 1000);
-
+            Message msg = likeHandler.obtainMessage(0);
+            likeHandler.removeMessages(0);
+            likeHandler.sendMessageDelayed(msg, 1000);
+        } else {
+            likeButton.setSelected(false);
+        }
     }
 
     private Handler likeHandler = new Handler() {
@@ -176,9 +187,7 @@ public class BeautyTipDetailActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-//            case R.id.menu_home:
-//                finish();
-//                return true;
+
             case R.id.menu_update:
                 Intent intent = new Intent(BeautyTipDetailActivity.this, BeautyTipWriteActivity.class);
                 intent.putExtra(BeautyTipWriteActivity.TAG_SEARCH_TYPE, BeautyTipWriteActivity.INDEX_TYPE_DETAIL);

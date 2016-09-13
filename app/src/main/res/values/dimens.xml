@@ -95,7 +95,8 @@
     <dimen name="activity_beauty_tip_detail_button_height">48dp</dimen>
     <dimen name="activity_beauty_tip_detail_button_margin">36dp</dimen>
     <dimen name="activity_beauty_tip_detail_button_margin_top">80dp</dimen>
-    <dimen name="activity_beauty_tip_detail_btn_like_comment_margin">25dp</dimen>
+    <dimen name="activity_beauty_tip_detail_btn_like_comment_margin">36dp</dimen>
+    <dimen name="activity_beauty_tip_detail_btn_like_comment_margin_top">10dp</dimen>
 
     <!-- activity_beauty_tip_write -->
     <dimen name="activity_beauty_tip_write_title_margin_top">41dp</dimen>
@@ -174,6 +175,7 @@
     <dimen name="activity_cosmetic_detail_sale_padding">5dp</dimen>
     <dimen name="activity_cosmetic_detail_sale_padding_left">12dp</dimen>
     <dimen name="activity_cosmetic_detail_layout_margin_bottom">20dp</dimen>
+    <dimen name="activity_cosmetic_detail_button_margin_bottom">10dp</dimen>
 
     <!-- activity update profile -->
     <dimen name="activity_update_profile_nickname_width">100dp</dimen>
@@ -207,13 +209,13 @@
     <dimen name="activity_register_barcode_button_width">140dp</dimen>
     <dimen name="activity_register_barcode_button_margin_bottom">60dp</dimen>
     <dimen name="activity_register_barcode_button_margin_right">110dp</dimen>
-    <dimen name="activity_register_barcode_button_margin_top">40dp</dimen>
+    <dimen name="activity_register_barcode_button_margin_top">50dp</dimen>
     <dimen name="activity_register_barcode_screen_margin">16dp</dimen>
     <dimen name="activity_register_barcode_screen_height">560dp</dimen>
     <dimen name="activity_register_barcode_screen_width">360dp</dimen>
     <dimen name="activity_register_barcode_screen_margin_top">64dp</dimen>
-    <dimen name="activity_register_barcode_text_margin">30dp</dimen>
-    <dimen name="activity_register_barcode_text_margin_top">20dp</dimen>
+    <dimen name="activity_register_barcode_text_margin">32dp</dimen>
+    <dimen name="activity_register_barcode_text_margin_top">41dp</dimen>
 
     <!-- activity_register_search -->
     <dimen name="activity_register_search_list_margin_top">30dp</dimen>
@@ -221,11 +223,13 @@
     <dimen name="activity_register_search_spinner_margin_left">16dp</dimen>
     <dimen name="activity_register_search_spinner_width">100dp</dimen>
     <dimen name="activity_register_search_spinner_height">30dp</dimen>
+    <dimen name="activity_register_search_spinner_margin_top">5dp</dimen>
     <dimen name="activity_register_search_spinner_margin_bottom">8dp</dimen>
-    <dimen name="activity_register_search_search_height">30dp</dimen>
+    <dimen name="activity_register_search_search_height">35dp</dimen>
     <dimen name="activity_register_search_width">328dp</dimen>
-    <dimen name="activity_register_search_button_width">30dp</dimen>
-    <dimen name="activity_register_search_button_height">30dp</dimen>
+    <dimen name="activity_register_search_button_width">25dp</dimen>
+    <dimen name="activity_register_search_button_height">25dp</dimen>
+    <dimen name="activity_register_search_button_margin_bottom">5dp</dimen>
 
     <!-- view_cosmetic -->
     <dimen name="view_cosmetic_image_size">95dp</dimen>
