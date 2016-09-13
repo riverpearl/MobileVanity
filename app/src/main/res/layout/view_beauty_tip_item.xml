@@ -93,23 +93,21 @@
         android:id="@+id/layout_info"
         android:layout_width="match_parent"
         android:layout_height="@dimen/view_beauty_tip_item_hit_like_comment_height"
-        android:layout_marginLeft="@dimen/default_list_margin"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
 
         <ImageView
             android:id="@+id/image_read"
             android:layout_width="@dimen/view_beauty_tip_item_image_margin"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="5dp"
+            android:layout_marginLeft="@dimen/default_list_margin"
             android:src="@drawable/icon_read" />
 
         <TextView
             android:id="@+id/text_read"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/view_beauty_tip_item_hit_like_comment_margin"
-            android:gravity="center"
             android:text="Read"
             android:textSize="@dimen/view_beauty_tip_item_content_font_size" />
 
@@ -117,34 +115,29 @@
             android:id="@+id/image_like"
             android:layout_width="@dimen/view_beauty_tip_item_image_margin"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
             android:layout_marginLeft="@dimen/view_beauty_tip_item_image_margin"
             android:src="@drawable/icon_like" />
 
         <TextView
             android:id="@+id/text_like"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/view_beauty_tip_item_hit_like_comment_margin"
-            android:gravity="center"
             android:text="Like"
             android:textSize="@dimen/view_beauty_tip_item_content_font_size" />
-
 
         <ImageView
             android:id="@+id/image_comment"
             android:layout_width="@dimen/view_beauty_tip_item_image_margin"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
             android:layout_marginLeft="@dimen/view_beauty_tip_item_image_margin"
             android:src="@drawable/icon_comment" />
 
         <TextView
             android:id="@+id/text_comment"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/view_beauty_tip_item_hit_like_comment_margin"
-            android:gravity="center"
             android:text="Comment"
             android:textSize="@dimen/view_beauty_tip_item_content_font_size" />
 
@@ -165,7 +158,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@android:color/white"
+            android:background="@android:color/transparent"
             android:drawableLeft="@drawable/selector_beauty_tip_like"
             android:drawableStart="@drawable/selector_beauty_tip_like"
             android:paddingLeft="@dimen/view_beauty_tip_item_btn_like_comment_margin" />
@@ -176,7 +169,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_weight="1"
-            android:background="@android:color/white"
+            android:background="@android:color/transparent"
             android:drawableEnd="@drawable/selector_beauty_tip_comment"
             android:drawableRight="@drawable/selector_beauty_tip_comment"
             android:paddingRight="@dimen/view_beauty_tip_item_btn_like_comment_margin" />

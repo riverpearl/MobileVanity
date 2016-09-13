@@ -14,13 +14,14 @@
 
         <ImageView
             android:id="@+id/image_alert"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/view_like_image_size"
+            android:layout_height="@dimen/view_like_image_size"
             android:layout_marginLeft="@dimen/default_margin"
             android:layout_marginStart="@dimen/default_margin"
             android:layout_marginRight="@dimen/view_like_image_margin_right"
             android:layout_marginEnd="@dimen/view_like_image_margin_right"
-            android:src="@drawable/abc_btn_radio_material" />
+            android:src="@drawable/abc_btn_radio_material"
+            android:layout_gravity="center"/>
 
         <TextView
             android:id="@+id/text_message"

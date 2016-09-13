@@ -20,7 +20,7 @@
             android:layout_width="@dimen/view_beauty_tip_item_spinner_width"
             android:layout_height="@dimen/view_beauty_tip_item_spinner_height"
             android:layout_marginLeft="@dimen/default_margin"
-            android:paddingLeft="@dimen/view_beauty_tip_item_spinner_margin"/>
+            android:background="@drawable/shape_stroke_square"/>
 
         <Button
             android:id="@+id/btn_set"

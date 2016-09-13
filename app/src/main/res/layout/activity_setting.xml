@@ -19,7 +19,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:divider="@color/colorBackground"
+        android:dividerHeight="@dimen/view_like_margin_bottom"/>
 
     <ImageView
         android:id="@+id/toolbar_shadow"

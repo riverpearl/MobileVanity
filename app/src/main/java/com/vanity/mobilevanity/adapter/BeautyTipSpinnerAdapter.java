@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.vanity.mobilevanity.R;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -41,7 +43,7 @@ public class BeautyTipSpinnerAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         TextView view;
         if (convertView == null) {
-            view = (TextView) LayoutInflater.from(parent.getContext()).inflate(android.R.layout.simple_list_item_1, parent, false);
+            view = (TextView) LayoutInflater.from(parent.getContext()).inflate(R.layout.view_spinner_item, parent, false);
             view.setTextColor(Color.BLACK);
         } else {
             view = (TextView) convertView;
