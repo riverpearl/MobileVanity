@@ -12,22 +12,58 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true" />
 
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/view_scanner"
+        android:layout_alignLeft="@+id/view_scanner"
+        android:layout_alignRight="@+id/view_scanner"
+        android:layout_alignStart="@+id/view_scanner"
+        android:layout_alignTop="@+id/imageView7"
+        android:text="@string/activity_register_barcode_title_text"
+        android:textSize="@dimen/activity_register_barcode_font_size"
+        android:textStyle="bold"
+        android:textColor="@color/colorSub"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_marginTop="@dimen/activity_register_barcode_text_margin_top"
+        android:layout_marginBottom="@dimen/activity_register_barcode_text_margin"
+        android:gravity="center" />
+
     <me.dm7.barcodescanner.zxing.ZXingScannerView
         android:id="@+id/view_scanner"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/activity_register_barcode_screen_width"
+        android:layout_height="@dimen/activity_register_barcode_screen_height"
         android:layout_above="@+id/btn_register_myself"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/toolbar_register_barcode" />
+        android:layout_below="@+id/toolbar_register_barcode"
+        android:layout_marginLeft="@dimen/activity_register_barcode_screen_margin"
+        android:layout_marginRight="@dimen/activity_register_barcode_screen_margin"
+        android:layout_marginTop="@dimen/activity_register_barcode_screen_margin_top" />
 
     <Button
         android:id="@+id/btn_register_myself"
         style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/activity_register_barcode_button_width"
+        android:layout_height="@dimen/activity_register_barcode_button_height"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:text="REGISTER MYSELF" />
+        android:layout_marginBottom="@dimen/activity_register_barcode_button_margin_bottom"
+        android:layout_marginRight="@dimen/activity_register_barcode_button_margin_right"
+        android:layout_marginTop="@dimen/activity_register_barcode_button_margin_top"
+        android:background="@drawable/btn_default"
+        android:text="@string/activity_register_barcode_button_text"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/activity_register_barcode_font_size" />
+
+    <ImageView
+        android:id="@+id/imageView7"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/view_scanner"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:src="@drawable/shape_toolbar_shadow" />
 
 </RelativeLayout>
