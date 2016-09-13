@@ -3,7 +3,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/white"
     tools:context=".setting.PartnershipActivity">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView6"
+        android:src="@drawable/bg_partnership" />
+
+    <TextView
+        android:id="@+id/text_partnership"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:textColor="@color/colorMain"
+        android:textSize="@dimen/activity_partnership_tel_font_size"
+        android:layout_alignBottom="@+id/imageView6"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/activity_partnership_tel_margin_bottom" />
 
     <include
         android:id="@+id/toolbar_partnership"
@@ -12,40 +30,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center_horizontal"
-        android:layout_below="@+id/toolbar_partnership"
-        android:layout_marginTop="@dimen/activity_partnership_logo_big_margin_top">
-
-        <ImageView
-            android:id="@+id/imageView6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:src="@drawable/vanity_logo_big" />
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/imageView9"
-            android:src="@drawable/vanity_logo_simple"
-            android:layout_marginTop="@dimen/activity_partnership_logo_simple_margin_top"/>
-
-    </LinearLayout>
-
-
-    <TextView
-        android:id="@+id/text_partnership"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:gravity="center_horizontal"
-        android:text="New Text" />
-
     <ImageView
         android:id="@+id/toolbar_shadow"
         android:layout_width="match_parent"
@@ -53,4 +37,5 @@
         android:src="@drawable/shape_toolbar_shadow"
         android:layout_below="@id/toolbar_partnership"
         android:layout_gravity="center_horizontal|bottom" />
+
 </RelativeLayout>

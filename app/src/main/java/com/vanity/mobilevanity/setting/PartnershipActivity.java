@@ -33,9 +33,7 @@ public class PartnershipActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         toolbarTitleView.setText(getResources().getString(R.string.toolbar_title_partnership));
 
-        partnershipView.setText("함께 만들어가는 베니띠.\n" +
-            "제휴를 원하시는 경우 아래 주소로 연락주세요.\n\n\n\n\n" +
-            "help@mobilevanity.com");
+        partnershipView.setText("help@mobilevanity.com");
     }
 
    @Override

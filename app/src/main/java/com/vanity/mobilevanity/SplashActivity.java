@@ -35,6 +35,8 @@ import com.vanity.mobilevanity.request.FacebookLoginRequest;
 import com.vanity.mobilevanity.request.LoginRequest;
 import com.vanity.mobilevanity.request.MyInfoRequest;
 
+import java.util.Arrays;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -90,6 +92,28 @@ public class SplashActivity extends AppCompatActivity {
         };
 
         setUpIfNeeded();
+    }
+
+    @OnClick(R.id.btn_facebook_login)
+    public void onFacebookLoginClick(View view) {
+        loginManager.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                processAfterFacebookLogin();
+            }
+
+            @Override
+            public void onCancel() {
+
+            }
+
+            @Override
+            public void onError(FacebookException error) {
+
+            }
+        });
+
+        loginManager.logInWithReadPermissions(this, Arrays.asList("email"));
     }
 
     private void setUpIfNeeded() {
