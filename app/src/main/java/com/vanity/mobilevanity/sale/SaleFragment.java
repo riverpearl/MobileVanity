@@ -158,7 +158,7 @@ public class SaleFragment extends Fragment {
     private void setMonthView(Calendar calendar) {
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH) + 1;
-        monthView.setText(year + "년 " + month + "월의 세일정보");
+        monthView.setText(year + "년 " + month + "월");
     }
 
     private void setSaleInfoView(Calendar calendar) {
@@ -176,7 +176,11 @@ public class SaleFragment extends Fragment {
             String start = startCal.get(Calendar.YEAR) + "/" + startCal.get(Calendar.MONTH) + "/" + startCal.get(Calendar.DATE);
             String end = endCal.get(Calendar.YEAR) + "/" + endCal.get(Calendar.MONTH) + "/" + endCal.get(Calendar.DATE);
 
-            buffer.append("[" + brandName + "] " + saleTitle  + " : " + start + " ~ " + end + "\n");
+            buffer.append("[" + brandName + "] " + saleTitle  + " : " + start + " ~ " + end);
+
+            if (clickedDayEvent.indexOf(e) != (clickedDayEvent.size() - 1))
+                buffer.append("\n");
+
         }
 
         saleInfoView.setText(buffer);

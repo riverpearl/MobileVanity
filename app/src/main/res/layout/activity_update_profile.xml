@@ -37,7 +37,7 @@
             android:layout_width="@dimen/fragment_mypage_profile_image_size"
             android:layout_height="@dimen/fragment_mypage_profile_image_size"
             android:id="@+id/image_profile"
-            android:src="@mipmap/ic_launcher"
+            android:src="@drawable/profile_image_default"
             app:civ_shadow="true"
             app:civ_shadow_radius="8"
             app:civ_shadow_color="@color/colorShadow"

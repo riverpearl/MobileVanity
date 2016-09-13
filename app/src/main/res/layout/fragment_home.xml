@@ -15,8 +15,8 @@
         android:layout_marginRight="@dimen/default_margin"
         android:layout_marginEnd="@dimen/default_margin"
         android:layout_marginBottom="@dimen/default_margin"
-        android:src="@android:drawable/ic_input_add"
-        app:backgroundTint="@color/colorMain"/>
+        android:src="@drawable/main_floating"
+        app:backgroundTint="@color/colorMain" />
 
     <ImageButton
         android:layout_width="wrap_content"

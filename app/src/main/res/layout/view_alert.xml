@@ -32,6 +32,8 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="@dimen/default_margin"
             android:layout_marginEnd="@dimen/default_margin"
+            android:thumbTint="@android:color/white"
+            android:track="@drawable/selector_switch"
             android:checked="false" />
 
     </LinearLayout>

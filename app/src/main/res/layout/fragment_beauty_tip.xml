@@ -2,25 +2,32 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginTop="@dimen/default_list_margin"
-    android:layout_marginBottom="@dimen/default_list_margin"
+    android:background="@color/colorBackground"
     tools:context=".beautytip.BeautyTipFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/layout_one"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
+        android:layout_marginTop="@dimen/default_list_margin"
         android:layout_marginBottom="@dimen/default_list_margin"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
 
         <Spinner
             android:id="@+id/spinner"
             android:layout_width="@dimen/view_beauty_tip_item_spinner_width"
             android:layout_height="@dimen/view_beauty_tip_item_spinner_height"
             android:layout_marginLeft="@dimen/default_margin"
+            android:paddingLeft="10dp"
             android:background="@drawable/shape_stroke_square"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView3"
+            android:layout_weight="1" />
 
         <Button
             android:id="@+id/btn_set"
@@ -35,14 +42,16 @@
             android:textSize="@dimen/button_font_size"
             android:background="@drawable/btn_default"/>
 
-    </RelativeLayout>
-
+    </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/beautytiplist"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/layout_one" />
-
+        android:layout_below="@+id/layout_one"
+        android:layout_marginLeft="@dimen/default_margin"
+        android:layout_marginStart="@dimen/default_margin"
+        android:layout_marginRight="@dimen/default_margin"
+        android:layout_marginEnd="@dimen/default_margin" />
 
 </RelativeLayout>

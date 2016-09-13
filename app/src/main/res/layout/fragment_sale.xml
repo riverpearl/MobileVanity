@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="@dimen/default_padding"
     tools:context=".sale.SaleFragment">
 
     <ScrollView
@@ -19,34 +20,40 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text=""
+                android:textColor="@color/colorSub"
+                android:textSize="@dimen/toolbar_font_size"
                 android:id="@+id/text_month"
                 android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true" />
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginBottom="@dimen/default_margin"
+                android:paddingLeft="@dimen/default_padding"
+                android:paddingStart="@dimen/default_padding"/>
 
             <com.github.sundeepk.compactcalendarview.CompactCalendarView
                 xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/compactcalendar_view"
                 android:layout_height="250dp"
                 android:layout_width="match_parent"
-                android:paddingRight="10dp"
-                android:paddingLeft="10dp"
                 android:layout_below="@+id/text_month"
-                app:compactCalendarTextSize="16sp"
+                app:compactCalendarTextSize="14sp"
                 app:compactCalendarBackgroundColor="@android:color/transparent"
-                app:compactCalendarTextColor="#000000"
-                app:compactCalendarCurrentSelectedDayBackgroundColor="#E57373"
-                app:compactCalendarCurrentDayBackgroundColor="#B71C1C" />
+                app:compactCalendarTextColor="@color/colorSub"
+                app:compactCalendarCurrentSelectedDayBackgroundColor="@color/colorDivider"
+                app:compactCalendarCurrentDayBackgroundColor="@color/colorSale" />
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="sale info."
                 android:id="@+id/text_sale_info"
+                android:layout_width="@dimen/activity_cosmetic_detail_sale_width"
+                android:layout_height="@dimen/activity_cosmetic_detail_sale_height"
+                android:text="sale info."
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/list_color_font_size"
+                android:background="@color/colorSale"
                 android:layout_below="@+id/compactcalendar_view"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
+                android:paddingLeft="@dimen/activity_cosmetic_detail_sale_padding_left"
+                android:paddingTop="@dimen/activity_cosmetic_detail_sale_padding" />
 
             <android.support.v7.widget.RecyclerView
                 android:layout_width="match_parent"

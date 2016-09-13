@@ -20,7 +20,7 @@
             android:layout_marginStart="@dimen/default_margin"
             android:layout_marginRight="@dimen/view_like_image_margin_right"
             android:layout_marginEnd="@dimen/view_like_image_margin_right"
-            android:src="@drawable/abc_btn_radio_material" />
+            android:src="@drawable/faq" />
 
         <TextView
             android:id="@+id/text_question"
@@ -43,7 +43,7 @@
             android:layout_marginRight="@dimen/default_margin"
             android:layout_marginEnd="@dimen/default_margin"
             android:id="@+id/imageView7"
-            android:src="@android:drawable/arrow_down_float" />
+            android:src="@drawable/expand_more" />
 
     </LinearLayout>
 
