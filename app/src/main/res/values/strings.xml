@@ -114,4 +114,8 @@
     <!-- activity access term -->
     <string name="activity_access_term_content"></string>
 
+    <!-- activity_register_barcode -->
+    <string name="activity_register_barcode_button_text">Direct Register</string>
+    <string name="activity_register_barcode_title_text">We are going to recognize QR or barcode automatically</string>
+
 </resources>

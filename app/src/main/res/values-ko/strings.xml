@@ -99,4 +99,9 @@
     <string name="activity_like_dialog_title">좋아요 </string>
     <string name="activity_like_dialog_content">좋아요를 취소하시겠습니까?</string>
 
+    <!-- activity_register_barcode -->
+    <string name="activity_register_barcode_button_text">직접등록</string>
+    <string name="activity_register_barcode_title_text">QR코드/바코드를 자동으로 인식합니다.</string>
+
+
 </resources>
