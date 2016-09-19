@@ -1,5 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string-array name="register_brand">
+        <item>@string/brand</item>
+        <item>@string/etude_house</item>
+        <item>@string/innisfree</item>
+        <item>@string/apieu</item>
+    </string-array>
+
+    <string-array name="register_category">
+        <item>@string/category</item>
+        <item>@string/eye_makeup</item>
+        <item>@string/lip_makeup</item>
+        <item>@string/skin_care</item>
+        <item>@string/face</item>
+        <item>@string/cleansing</item>
+        <item>@string/tool</item>
+    </string-array>
+
+    <string-array name="register_item">
+        <item>@string/item</item>
+    </string-array>
+
     <string-array name="beautytip_sort">
         <item>@string/latest</item>
         <item>@string/popularity</item>
@@ -14,7 +35,7 @@
         <item>Cleansing</item>
         <item>Tool</item>
     </string-array>
-    
+
     <string-array name="items_eye">
         <item>Item</item>
         <item>Eyeshadow</item>

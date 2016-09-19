@@ -141,7 +141,6 @@ public class SettingActivity extends AppCompatActivity {
                 PropertyManager.getInstance().setIsAlarmCreated(false);
                 PropertyManager.getInstance().setRegistrationId("");
                 PropertyManager.getInstance().setLastNotifyDate("");
-                PropertyManager.getInstance().setIsAlarmCreated(false);
             }
 
             @Override

@@ -50,6 +50,7 @@
     <dimen name="fragment_sale_info_font_size">12sp</dimen>
     <dimen name="activity_partnership_tel_font_size">10sp</dimen>
     <dimen name="spinner_font_size">14sp</dimen>
+    <dimen name="view_register_spinner_font_size">14sp</dimen>
 
     <!-- default dimes -->
     <dimen name="default_margin">16dp</dimen>
