@@ -25,6 +25,7 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_marginTop="@dimen/activity_register_search_spinner_margin_top"
+            android:background="@android:color/white"
             android:orientation="horizontal">
 
             <Spinner
@@ -33,6 +34,7 @@
                 android:layout_height="@dimen/activity_register_search_spinner_height"
                 android:layout_marginLeft="@dimen/default_margin"
                 android:layout_weight="1"
+                android:background="@android:color/white"
                 android:gravity="center" />
 
             <Spinner
@@ -40,6 +42,7 @@
                 android:layout_width="0dp"
                 android:layout_height="@dimen/activity_register_search_spinner_height"
                 android:layout_weight="1"
+                android:background="@android:color/white"
                 android:gravity="center" />
 
             <Spinner
@@ -48,6 +51,7 @@
                 android:layout_height="@dimen/activity_register_search_spinner_height"
                 android:layout_marginRight="@dimen/default_margin"
                 android:layout_weight="1"
+                android:background="@android:color/white"
                 android:gravity="center" />
         </LinearLayout>
 
@@ -88,17 +92,15 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/linearLayout4"
-            android:layout_marginBottom="@dimen/activity_register_search_spinner_margin_bottom"
-            android:layout_marginLeft="@dimen/default_margin"
-            android:layout_marginRight="@dimen/default_margin" />
+            android:layout_marginTop="15dp" />
 
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@drawable/shape_stroke_line"
-            android:layout_below="@+id/linearLayout3"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/linearLayout3"
+            android:src="@drawable/shape_stroke_line" />
 
         <ImageView
             android:id="@+id/toolbar_shadow"
@@ -112,9 +114,17 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/image_cosmetic"
+            android:src="@drawable/shape_stroke_line"
+            android:layout_below="@+id/linearLayout4"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:src="@drawable/shape_stroke_line" />
+            android:layout_alignParentStart="true" />
+
     </RelativeLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:src="@drawable/shape_stroke_line" />
 </RelativeLayout>

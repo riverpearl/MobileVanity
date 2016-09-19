@@ -21,6 +21,9 @@ import android.widget.Toast;
 
 import com.vanity.mobilevanity.MainActivity;
 import com.vanity.mobilevanity.R;
+import com.vanity.mobilevanity.adapter.RegisterBrandSpinnerAdapter;
+import com.vanity.mobilevanity.adapter.RegisterCategorySpinnerAdapter;
+import com.vanity.mobilevanity.adapter.RegisterItemSpinnerAdapter;
 import com.vanity.mobilevanity.adapter.SearchResultAdapter;
 import com.vanity.mobilevanity.cosmetic.CosmeticListActivity;
 import com.vanity.mobilevanity.cosmetic.HomeFragment;
@@ -66,9 +69,10 @@ public class RegisterSearchActivity extends AppCompatActivity {
 
 
     SearchResultAdapter resultAdapter;
-    ArrayAdapter<String> brandAdapter;
-    ArrayAdapter<String> categoryAdapter;
-    ArrayAdapter<String> itemAdapter;
+    RegisterBrandSpinnerAdapter brandAdapter;
+    RegisterCategorySpinnerAdapter categoryAdapter;
+    RegisterItemSpinnerAdapter itemAdapter;
+
     List<Brand> brands;
 
     private int requestCode = 0;
@@ -194,7 +198,7 @@ public class RegisterSearchActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.menu_cancel :
+            case R.id.menu_cancel:
                 if (requestCode == HomeFragment.KEY_HOME) {
                     Intent intent = new Intent(RegisterSearchActivity.this, MainActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -207,7 +211,7 @@ public class RegisterSearchActivity extends AppCompatActivity {
                     startActivity(intent);
                 }
                 return true;
-            case android.R.id.home :
+            case android.R.id.home:
                 finish();
                 return true;
         }
@@ -228,10 +232,11 @@ public class RegisterSearchActivity extends AppCompatActivity {
                         brandList.add(brands.get(i).getName());
                     }
 
-                    brandAdapter = new ArrayAdapter<String>(RegisterSearchActivity.this, android.R.layout.simple_list_item_1, brandList);
-                    brandAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    brandAdapter = new RegisterBrandSpinnerAdapter();
                     brandView.setAdapter(brandAdapter);
 
+                    String[] items = getResources().getStringArray(R.array.register_brand);
+                    brandAdapter.addAll(items);
                     setCategoryView();
                     setItemView(Constant.INDEX_CATEGROY_NONE);
                 }
@@ -246,40 +251,46 @@ public class RegisterSearchActivity extends AppCompatActivity {
 
     private void setCategoryView() {
         String[] categoryList = getResources().getStringArray(R.array.categories);
-        categoryAdapter = new ArrayAdapter<String>(RegisterSearchActivity.this, android.R.layout.simple_list_item_1, categoryList);
+        categoryAdapter = new RegisterCategorySpinnerAdapter();
         categoryView.setAdapter(categoryAdapter);
+
+        String[] items = getResources().getStringArray(R.array.register_category);
+        categoryAdapter.addAll(items);
     }
 
     private void setItemView(int category) {
         String[] itemList;
 
         switch (category) {
-            case Constant.INDEX_CATEGROY_NONE :
-            default :
-                itemList = new String[] { "품목" };
+            case Constant.INDEX_CATEGROY_NONE:
+            default:
+                itemList = new String[]{"품목"};
                 break;
-            case Constant.INDEX_CATEGORY_EYE :
+            case Constant.INDEX_CATEGORY_EYE:
                 itemList = getResources().getStringArray(R.array.items_eye);
                 break;
-            case Constant.INDEX_CATEGORY_LIP :
+            case Constant.INDEX_CATEGORY_LIP:
                 itemList = getResources().getStringArray(R.array.items_lips);
                 break;
-            case Constant.INDEX_CATEGORY_SKIN :
+            case Constant.INDEX_CATEGORY_SKIN:
                 itemList = getResources().getStringArray(R.array.items_skin);
                 break;
-            case Constant.INDEX_CATEGORY_FACE :
+            case Constant.INDEX_CATEGORY_FACE:
                 itemList = getResources().getStringArray(R.array.items_face);
                 break;
-            case Constant.INDEX_CATEGORY_CLEANSING :
+            case Constant.INDEX_CATEGORY_CLEANSING:
                 itemList = getResources().getStringArray(R.array.items_cleansing);
                 break;
-            case Constant.INDEX_CATEGORY_TOOL :
+            case Constant.INDEX_CATEGORY_TOOL:
                 itemList = getResources().getStringArray(R.array.items_tool);
                 break;
         }
 
-        itemAdapter = new ArrayAdapter<String>(RegisterSearchActivity.this, android.R.layout.simple_list_item_1, itemList);
+        itemAdapter = new RegisterItemSpinnerAdapter();
         itemView.setAdapter(itemAdapter);
+
+        String[] items = getResources().getStringArray(R.array.register_item);
+        itemAdapter.addAll(items);
     }
 
     private void searchRequest() {

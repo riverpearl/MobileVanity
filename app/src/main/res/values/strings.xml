@@ -123,4 +123,19 @@
     <string name="activity_setting_title_alert">Alert</string>
     <string name="activity_setting_title_logout">Log Out</string>
 
+    <!-- activity_register_search -->
+    <string name="brand">Brand</string>
+    <string name="etude_house">ETUDE House</string>
+    <string name="apieu">APIEU</string>
+    <string name="innisfree">INNISFREE</string>
+
+    <string name="category">Category</string>
+    <string name="eye_makeup">EYE MAKE-UP</string>
+    <string name="lip_makeup">LIP MAKE-UP</string>
+    <string name="skin_care">SKIN CARE</string>
+    <string name="face">FACE</string>
+    <string name="cleansing">CLEANSING</string>
+    <string name="tool">TOOL</string>
+
+    <string name="item">Item</string>
 </resources>

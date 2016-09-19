@@ -109,4 +109,19 @@
     <string name="activity_setting_title_alert">알림설정</string>
     <string name="activity_setting_title_logout">로그아웃</string>
 
+    <!-- activity_register_search -->
+    <string name="brand">브랜드</string>
+    <string name="etude_house">에뛰드 하우스</string>
+    <string name="apieu">어퓨</string>
+    <string name="innisfree">이니스프리</string>
+
+    <string name="category">카테고리</string>
+    <string name="eye_makeup">아이메이크업</string>
+    <string name="lip_makeup">립메이크업</string>
+    <string name="skin_care">스킨케어</string>
+    <string name="face">페이스</string>
+    <string name="cleansing">클렌징</string>
+    <string name="tool">화장도구</string>
+
+    <string name="item">품목</string>
 </resources>

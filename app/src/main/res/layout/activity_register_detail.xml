@@ -38,8 +38,7 @@
                 android:layout_marginBottom="@dimen/activity_register_detail_image_margin_bottom"
                 android:layout_marginLeft="@dimen/default_margin"
                 android:layout_marginRight="@dimen/activity_register_detail_image_margin_right"
-                android:layout_marginTop="@dimen/activity_register_detail_image_margin_top"
-                android:src="@mipmap/ic_launcher" />
+                android:layout_marginTop="@dimen/activity_register_detail_image_margin_top" />
 
             <ImageView
                 android:id="@+id/image_brand_stick"
