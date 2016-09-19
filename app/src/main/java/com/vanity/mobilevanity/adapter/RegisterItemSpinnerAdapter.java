@@ -43,7 +43,7 @@ public class RegisterItemSpinnerAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         TextView view;
         if (convertView == null) {
-            view = (TextView) LayoutInflater.from(parent.getContext()).inflate(R.layout.view_register_spinner_item, parent, false);
+            view = (TextView) LayoutInflater.from(parent.getContext()).inflate(R.layout.view_spinner_item, parent, false);
             view.setTextColor(Color.BLACK);
         } else {
             view = (TextView) convertView;

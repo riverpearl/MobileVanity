@@ -90,11 +90,11 @@
     <string name="activity_update_profile_23">23호</string>
 
     <!-- activity register detail -->
-    <string name="activity_register_detail_register_date">등록날짜 :</string>
+    <string name="activity_register_detail_register_date">등록날짜</string>
     <string name="activity_register_detail_register_year">년</string>
     <string name="activity_register_detail_register_month">월</string>
     <string name="activity_register_detail_register_day">일</string>
-    <string name="activity_register_detail_useby_date">사용기한 :</string>
+    <string name="activity_register_detail_useby_date">사용기한</string>
     <string name="activity_register_detail_button_text">등록하기</string>
 
     <!-- activity like -->
@@ -115,6 +115,7 @@
     <string name="activity_cosmetic_list_text_default_message">화장품을 등록해주세요.</string>
 
     <!-- activity_register_search -->
+    <string name="activity_register_search_keyword_hint">검색어를 입력하세요.</string>
     <string name="brand">브랜드</string>
     <string name="etude_house">에뛰드 하우스</string>
     <string name="apieu">어퓨</string>

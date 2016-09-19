@@ -63,6 +63,9 @@ public class CosmeticListActivity extends AppCompatActivity {
     @BindView(R.id.rv_cosmetic)
     RecyclerView listView;
 
+    @BindView(R.id.text_default_message)
+    TextView defaultMessageView;
+
     CosmeticAdapter mAdapter;
 
     int category = 0;
@@ -154,8 +157,16 @@ public class CosmeticListActivity extends AppCompatActivity {
             public void onSuccess(NetworkRequest<NetworkResult<List<CosmeticItem>>> request, NetworkResult<List<CosmeticItem>> result) {
                 if (result.getCode() == 1) {
                     List<CosmeticItem> cosmetic = result.getResult();
-                    mAdapter.clear();
-                    mAdapter.addAll(cosmetic);
+
+                    if (cosmetic.size() == 0) {
+                        defaultMessageView.setVisibility(View.VISIBLE);
+                    }
+                    else {
+                        defaultMessageView.setVisibility(View.GONE);
+                        mAdapter.clear();
+                        mAdapter.addAll(cosmetic);
+                    }
+
                 }
             }
 
@@ -169,36 +180,36 @@ public class CosmeticListActivity extends AppCompatActivity {
     private void initTabAndToolbarTitle() {
         String[] tabName = new String[6];
         switch (category) {
-            case Constant.INDEX_CATEGROY_NONE :
+            case Constant.INDEX_CATEGROY_NONE:
                 finish();
                 break;
 
-            case Constant.INDEX_CATEGORY_EYE :
+            case Constant.INDEX_CATEGORY_EYE:
                 tabName = getResources().getStringArray(R.array.items_eye);
                 toolbarTitleView.setText(getResources().getString(R.string.toolbar_title_cosmetic_list_eye_makeup));
                 break;
 
-            case Constant.INDEX_CATEGORY_LIP :
+            case Constant.INDEX_CATEGORY_LIP:
                 tabName = getResources().getStringArray(R.array.items_lips);
                 toolbarTitleView.setText(getResources().getString(R.string.toolbar_title_cosmetic_list_lip_makeup));
                 break;
 
-            case Constant.INDEX_CATEGORY_SKIN :
+            case Constant.INDEX_CATEGORY_SKIN:
                 tabName = getResources().getStringArray(R.array.items_skin);
                 toolbarTitleView.setText(getResources().getString(R.string.toolbar_title_cosmetic_list_skin_care));
                 break;
 
-            case Constant.INDEX_CATEGORY_FACE :
+            case Constant.INDEX_CATEGORY_FACE:
                 tabName = getResources().getStringArray(R.array.items_face);
                 toolbarTitleView.setText(getResources().getString(R.string.toolbar_title_cosmetic_list_face));
                 break;
 
-            case Constant.INDEX_CATEGORY_CLEANSING :
+            case Constant.INDEX_CATEGORY_CLEANSING:
                 tabName = getResources().getStringArray(R.array.items_cleansing);
                 toolbarTitleView.setText(getResources().getString(R.string.toolbar_title_cosmetic_list_cleansing));
                 break;
 
-            case Constant.INDEX_CATEGORY_TOOL :
+            case Constant.INDEX_CATEGORY_TOOL:
                 tabName = getResources().getStringArray(R.array.items_tool);
                 toolbarTitleView.setText(getResources().getString(R.string.toolbar_title_cosmetic_list_tool));
                 break;

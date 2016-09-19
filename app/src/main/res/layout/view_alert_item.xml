@@ -20,7 +20,7 @@
             android:layout_marginStart="@dimen/default_margin"
             android:layout_marginRight="@dimen/view_like_image_margin_right"
             android:layout_marginEnd="@dimen/view_like_image_margin_right"
-            android:src="@drawable/abc_btn_radio_material"
+            android:src="@drawable/icon_circel_like"
             android:layout_gravity="center"/>
 
         <TextView

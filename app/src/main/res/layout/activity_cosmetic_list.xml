@@ -26,13 +26,30 @@
         app:tabMode="scrollable"
         app:tabTextAppearance="@style/TabLayoutTextStyle" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_cosmetic"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tabs"
-        android:background="@color/colorDivider"
-        android:paddingTop="1dp" />
+        android:layout_height="match_parent"
+        android:layout_below="@id/tabs"
+        android:background="@color/colorBackground">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_cosmetic"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="1dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/text_default_message"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:text="@string/activity_cosmetic_list_text_default_message"
+            android:textColor="@color/colorAlert"
+            android:textSize="@dimen/activity_cosmetic_list_default_message_font_size"/>
+
+    </RelativeLayout>
+
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_add_cosmetic"

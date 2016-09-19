@@ -10,7 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/imageView6"
-        android:src="@drawable/vanity_partnership" />
+        android:src="@drawable/bg_partnership" />
 
     <TextView
         android:id="@+id/text_partnership"

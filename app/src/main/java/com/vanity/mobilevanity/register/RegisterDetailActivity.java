@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -83,6 +84,9 @@ public class RegisterDetailActivity extends AppCompatActivity implements DatePic
     @BindView(R.id.text_useby_day)
     TextView usebyDayView;
 
+    @BindView(R.id.btn_register)
+    Button registerButton;
+
     Cosmetic cosmetic;
     private int requestCode = 0;
     private int category = 0;
@@ -103,6 +107,7 @@ public class RegisterDetailActivity extends AppCompatActivity implements DatePic
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         toolbarTitleView.setText(getResources().getString(R.string.toolbar_title_register_detail));
+        registerButton.setText(R.string.button_text);
 
         Intent intent = getIntent();
         requestCode = intent.getIntExtra(TAG_REQUEST_CODE, 0);

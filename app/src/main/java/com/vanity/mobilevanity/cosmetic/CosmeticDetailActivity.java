@@ -327,22 +327,33 @@ public class CosmeticDetailActivity extends AppCompatActivity implements DatePic
             public void onSuccess(NetworkRequest<NetworkResult<List<Sale>>> request, NetworkResult<List<Sale>> result) {
                 if (result.getCode() == 1) {
                     List<Sale> sales = result.getResult();
-                    DateCalculator calculator = new DateCalculator();
-                    StringBuffer buffer = new StringBuffer();
 
-                    for (Sale s : sales) {
-                        Calendar startDay = calculator.StrToCal(s.getStartDay());
-                        Calendar endDay = calculator.StrToCal(s.getEndDay());
+                    if (sales.size() == 0) {
+                        saleView.setText(R.string.activity_cosmetic_detail_sale_guide_message);
+                        return;
+                    }
+                    else {
+                        DateCalculator calculator = new DateCalculator();
+                        StringBuffer buffer = new StringBuffer();
 
-                        String brandName = cosmeticItem.getCosmetic().getProduct().getBrand().getName();
-                        String saleTitle = s.getTitle();
-                        String start = startDay.get(Calendar.YEAR) + "/" + startDay.get(Calendar.MONTH) + "/" + startDay.get(Calendar.DATE);
-                        String end = endDay.get(Calendar.YEAR) + "/" + endDay.get(Calendar.MONTH) + "/" + endDay.get(Calendar.DATE);
+                        for (Sale s : sales) {
+                            Calendar startDay = calculator.StrToCal(s.getStartDay());
+                            Calendar endDay = calculator.StrToCal(s.getEndDay());
 
-                        buffer.append("[" + brandName + "] " + saleTitle  + " : " + start + " ~ " + end + "\n");
+                            String brandName = cosmeticItem.getCosmetic().getProduct().getBrand().getName();
+                            String saleTitle = s.getTitle();
+                            String start = startDay.get(Calendar.YEAR) + "/" + startDay.get(Calendar.MONTH) + "/" + startDay.get(Calendar.DATE);
+                            String end = endDay.get(Calendar.YEAR) + "/" + endDay.get(Calendar.MONTH) + "/" + endDay.get(Calendar.DATE);
+
+                            buffer.append("[" + brandName + "] " + saleTitle  + " : " + start + " ~ " + end);
+
+                            if (sales.indexOf(s) != (sales.size() - 1))
+                                buffer.append("\n");
+                        }
+
+                        saleView.setText(buffer.toString());
                     }
 
-                    saleView.setText(buffer.toString());
                 }
             }
 

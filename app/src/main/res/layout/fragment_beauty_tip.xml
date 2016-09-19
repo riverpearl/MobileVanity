@@ -20,8 +20,8 @@
             android:layout_width="@dimen/view_beauty_tip_item_spinner_width"
             android:layout_height="@dimen/view_beauty_tip_item_spinner_height"
             android:layout_marginLeft="@dimen/default_margin"
-            android:paddingLeft="20dp"
-            android:paddingStart="20dp"
+            android:paddingLeft="8dp"
+            android:paddingStart="8dp"
             android:background="@drawable/custom_spinner" />
 
         <TextView

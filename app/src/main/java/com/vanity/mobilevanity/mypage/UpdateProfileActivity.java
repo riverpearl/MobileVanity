@@ -65,7 +65,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
     @BindView(R.id.group_select_skin_tone)
     RadioGroup groupSkinToneView;
 
-    @BindView(R.id.btn_default_gray)
+    @BindView(R.id.btn_update)
     Button grayButton;
 
     private File profile;

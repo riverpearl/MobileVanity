@@ -13,7 +13,7 @@
         android:id="@+id/imageView3"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/vanity_splash" />
+        android:src="@drawable/bg_splash" />
 
     <Button
         style="?android:attr/buttonStyleSmall"

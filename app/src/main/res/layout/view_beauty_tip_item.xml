@@ -33,8 +33,7 @@
                 android:layout_marginLeft="@dimen/view_beauty_tip_item_image_margin"
                 android:layout_marginRight="@dimen/view_beauty_tip_item_image_margin"
                 android:layout_marginTop="0dp"
-                android:scaleType="centerCrop"
-                android:src="@mipmap/ic_launcher" />
+                android:scaleType="centerCrop" />
 
             <TextView
                 android:id="@+id/text_content"
@@ -179,6 +178,8 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:paddingRight="@dimen/view_beauty_tip_item_btn_like_comment_margin"
+                android:paddingEnd="@dimen/view_beauty_tip_item_btn_like_comment_margin"
                 android:background="@android:color/transparent"
                 android:src="@drawable/btn_like" />
 
@@ -187,6 +188,8 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:paddingLeft="@dimen/view_beauty_tip_item_btn_like_comment_margin"
+                android:paddingStart="@dimen/view_beauty_tip_item_btn_like_comment_margin"
                 android:background="@android:color/transparent"
                 android:src="@drawable/selector_beauty_tip_comment"/>
 

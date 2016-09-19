@@ -18,7 +18,8 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_marginRight="@dimen/view_beauty_tip_pop_up_image_margin"
-            android:src="@mipmap/ic_launcher" />
+            android:src="@drawable/profile_image_default"
+            android:scaleType="centerCrop"/>
 
         <RelativeLayout
             android:layout_width="wrap_content"

@@ -16,6 +16,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,6 +40,9 @@ public class RegisterBarcodeActivity extends AppCompatActivity implements ZXingS
     @BindView(R.id.view_scanner)
     ZXingScannerView scannerView;
 
+    @BindView(R.id.btn_register_myself)
+    Button registerButton;
+
     public final static String TAG_BARCODE = "barcode";
     private final static int RC_PERMISSION = 500;
 
@@ -57,6 +61,7 @@ public class RegisterBarcodeActivity extends AppCompatActivity implements ZXingS
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         toolbarTitleView.setText(getResources().getString(R.string.toolbar_title_register_barcode));
+        registerButton.setText(R.string.activity_register_barcode_button_text);
 
         Intent intent = getIntent();
         requestCode = intent.getIntExtra(RegisterSearchActivity.TAG_REQUEST_CODE, 0);

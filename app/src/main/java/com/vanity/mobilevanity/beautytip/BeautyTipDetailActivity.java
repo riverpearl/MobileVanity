@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -51,10 +52,10 @@ public class BeautyTipDetailActivity extends AppCompatActivity {
     ImageView beautytipImage;
 
     @BindView(R.id.btn_like)
-    Button likeButton;
+    ImageButton likeButton;
 
     @BindView(R.id.btn_comment)
-    Button commentButton;
+    ImageButton commentButton;
 
     long beautyTipId = 0;
     boolean like = false;
@@ -106,13 +107,9 @@ public class BeautyTipDetailActivity extends AppCompatActivity {
     @OnClick(R.id.btn_like)
     public void onLikeClick() {
         if (likeButton.isSelected() == false) {
-            likeButton.setSelected(true);
-
             Message msg = likeHandler.obtainMessage(0);
             likeHandler.removeMessages(0);
             likeHandler.sendMessageDelayed(msg, 1000);
-        } else {
-            likeButton.setSelected(false);
         }
     }
 
@@ -129,6 +126,14 @@ public class BeautyTipDetailActivity extends AppCompatActivity {
             NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<BeautyTip>>() {
                 @Override
                 public void onSuccess(NetworkRequest<NetworkResult<BeautyTip>> request, NetworkResult<BeautyTip> result) {
+                    if (result.getCode()==1) {
+                        BeautyTip tip = result.getResult();
+                        like = tip.isLike();
+
+                        if (like)
+                            likeButton.setImageResource(R.drawable.btn_like_default);
+                        else likeButton.setImageResource(R.drawable.btn_like_default_gray);
+                    }
                 }
 
                 @Override
@@ -141,13 +146,9 @@ public class BeautyTipDetailActivity extends AppCompatActivity {
 
     @OnClick(R.id.btn_comment)
     public void onCommentClick() {
-        commentButton.setSelected(true);
-
         Message msg = commentHandler.obtainMessage(0);
         commentHandler.removeMessages(0);
         commentHandler.sendMessageDelayed(msg, 1000);
-
-        commentButton.setSelected(false);
     }
 
     private Handler commentHandler = new Handler() {
@@ -238,13 +239,17 @@ public class BeautyTipDetailActivity extends AppCompatActivity {
                     like = beautyTip.isLike();
 
                     if (PropertyManager.getInstance().getUserId() == beautyTip.getUser().getId()) {
-
                         updateMenuItem.setVisible(true);
                         deleteMenuItem.setVisible(true);
                     } else {
                         updateMenuItem.setVisible(false);
                         deleteMenuItem.setVisible(false);
                     }
+
+                    if (like)
+                        likeButton.setImageResource(R.drawable.btn_like_default);
+                    else likeButton.setImageResource(R.drawable.btn_like_default_gray);
+
                 } else {
                     Toast.makeText(BeautyTipDetailActivity.this, "삭제된 게시물입니다.", Toast.LENGTH_SHORT).show();
                     finish();

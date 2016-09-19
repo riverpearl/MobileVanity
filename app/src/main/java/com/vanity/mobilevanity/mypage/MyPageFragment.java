@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -262,7 +263,10 @@ public class MyPageFragment extends Fragment {
             public void onSuccess(NetworkRequest<NetworkResult<User>> request, NetworkResult<User> result) {
                 if (result.getCode() == 1) {
                     User user = result.getResult();
-                    Glide.with(getContext()).load(user.getUserProfile()).into(profileView);
+
+                    if (!TextUtils.isEmpty(user.getUserProfile()))
+                        Glide.with(getContext()).load(user.getUserProfile()).into(profileView);
+
                     nicknameView.setText(user.getUserNickName());
                     setGenderView(user.getGender());
                     setSkinTypeView(user.getSkinType());

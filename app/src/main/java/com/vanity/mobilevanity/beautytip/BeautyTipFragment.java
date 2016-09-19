@@ -150,7 +150,6 @@ public class BeautyTipFragment extends Fragment {
                             args.putString(TAG_USER_PROFILE, user.getUserProfile());
                             args.putString(TAG_USER_NICKNAME, user.getUserNickName());
 
-                            dialog.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.mdtp_time_label);
                             dialog.setArguments(args);
                             dialog.show(fm, TAG_COMMENT);
                         }

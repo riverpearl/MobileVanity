@@ -96,7 +96,16 @@ public class RegisterSearchActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbarTitleView.setText(getResources().getString(R.string.toolbar_title_register_search));
+
+        toolbar.setNavigationIcon(R.drawable.btn_before);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
         setSpinners();
 
@@ -235,8 +244,10 @@ public class RegisterSearchActivity extends AppCompatActivity {
                     brandAdapter = new RegisterBrandSpinnerAdapter();
                     brandView.setAdapter(brandAdapter);
 
-                    String[] items = getResources().getStringArray(R.array.register_brand);
-                    brandAdapter.addAll(items);
+                    brandAdapter.addAll(brandList);
+
+                    //String[] items = getResources().getStringArray(R.array.register_brand);
+                    //brandAdapter.addAll(items);
                     setCategoryView();
                     setItemView(Constant.INDEX_CATEGROY_NONE);
                 }
@@ -253,9 +264,7 @@ public class RegisterSearchActivity extends AppCompatActivity {
         String[] categoryList = getResources().getStringArray(R.array.categories);
         categoryAdapter = new RegisterCategorySpinnerAdapter();
         categoryView.setAdapter(categoryAdapter);
-
-        String[] items = getResources().getStringArray(R.array.register_category);
-        categoryAdapter.addAll(items);
+        categoryAdapter.addAll(categoryList);
     }
 
     private void setItemView(int category) {
@@ -289,8 +298,7 @@ public class RegisterSearchActivity extends AppCompatActivity {
         itemAdapter = new RegisterItemSpinnerAdapter();
         itemView.setAdapter(itemAdapter);
 
-        String[] items = getResources().getStringArray(R.array.register_item);
-        itemAdapter.addAll(items);
+        itemAdapter.addAll(itemList);
     }
 
     private void searchRequest() {

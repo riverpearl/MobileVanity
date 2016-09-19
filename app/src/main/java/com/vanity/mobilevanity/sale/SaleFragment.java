@@ -163,6 +163,12 @@ public class SaleFragment extends Fragment {
 
     private void setSaleInfoView(Calendar calendar) {
         List<Event> clickedDayEvent = calendarView.getEvents(calendar.getTime());
+
+        if (clickedDayEvent.size() == 0) {
+            saleInfoView.setText(R.string.activity_cosmetic_detail_sale_guide_message);
+            return;
+        }
+
         StringBuffer buffer = new StringBuffer();
 
         for (Event e : clickedDayEvent) {
@@ -180,7 +186,6 @@ public class SaleFragment extends Fragment {
 
             if (clickedDayEvent.indexOf(e) != (clickedDayEvent.size() - 1))
                 buffer.append("\n");
-
         }
 
         saleInfoView.setText(buffer);

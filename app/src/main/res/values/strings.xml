@@ -105,11 +105,11 @@
     <string name="activity_update_profile_23">23</string>
 
     <!-- activity register detail -->
-    <string name="activity_register_detail_register_date">Register Date :</string>
+    <string name="activity_register_detail_register_date">Register Date</string>
     <string name="activity_register_detail_register_year">Y</string>
     <string name="activity_register_detail_register_month">M</string>
     <string name="activity_register_detail_register_day">D</string>
-    <string name="activity_register_detail_useby_date">Use By Date :</string>
+    <string name="activity_register_detail_useby_date">Use By Date</string>
     <string name="activity_register_detail_button_text">Register</string>
 
     <!-- activity access term -->
@@ -128,6 +128,7 @@
     <string name="activity_cosmetic_list_text_default_message">Add Cosmetic Items</string>
 
     <!-- activity_register_search -->
+    <string name="activity_register_search_keyword_hint">Insert Keyword</string>
     <string name="brand">Brand</string>
     <string name="etude_house">ETUDE House</string>
     <string name="apieu">APIEU</string>
