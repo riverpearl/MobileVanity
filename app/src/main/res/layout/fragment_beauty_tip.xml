@@ -20,8 +20,9 @@
             android:layout_width="@dimen/view_beauty_tip_item_spinner_width"
             android:layout_height="@dimen/view_beauty_tip_item_spinner_height"
             android:layout_marginLeft="@dimen/default_margin"
-            android:paddingLeft="10dp"
-            android:background="@drawable/shape_stroke_square"/>
+            android:paddingLeft="20dp"
+            android:paddingStart="20dp"
+            android:background="@drawable/custom_spinner" />
 
         <TextView
             android:layout_width="wrap_content"

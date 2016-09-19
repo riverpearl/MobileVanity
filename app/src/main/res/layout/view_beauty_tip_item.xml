@@ -33,6 +33,7 @@
                 android:layout_marginLeft="@dimen/view_beauty_tip_item_image_margin"
                 android:layout_marginRight="@dimen/view_beauty_tip_item_image_margin"
                 android:layout_marginTop="0dp"
+                android:scaleType="centerCrop"
                 android:src="@mipmap/ic_launcher" />
 
             <TextView
@@ -69,7 +70,8 @@
                 android:layout_width="@dimen/view_beauty_tip_item_user_profile_image_size"
                 android:layout_height="@dimen/view_beauty_tip_item_user_profile_image_size"
                 android:layout_marginRight="@dimen/view_beauty_tip_item_user_profile_margin"
-                android:src="@mipmap/ic_launcher" />
+                android:scaleType="centerCrop"
+                android:src="@drawable/profile_image_default" />
 
             <TextView
                 android:id="@+id/text_user"
@@ -150,26 +152,44 @@
             android:layout_height="@dimen/view_beauty_tip_item_like_comment_height"
             android:orientation="horizontal">
 
-            <Button
+            <!--
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:paddingLeft="@dimen/view_beauty_tip_item_btn_like_comment_margin"
+                android:background="@android:color/transparent"
+                android:src="@drawable/btn_like" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <ImageButton
+                android:id="@+id/btn_comment"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:paddingRight="@dimen/view_beauty_tip_item_btn_like_comment_margin"
+                android:background="@android:color/transparent"
+                android:src="@drawable/btn_comment"/>
+            -->
+
+            <ImageButton
                 android:id="@+id/btn_like"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@android:color/transparent"
-                android:drawableLeft="@drawable/selector_beauty_tip_like"
-                android:drawableStart="@drawable/selector_beauty_tip_like"
-                android:paddingLeft="@dimen/view_beauty_tip_item_btn_like_comment_margin" />
+                android:src="@drawable/btn_like" />
 
-            <Button
+            <ImageButton
                 android:id="@+id/btn_comment"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@android:color/transparent"
-                android:drawableEnd="@drawable/selector_beauty_tip_comment"
-                android:drawableRight="@drawable/selector_beauty_tip_comment"
-                android:paddingRight="@dimen/view_beauty_tip_item_btn_like_comment_margin" />
+                android:src="@drawable/selector_beauty_tip_comment"/>
+
         </LinearLayout>
 
 

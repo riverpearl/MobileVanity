@@ -57,15 +57,19 @@
 
             <TextView
                 android:id="@+id/text_sale_info"
-                android:layout_width="@dimen/activity_cosmetic_detail_sale_width"
-                android:layout_height="@dimen/activity_cosmetic_detail_sale_height"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:text="sale info."
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/list_color_font_size"
                 android:background="@color/colorSale"
                 android:layout_below="@+id/layout_calendar"
                 android:paddingLeft="@dimen/activity_cosmetic_detail_sale_padding_left"
+                android:paddingStart="@dimen/activity_cosmetic_detail_sale_padding_left"
+                android:paddingRight="@dimen/activity_cosmetic_detail_sale_padding_left"
+                android:paddingEnd="@dimen/activity_cosmetic_detail_sale_padding_left"
                 android:paddingTop="@dimen/activity_cosmetic_detail_sale_padding"
+                android:paddingBottom="@dimen/activity_cosmetic_detail_sale_padding"
                 android:layout_marginTop="@dimen/default_margin"/>
 
             <android.support.v7.widget.RecyclerView

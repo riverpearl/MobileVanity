@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -41,10 +42,10 @@ public class BeautyTipItemViewHolder extends RecyclerView.ViewHolder {
     ImageView previewImageView;
 
     @BindView(R.id.btn_like)
-    Button likeButton;
+    ImageButton likeButton;
 
     @BindView(R.id.btn_comment)
-    Button commentButton;
+    ImageButton commentButton;
 
     private BeautyTip item;
     private Comment commentItem;
@@ -99,6 +100,10 @@ public class BeautyTipItemViewHolder extends RecyclerView.ViewHolder {
         Glide.with(userProfileView.getContext())
                 .load(item.getUser().getUserProfile())
                 .into(userProfileView);
+
+        if (item.isLike())
+            likeButton.setImageResource(R.drawable.btn_like_selected);
+        else likeButton.setImageResource(R.drawable.btn_like);
     }
 
     public interface OnBeautyTipItemClickListener {

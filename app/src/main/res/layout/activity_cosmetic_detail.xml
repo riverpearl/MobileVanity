@@ -341,17 +341,19 @@
 
         <TextView
             android:id="@+id/text_sale_info"
-            android:layout_width="@dimen/activity_cosmetic_detail_sale_width"
-            android:layout_height="@dimen/activity_cosmetic_detail_sale_height"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/textView13"
             android:layout_marginBottom="@dimen/activity_cosmetic_detail_sale_margin_bottom"
             android:layout_marginLeft="@dimen/activity_cosmetic_detail_sale_margin"
             android:layout_marginRight="@dimen/activity_cosmetic_detail_sale_margin"
             android:background="@color/colorSale"
             android:paddingLeft="@dimen/activity_cosmetic_detail_sale_padding_left"
+            android:paddingStart="@dimen/activity_cosmetic_detail_sale_padding_left"
+            android:paddingRight="@dimen/activity_cosmetic_detail_sale_padding_left"
+            android:paddingEnd="@dimen/activity_cosmetic_detail_sale_padding_left"
             android:paddingTop="@dimen/activity_cosmetic_detail_sale_padding"
+            android:paddingBottom="@dimen/activity_cosmetic_detail_sale_padding"
             android:text="sale info."
             android:textColor="@android:color/white"
             android:textSize="@dimen/list_color_font_size" />
