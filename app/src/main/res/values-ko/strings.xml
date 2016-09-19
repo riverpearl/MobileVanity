@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">배니띠</string>
+
     <!-- toolbar -->
     <string name="toolbar_title_alert">알람</string>
     <string name="toolbar_title_beauty_tip_detail">뷰티팁보기</string>
@@ -23,7 +25,6 @@
     <string name="toolbar_title_partnership">제휴문의</string>
     <string name="toolbar_title_setting">설정하기</string>
     <string name="toolbar_title_insert_profile">내 정보 입력</string>
-
 
     <!-- activity beauty tip detail -->
     <string name="actionbar_delete">삭제</string>
@@ -53,6 +54,7 @@
     <string name="activity_cosmetic_detail_usebydate_date">일</string>
     <string name="activity_cosmetic_detail_sale_information">세일정보</string>
     <string name="activity_cosmetic_detail_sale_text">까지 세일이 진행됩니다</string>
+    <string name="activity_cosmetic_detail_sale_guide_message">진행중인 세일정보가 없습니다.</string>
     <string name="activity_cosmetic_detail_button_update">수정하기</string>
     <string name="activity_cosmetic_detail_button_cancel">취소하기</string>
 
@@ -108,5 +110,8 @@
     <string name="activity_setting_title_version">버전정보</string>
     <string name="activity_setting_title_alert">알림설정</string>
     <string name="activity_setting_title_logout">로그아웃</string>
+
+    <!-- activity cosmetic list -->
+    <string name="activity_cosmetic_list_text_default_message">화장품을 등록해주세요.</string>
 
 </resources>
