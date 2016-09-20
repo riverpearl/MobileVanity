@@ -179,8 +179,8 @@ public class SaleFragment extends Fragment {
 
             String brandName = data.getProduct().getBrand().getName();
             String saleTitle = data.getTitle();
-            String start = startCal.get(Calendar.YEAR) + "/" + startCal.get(Calendar.MONTH) + "/" + startCal.get(Calendar.DATE);
-            String end = endCal.get(Calendar.YEAR) + "/" + endCal.get(Calendar.MONTH) + "/" + endCal.get(Calendar.DATE);
+            String start = startCal.get(Calendar.YEAR) + "/" + (startCal.get(Calendar.MONTH) + 1) + "/" + startCal.get(Calendar.DATE);
+            String end = endCal.get(Calendar.YEAR) + "/" + (endCal.get(Calendar.MONTH) + 1) + "/" + endCal.get(Calendar.DATE);
 
             buffer.append("[" + brandName + "] " + saleTitle  + " : " + start + " ~ " + end);
 

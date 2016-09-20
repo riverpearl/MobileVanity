@@ -66,6 +66,7 @@
     <string name="activity_cosmetic_detail_sale_information">Sale Information</string>
     <string name="activity_cosmetic_detail_sale_text">salestart</string>
     <string name="activity_cosmetic_detail_sale_guide_message">No Sale Today</string>
+    <string name="activity_cosmetic_detail_sale_view_more">(Tab To View More)</string>
     <string name="activity_cosmetic_detail_button_update">update</string>
     <string name="activity_cosmetic_detail_button_cancel">cancel</string>
 

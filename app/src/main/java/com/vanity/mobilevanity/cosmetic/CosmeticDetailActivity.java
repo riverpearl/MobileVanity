@@ -342,15 +342,17 @@ public class CosmeticDetailActivity extends AppCompatActivity implements DatePic
 
                             String brandName = cosmeticItem.getCosmetic().getProduct().getBrand().getName();
                             String saleTitle = s.getTitle();
-                            String start = startDay.get(Calendar.YEAR) + "/" + startDay.get(Calendar.MONTH) + "/" + startDay.get(Calendar.DATE);
-                            String end = endDay.get(Calendar.YEAR) + "/" + endDay.get(Calendar.MONTH) + "/" + endDay.get(Calendar.DATE);
+                            String start = startDay.get(Calendar.YEAR) + "/" + (startDay.get(Calendar.MONTH) + 1) + "/" + startDay.get(Calendar.DATE);
+                            String end = endDay.get(Calendar.YEAR) + "/" + (endDay.get(Calendar.MONTH) + 1) + "/" + endDay.get(Calendar.DATE);
 
-                            buffer.append("[" + brandName + "] " + saleTitle  + " : " + start + " ~ " + end);
+                            buffer.append("[" + brandName + "] " + saleTitle  + " : " + start + " ~ " + end + "\n");
 
-                            if (sales.indexOf(s) != (sales.size() - 1))
-                                buffer.append("\n");
+                            if (sales.indexOf(s) == 1)
+                                break;
                         }
 
+                        String guideMessage = getResources().getString(R.string.activity_cosmetic_detail_sale_view_more);
+                        buffer.append(guideMessage);
                         saleView.setText(buffer.toString());
                     }
 
