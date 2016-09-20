@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.print.PageRange;
+import android.support.annotation.Dimension;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
@@ -23,6 +24,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -52,10 +54,15 @@ public class BeautyTipCommentFragment extends DialogFragment {
 
     @BindView(R.id.edit_comment)
     EditText inputView;
+
     @BindView(R.id.image_profile)
     ImageView profileView;
+
     @BindView(R.id.rv_comment)
     RecyclerView listView;
+
+    @BindView(R.id.btn_send)
+    Button sendButton;
 
     BeautyTipPopUpAdapter mAdapter;
 
@@ -81,6 +88,9 @@ public class BeautyTipCommentFragment extends DialogFragment {
     public View onCreateView(final LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_beauty_tip_pop_up, container, false);
         ButterKnife.bind(this, view);
+
+        sendButton.setText(R.string.dialog_button_text);
+        sendButton.setTextSize(Dimension.SP, 14);
 
         mAdapter = new BeautyTipPopUpAdapter();
         listView.setAdapter(mAdapter);

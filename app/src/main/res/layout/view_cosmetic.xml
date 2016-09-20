@@ -53,7 +53,8 @@
             android:layout_toRightOf="@+id/image_cosmetic"
             android:text="productName"
             android:textSize="@dimen/view_cosmetic_product_font_size"
-            android:textColor="@color/colorSub"/>
+            android:textColor="@color/colorSub"
+            android:singleLine="true" />
 
         <TextView
             android:id="@+id/text_brand_name"

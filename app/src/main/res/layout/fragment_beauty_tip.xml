@@ -12,6 +12,10 @@
         android:layout_alignParentTop="true"
         android:layout_marginTop="@dimen/default_list_margin"
         android:layout_marginBottom="@dimen/default_list_margin"
+        android:layout_marginLeft="@dimen/default_margin"
+        android:layout_marginStart="@dimen/default_margin"
+        android:layout_marginRight="@dimen/default_margin"
+        android:layout_marginEnd="@dimen/default_margin"
         android:orientation="horizontal"
         android:gravity="center_vertical">
 
@@ -19,7 +23,6 @@
             android:id="@+id/spinner"
             android:layout_width="@dimen/view_beauty_tip_item_spinner_width"
             android:layout_height="@dimen/view_beauty_tip_item_spinner_height"
-            android:layout_marginLeft="@dimen/default_margin"
             android:paddingLeft="8dp"
             android:paddingStart="8dp"
             android:background="@drawable/custom_spinner" />
@@ -30,18 +33,11 @@
             android:id="@+id/textView3"
             android:layout_weight="1" />
 
-        <Button
+        <include
             android:id="@+id/btn_set"
             android:layout_width="@dimen/view_beauty_tip_item_button_width"
             android:layout_height="@dimen/view_beauty_tip_item_button_height"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginRight="@dimen/default_margin"
-            android:text="@string/button_text"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/button_font_size"
-            android:background="@drawable/btn_default"/>
+            layout="@layout/view_default_button" />
 
     </LinearLayout>
 

@@ -53,7 +53,8 @@
             android:layout_toEndOf="@+id/image_cosmetic"
             android:layout_marginTop="@dimen/default_list_margin"
             android:layout_marginLeft="@dimen/default_margin"
-            android:layout_marginStart="@dimen/default_margin" />
+            android:layout_marginStart="@dimen/default_margin"
+            android:singleLine="true" />
 
         <TextView
             android:id="@+id/text_brand_name"

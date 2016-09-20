@@ -111,6 +111,9 @@ public class CosmeticDetailActivity extends AppCompatActivity implements DatePic
         setContentView(R.layout.activity_cosmetic_detail);
         ButterKnife.bind(this);
 
+        updateView.setText(R.string.activity_cosmetic_detail_button_update);
+        cancelView.setText(R.string.activity_cosmetic_detail_button_cancel);
+
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         toolbarTitleView.setText(getResources().getString(R.string.toolbar_title_cosmetic_detail));

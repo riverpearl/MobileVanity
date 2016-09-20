@@ -392,35 +392,24 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:gravity="center_horizontal"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginBottom="@dimen/default_margin"
+        android:background="@color/colorBackground">
 
-        <Button
+        <include
             android:id="@+id/btn_update"
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="@dimen/activity_beauty_tip_write_button_width"
-            android:layout_height="@dimen/activity_beauty_tip_write_button_height"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="@dimen/activity_cosmetic_detail_button_margin_bottom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            layout="@layout/view_default_button"
             android:layout_marginRight="@dimen/activity_cosmetic_detail_image_margin_right"
-            android:background="@drawable/btn_default"
-            android:text="@string/activity_cosmetic_detail_button_update"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/button_font_size" />
+            android:layout_marginEnd="@dimen/activity_cosmetic_detail_image_margin_right" />
 
-        <Button
+        <include
             android:id="@+id/btn_cancel"
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="@dimen/activity_beauty_tip_write_button_width"
-            android:layout_height="@dimen/activity_beauty_tip_write_button_height"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="@dimen/activity_cosmetic_detail_button_margin_bottom"
-            android:layout_toEndOf="@+id/btn_register"
-            android:layout_toRightOf="@+id/btn_register"
-            android:background="@drawable/btn_default"
-            android:text="@string/activity_cosmetic_detail_button_cancel"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/button_font_size" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            layout="@layout/view_default_button" />
+
     </LinearLayout>
 
 </RelativeLayout>

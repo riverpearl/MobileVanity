@@ -33,6 +33,7 @@
                 android:layout_marginLeft="@dimen/view_beauty_tip_item_image_margin"
                 android:layout_marginRight="@dimen/view_beauty_tip_item_image_margin"
                 android:layout_marginTop="0dp"
+                android:background="@drawable/shape_stroke_square"
                 android:scaleType="centerCrop" />
 
             <TextView
