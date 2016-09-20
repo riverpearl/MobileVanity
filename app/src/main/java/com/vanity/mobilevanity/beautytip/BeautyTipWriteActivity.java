@@ -37,6 +37,7 @@ import com.vanity.mobilevanity.data.BeautyTip;
 import com.vanity.mobilevanity.data.NetworkResult;
 import com.vanity.mobilevanity.manager.NetworkManager;
 import com.vanity.mobilevanity.manager.NetworkRequest;
+import com.vanity.mobilevanity.request.BeautyTipInfoRequest;
 import com.vanity.mobilevanity.request.InsertBeautyTipRequest;
 import com.vanity.mobilevanity.request.UpdateBeautyTipRequest;
 
@@ -93,6 +94,34 @@ public class BeautyTipWriteActivity extends BaseActivity {
 
         toolbarTitleView.setText(getResources().getString(R.string.toolbar_title_beauty_tip_write));
         writeButton.setText(R.string.button_text);
+
+        Intent intent = getIntent();
+        int mode = intent.getIntExtra(TAG_SEARCH_TYPE, 0);
+
+        if (mode == INDEX_TYPE_DETAIL) {
+            long id = intent.getLongExtra(BeautyTipDetailActivity.TAG_BEAUTY_TIP_ID, 0);
+
+            if (id != 0) {
+                BeautyTipInfoRequest request = new BeautyTipInfoRequest(BeautyTipWriteActivity.this, "" + id);
+                NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<BeautyTip>>() {
+                    @Override
+                    public void onSuccess(NetworkRequest<NetworkResult<BeautyTip>> request, NetworkResult<BeautyTip> result) {
+                        if (result.getCode() == 1) {
+                            BeautyTip tip = result.getResult();
+
+                            titleView.setText(tip.getTitle());
+                            contentView.setText(tip.getContent());
+                            Glide.with(BeautyTipWriteActivity.this).load(tip.getPreviewImage()).into(imageView);
+                        }
+                    }
+
+                    @Override
+                    public void onFail(NetworkRequest<NetworkResult<BeautyTip>> request, int errorCode, String errorMessage, Throwable e) {
+
+                    }
+                });
+            }
+        }
 
         checkPermission();
     }
