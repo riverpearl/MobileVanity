@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.os.SystemClock;
 import android.print.PageRange;
 import android.support.annotation.Dimension;
 import android.support.annotation.NonNull;
@@ -71,6 +72,8 @@ public class BeautyTipCommentFragment extends DialogFragment {
     private String userProfile = "";
     private String userNickname = "";
 
+    private long lastClickTime = 0;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -124,9 +127,9 @@ public class BeautyTipCommentFragment extends DialogFragment {
     public void onStart() {
         super.onStart();
 
-        Glide.with(profileView.getContext())
-                .load(userProfile)
-                .into(profileView);
+        if (profileView != null)
+            Glide.with(profileView.getContext()).load(userProfile).into(profileView);
+
         getCommentList();
     }
 
@@ -152,38 +155,34 @@ public class BeautyTipCommentFragment extends DialogFragment {
 
     @OnClick(R.id.btn_send)
     public void onSendButton() {
-        Message msg = mHandler.obtainMessage(0);
-        mHandler.removeMessages(0);
-        mHandler.sendMessageDelayed(msg, 1000);
+        if (SystemClock.elapsedRealtime() - lastClickTime < 1000) return;
+        lastClickTime = SystemClock.elapsedRealtime();
+
+        InsertCommentRequest request = new InsertCommentRequest(getContext(), "" + beautyTipId, inputView.getText().toString());
+        NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<Comment>>() {
+            @Override
+            public void onSuccess(NetworkRequest<NetworkResult<Comment>> request, NetworkResult<Comment> result) {
+                if (result.getCode() == 1) {
+                    inputView.setText("");
+                    InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(getView().getWindowToken(), 0);
+                    getCommentList();
+                }
+            }
+
+            @Override
+            public void onFail(NetworkRequest<NetworkResult<Comment>> request, int errorCode, String errorMessage, Throwable e) {
+                Toast.makeText(getContext(), "댓글 입력하기에 실패했습니다.", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
-    private Handler mHandler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            InsertCommentRequest request = new InsertCommentRequest(getContext(), "" + beautyTipId, inputView.getText().toString());
-            NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<Comment>>() {
-                @Override
-                public void onSuccess(NetworkRequest<NetworkResult<Comment>> request, NetworkResult<Comment> result) {
-                    if (result.getCode() == 1) {
-                        inputView.setText("");
-                        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-                        imm.hideSoftInputFromWindow(getView().getWindowToken(), 0);
-                        getCommentList();
-                    }
-                }
-
-                @Override
-                public void onFail(NetworkRequest<NetworkResult<Comment>> request, int errorCode, String errorMessage, Throwable e) {
-                    Toast.makeText(getContext(), "댓글 입력하기에 실패했습니다.", Toast.LENGTH_SHORT).show();
-                }
-            });
-        }
-
-    };
 
     @OnClick(R.id.btn_cancel)
     public void onCancelClick(View view) {
+        if (SystemClock.elapsedRealtime() - lastClickTime < 1000) return;
+        lastClickTime = SystemClock.elapsedRealtime();
+
         this.dismiss();
     }
 }

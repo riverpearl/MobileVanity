@@ -7,6 +7,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.os.SystemClock;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -67,6 +68,8 @@ public class BeautyTipFragment extends Fragment {
     String order;
     private User user;
 
+    private long lastClickTime = 0;
+
     public static final String TAG_COMMENT = "commentdialog";
     public static final String TAG_BEAUTY_TIP_ID = "beautytipid";
     public static final String TAG_USER_PROFILE = "userprofile";
@@ -114,8 +117,6 @@ public class BeautyTipFragment extends Fragment {
                     public void onFail(NetworkRequest<NetworkResult<List<BeautyTip>>> request, int errorCode, String errorMessage, Throwable e) {
                     }
                 });
-
-                //onStart();
             }
 
             @Override
@@ -129,7 +130,9 @@ public class BeautyTipFragment extends Fragment {
         mAdapter.setOnAdapterItemClickListener(new BeautyTipAdapter.OnAdapterItemClickListener() {
             @Override
             public void onAdapterItemClick(View view, BeautyTip beautyTip, int position) {
-                //   BeautyTipInfoRequest request = new BeautyTipInfoRequest(getContext(),mAdapter.getItemId(position))
+                if (SystemClock.elapsedRealtime() - lastClickTime < 1000) return;
+                lastClickTime = SystemClock.elapsedRealtime();
+
                 Intent intent = new Intent(getContext(), BeautyTipDetailActivity.class);
                 intent.putExtra(TAG_BEAUTY_TIP_ID, beautyTip.getId());
                 startActivity(intent);
@@ -139,6 +142,9 @@ public class BeautyTipFragment extends Fragment {
         mAdapter.setOnAdapterCommentClickListener(new BeautyTipAdapter.OnAdapterCommentClickListener() {
             @Override
             public void onAdapterCommentClick(View view, BeautyTip beautyTip, Comment comment) {
+                if (SystemClock.elapsedRealtime() - lastClickTime < 1000) return;
+                lastClickTime = SystemClock.elapsedRealtime();
+
                 final long beautyTipId = beautyTip.getId();
 
                 MyInfoRequest request = new MyInfoRequest(getContext());
@@ -173,7 +179,9 @@ public class BeautyTipFragment extends Fragment {
         mAdapter.setOnAdapterLikeClickListener(new BeautyTipAdapter.OnAdapterLikeClickListener() {
             @Override
             public void onAdapterLikeClick(View view, BeautyTip beautyTip, final int position) {
-                onLikeImageClick(view, beautyTip);
+                if (SystemClock.elapsedRealtime() - lastClickTime < 1000) return;
+                lastClickTime = SystemClock.elapsedRealtime();
+
                 String like;
                 if (beautyTip.isLike()) like = "false";
                 else like = "true";
@@ -204,14 +212,6 @@ public class BeautyTipFragment extends Fragment {
         return view;
     }
 
-    public void onLikeImageClick(View view, BeautyTip beautyTip) {
-        if (beautyTip.isLike() == false) {
-            view.setSelected(true);
-        } else {
-            view.setSelected(false);
-        }
-    }
-
     private void init() {
         String[] items = getResources().getStringArray(R.array.beautytip_sort);
         sAdapter.addAll(items);
@@ -219,20 +219,13 @@ public class BeautyTipFragment extends Fragment {
 
     @OnClick(R.id.btn_set)
     public void onSetClick(View view) {
-        Message msg = setHandler.obtainMessage(0);
-        setHandler.removeMessages(0);
-        setHandler.sendMessageDelayed(msg, 1000);
-    }
+        if (SystemClock.elapsedRealtime() - lastClickTime < 1000) return;
+        lastClickTime = SystemClock.elapsedRealtime();
 
-    private Handler setHandler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            Intent intent = new Intent(getContext(), BeautyTipWriteActivity.class);
-            intent.putExtra(BeautyTipWriteActivity.TAG_SEARCH_TYPE, BeautyTipWriteActivity.INDEX_TYPE_FRAGMENT);
-            startActivity(intent);
-        }
-    };
+        Intent intent = new Intent(getContext(), BeautyTipWriteActivity.class);
+        intent.putExtra(BeautyTipWriteActivity.TAG_SEARCH_TYPE, BeautyTipWriteActivity.INDEX_TYPE_FRAGMENT);
+        startActivity(intent);
+    }
 
     public static final String keyword = "keyword";
     public static final String query = "";

@@ -10,12 +10,14 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.Message;
+import android.os.SystemClock;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -66,8 +68,8 @@ public class BeautyTipWriteActivity extends AppCompatActivity {
     @BindView(R.id.btn_set)
     Button writeButton;
 
-    Intent intent;
     long id;
+    private long lastClickTime = 0;
 
     public final static String TAG_SEARCH_TYPE = "searchtype";
     public final static int INDEX_TYPE_NONE = 0;
@@ -90,25 +92,6 @@ public class BeautyTipWriteActivity extends AppCompatActivity {
 
         toolbarTitleView.setText(getResources().getString(R.string.toolbar_title_beauty_tip_write));
         writeButton.setText(R.string.button_text);
-
-        camera.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Message msg = cameraHandler.obtainMessage(0);
-                cameraHandler.removeMessages(0);
-                cameraHandler.sendMessageDelayed(msg, 1000);
-            }
-
-            private Handler cameraHandler = new Handler() {
-                @Override
-                public void handleMessage(Message msg) {
-                    super.handleMessage(msg);
-                    Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    intent.setType("image/*");
-                    startActivityForResult(intent, RC_GET_IMAGE);
-                }
-            };
-        });
 
         checkPermission();
     }
@@ -162,77 +145,15 @@ public class BeautyTipWriteActivity extends AppCompatActivity {
         }
     }
 
-    @OnClick(R.id.btn_set)
-    public void onSetClick(View view) {
-        Message msg = setHandler.obtainMessage(0);
-        setHandler.removeMessages(0);
-        setHandler.sendMessageDelayed(msg, 1000);
+    @OnClick(R.id.btn_camera)
+    public void onCameraClick(View view) {
+        if (SystemClock.elapsedRealtime() - lastClickTime < 1000) return;
+        lastClickTime = SystemClock.elapsedRealtime();
+
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        intent.setType("image/*");
+        startActivityForResult(intent, RC_GET_IMAGE);
     }
-
-    private Handler setHandler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            Intent intent = getIntent();
-            int code = intent.getIntExtra(TAG_SEARCH_TYPE, 0);
-
-            switch (code) {
-                case INDEX_TYPE_NONE:
-                default:
-                    Toast.makeText(BeautyTipWriteActivity.this, "잘못된 접근입니다.", Toast.LENGTH_SHORT).show();
-                    finish();
-                    return;
-
-                case INDEX_TYPE_DETAIL:
-                    id = intent.getLongExtra(BeautyTipDetailActivity.TAG_BEAUTY_TIP_ID, 0);
-
-                    UpdateBeautyTipRequest request = new UpdateBeautyTipRequest(getBaseContext(), "" + id, titleView.getText().toString(), contentView.getText().toString(), uploadFile);
-                    NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<BeautyTip>>() {
-                        @Override
-                        public void onSuccess(NetworkRequest<NetworkResult<BeautyTip>> request, NetworkResult<BeautyTip> result) {
-                            if (result.getCode() == 1) {
-                                BeautyTip beautyTip = result.getResult();
-                                titleView.setText(beautyTip.getTitle());
-                                contentView.setText(beautyTip.getContent());
-                                Glide.with(imageView.getContext())
-                                        .load(uploadFile)
-                                        .into(imageView);
-                                finish();
-                            }
-                            if (result.getCode() != 1) {
-                                Toast.makeText(BeautyTipWriteActivity.this, "수정할 내용을 입력하세요.", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-
-                        @Override
-                        public void onFail(NetworkRequest<NetworkResult<BeautyTip>> request, int errorCode, String errorMessage, Throwable e) {
-                            Toast.makeText(BeautyTipWriteActivity.this, "수정할 내용을 입력하세요.", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                    return;
-
-                case INDEX_TYPE_FRAGMENT:
-                    InsertBeautyTipRequest beautyTipRequest = new InsertBeautyTipRequest(getBaseContext(), titleView.getText().toString(), contentView.getText().toString(), uploadFile);
-                    NetworkManager.getInstance().getNetworkData(beautyTipRequest, new NetworkManager.OnResultListener<NetworkResult<BeautyTip>>() {
-                        @Override
-                        public void onSuccess(NetworkRequest<NetworkResult<BeautyTip>> request, NetworkResult<BeautyTip> result) {
-                            if (result.getCode() == 1) {
-                                BeautyTip tip = result.getResult();
-                                finish();
-                            }
-                            if (result.getCode() != 1) {
-                                Toast.makeText(BeautyTipWriteActivity.this, "내용을 입력하세요.", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-
-                        @Override
-                        public void onFail(NetworkRequest<NetworkResult<BeautyTip>> request, int errorCode, String errorMessage, Throwable e) {
-                            Toast.makeText(BeautyTipWriteActivity.this, "내용을 입력하세요.", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-            }
-        }
-    };
 
     File uploadFile = null;
 
@@ -256,6 +177,81 @@ public class BeautyTipWriteActivity extends AppCompatActivity {
         }
     }
 
+    @OnClick(R.id.btn_set)
+    public void onSetClick(View view) {
+        if (SystemClock.elapsedRealtime() - lastClickTime < 1000) return;
+        lastClickTime = SystemClock.elapsedRealtime();
+
+        if (TextUtils.isEmpty(titleView.getText().toString())) {
+            Toast.makeText(BeautyTipWriteActivity.this, "제목을 입력해주세요.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (TextUtils.isEmpty(contentView.getText().toString())) {
+            Toast.makeText(BeautyTipWriteActivity.this, "내용을 입력해주세요.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (uploadFile == null) {
+            Toast.makeText(BeautyTipWriteActivity.this, "등록된 사진이 없습니다.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        Intent intent = getIntent();
+        int code = intent.getIntExtra(TAG_SEARCH_TYPE, 0);
+
+        switch (code) {
+            case INDEX_TYPE_NONE:
+            default:
+                Toast.makeText(BeautyTipWriteActivity.this, "잘못된 접근입니다.", Toast.LENGTH_SHORT).show();
+                finish();
+                return;
+
+            case INDEX_TYPE_DETAIL:
+                id = intent.getLongExtra(BeautyTipDetailActivity.TAG_BEAUTY_TIP_ID, 0);
+
+                UpdateBeautyTipRequest request = new UpdateBeautyTipRequest(getBaseContext(), "" + id, titleView.getText().toString(), contentView.getText().toString(), uploadFile);
+                NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<BeautyTip>>() {
+                    @Override
+                    public void onSuccess(NetworkRequest<NetworkResult<BeautyTip>> request, NetworkResult<BeautyTip> result) {
+                        if (result.getCode() == 1) {
+                            BeautyTip beautyTip = result.getResult();
+                            titleView.setText(beautyTip.getTitle());
+                            contentView.setText(beautyTip.getContent());
+                            Glide.with(imageView.getContext())
+                                    .load(uploadFile)
+                                    .into(imageView);
+                            finish();
+                        }
+                    }
+
+                    @Override
+                    public void onFail(NetworkRequest<NetworkResult<BeautyTip>> request, int errorCode, String errorMessage, Throwable e) {
+
+                    }
+                });
+                return;
+
+            case INDEX_TYPE_FRAGMENT:
+                InsertBeautyTipRequest beautyTipRequest = new InsertBeautyTipRequest(getBaseContext(), titleView.getText().toString(), contentView.getText().toString(), uploadFile);
+                NetworkManager.getInstance().getNetworkData(beautyTipRequest, new NetworkManager.OnResultListener<NetworkResult<BeautyTip>>() {
+                    @Override
+                    public void onSuccess(NetworkRequest<NetworkResult<BeautyTip>> request, NetworkResult<BeautyTip> result) {
+                        if (result.getCode() == 1) {
+                            BeautyTip tip = result.getResult();
+                            finish();
+                        }
+                    }
+
+                    @Override
+                    public void onFail(NetworkRequest<NetworkResult<BeautyTip>> request, int errorCode, String errorMessage, Throwable e) {
+
+                    }
+                });
+                return;
+        }
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.actionbar_cancel, menu);
@@ -264,18 +260,15 @@ public class BeautyTipWriteActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        if (SystemClock.elapsedRealtime() - lastClickTime < 1000) return false;
+        lastClickTime = SystemClock.elapsedRealtime();
+
         if (item.getItemId() == R.id.menu_cancel) {
             finish();
             return true;
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-
     }
 }
 

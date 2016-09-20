@@ -72,13 +72,9 @@ public class MyGcmListenerService extends GcmListenerService {
                 public void onSuccess(NetworkRequest<NetworkResult<List<Notify>>> request, NetworkResult<List<Notify>> result) {
                     if (result.getCode() == 1) {
                         List<Notify> notifies = result.getResult();
-
-                        for (Notify n : notifies) {
-                            DBManager.getInstance().insertNotify(type, n.getBeautyTipId().getKey().getRaw().getId(), n.getMessage(), n.getDate());
-                        }
-
-                        Notify notify = notifies.get(notifies.size() - 1);
-                        sendNotification(notify);
+                        Notify n = notifies.get(notifies.size() - 1);
+                        DBManager.getInstance().insertNotify(type, n.getBeautyTipId().getKey().getRaw().getId(), n.getMessage(), n.getDate());
+                        sendNotification(n);
 
                         Calendar newLastDateTemp = Calendar.getInstance();
                         DateCalculator calculator = new DateCalculator();

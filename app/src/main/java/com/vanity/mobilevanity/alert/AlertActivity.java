@@ -2,6 +2,7 @@ package com.vanity.mobilevanity.alert;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -57,6 +58,8 @@ public class AlertActivity extends AppCompatActivity {
     List<Notify> notifyList = new ArrayList<>();
     DateCalculator calculator = new DateCalculator();
 
+    private long lastClickTime = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,6 +75,9 @@ public class AlertActivity extends AppCompatActivity {
         mAdapter.setOnAdapterItemClickListener(new AlertAdapter.OnAdapterItemClickListener() {
             @Override
             public void onAdapterItemClick(View view, Notify item, int position) {
+                if (SystemClock.elapsedRealtime() - lastClickTime < 1000) return;
+                lastClickTime = SystemClock.elapsedRealtime();
+
                 if (item.getType().equals("useby")) {
                     Intent intent = new Intent(AlertActivity.this, CosmeticDetailActivity.class);
                     intent.putExtra(CosmeticDetailActivity.TAG_COSMETIC_ITEM_ID, item.getContentId());
@@ -99,6 +105,9 @@ public class AlertActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        if (SystemClock.elapsedRealtime() - lastClickTime < 1000) return false;
+        lastClickTime = SystemClock.elapsedRealtime();
+
         if (item.getItemId() == R.id.menu_cancel) {
             finish();
             return true;

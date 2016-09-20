@@ -3,6 +3,7 @@ package com.vanity.mobilevanity.beautytip;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
+import android.os.SystemClock;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -61,6 +62,8 @@ public class BeautyTipDetailActivity extends AppCompatActivity {
     boolean like = false;
     User user;
 
+    private long lastClickTime = 0;
+
     public static final String TAG_BEAUTY_TIP_ID = "beautytipid";
 
     @Override
@@ -71,7 +74,7 @@ public class BeautyTipDetailActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         toolbarTitleView.setText(getResources().getString(R.string.toolbar_title_beauty_tip_detail));
 
@@ -79,6 +82,9 @@ public class BeautyTipDetailActivity extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (SystemClock.elapsedRealtime() - lastClickTime < 1000) return;
+                lastClickTime = SystemClock.elapsedRealtime();
+
                 finish();
             }
         });
@@ -104,91 +110,12 @@ public class BeautyTipDetailActivity extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
-    @OnClick(R.id.btn_like)
-    public void onLikeClick() {
-        if (likeButton.isSelected() == false) {
-            Message msg = likeHandler.obtainMessage(0);
-            likeHandler.removeMessages(0);
-            likeHandler.sendMessageDelayed(msg, 1000);
-        }
-    }
-
-    private Handler likeHandler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-
-            String isLike;
-            if (like) isLike = "false";
-            else isLike = "true";
-
-            UpdateLikeRequest request = new UpdateLikeRequest(getBaseContext(), "" + beautyTipId, isLike);
-            NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<BeautyTip>>() {
-                @Override
-                public void onSuccess(NetworkRequest<NetworkResult<BeautyTip>> request, NetworkResult<BeautyTip> result) {
-                    if (result.getCode()==1) {
-                        BeautyTip tip = result.getResult();
-                        like = tip.isLike();
-
-                        if (like)
-                            likeButton.setImageResource(R.drawable.btn_like_default);
-                        else likeButton.setImageResource(R.drawable.btn_like_default_gray);
-                    }
-                }
-
-                @Override
-                public void onFail(NetworkRequest<NetworkResult<BeautyTip>> request, int errorCode, String errorMessage, Throwable e) {
-                }
-            });
-        }
-    };
-
-
-    @OnClick(R.id.btn_comment)
-    public void onCommentClick() {
-        Message msg = commentHandler.obtainMessage(0);
-        commentHandler.removeMessages(0);
-        commentHandler.sendMessageDelayed(msg, 1000);
-    }
-
-    private Handler commentHandler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-
-            MyInfoRequest request = new MyInfoRequest(BeautyTipDetailActivity.this);
-            NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<User>>() {
-                @Override
-                public void onSuccess(NetworkRequest<NetworkResult<User>> request, NetworkResult<User> result) {
-                    if (result.getCode() == 1) {
-                        user = result.getResult();
-
-                        FragmentManager fm = getSupportFragmentManager();
-                        BeautyTipCommentFragment dialog = new BeautyTipCommentFragment();
-
-                        Bundle args = new Bundle();
-                        args.putLong(TAG_BEAUTY_TIP_ID, beautyTipId);
-                        args.putString(BeautyTipFragment.TAG_USER_PROFILE, user.getUserProfile());
-                        args.putString(BeautyTipFragment.TAG_USER_NICKNAME, user.getUserNickName());
-
-                        dialog.setArguments(args);
-                        dialog.show(fm, BeautyTipFragment.TAG_COMMENT);
-                    }
-
-                }
-
-                @Override
-                public void onFail(NetworkRequest<NetworkResult<User>> request, int errorCode, String errorMessage, Throwable e) {
-
-                }
-            });
-        }
-    };
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
+        if (SystemClock.elapsedRealtime() - lastClickTime < 1000) return false;
+        lastClickTime = SystemClock.elapsedRealtime();
 
+        switch (item.getItemId()) {
             case R.id.menu_update:
                 Intent intent = new Intent(BeautyTipDetailActivity.this, BeautyTipWriteActivity.class);
                 intent.putExtra(BeautyTipWriteActivity.TAG_SEARCH_TYPE, BeautyTipWriteActivity.INDEX_TYPE_DETAIL);
@@ -216,11 +143,66 @@ public class BeautyTipDetailActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
+    @OnClick(R.id.btn_like)
+    public void onLikeClick() {
+        if (SystemClock.elapsedRealtime() - lastClickTime < 1000) return;
+        lastClickTime = SystemClock.elapsedRealtime();
 
+        String isLike;
+        if (like) isLike = "false";
+        else isLike = "true";
 
+        UpdateLikeRequest request = new UpdateLikeRequest(getBaseContext(), "" + beautyTipId, isLike);
+        NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<BeautyTip>>() {
+            @Override
+            public void onSuccess(NetworkRequest<NetworkResult<BeautyTip>> request, NetworkResult<BeautyTip> result) {
+                if (result.getCode()==1) {
+                    BeautyTip tip = result.getResult();
+                    like = tip.isLike();
+
+                    if (like)
+                        likeButton.setImageResource(R.drawable.btn_like_default);
+                    else likeButton.setImageResource(R.drawable.btn_like_default_gray);
+                }
+            }
+
+            @Override
+            public void onFail(NetworkRequest<NetworkResult<BeautyTip>> request, int errorCode, String errorMessage, Throwable e) {
+            }
+        });
+    }
+
+    @OnClick(R.id.btn_comment)
+    public void onCommentClick() {
+        if (SystemClock.elapsedRealtime() - lastClickTime < 1000) return;
+        lastClickTime = SystemClock.elapsedRealtime();
+
+        MyInfoRequest request = new MyInfoRequest(BeautyTipDetailActivity.this);
+        NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<User>>() {
+            @Override
+            public void onSuccess(NetworkRequest<NetworkResult<User>> request, NetworkResult<User> result) {
+                if (result.getCode() == 1) {
+                    user = result.getResult();
+
+                    FragmentManager fm = getSupportFragmentManager();
+                    BeautyTipCommentFragment dialog = new BeautyTipCommentFragment();
+
+                    Bundle args = new Bundle();
+                    args.putLong(TAG_BEAUTY_TIP_ID, beautyTipId);
+                    args.putString(BeautyTipFragment.TAG_USER_PROFILE, user.getUserProfile());
+                    args.putString(BeautyTipFragment.TAG_USER_NICKNAME, user.getUserNickName());
+
+                    dialog.setArguments(args);
+                    dialog.show(fm, BeautyTipFragment.TAG_COMMENT);
+                }
+
+            }
+
+            @Override
+            public void onFail(NetworkRequest<NetworkResult<User>> request, int errorCode, String errorMessage, Throwable e) {
+
+            }
+        });
     }
 
     private void getBeautyTipInfo() {
