@@ -3,6 +3,8 @@ package com.vanity.mobilevanity.register;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
+import android.os.SystemClock;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -16,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.vanity.mobilevanity.BaseActivity;
 import com.vanity.mobilevanity.MainActivity;
 import com.vanity.mobilevanity.R;
 import com.vanity.mobilevanity.cosmetic.CosmeticListActivity;
@@ -43,7 +46,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class RegisterDetailActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
+public class RegisterDetailActivity extends BaseActivity implements DatePickerDialog.OnDateSetListener {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -92,6 +95,8 @@ public class RegisterDetailActivity extends AppCompatActivity implements DatePic
     private int category = 0;
     private int tabpos = -1;
 
+    private long lastClickTime = 0;
+
     public final static String TAG_REQUEST_CODE = "requestcode";
     public final static String TAG_SEARCH_TYPE = "searchtype";
     public final static int INDEX_TYPE_NONE = 0;
@@ -123,6 +128,9 @@ public class RegisterDetailActivity extends AppCompatActivity implements DatePic
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        if (SystemClock.elapsedRealtime() - lastClickTime < 1000) return false;
+        lastClickTime = SystemClock.elapsedRealtime();
+
         switch (item.getItemId()) {
             case R.id.menu_cancel :
                 if (requestCode == HomeFragment.KEY_HOME) {
@@ -147,26 +155,20 @@ public class RegisterDetailActivity extends AppCompatActivity implements DatePic
 
     @OnClick(R.id.btn_edit_register)
     public void onEditClick(View view) {
-        Message msg = editRegisterHandler.obtainMessage(0);
-        editRegisterHandler.removeMessages(0);
-        editRegisterHandler.sendMessageDelayed(msg, 1000);
+        if (SystemClock.elapsedRealtime() - lastClickTime < 1000) return;
+        lastClickTime = SystemClock.elapsedRealtime();
+
+        Calendar now = Calendar.getInstance();
+        DatePickerDialog dpd = DatePickerDialog.newInstance(
+                RegisterDetailActivity.this,
+                now.get(Calendar.YEAR),
+                now.get(Calendar.MONTH),
+                now.get(Calendar.DAY_OF_MONTH)
+        );
+
+        dpd.setAccentColor(ContextCompat.getColor(this, R.color.colorMain));
+        dpd.show(getFragmentManager(), "Datepickerdialog");
     }
-
-    private Handler editRegisterHandler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            Calendar now = Calendar.getInstance();
-            DatePickerDialog dpd = DatePickerDialog.newInstance(
-                    RegisterDetailActivity.this,
-                    now.get(Calendar.YEAR),
-                    now.get(Calendar.MONTH),
-                    now.get(Calendar.DAY_OF_MONTH)
-            );
-
-            dpd.show(getFragmentManager(), "Datepickerdialog");
-        }
-    };
 
     @Override
     public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
@@ -177,68 +179,60 @@ public class RegisterDetailActivity extends AppCompatActivity implements DatePic
 
     @OnClick(R.id.btn_register)
     public void onRegisterClick(View view) {
-        Message msg = registerHandler.obtainMessage(0);
-        registerHandler.removeMessages(0);
-        registerHandler.sendMessageDelayed(msg, 1000);
-    }
+        if (SystemClock.elapsedRealtime() - lastClickTime < 1000) return;
+        lastClickTime = SystemClock.elapsedRealtime();
 
-    private Handler registerHandler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
+        if (cosmetic == null) {
+            Toast.makeText(RegisterDetailActivity.this, "올바른 접근이 아닙니다.", Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
 
-            if (cosmetic == null) {
-                Toast.makeText(RegisterDetailActivity.this, "올바른 접근이 아닙니다.", Toast.LENGTH_SHORT).show();
-                finish();
-                return;
-            }
+        Calendar calendar = Calendar.getInstance();
+        int year = Integer.parseInt(registerYearView.getText().toString());
+        int month = Integer.parseInt(registerMonthView.getText().toString()) - 1;
+        int date = Integer.parseInt(registerDayView.getText().toString());
+        calendar.set(year, month, date);
 
-            Calendar calendar = Calendar.getInstance();
-            int year = Integer.parseInt(registerYearView.getText().toString());
-            int month = Integer.parseInt(registerMonthView.getText().toString()) - 1;
-            int date = Integer.parseInt(registerDayView.getText().toString());
-            calendar.set(year, month, date);
+        DateCalculator calculator = new DateCalculator();
+        String dateAdded = calculator.CalToStr(calendar);
+        String id = cosmetic.getId() + "";
+        String cosmeticTerm = cosmetic.getProduct().getUseBy() + "";
 
-            DateCalculator calculator = new DateCalculator();
-            String dateAdded = calculator.CalToStr(calendar);
-            String id = cosmetic.getId() + "";
-            String cosmeticTerm = cosmetic.getProduct().getUseBy() + "";
+        InsertCosmeticItemRequest request = new InsertCosmeticItemRequest(RegisterDetailActivity.this, id, dateAdded, cosmeticTerm);
+        NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<CosmeticItem>>() {
+            @Override
+            public void onSuccess(NetworkRequest<NetworkResult<CosmeticItem>> request, NetworkResult<CosmeticItem> result) {
+                if (result.getCode() == 1) {
+                    CosmeticItem citem = result.getResult();
+                    long sid = citem.getId();
+                    long cid = citem.getCosmetic().getId();
+                    String dateAdded = citem.getDateAdded();
+                    int term = citem.getCosmetic().getProduct().getUseBy();
+                    String productName = citem.getCosmetic().getProduct().getName();
+                    DBManager.getInstance().insertCosmeticItem(sid, cid, productName, dateAdded, term);
+                    Toast.makeText(RegisterDetailActivity.this, "등록되었습니다.", Toast.LENGTH_SHORT).show();
 
-            InsertCosmeticItemRequest request = new InsertCosmeticItemRequest(RegisterDetailActivity.this, id, dateAdded, cosmeticTerm);
-            NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<CosmeticItem>>() {
-                @Override
-                public void onSuccess(NetworkRequest<NetworkResult<CosmeticItem>> request, NetworkResult<CosmeticItem> result) {
-                    if (result.getCode() == 1) {
-                        CosmeticItem citem = result.getResult();
-                        long sid = citem.getId();
-                        long cid = citem.getCosmetic().getId();
-                        String dateAdded = citem.getDateAdded();
-                        int term = citem.getCosmetic().getProduct().getUseBy();
-                        String productName = citem.getCosmetic().getProduct().getName();
-                        DBManager.getInstance().insertCosmeticItem(sid, cid, productName, dateAdded, term);
-                        Toast.makeText(RegisterDetailActivity.this, "등록되었습니다.", Toast.LENGTH_SHORT).show();
-
-                        if (requestCode == HomeFragment.KEY_HOME) {
-                            Intent intent = new Intent(RegisterDetailActivity.this, MainActivity.class);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            startActivity(intent);
-                        } else if (requestCode == CosmeticListActivity.KEY_COSMETIC_LIST) {
-                            Intent intent = new Intent(RegisterDetailActivity.this, CosmeticListActivity.class);
-                            intent.putExtra(CosmeticListActivity.TAG_CATEGORY, category);
-                            intent.putExtra(CosmeticListActivity.TAG_TAB_POS, tabpos);
-                            intent.addFlags(intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            startActivity(intent);
-                        }
+                    if (requestCode == HomeFragment.KEY_HOME) {
+                        Intent intent = new Intent(RegisterDetailActivity.this, MainActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
+                    } else if (requestCode == CosmeticListActivity.KEY_COSMETIC_LIST) {
+                        Intent intent = new Intent(RegisterDetailActivity.this, CosmeticListActivity.class);
+                        intent.putExtra(CosmeticListActivity.TAG_CATEGORY, category);
+                        intent.putExtra(CosmeticListActivity.TAG_TAB_POS, tabpos);
+                        intent.addFlags(intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
                     }
                 }
+            }
 
-                @Override
-                public void onFail(NetworkRequest<NetworkResult<CosmeticItem>> request, int errorCode, String errorMessage, Throwable e) {
-                    Toast.makeText(RegisterDetailActivity.this, errorCode + " : " + errorMessage, Toast.LENGTH_SHORT).show();
-                }
-            });
-        }
-    };
+            @Override
+            public void onFail(NetworkRequest<NetworkResult<CosmeticItem>> request, int errorCode, String errorMessage, Throwable e) {
+                Toast.makeText(RegisterDetailActivity.this, errorCode + " : " + errorMessage, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 
     @Override
     protected void onStart() {

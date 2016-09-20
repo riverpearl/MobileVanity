@@ -4,6 +4,7 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.os.SystemClock;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTabHost;
 import android.support.v4.app.FragmentTransaction;
@@ -32,7 +33,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
     @BindView(R.id.tabhost)
     FragmentTabHost tabHost;
@@ -46,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
     public final static String TAG_TAB_MYPAGE = "mypage";
 
     AlarmManager alarmManager;
+    private long lastClickTime = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,6 +113,9 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        if (SystemClock.elapsedRealtime() - lastClickTime < 1000) return false;
+        lastClickTime = SystemClock.elapsedRealtime();
+
         if (item.getItemId() == R.id.menu_alert) {
             Intent intent = new Intent(MainActivity.this, AlertActivity.class);
             startActivity(intent);
@@ -122,6 +127,9 @@ public class MainActivity extends AppCompatActivity {
 
     @OnClick(R.id.logo)
     public void onLogoClick(View view) {
+        if (SystemClock.elapsedRealtime() - lastClickTime < 1000) return;
+        lastClickTime = SystemClock.elapsedRealtime();
+
         tabHost.setCurrentTabByTag(TAG_TAB_HOME);
     }
 }

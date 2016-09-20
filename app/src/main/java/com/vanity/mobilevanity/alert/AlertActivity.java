@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.vanity.mobilevanity.BaseActivity;
 import com.vanity.mobilevanity.R;
 import com.vanity.mobilevanity.adapter.AlertAdapter;
 import com.vanity.mobilevanity.beautytip.BeautyTipDetailActivity;
@@ -43,7 +44,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class AlertActivity extends AppCompatActivity {
+public class AlertActivity extends BaseActivity {
 
     @BindView(R.id.alert_list)
     RecyclerView listView;

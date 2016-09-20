@@ -1,6 +1,7 @@
 package com.vanity.mobilevanity.setting;
 
 import android.content.Intent;
+import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.SwitchCompat;
@@ -14,6 +15,7 @@ import android.widget.ListView;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import com.vanity.mobilevanity.BaseActivity;
 import com.vanity.mobilevanity.R;
 import com.vanity.mobilevanity.SplashActivity;
 import com.vanity.mobilevanity.adapter.SettingAdapter;
@@ -27,7 +29,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class SettingActivity extends AppCompatActivity {
+public class SettingActivity extends BaseActivity {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -41,6 +43,7 @@ public class SettingActivity extends AppCompatActivity {
     Switch switchView;
 
     SettingAdapter sAdapter;
+    private long lastClickTime = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +76,9 @@ public class SettingActivity extends AppCompatActivity {
         settingView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                if (SystemClock.elapsedRealtime() - lastClickTime < 1000) return;
+                lastClickTime = SystemClock.elapsedRealtime();
+
                 Intent intent;
 
                 switch (position) {
@@ -119,6 +125,9 @@ public class SettingActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        if (SystemClock.elapsedRealtime() - lastClickTime < 1000) return false;
+        lastClickTime = SystemClock.elapsedRealtime();
+
         if (item.getItemId() == R.id.menu_cancel) {
             finish();
             return true;

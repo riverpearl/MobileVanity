@@ -68,10 +68,10 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/text_cosmetic_name"
             android:layout_centerHorizontal="true"
-            android:layout_marginRight="@dimen/activity_register_detail_cosmetic_name_margin_right"
+            android:layout_marginRight="@dimen/view_cosmetic_cosmetic_color_margin_right"
             android:text="Color Code"
             android:textColor="@color/colorSub"
-            android:textSize="@dimen/activity_register_detail_cosmetic_color_font_size" />
+            android:textSize="@dimen/activity_register_detail_cosmetic_name_font_size" />
 
         <TextView
             android:id="@+id/text_color_name"
@@ -82,7 +82,7 @@
             android:layout_toRightOf="@+id/text_color_code"
             android:text="Color Name"
             android:textColor="@color/colorSub"
-            android:textSize="@dimen/activity_register_detail_cosmetic_color_font_size" />
+            android:textSize="@dimen/activity_register_detail_cosmetic_name_font_size" />
 
         <TextView
             android:id="@+id/text_cosmetic_name"
@@ -94,7 +94,7 @@
             android:layout_marginBottom="@dimen/activity_register_detail_cosmetic_color_name_margin_top"
             android:text="Cosmetic Name"
             android:textColor="@color/colorSub"
-            android:textSize="@dimen/activity_register_detail_cosmetic_name_font_size" />
+            android:textSize="@dimen/activity_register_detail_cosmetic_color_font_size" />
 
         <ImageView
             android:layout_width="match_parent"
@@ -384,7 +384,7 @@
         android:paddingTop="@dimen/activity_cosmetic_detail_sale_padding"
         android:text="@string/activity_cosmetic_detail_sale_guide_message"
         android:textColor="@android:color/white"
-        android:textSize="@dimen/list_color_font_size" />
+        android:textSize="@dimen/fragment_sale_info_font_size" />
 
     <LinearLayout
         android:layout_width="match_parent"

@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
+import android.os.SystemClock;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
@@ -24,6 +25,7 @@ import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.vanity.mobilevanity.BaseActivity;
 import com.vanity.mobilevanity.R;
 import com.vanity.mobilevanity.adapter.CosmeticAdapter;
 import com.vanity.mobilevanity.data.Brand;
@@ -49,7 +51,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class CosmeticListActivity extends AppCompatActivity {
+public class CosmeticListActivity extends BaseActivity {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -70,6 +72,7 @@ public class CosmeticListActivity extends AppCompatActivity {
 
     int category = 0;
     int tabpos = 0;
+    private long lastClickTime = 0;
 
     public final static String TAG_CATEGORY = "category";
     public final static String TAG_TAB_POS = "tabpos";
@@ -91,6 +94,7 @@ public class CosmeticListActivity extends AppCompatActivity {
         tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
+                NetworkManager.getInstance().cancelAll();
                 mAdapter.clear();
                 tabpos = tab.getPosition();
                 getCosmeticItemList();
@@ -104,6 +108,7 @@ public class CosmeticListActivity extends AppCompatActivity {
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
+                NetworkManager.getInstance().cancelAll();
                 mAdapter.clear();
                 tabpos = tab.getPosition();
                 getCosmeticItemList();
@@ -114,6 +119,9 @@ public class CosmeticListActivity extends AppCompatActivity {
         mAdapter.setOnAdapterItemClickListener(new CosmeticAdapter.OnAdapterItemClickListener() {
             @Override
             public void onAdapterItemClick(View view, CosmeticItem data, int position) {
+                if (SystemClock.elapsedRealtime() - lastClickTime < 1000) return;
+                lastClickTime = SystemClock.elapsedRealtime();
+
                 Intent intent = new Intent(CosmeticListActivity.this, CosmeticDetailActivity.class);
                 intent.putExtra(CosmeticDetailActivity.TAG_COSMETIC_ITEM_ID, data.getId());
                 startActivity(intent);
@@ -122,6 +130,9 @@ public class CosmeticListActivity extends AppCompatActivity {
         mAdapter.setOnAdapterItemLongClickListener(new CosmeticAdapter.OnAdapterItemLongClickListener() {
             @Override
             public void onAdapterItemLongClick(View view, CosmeticItem data, int position) {
+                if (SystemClock.elapsedRealtime() - lastClickTime < 1000) return;
+                lastClickTime = SystemClock.elapsedRealtime();
+
                 AlertDialog.Builder builder = new AlertDialog.Builder(CosmeticListActivity.this);
                 builder.setTitle("등록된 제품 삭제");
                 builder.setMessage("삭제하시겠습니까?");
@@ -166,13 +177,12 @@ public class CosmeticListActivity extends AppCompatActivity {
                         mAdapter.clear();
                         mAdapter.addAll(cosmetic);
                     }
-
                 }
             }
 
             @Override
             public void onFail(NetworkRequest<NetworkResult<List<CosmeticItem>>> request, int errorCode, String errorMessage, Throwable e) {
-                Toast.makeText(CosmeticListActivity.this, "fail", Toast.LENGTH_SHORT).show();
+
             }
         });
     }
@@ -224,22 +234,15 @@ public class CosmeticListActivity extends AppCompatActivity {
 
     @OnClick(R.id.fab_add_cosmetic)
     public void onFloatingClick(View view) {
-        Message msg = addCosmeticHandler.obtainMessage(0);
-        addCosmeticHandler.removeMessages(0);
-        addCosmeticHandler.sendMessageDelayed(msg, 1000);
-    }
+        if (SystemClock.elapsedRealtime() - lastClickTime < 1000) return;
+        lastClickTime = SystemClock.elapsedRealtime();
 
-    private Handler addCosmeticHandler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            Intent intent = new Intent(CosmeticListActivity.this, RegisterBarcodeActivity.class);
-            intent.putExtra(RegisterSearchActivity.TAG_REQUEST_CODE, KEY_COSMETIC_LIST);
-            intent.putExtra(TAG_CATEGORY, category);
-            intent.putExtra(TAG_TAB_POS, tabpos);
-            startActivity(intent);
-        }
-    };
+        Intent intent = new Intent(CosmeticListActivity.this, RegisterBarcodeActivity.class);
+        intent.putExtra(RegisterSearchActivity.TAG_REQUEST_CODE, KEY_COSMETIC_LIST);
+        intent.putExtra(TAG_CATEGORY, category);
+        intent.putExtra(TAG_TAB_POS, tabpos);
+        startActivity(intent);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -249,6 +252,9 @@ public class CosmeticListActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        if (SystemClock.elapsedRealtime() - lastClickTime < 1000) return false;
+        lastClickTime = SystemClock.elapsedRealtime();
+
         if (item.getItemId() == R.id.menu_cancel) {
             finish();
             return true;

@@ -1,5 +1,6 @@
 package com.vanity.mobilevanity.setting;
 
+import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,6 +11,7 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.vanity.mobilevanity.BaseActivity;
 import com.vanity.mobilevanity.R;
 import com.vanity.mobilevanity.adapter.FAQAdapter;
 import com.vanity.mobilevanity.data.FAQ;
@@ -24,7 +26,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class FAQActivity extends AppCompatActivity {
+public class FAQActivity extends BaseActivity {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -36,6 +38,7 @@ public class FAQActivity extends AppCompatActivity {
     RecyclerView listView;
 
     FAQAdapter faqAdapter;
+    private long lastClickTime = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +49,11 @@ public class FAQActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         toolbarTitleView.setText(getResources().getString(R.string.toolbar_title_faq));
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
 
         FAQListRequest request = new FAQListRequest(this);
         NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<List<FAQ>>>() {
@@ -89,6 +97,9 @@ public class FAQActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        if (SystemClock.elapsedRealtime() - lastClickTime < 1000) return false;
+        lastClickTime = SystemClock.elapsedRealtime();
+
         if (item.getItemId() == R.id.menu_cancel) {
             finish();
             return true;

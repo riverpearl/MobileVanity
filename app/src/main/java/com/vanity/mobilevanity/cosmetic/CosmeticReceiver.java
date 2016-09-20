@@ -70,7 +70,7 @@ public class CosmeticReceiver extends BroadcastReceiver {
 
         Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(MyApplication.getContext())
-                .setSmallIcon(R.mipmap.ic_launcher)
+                .setSmallIcon(R.drawable.icon_app)
                 .setTicker("Useby Message")
                 .setContentTitle("Vanity")
                 .setContentText(message)

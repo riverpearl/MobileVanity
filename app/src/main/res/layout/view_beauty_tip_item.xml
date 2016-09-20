@@ -21,6 +21,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/view_beauty_tip_item_title_height"
                 android:layout_marginLeft="@dimen/default_list_margin"
+                android:layout_marginRight="@dimen/default_list_margin"
                 android:gravity="center_vertical"
                 android:text="Title"
                 android:textColor="@color/colorSub"
@@ -42,6 +43,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/view_beauty_tip_item_content_height"
                 android:layout_marginLeft="@dimen/default_list_margin"
+                android:layout_marginRight="@dimen/default_list_margin"
                 android:gravity="center_vertical"
                 android:text="Content"
                 android:textColor="@color/colorSub"
@@ -62,6 +64,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/view_beauty_tip_item_user_profile_view_height"
             android:layout_marginLeft="@dimen/default_list_margin"
+            android:layout_marginRight="@dimen/default_list_margin"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:weightSum="1">
@@ -76,7 +79,7 @@
 
             <TextView
                 android:id="@+id/text_user"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="User"
                 android:textColor="#636262"

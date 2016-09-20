@@ -30,7 +30,8 @@
     <dimen name="view_beauty_tip_pop_up_comment_font_size">13sp</dimen>
     <dimen name="fragment_mypage_default_font_size">12sp</dimen>
     <dimen name="fragment_mypage_title_font_size">15sp</dimen>
-    <dimen name="fragment_mypage_cosmetic_title_font_size">10sp</dimen>
+    <dimen name="fragment_mypage_cosmetic_title_font_size">8sp</dimen>
+    <dimen name="fragment_mypage_button_title_font_size">10sp</dimen>
     <dimen name="activity_update_profile_radio_text_size">12sp</dimen>
     <dimen name="activity_cosmetic_detail_default_size">12sp</dimen>
     <dimen name="activity_cosmetic_detail_cosmetic_color_font_size">18sp</dimen>
@@ -145,6 +146,7 @@
     <dimen name="fragment_mypage_user_info_margin">4dp</dimen>
     <dimen name="fragment_mypage_gridlayout_title_height">28dp</dimen>
     <dimen name="fragment_mypage_gridlayout_content_height">60dp</dimen>
+
 
     <!-- activity like -->
     <!-- view like -->

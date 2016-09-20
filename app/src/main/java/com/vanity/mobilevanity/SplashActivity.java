@@ -9,11 +9,13 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Handler;
 import android.os.Message;
+import android.os.SystemClock;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.facebook.AccessToken;
@@ -41,13 +43,24 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class SplashActivity extends AppCompatActivity {
+public class SplashActivity extends BaseActivity {
 
     LoginManager loginManager;
     CallbackManager callbackManager;
 
     @BindView(R.id.login_button)
     LoginButton loginButton;
+
+    @BindView(R.id.btn_facebook_login)
+    ImageButton facebookButton;
+
+    @BindView(R.id.btn_naver_login)
+    ImageButton naverButton;
+
+    @BindView(R.id.btn_kakao_login)
+    ImageButton kakaoButton;
+
+    private long lastClickTime = 0;
 
     private final static int RC_SIGN_UP = 100;
 
@@ -61,6 +74,9 @@ public class SplashActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
         loginButton.setVisibility(View.GONE);
+        facebookButton.setVisibility(View.GONE);
+        naverButton.setVisibility(View.GONE);
+        kakaoButton.setVisibility(View.GONE);
 
         loginManager = LoginManager.getInstance();
         callbackManager = CallbackManager.Factory.create();
@@ -96,6 +112,9 @@ public class SplashActivity extends AppCompatActivity {
 
     @OnClick(R.id.btn_facebook_login)
     public void onFacebookLoginClick(View view) {
+        if (SystemClock.elapsedRealtime() - lastClickTime < 1000) return;
+        lastClickTime = SystemClock.elapsedRealtime();
+
         loginManager.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
@@ -327,41 +346,37 @@ public class SplashActivity extends AppCompatActivity {
         loginManager.logOut();
         PropertyManager.getInstance().setFacebookId("");
         loginButton.setVisibility(View.VISIBLE);
+        facebookButton.setVisibility(View.VISIBLE);
+        naverButton.setVisibility(View.VISIBLE);
+        kakaoButton.setVisibility(View.VISIBLE);
     }
 
     @OnClick(R.id.btn_fb_login)
     public void onLoginClick(View view) {
-        Message msg = fbLoginHandler.obtainMessage(0);
-        fbLoginHandler.removeMessages(0);
-        fbLoginHandler.sendMessageDelayed(msg, 1000);
+        if (SystemClock.elapsedRealtime() - lastClickTime < 1000) return;
+        lastClickTime = SystemClock.elapsedRealtime();
+
+        String email = "admin@mobilevanity.com";
+        String password = "pwd";
+        String regId = "1234";
+
+        LoginRequest request = new LoginRequest(SplashActivity.this, email, password, regId);
+        NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<User>>() {
+            @Override
+            public void onSuccess(NetworkRequest<NetworkResult<User>> request, NetworkResult<User> result) {
+                if (result.getCode() == 1) {
+                    Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+            }
+
+            @Override
+            public void onFail(NetworkRequest<NetworkResult<User>> request, int errorCode, String errorMessage, Throwable e) {
+                Toast.makeText(SplashActivity.this, errorCode + " : " + errorMessage, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
-
-    private Handler fbLoginHandler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            String email = "admin@mobilevanity.com";
-            String password = "pwd";
-            String regId = "1234";
-
-            LoginRequest request = new LoginRequest(SplashActivity.this, email, password, regId);
-            NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<User>>() {
-                @Override
-                public void onSuccess(NetworkRequest<NetworkResult<User>> request, NetworkResult<User> result) {
-                    if (result.getCode() == 1) {
-                        Intent intent = new Intent(SplashActivity.this, MainActivity.class);
-                        startActivity(intent);
-                        finish();
-                    }
-                }
-
-                @Override
-                public void onFail(NetworkRequest<NetworkResult<User>> request, int errorCode, String errorMessage, Throwable e) {
-                    Toast.makeText(SplashActivity.this, errorCode + " : " + errorMessage, Toast.LENGTH_SHORT).show();
-                }
-            });
-        }
-    };
 
     @Override
     protected void onDestroy() {

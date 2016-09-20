@@ -10,6 +10,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.Message;
+import android.os.SystemClock;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -39,7 +40,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class FacebookSignUpActivity extends AppCompatActivity {
+public class FacebookSignUpActivity extends BaseActivity {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -65,6 +66,8 @@ public class FacebookSignUpActivity extends AppCompatActivity {
     private File profile;
     private String facebookId;
     private String email;
+
+    private long lastClickTime = 0;
 
     public final static String TAG_EMAIL = "email";
     public final static String TAG_FACEBOOK_ID = "facebookId";
@@ -140,20 +143,13 @@ public class FacebookSignUpActivity extends AppCompatActivity {
 
     @OnClick(R.id.image_profile)
     public void onProfileClick(View view) {
-        Message msg = imageProfileHandler.obtainMessage(0);
-        imageProfileHandler.removeMessages(0);
-        imageProfileHandler.sendMessageDelayed(msg, 1000);
-    }
+        if (SystemClock.elapsedRealtime() - lastClickTime < 1000) return;
+        lastClickTime = SystemClock.elapsedRealtime();
 
-    private Handler imageProfileHandler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-            intent.setType("image/*");
-            startActivityForResult(intent, RC_GET_IMAGE);
-        }
-    };
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        intent.setType("image/*");
+        startActivityForResult(intent, RC_GET_IMAGE);
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -174,45 +170,40 @@ public class FacebookSignUpActivity extends AppCompatActivity {
 
     @OnClick(R.id.btn_sign_up)
     public void onSignUpClick(View view) {
-        Message msg = signUpHandler.obtainMessage(0);
-        signUpHandler.removeMessages(0);
-        signUpHandler.sendMessageDelayed(msg, 1000);
-    }
+        if (SystemClock.elapsedRealtime() - lastClickTime < 1000) return;
+        lastClickTime = SystemClock.elapsedRealtime();
 
-    private Handler signUpHandler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            if (profile == null)
-                return; // default 프로필 이미지를 넣어준다
-
-            String nickname = nicknameView.getText().toString();
-            String gender = getGroupGenderView() + "";
-            String skinType = getGroupSkinTypeView() + "";
-            String skinTone = getGroupSkinToneView() + "";
-
-            if (!TextUtils.isEmpty(nickname)) {
-                FacebookSignupRequest request = new FacebookSignupRequest(FacebookSignUpActivity.this, nickname, email, skinType, skinTone, gender, profile);
-                NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<User>>() {
-                    @Override
-                    public void onSuccess(NetworkRequest<NetworkResult<User>> request, NetworkResult<User> result) {
-                        if (result.getCode() == 1) {
-                            PropertyManager.getInstance().setFacebookId(facebookId);
-                            setResult(Activity.RESULT_OK);
-                            finish();
-                        } else {
-                            Toast.makeText(FacebookSignUpActivity.this, result.getError(), Toast.LENGTH_SHORT).show();
-                        }
-                    }
-
-                    @Override
-                    public void onFail(NetworkRequest<NetworkResult<User>> request, int errorCode, String errorMessage, Throwable e) {
-                        Toast.makeText(FacebookSignUpActivity.this, "sign up fail", Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
+        if (profile == null) {
+            Toast.makeText(this, "프로필 사진을 등록해주세요.", Toast.LENGTH_SHORT).show();
+            return;
         }
-    };
+
+        String nickname = nicknameView.getText().toString();
+        String gender = getGroupGenderView() + "";
+        String skinType = getGroupSkinTypeView() + "";
+        String skinTone = getGroupSkinToneView() + "";
+
+        if (!TextUtils.isEmpty(nickname)) {
+            FacebookSignupRequest request = new FacebookSignupRequest(FacebookSignUpActivity.this, nickname, email, skinType, skinTone, gender, profile);
+            NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<User>>() {
+                @Override
+                public void onSuccess(NetworkRequest<NetworkResult<User>> request, NetworkResult<User> result) {
+                    if (result.getCode() == 1) {
+                        PropertyManager.getInstance().setFacebookId(facebookId);
+                        setResult(Activity.RESULT_OK);
+                        finish();
+                    } else {
+                        Toast.makeText(FacebookSignUpActivity.this, result.getError(), Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onFail(NetworkRequest<NetworkResult<User>> request, int errorCode, String errorMessage, Throwable e) {
+                    Toast.makeText(FacebookSignUpActivity.this, "sign up fail", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+    }
 
     private int getGroupGenderView() {
         switch (groupGenderView.getCheckedRadioButtonId()) {

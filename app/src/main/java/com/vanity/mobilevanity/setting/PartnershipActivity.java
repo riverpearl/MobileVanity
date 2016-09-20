@@ -1,5 +1,6 @@
 package com.vanity.mobilevanity.setting;
 
+import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -7,12 +8,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.vanity.mobilevanity.BaseActivity;
 import com.vanity.mobilevanity.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class PartnershipActivity extends AppCompatActivity {
+public class PartnershipActivity extends BaseActivity {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -22,6 +24,8 @@ public class PartnershipActivity extends AppCompatActivity {
 
     @BindView(R.id.text_partnership)
     TextView partnershipView;
+
+    private long lastClickTime = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +48,9 @@ public class PartnershipActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        if (SystemClock.elapsedRealtime() - lastClickTime < 1000) return false;
+        lastClickTime = SystemClock.elapsedRealtime();
+
         if (item.getItemId() == R.id.menu_cancel) {
             finish();
             return true;

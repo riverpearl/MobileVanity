@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.hardware.camera2.CameraManager;
+import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -21,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.zxing.Result;
+import com.vanity.mobilevanity.BaseActivity;
 import com.vanity.mobilevanity.R;
 import com.vanity.mobilevanity.cosmetic.CosmeticListActivity;
 
@@ -29,7 +31,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
-public class RegisterBarcodeActivity extends AppCompatActivity implements ZXingScannerView.ResultHandler {
+public class RegisterBarcodeActivity extends BaseActivity implements ZXingScannerView.ResultHandler {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -49,6 +51,8 @@ public class RegisterBarcodeActivity extends AppCompatActivity implements ZXingS
     private int requestCode = 0;
     private int category = 0;
     private int tabpos = -1;
+
+    private long lastClickTime = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -139,6 +143,9 @@ public class RegisterBarcodeActivity extends AppCompatActivity implements ZXingS
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        if (SystemClock.elapsedRealtime() - lastClickTime < 1000) return false;
+        lastClickTime = SystemClock.elapsedRealtime();
+
         if (item.getItemId() == R.id.menu_cancel) {
             finish();
             return true;
@@ -149,6 +156,9 @@ public class RegisterBarcodeActivity extends AppCompatActivity implements ZXingS
 
     @OnClick(R.id.btn_register_myself)
     public void onRegisterMyselfClick(View view) {
+        if (SystemClock.elapsedRealtime() - lastClickTime < 1000) return;
+        lastClickTime = SystemClock.elapsedRealtime();
+
         Intent intent = new Intent(RegisterBarcodeActivity.this, RegisterSearchActivity.class);
         intent.putExtra(RegisterSearchActivity.TAG_REQUEST_CODE, requestCode);
 

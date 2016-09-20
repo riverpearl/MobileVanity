@@ -2,6 +2,7 @@ package com.vanity.mobilevanity.mypage;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.SystemClock;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.vanity.mobilevanity.BaseActivity;
 import com.vanity.mobilevanity.R;
 import com.vanity.mobilevanity.adapter.MyBeautyTipAdapter;
 import com.vanity.mobilevanity.beautytip.BeautyTipDetailActivity;
@@ -29,7 +31,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MyBeautyTipActivity extends AppCompatActivity {
+public class MyBeautyTipActivity extends BaseActivity {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -41,6 +43,7 @@ public class MyBeautyTipActivity extends AppCompatActivity {
     RecyclerView listView;
 
     MyBeautyTipAdapter mAdapter;
+    private long lastClickTime = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +60,9 @@ public class MyBeautyTipActivity extends AppCompatActivity {
         mAdapter.setOnAdapterItemClickListener(new MyBeautyTipAdapter.OnAdapterItemClickListener() {
             @Override
             public void onAdapterItemClick(View view, BeautyTip data, int position) {
+                if (SystemClock.elapsedRealtime() - lastClickTime < 1000) return;
+                lastClickTime = SystemClock.elapsedRealtime();
+
                 Intent intent = new Intent(MyBeautyTipActivity.this, BeautyTipDetailActivity.class);
                 intent.putExtra("beautytipid", data.getId());
                 startActivity(intent);
@@ -65,6 +71,9 @@ public class MyBeautyTipActivity extends AppCompatActivity {
         mAdapter.setOnAdapterItemLongClickListener(new MyBeautyTipAdapter.OnAdapterItemLongClickListener() {
             @Override
             public void onAdapterItemLongClick(View view, BeautyTip data, int position) {
+                if (SystemClock.elapsedRealtime() - lastClickTime < 1000) return;
+                lastClickTime = SystemClock.elapsedRealtime();
+
                 AlertDialog.Builder builder = new AlertDialog.Builder(MyBeautyTipActivity.this);
                 builder.setTitle("뷰티 팁 삭제");
                 builder.setMessage("삭제하시겠습니까?");
@@ -101,6 +110,9 @@ public class MyBeautyTipActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        if (SystemClock.elapsedRealtime() - lastClickTime < 1000) return false;
+        lastClickTime = SystemClock.elapsedRealtime();
+
         if (item.getItemId() == R.id.menu_cancel) {
             finish();
             return true;

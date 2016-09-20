@@ -2,6 +2,7 @@ package com.vanity.mobilevanity.mypage;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.SystemClock;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.vanity.mobilevanity.BaseActivity;
 import com.vanity.mobilevanity.R;
 import com.vanity.mobilevanity.adapter.LikeAdapter;
 import com.vanity.mobilevanity.beautytip.BeautyTipDetailActivity;
@@ -30,7 +32,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class LikeActivity extends AppCompatActivity {
+public class LikeActivity extends BaseActivity {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -42,6 +44,7 @@ public class LikeActivity extends AppCompatActivity {
     RecyclerView listView;
 
     LikeAdapter mAdapter;
+    private long lastClickTime = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +61,9 @@ public class LikeActivity extends AppCompatActivity {
         mAdapter.setOnAdapterItemClickListener(new LikeAdapter.OnAdapterItemClickListener() {
             @Override
             public void onAdapterItemClick(View view, BeautyTip data, int position) {
+                if (SystemClock.elapsedRealtime() - lastClickTime < 1000) return;
+                lastClickTime = SystemClock.elapsedRealtime();
+
                 Intent intent = new Intent(LikeActivity.this, BeautyTipDetailActivity.class);
                 intent.putExtra(BeautyTipDetailActivity.TAG_BEAUTY_TIP_ID, data.getId());
                 startActivity(intent);
@@ -66,6 +72,9 @@ public class LikeActivity extends AppCompatActivity {
         mAdapter.setOnAdapterItemLongClickListener(new LikeAdapter.OnAdapterItemLongClickListener() {
             @Override
             public void onAdapterLongItemClick(View view, BeautyTip data, int position) {
+                if (SystemClock.elapsedRealtime() - lastClickTime < 1000) return;
+                lastClickTime = SystemClock.elapsedRealtime();
+
                 AlertDialog.Builder builder = new AlertDialog.Builder(LikeActivity.this);
                 builder.setTitle(getResources().getString(R.string.activity_like_dialog_title));
                 builder.setMessage((getResources().getString(R.string.activity_like_dialog_content)));
@@ -102,6 +111,9 @@ public class LikeActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        if (SystemClock.elapsedRealtime() - lastClickTime < 1000) return false;
+        lastClickTime = SystemClock.elapsedRealtime();
+
         if (item.getItemId() == R.id.menu_cancel) {
             finish();
             return true;

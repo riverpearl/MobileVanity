@@ -28,7 +28,8 @@
             android:textColor="@color/colorSub"
             android:layout_below="@+id/text_product_name"
             android:layout_alignLeft="@+id/text_product_name"
-            android:layout_alignStart="@+id/text_product_name" />
+            android:layout_alignStart="@+id/text_product_name"
+            android:layout_marginRight="@dimen/view_cosmetic_cosmetic_color_margin_right"/>
 
         <TextView
             android:id="@+id/text_color_name"

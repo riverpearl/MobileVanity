@@ -62,7 +62,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/activity_cosmetic_detail_sale_guide_message"
                 android:textColor="@android:color/white"
-                android:textSize="@dimen/list_color_font_size"
+                android:textSize="@dimen/fragment_sale_info_font_size"
                 android:background="@color/colorSale"
                 android:layout_below="@+id/layout_calendar"
                 android:paddingLeft="@dimen/activity_cosmetic_detail_sale_padding_left"

@@ -10,6 +10,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.Message;
+import android.os.SystemClock;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -28,6 +29,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.vanity.mobilevanity.BaseActivity;
 import com.vanity.mobilevanity.R;
 import com.vanity.mobilevanity.data.NetworkResult;
 import com.vanity.mobilevanity.data.User;
@@ -42,7 +44,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class UpdateProfileActivity extends AppCompatActivity {
+public class UpdateProfileActivity extends BaseActivity {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -69,6 +71,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
     Button grayButton;
 
     private File profile;
+    private long lastClickTime = 0;
 
     private final static int RC_GET_IMAGE = 100;
     private final static int RC_PERMISSION = 500;
@@ -84,8 +87,13 @@ public class UpdateProfileActivity extends AppCompatActivity {
         toolbarTitleView.setText(getResources().getString(R.string.toolbar_title_update_profile));
         grayButton.setText(getResources().getString(R.string.button_text));
 
-        init();
         checkPermission();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        init();
     }
 
     private void checkPermission() {
@@ -239,20 +247,13 @@ public class UpdateProfileActivity extends AppCompatActivity {
 
     @OnClick(R.id.image_profile)
     public void onProfileClick(View view) {
-        Message msg = imageProfileHandler.obtainMessage(0);
-        imageProfileHandler.removeMessages(0);
-        imageProfileHandler.sendMessageDelayed(msg, 1000);
-    }
+        if (SystemClock.elapsedRealtime() - lastClickTime < 1000) return;
+        lastClickTime = SystemClock.elapsedRealtime();
 
-    private Handler imageProfileHandler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-            intent.setType("image/*");
-            startActivityForResult(intent, RC_GET_IMAGE);
-        }
-    };
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        intent.setType("image/*");
+        startActivityForResult(intent, RC_GET_IMAGE);
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -273,40 +274,35 @@ public class UpdateProfileActivity extends AppCompatActivity {
 
     @OnClick(R.id.btn_update)
     public void onUpdateClick(View view) {
-        Message msg = updateHandler.obtainMessage(0);
-        updateHandler.removeMessages(0);
-        updateHandler.sendMessageDelayed(msg, 1000);
-    }
+        if (SystemClock.elapsedRealtime() - lastClickTime < 1000) return;
+        lastClickTime = SystemClock.elapsedRealtime();
 
-    private Handler updateHandler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            if (profile == null)
-                return; // default 프로필 이미지를 넣어준다
-
-            String nickname = nicknameView.getText().toString();
-            String gender = getGroupGenderView() + "";
-            String skinType = getGroupSkinTypeView() + "";
-            String skinTone = getGroupSkinToneView() + "";
-
-            UpdateMyInfoRequest request = new UpdateMyInfoRequest(UpdateProfileActivity.this, profile, nickname, skinType, skinTone, gender);
-            NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<User>>() {
-                @Override
-                public void onSuccess(NetworkRequest<NetworkResult<User>> request, NetworkResult<User> result) {
-                    if (result.getCode() == 1) {
-                        Toast.makeText(UpdateProfileActivity.this, "회원정보가 수정되었습니다.", Toast.LENGTH_SHORT).show();
-                        finish();
-                    }
-                }
-
-                @Override
-                public void onFail(NetworkRequest<NetworkResult<User>> request, int errorCode, String errorMessage, Throwable e) {
-                    Toast.makeText(UpdateProfileActivity.this, errorCode + " : " + errorMessage, Toast.LENGTH_SHORT).show();
-                }
-            });
+        if (profile == null) {
+            Toast.makeText(this, "프로필 사진을 등록해주세요.", Toast.LENGTH_SHORT).show();
+            return;
         }
-    };
+
+        String nickname = nicknameView.getText().toString();
+        String gender = getGroupGenderView() + "";
+        String skinType = getGroupSkinTypeView() + "";
+        String skinTone = getGroupSkinToneView() + "";
+
+        UpdateMyInfoRequest request = new UpdateMyInfoRequest(UpdateProfileActivity.this, profile, nickname, skinType, skinTone, gender);
+        NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<User>>() {
+            @Override
+            public void onSuccess(NetworkRequest<NetworkResult<User>> request, NetworkResult<User> result) {
+                if (result.getCode() == 1) {
+                    Toast.makeText(UpdateProfileActivity.this, "회원정보가 수정되었습니다.", Toast.LENGTH_SHORT).show();
+                    finish();
+                }
+            }
+
+            @Override
+            public void onFail(NetworkRequest<NetworkResult<User>> request, int errorCode, String errorMessage, Throwable e) {
+                Toast.makeText(UpdateProfileActivity.this, errorCode + " : " + errorMessage, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -316,6 +312,9 @@ public class UpdateProfileActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        if (SystemClock.elapsedRealtime() - lastClickTime < 1000) return false;
+        lastClickTime = SystemClock.elapsedRealtime();
+
         if (item.getItemId() == R.id.menu_cancel) {
             finish();
             return true;

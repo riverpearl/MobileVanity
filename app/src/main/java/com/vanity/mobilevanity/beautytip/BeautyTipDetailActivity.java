@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.vanity.mobilevanity.BaseActivity;
 import com.vanity.mobilevanity.R;
 import com.vanity.mobilevanity.data.BeautyTip;
 import com.vanity.mobilevanity.data.NetworkResult;
@@ -35,7 +36,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 
-public class BeautyTipDetailActivity extends AppCompatActivity {
+public class BeautyTipDetailActivity extends BaseActivity {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;

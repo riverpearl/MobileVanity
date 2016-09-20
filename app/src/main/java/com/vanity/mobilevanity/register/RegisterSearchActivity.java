@@ -1,6 +1,7 @@
 package com.vanity.mobilevanity.register;
 
 import android.content.Intent;
+import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -19,6 +20,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.vanity.mobilevanity.BaseActivity;
 import com.vanity.mobilevanity.MainActivity;
 import com.vanity.mobilevanity.R;
 import com.vanity.mobilevanity.adapter.RegisterBrandSpinnerAdapter;
@@ -44,7 +46,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class RegisterSearchActivity extends AppCompatActivity {
+public class RegisterSearchActivity extends BaseActivity {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -67,7 +69,6 @@ public class RegisterSearchActivity extends AppCompatActivity {
     @BindView(R.id.rv_cosmetic)
     RecyclerView listView;
 
-
     SearchResultAdapter resultAdapter;
     RegisterBrandSpinnerAdapter brandAdapter;
     RegisterCategorySpinnerAdapter categoryAdapter;
@@ -78,6 +79,9 @@ public class RegisterSearchActivity extends AppCompatActivity {
     private int requestCode = 0;
     private int category = 0;
     private int tabpos = -1;
+
+    private long lastClickTime = 0;
+    private long lastChangeTime = 0;
 
     public final static String TAG_REQUEST_CODE = "requestcode";
     public final static String TAG_COSMETIC_ID = "cid";
@@ -117,6 +121,7 @@ public class RegisterSearchActivity extends AppCompatActivity {
         brandView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                NetworkManager.getInstance().cancelAll();
                 searchRequest();
             }
 
@@ -129,6 +134,7 @@ public class RegisterSearchActivity extends AppCompatActivity {
         categoryView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                NetworkManager.getInstance().cancelAll();
                 setItemView(position);
                 searchRequest();
             }
@@ -142,6 +148,7 @@ public class RegisterSearchActivity extends AppCompatActivity {
         itemView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                NetworkManager.getInstance().cancelAll();
                 searchRequest();
             }
 
@@ -159,6 +166,9 @@ public class RegisterSearchActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (SystemClock.elapsedRealtime() - lastChangeTime < 1000) return;
+                lastChangeTime = SystemClock.elapsedRealtime();
+
                 NetworkManager.getInstance().cancelAll();
                 searchRequest();
             }
@@ -173,6 +183,9 @@ public class RegisterSearchActivity extends AppCompatActivity {
         resultAdapter.setOnAdapterItemClickListener(new SearchResultAdapter.OnAdapterItemClickListener() {
             @Override
             public void onAdapterItemClick(View view, Cosmetic data, int position) {
+                if (SystemClock.elapsedRealtime() - lastClickTime < 1000) return;
+                lastClickTime = SystemClock.elapsedRealtime();
+
                 Intent intent = new Intent(RegisterSearchActivity.this, RegisterDetailActivity.class);
                 intent.putExtra(RegisterDetailActivity.TAG_REQUEST_CODE, requestCode);
 
@@ -206,6 +219,9 @@ public class RegisterSearchActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        if (SystemClock.elapsedRealtime() - lastClickTime < 1000) return false;
+        lastClickTime = SystemClock.elapsedRealtime();
+
         switch (item.getItemId()) {
             case R.id.menu_cancel:
                 if (requestCode == HomeFragment.KEY_HOME) {
@@ -246,8 +262,6 @@ public class RegisterSearchActivity extends AppCompatActivity {
 
                     brandAdapter.addAll(brandList);
 
-                    //String[] items = getResources().getStringArray(R.array.register_brand);
-                    //brandAdapter.addAll(items);
                     setCategoryView();
                     setItemView(Constant.INDEX_CATEGROY_NONE);
                 }

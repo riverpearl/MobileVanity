@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
+import com.vanity.mobilevanity.MyApplication;
 import com.vanity.mobilevanity.R;
 import com.vanity.mobilevanity.data.BeautyTip;
 
@@ -47,7 +48,8 @@ public class LikeViewHolder extends RecyclerView.ViewHolder {
 
     public void setData(BeautyTip data) {
         this.data = data;
-        titleView.setText(data.getTitle());
+        String like = MyApplication.getContext().getResources().getString(R.string.view_like_sentence);
+        titleView.setText(data.getTitle() + like);
     }
 
     public interface OnLikeItemClickListener {

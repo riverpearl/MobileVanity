@@ -163,7 +163,8 @@
                 android:textSize="@dimen/fragment_mypage_title_font_size"
                 android:textStyle="bold"
                 android:gravity="center"
-                android:background="@drawable/btn_circle"/>
+                android:background="@drawable/btn_circle"
+                android:layout_marginBottom="@dimen/fragment_mypage_user_info_margin" />
 
             <TextView
                 android:id="@+id/text_eye_title"
@@ -192,7 +193,8 @@
                 android:textSize="@dimen/fragment_mypage_title_font_size"
                 android:textStyle="bold"
                 android:gravity="center"
-                android:background="@drawable/btn_circle"/>
+                android:background="@drawable/btn_circle"
+                android:layout_marginBottom="@dimen/fragment_mypage_user_info_margin" />
 
             <TextView
                 android:id="@+id/text_lip_title"
@@ -221,7 +223,8 @@
                 android:textSize="@dimen/fragment_mypage_title_font_size"
                 android:textStyle="bold"
                 android:gravity="center"
-                android:background="@drawable/btn_circle"/>
+                android:background="@drawable/btn_circle"
+                android:layout_marginBottom="@dimen/fragment_mypage_user_info_margin" />
 
             <TextView
                 android:id="@+id/text_skin_title"
@@ -250,7 +253,8 @@
                 android:textSize="@dimen/fragment_mypage_title_font_size"
                 android:textStyle="bold"
                 android:gravity="center"
-                android:background="@drawable/btn_circle"/>
+                android:background="@drawable/btn_circle"
+                android:layout_marginBottom="@dimen/fragment_mypage_user_info_margin" />
 
             <TextView
                 android:id="@+id/text_face_title"
@@ -279,7 +283,8 @@
                 android:textSize="@dimen/fragment_mypage_title_font_size"
                 android:textStyle="bold"
                 android:gravity="center"
-                android:background="@drawable/btn_circle"/>
+                android:background="@drawable/btn_circle"
+                android:layout_marginBottom="@dimen/fragment_mypage_user_info_margin" />
 
             <TextView
                 android:id="@+id/text_cleansing_title"
@@ -308,7 +313,8 @@
                 android:textSize="@dimen/fragment_mypage_title_font_size"
                 android:textStyle="bold"
                 android:gravity="center"
-                android:background="@drawable/btn_circle"/>
+                android:background="@drawable/btn_circle"
+                android:layout_marginBottom="@dimen/fragment_mypage_user_info_margin" />
 
             <TextView
                 android:id="@+id/text_tool_title"
@@ -348,14 +354,15 @@
                 android:layout_height="wrap_content"
                 android:text="@string/fragment_my_page_my_tips"
                 android:textColor="@color/colorSub"
-                android:textSize="@dimen/fragment_mypage_default_font_size" />
+                android:textSize="@dimen/fragment_mypage_default_font_size"
+                android:layout_marginBottom="@dimen/fragment_mypage_user_info_margin" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/fragment_my_page_collection"
                 android:textColor="@color/colorSub"
-                android:textSize="@dimen/fragment_mypage_cosmetic_title_font_size" />
+                android:textSize="@dimen/fragment_mypage_button_title_font_size" />
 
         </LinearLayout>
 
@@ -375,14 +382,15 @@
                 android:layout_height="wrap_content"
                 android:text="@string/fragment_my_page_likes"
                 android:textColor="@color/colorSub"
-                android:textSize="@dimen/fragment_mypage_default_font_size" />
+                android:textSize="@dimen/fragment_mypage_default_font_size"
+                android:layout_marginBottom="@dimen/fragment_mypage_user_info_margin" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/fragment_my_page_collection"
                 android:textColor="@color/colorSub"
-                android:textSize="@dimen/fragment_mypage_cosmetic_title_font_size" />
+                android:textSize="@dimen/fragment_mypage_button_title_font_size" />
 
         </LinearLayout>
 
