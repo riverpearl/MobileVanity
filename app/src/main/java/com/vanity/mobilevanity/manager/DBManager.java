@@ -102,6 +102,11 @@ public class DBManager extends SQLiteOpenHelper {
         return db.delete(DBContract.CosmeticItem.TABLE, where, args);
     }
 
+    public int deleteCosmeticItems() {
+        SQLiteDatabase db = getWritableDatabase();
+        return db.delete(DBContract.CosmeticItem.TABLE, null, null);
+    }
+
     public Cursor selectCosmeticItem() {
         SQLiteDatabase db = getReadableDatabase();
         String[] columns = {DBContract.CosmeticItem.COLUMN_SERVER_ID, DBContract.CosmeticItem.COLUMN_COSMETIC_ID, DBContract.CosmeticItem.COLUMN_COSMETIC_NAME,

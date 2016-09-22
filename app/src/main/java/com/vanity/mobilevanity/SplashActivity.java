@@ -26,17 +26,21 @@ import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
+import com.vanity.mobilevanity.data.CosmeticItem;
 import com.vanity.mobilevanity.data.NetworkResult;
 import com.vanity.mobilevanity.data.User;
 import com.vanity.mobilevanity.gcm.RegistrationIntentService;
+import com.vanity.mobilevanity.manager.DBManager;
 import com.vanity.mobilevanity.manager.NetworkManager;
 import com.vanity.mobilevanity.manager.NetworkRequest;
 import com.vanity.mobilevanity.manager.PropertyManager;
+import com.vanity.mobilevanity.request.CosmeticItemsRequest;
 import com.vanity.mobilevanity.request.FacebookLoginRequest;
 import com.vanity.mobilevanity.request.LoginRequest;
 import com.vanity.mobilevanity.request.MyInfoRequest;
 
 import java.util.Arrays;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -229,6 +233,8 @@ public class SplashActivity extends BaseActivity {
     }
 
     private void moveMainActivity() {
+        getCosmeticItemList();
+
         Intent intent = new Intent(SplashActivity.this, MainActivity.class);
         startActivity(intent);
         finish();
@@ -351,6 +357,68 @@ public class SplashActivity extends BaseActivity {
                 Toast.makeText(SplashActivity.this, errorCode + " : " + errorMessage, Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void getCosmeticItemList() {
+        DBManager.getInstance().deleteCosmeticItems();
+
+        int itemCount = 0;
+
+        for (int i = 0; i < 6; i++) {
+            final int categroyIndex = i;
+
+            switch (i) {
+                case 1 :
+                    itemCount = 5;
+                    break;
+                case 2 :
+                case 3 :
+                case 4 :
+                    itemCount = 4;
+                case 5 :
+                case 6 :
+                    itemCount = 2;
+            }
+
+            if (itemCount == 0) continue;
+
+            for (int j = 0; j < itemCount; j++) {
+                final int itemIndex = j;
+
+                CosmeticItemsRequest request = new CosmeticItemsRequest(SplashActivity.this, i + "", j + "");
+                NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<List<CosmeticItem>>>() {
+                    @Override
+                    public void onSuccess(NetworkRequest<NetworkResult<List<CosmeticItem>>> request, NetworkResult<List<CosmeticItem>> result) {
+                        if (result.getCode() == 1) {
+                            List<CosmeticItem> items = result.getResult();
+
+                            if (items.size() == 0) return;
+
+                            for (CosmeticItem citem : items) {
+                                long sid = citem.getId();
+                                long cid = citem.getCosmetic().getId();
+                                String name = citem.getCosmetic().getProduct().getName();
+                                String dateAdded = citem.getDateAdded();
+                                int term = citem.getCosmetic().getProduct().getUseBy();
+
+                                DBManager.getInstance().insertCosmeticItem(sid, cid, name, dateAdded, term);
+                            }
+
+                            if (categroyIndex == 5 && itemIndex == 1) {
+                                Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+                                startActivity(intent);
+                                finish();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFail(NetworkRequest<NetworkResult<List<CosmeticItem>>> request, int errorCode, String errorMessage, Throwable e) {
+
+                    }
+                });
+            }
+        }
     }
 
     @Override

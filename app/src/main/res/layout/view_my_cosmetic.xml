@@ -84,6 +84,7 @@
         android:layout_height="wrap_content"
         android:text="D-Day"
         android:textColor="@android:color/white"
+        android:textSize="12sp"
         android:id="@+id/text_dday"
         android:layout_gravity="center_vertical|right|end"
         android:gravity="center"

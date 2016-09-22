@@ -146,8 +146,7 @@ public class CosmeticListActivity extends BaseActivity {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         deleteCosmeticItemRequest(id);
-                        int a = DBManager.getInstance().deleteCosmeticItem(id);
-                        Log.d("dbresult", a + "");
+                        DBManager.getInstance().deleteCosmeticItem(id);
                     }
                 });
                 builder.setNegativeButton("아니오", new DialogInterface.OnClickListener() {

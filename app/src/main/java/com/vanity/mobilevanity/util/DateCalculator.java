@@ -51,8 +51,8 @@ public class DateCalculator {
         long standard = StrToCal(date).getTimeInMillis();
         int result = (int)((now - standard) / (1000 * 60 * 60 * 24));
 
-        if (result < 0)
-            return result * (-1);
+//        if (result < 0)
+//            return result * (-1);
 
         return result;
     }

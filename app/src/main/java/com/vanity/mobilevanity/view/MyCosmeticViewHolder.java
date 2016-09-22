@@ -74,7 +74,11 @@ public class MyCosmeticViewHolder extends RecyclerView.ViewHolder {
         brandNameView.setText(item.getCosmetic().getProduct().getBrand().getName());
 
         DateCalculator calculator = new DateCalculator();
-        ddayView.setText("" + calculator.calculateDDay(item.getDateAdded(), item.getCosmetic().getProduct().getUseBy()));
+        int dday = calculator.calculateDDay(item.getDateAdded(), item.getCosmetic().getProduct().getUseBy());
+
+        if (dday > 0)
+            ddayView.setText("D+" + dday);
+        else ddayView.setText("D" + dday);
 
         Glide.with(cosmeticView.getContext())
                 .load(item.getCosmetic().getImage())

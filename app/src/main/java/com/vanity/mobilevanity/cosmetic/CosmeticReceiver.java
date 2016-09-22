@@ -51,7 +51,7 @@ public class CosmeticReceiver extends BroadcastReceiver {
             String message = name + "의 사용기한이 " + dday + "일 남았습니다.";
             String date = calculator.CalToStr(Calendar.getInstance());
 
-            if (dday == 30 || dday == 10 || dday == 3 || dday == 1) {
+            if (dday == -30 || dday == -10 || dday == -3 || dday == -1) {
                 DBManager.getInstance().insertNotify("useby", cid, message, date);
                 cosmeticId = cid;
                 notiMessage = message;

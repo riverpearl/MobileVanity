@@ -21,6 +21,7 @@ import com.vanity.mobilevanity.R;
 import com.vanity.mobilevanity.SplashActivity;
 import com.vanity.mobilevanity.adapter.SettingAdapter;
 import com.vanity.mobilevanity.data.NetworkResult;
+import com.vanity.mobilevanity.manager.DBManager;
 import com.vanity.mobilevanity.manager.NetworkManager;
 import com.vanity.mobilevanity.manager.NetworkRequest;
 import com.vanity.mobilevanity.manager.PropertyManager;
@@ -143,15 +144,17 @@ public class SettingActivity extends BaseActivity {
         NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<String>>() {
             @Override
             public void onSuccess(NetworkRequest<NetworkResult<String>> request, NetworkResult<String> result) {
-                Intent intent = new Intent(SettingActivity.this, SplashActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
-
                 PropertyManager.getInstance().setFacebookId("");
                 PropertyManager.getInstance().setUserId(0);
                 PropertyManager.getInstance().setIsAlarmCreated(false);
                 PropertyManager.getInstance().setRegistrationId("");
                 PropertyManager.getInstance().setLastNotifyDate("");
+
+                DBManager.getInstance().deleteCosmeticItems();
+
+                Intent intent = new Intent(SettingActivity.this, SplashActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
             }
 
             @Override
