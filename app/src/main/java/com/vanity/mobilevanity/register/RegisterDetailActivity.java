@@ -1,6 +1,7 @@
 package com.vanity.mobilevanity.register;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
@@ -112,6 +113,7 @@ public class RegisterDetailActivity extends BaseActivity implements DatePickerDi
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         toolbarTitleView.setText(getResources().getString(R.string.toolbar_title_register_detail));
+        toolbarTitleView.setTypeface(Typeface.createFromAsset(getAssets(), "NanumGothicBold.ttf"));
         registerButton.setText(R.string.button_text);
 
         Intent intent = getIntent();
@@ -315,7 +317,7 @@ public class RegisterDetailActivity extends BaseActivity implements DatePickerDi
     }
 
     private void setCosmeticInfoView() {
-        Glide.with(RegisterDetailActivity.this).load(cosmetic.getProduct().getImage()).into(imageView);
+        Glide.with(RegisterDetailActivity.this).load(cosmetic.getImage()).into(imageView);
         brandView.setText(cosmetic.getProduct().getBrand().getName());
         colorCodeView.setText(cosmetic.getColorCode());
         colorNameView.setText(cosmetic.getColorName());

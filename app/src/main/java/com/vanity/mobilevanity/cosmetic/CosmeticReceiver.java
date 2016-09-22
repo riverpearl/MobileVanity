@@ -7,6 +7,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
@@ -68,9 +70,16 @@ public class CosmeticReceiver extends BroadcastReceiver {
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(MyApplication.getContext(), 1, intent, PendingIntent.FLAG_ONE_SHOT);
 
+        int bgColor = MyApplication.getContext().getResources().getColor(R.color.colorMain);
+
+        BitmapDrawable drawable = (BitmapDrawable) MyApplication.getContext().getResources().getDrawable(R.drawable.vanity_logo_big);
+        Bitmap appIcon = drawable.getBitmap();
+
         Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(MyApplication.getContext())
-                .setSmallIcon(R.drawable.icon_app)
+                .setLargeIcon(appIcon)
+                .setSmallIcon(R.drawable.icon_notify_dday)
+                .setColor(bgColor)
                 .setTicker("Useby Message")
                 .setContentTitle("Vanity")
                 .setContentText(message)

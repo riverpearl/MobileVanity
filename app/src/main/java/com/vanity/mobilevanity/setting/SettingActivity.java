@@ -1,6 +1,7 @@
 package com.vanity.mobilevanity.setting;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -57,6 +58,7 @@ public class SettingActivity extends BaseActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         toolbarTitleView.setText(getResources().getString(R.string.toolbar_title_setting));
+        toolbarTitleView.setTypeface(Typeface.createFromAsset(getAssets(), "NanumGothicBold.ttf"));
 
         settingView.addHeaderView(versionView, null, false);
         settingView.addHeaderView(alertView, null, false);

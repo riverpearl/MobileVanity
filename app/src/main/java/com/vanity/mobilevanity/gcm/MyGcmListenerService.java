@@ -20,6 +20,8 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
@@ -28,6 +30,7 @@ import android.util.Log;
 
 import com.google.android.gms.gcm.GcmListenerService;
 import com.vanity.mobilevanity.MainActivity;
+import com.vanity.mobilevanity.MyApplication;
 import com.vanity.mobilevanity.R;
 import com.vanity.mobilevanity.beautytip.BeautyTipDetailActivity;
 import com.vanity.mobilevanity.data.NetworkResult;
@@ -99,9 +102,22 @@ public class MyGcmListenerService extends GcmListenerService {
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent, PendingIntent.FLAG_ONE_SHOT);
 
+        int bgColor = MyApplication.getContext().getResources().getColor(R.color.colorMain);
+
+        BitmapDrawable drawable = (BitmapDrawable) MyApplication.getContext().getResources().getDrawable(R.drawable.vanity_logo_big);
+        Bitmap appIcon = drawable.getBitmap();
+
+        int smallIconId;
+
+        if (notify.getType().equals("comment"))
+            smallIconId = R.drawable.icon_notify_comment;
+        else smallIconId = R.drawable.icon_notify_like;
+
         Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
-                .setSmallIcon(R.drawable.icon_app)
+                .setLargeIcon(appIcon)
+                .setSmallIcon(smallIconId)
+                .setColor(bgColor)
                 .setTicker("GCM Message")
                 .setContentTitle("Vanity")
                 .setContentText(notify.getMessage())

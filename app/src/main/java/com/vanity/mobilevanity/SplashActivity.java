@@ -24,7 +24,6 @@ import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
-import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.vanity.mobilevanity.data.NetworkResult;
@@ -48,9 +47,6 @@ public class SplashActivity extends BaseActivity {
     LoginManager loginManager;
     CallbackManager callbackManager;
 
-    @BindView(R.id.login_button)
-    LoginButton loginButton;
-
     @BindView(R.id.btn_facebook_login)
     ImageButton facebookButton;
 
@@ -73,32 +69,12 @@ public class SplashActivity extends BaseActivity {
         setContentView(R.layout.activity_splash);
 
         ButterKnife.bind(this);
-        loginButton.setVisibility(View.GONE);
         facebookButton.setVisibility(View.GONE);
         naverButton.setVisibility(View.GONE);
         kakaoButton.setVisibility(View.GONE);
 
         loginManager = LoginManager.getInstance();
         callbackManager = CallbackManager.Factory.create();
-
-        loginButton.setReadPermissions("email");
-        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-            @Override
-            public void onSuccess(LoginResult loginResult) {
-                processAfterFacebookLogin();
-            }
-
-            @Override
-            public void onCancel() {
-                Toast.makeText(SplashActivity.this, "cancel", Toast.LENGTH_SHORT).show();
-
-            }
-
-            @Override
-            public void onError(FacebookException error) {
-                Toast.makeText(SplashActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
 
         mRegistrationBroadcastReceiver = new BroadcastReceiver() {
             @Override
@@ -345,7 +321,6 @@ public class SplashActivity extends BaseActivity {
     private void resetFacebookAndMoveLoginActivity() {
         loginManager.logOut();
         PropertyManager.getInstance().setFacebookId("");
-        loginButton.setVisibility(View.VISIBLE);
         facebookButton.setVisibility(View.VISIBLE);
         naverButton.setVisibility(View.VISIBLE);
         kakaoButton.setVisibility(View.VISIBLE);

@@ -1,6 +1,7 @@
 package com.vanity.mobilevanity.beautytip;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
@@ -78,6 +79,7 @@ public class BeautyTipDetailActivity extends BaseActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         toolbarTitleView.setText(getResources().getString(R.string.toolbar_title_beauty_tip_detail));
+        toolbarTitleView.setTypeface(Typeface.createFromAsset(getAssets(), "NanumGothicBold.ttf"));
 
         toolbar.setNavigationIcon(R.drawable.btn_before);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -215,6 +217,7 @@ public class BeautyTipDetailActivity extends BaseActivity {
                     BeautyTip beautyTip = result.getResult();
 
                     titleView.setText(beautyTip.getTitle());
+                    titleView.setTypeface(Typeface.createFromAsset(getAssets(), "NanumGothicBold.ttf"));
                     contentView.setText(beautyTip.getContent());
                     Glide.with(beautytipImage.getContext())
                             .load(beautyTip.getPreviewImage())

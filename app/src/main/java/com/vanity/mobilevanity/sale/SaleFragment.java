@@ -3,6 +3,7 @@ package com.vanity.mobilevanity.sale;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -67,6 +68,8 @@ public class SaleFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_sale, container, false);
         ButterKnife.bind(this, view);
+
+        monthView.setTypeface(Typeface.createFromAsset(getActivity().getAssets(), "NanumGothicBold.ttf"));
 
         saleAdapter = new SaleAdapter();
         saleAdapter.setOnAdapterItemClickListener(new SaleAdapter.OnAdapterItemClickListener() {

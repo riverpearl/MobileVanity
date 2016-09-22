@@ -1,6 +1,7 @@
 package com.vanity.mobilevanity.cosmetic;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
@@ -94,6 +95,9 @@ public class CosmeticDetailActivity extends BaseActivity implements DatePickerDi
     @BindView(R.id.text_useby_day)
     TextView usebyDayView;
 
+    @BindView(R.id.text_sale_title)
+    TextView saleTitleView;
+
     @BindView(R.id.text_sale_info)
     TextView saleView;
 
@@ -120,6 +124,9 @@ public class CosmeticDetailActivity extends BaseActivity implements DatePickerDi
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         toolbarTitleView.setText(getResources().getString(R.string.toolbar_title_cosmetic_detail));
+        toolbarTitleView.setTypeface(Typeface.createFromAsset(getAssets(), "NanumGothicBold.ttf"));
+
+        saleTitleView.setTypeface(Typeface.createFromAsset(getAssets(), "NanumGothicBold.ttf"));
     }
 
     @OnClick(R.id.text_sale_info)

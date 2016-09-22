@@ -4,5 +4,4 @@
     android:layout_height="wrap_content"
     android:background="@drawable/btn_default"
     android:textColor="@android:color/white"
-    android:textSize="@dimen/button_font_size"
-    android:textStyle="bold" />
+    android:textSize="@dimen/button_font_size" />

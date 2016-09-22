@@ -1,11 +1,13 @@
 package com.vanity.mobilevanity.view;
 
+import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.vanity.mobilevanity.MyApplication;
 import com.vanity.mobilevanity.R;
 import com.vanity.mobilevanity.data.Comment;
 
@@ -39,6 +41,7 @@ public class BeautyTipPopUpViewHolder extends RecyclerView.ViewHolder {
                 .into(profileView);
 
         nicknameView.setText(item.getWriter().getUserNickName());
+        nicknameView.setTypeface(Typeface.createFromAsset(MyApplication.getContext().getAssets(), "NanumGothicBold.ttf"));
         commentView.setText(item.getContent());
     }
 }

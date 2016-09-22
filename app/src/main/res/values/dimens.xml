@@ -10,11 +10,11 @@
     <dimen name="toolbar_bell_margin_right">30dp</dimen>
 
     <!-- font size -->
-    <dimen name="toolbar_font_size">19sp</dimen>
+    <dimen name="toolbar_font_size">18sp</dimen>
     <dimen name="button_font_size">16sp</dimen>
-    <dimen name="list_cosmetic_name_font_size">18sp</dimen>
-    <dimen name="list_brand_font_size">16sp</dimen>
-    <dimen name="list_color_font_size">15sp</dimen>
+    <dimen name="list_cosmetic_name_font_size">14sp</dimen>
+    <dimen name="list_brand_font_size">12sp</dimen>
+    <dimen name="list_color_font_size">11sp</dimen>
     <dimen name="list_alert_font_size">14sp</dimen>
     <dimen name="list_alert_sub_font_size">12sp</dimen>
     <dimen name="activity_cosmetic_list_tab_font_size">12sp</dimen>
@@ -27,7 +27,7 @@
     <dimen name="activity_beauty_tip_write_content_font_size">13sp</dimen>
     <dimen name="activity_beauty_tip_pop_up_button_font_size">10sp</dimen>
     <dimen name="view_beauty_tip_pop_up_nickname_font_size">10sp</dimen>
-    <dimen name="view_beauty_tip_pop_up_comment_font_size">13sp</dimen>
+    <dimen name="view_beauty_tip_pop_up_comment_font_size">12sp</dimen>
     <dimen name="fragment_mypage_default_font_size">12sp</dimen>
     <dimen name="fragment_mypage_title_font_size">15sp</dimen>
     <dimen name="fragment_mypage_cosmetic_title_font_size">8sp</dimen>
@@ -38,16 +38,16 @@
     <dimen name="activity_cosmetic_detail_cosmetic_name_font_size">15sp</dimen>
     <dimen name="activity_cosmetic_detail_register_font_size">16sp</dimen>
     <dimen name="activity_register_detail_brand_name_font_size">12sp</dimen>
-    <dimen name="activity_register_detail_cosmetic_color_font_size">18sp</dimen>
-    <dimen name="activity_register_detail_cosmetic_name_font_size">15sp</dimen>
+    <dimen name="activity_register_detail_cosmetic_color_font_size">15sp</dimen>
+    <dimen name="activity_register_detail_cosmetic_name_font_size">12sp</dimen>
     <dimen name="activity_register_detail_register_font_size">16sp</dimen>
     <dimen name="activity_register_search_spinner_text_size">14sp</dimen>
     <dimen name="activity_register_search_edit_text_size">14sp</dimen>
     <dimen name="activity_access_term_text_size">10sp</dimen>
     <dimen name="activity_register_barcode_font_size">16sp</dimen>
-    <dimen name="view_cosmetic_brand_name_font_size">16sp</dimen>
-    <dimen name="view_cosmetic_product_font_size">18sp</dimen>
-    <dimen name="view_cosmetic_cosmetic_name_font_size">15sp</dimen>
+    <dimen name="view_cosmetic_brand_name_font_size">12sp</dimen>
+    <dimen name="view_cosmetic_product_font_size">14sp</dimen>
+    <dimen name="view_cosmetic_cosmetic_name_font_size">11sp</dimen>
     <dimen name="fragment_sale_info_font_size">12sp</dimen>
     <dimen name="activity_partnership_tel_font_size">10sp</dimen>
     <dimen name="spinner_font_size">14sp</dimen>
@@ -118,8 +118,8 @@
     <dimen name="activity_beauty_tip_write_button_margin_bottom">60dp</dimen>
 
     <!-- activity_beauty_tip_pop_up -->
-    <dimen name="activity_beauty_tip_pop_up_button_width">60dp</dimen>
-    <dimen name="activity_beauty_tip_pop_up_button_height">40dp</dimen>
+    <dimen name="activity_beauty_tip_pop_up_button_width">48dp</dimen>
+    <dimen name="activity_beauty_tip_pop_up_button_height">36dp</dimen>
     <dimen name="activity_beauty_tip_pop_up_image_size">50dp</dimen>
     <dimen name="activity_beauty_tip_pop_up_cancel_size">20dp</dimen>
     <dimen name="activity_beauty_tip_pop_up_comment_width">100dp</dimen>

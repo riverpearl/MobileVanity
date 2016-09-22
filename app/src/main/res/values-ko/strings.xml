@@ -36,6 +36,7 @@
     <string name="button_text">등록하기</string>
 
     <!-- activity_beauty_tip_pop_up -->
+    <string name="dialog_comment_hint">댓글을 입력하세요.</string>
     <string name="dialog_button_text">전송</string>
 
     <!-- activity beauty tip write -->

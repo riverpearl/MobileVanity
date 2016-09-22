@@ -2,6 +2,7 @@ package com.vanity.mobilevanity.alert;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Typeface;
 import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -71,6 +72,7 @@ public class AlertActivity extends BaseActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         titleView.setText(getResources().getString(R.string.toolbar_title_alert));
+        titleView.setTypeface(Typeface.createFromAsset(getAssets(), "NanumGothicBold.ttf"));
 
         mAdapter = new AlertAdapter();
         mAdapter.setOnAdapterItemClickListener(new AlertAdapter.OnAdapterItemClickListener() {

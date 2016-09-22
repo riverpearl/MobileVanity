@@ -1,6 +1,7 @@
 package com.vanity.mobilevanity.register;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -102,6 +103,7 @@ public class RegisterSearchActivity extends BaseActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbarTitleView.setText(getResources().getString(R.string.toolbar_title_register_search));
+        toolbarTitleView.setTypeface(Typeface.createFromAsset(getAssets(), "NanumGothicBold.ttf"));
 
         toolbar.setNavigationIcon(R.drawable.btn_before);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -166,9 +168,6 @@ public class RegisterSearchActivity extends BaseActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (SystemClock.elapsedRealtime() - lastChangeTime < 1000) return;
-                lastChangeTime = SystemClock.elapsedRealtime();
-
                 NetworkManager.getInstance().cancelAll();
                 searchRequest();
             }
@@ -354,7 +353,7 @@ public class RegisterSearchActivity extends BaseActivity {
 
             @Override
             public void onFail(NetworkRequest<NetworkResult<List<Cosmetic>>> request, int errorCode, String errorMessage, Throwable e) {
-                Toast.makeText(RegisterSearchActivity.this, errorCode + " : " + errorMessage, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(RegisterSearchActivity.this, errorCode + " : " + errorMessage, Toast.LENGTH_SHORT).show();
             }
         });
     }

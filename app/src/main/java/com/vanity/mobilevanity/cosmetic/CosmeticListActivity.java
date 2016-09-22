@@ -5,6 +5,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
@@ -13,6 +14,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -20,6 +22,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.TextView;
@@ -86,6 +89,7 @@ public class CosmeticListActivity extends BaseActivity {
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+        toolbarTitleView.setTypeface(Typeface.createFromAsset(getAssets(), "NanumGothicBold.ttf"));
 
         Intent intent = getIntent();
         category = intent.getIntExtra(TAG_CATEGORY, 0);
@@ -225,8 +229,20 @@ public class CosmeticListActivity extends BaseActivity {
                 break;
         }
 
-        for (int i = 1; i < tabName.length; i++)
-            tabs.addTab(tabs.newTab().setText(tabName[i]).setTag(tabName[i]));
+        for (int i = 1; i < tabName.length; i++) {
+            TabLayout.Tab tab = tabs.newTab().setText(tabName[i]).setTag(tabName[i]);
+            tabs.addTab(tab);
+
+            ViewGroup vg = (ViewGroup)tabs.getChildAt(0);
+            ViewGroup tabChilds = (ViewGroup)vg.getChildAt(tab.getPosition());
+
+            for (int j = 0; j < tabChilds.getChildCount(); j++) {
+                View tabChild = tabChilds.getChildAt(j);
+
+                if (tabChild instanceof TextView)
+                    ((TextView)tabChild).setTypeface(Typeface.createFromAsset(getAssets(), "NanumGothic.ttf"));
+            }
+        }
 
         if (tabpos != -1) tabs.getTabAt(tabpos).select();
         else tabs.getTabAt(0).select();

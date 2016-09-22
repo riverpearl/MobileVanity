@@ -16,8 +16,7 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:background="@drawable/shape_stroke_square"
-            android:scaleType="centerCrop"/>
+            android:background="@android:color/white" />
 
         <TextView
             android:id="@+id/text_color_code"
@@ -29,7 +28,8 @@
             android:layout_below="@+id/text_product_name"
             android:layout_alignLeft="@+id/text_product_name"
             android:layout_alignStart="@+id/text_product_name"
-            android:layout_marginRight="@dimen/view_cosmetic_cosmetic_color_margin_right"/>
+            android:layout_marginRight="@dimen/view_cosmetic_cosmetic_color_margin_right"
+            android:layout_marginBottom="20dp"/>
 
         <TextView
             android:id="@+id/text_color_name"
@@ -52,7 +52,8 @@
             android:layout_alignParentTop="true"
             android:layout_toRightOf="@+id/image_cosmetic"
             android:layout_toEndOf="@+id/image_cosmetic"
-            android:layout_marginTop="@dimen/default_list_margin"
+            android:layout_marginTop="@dimen/default_margin"
+            android:layout_marginBottom="4dp"
             android:layout_marginLeft="@dimen/default_margin"
             android:layout_marginStart="@dimen/default_margin"
             android:singleLine="true" />
@@ -63,12 +64,9 @@
             android:layout_height="wrap_content"
             android:text="BrandName"
             android:textSize="@dimen/list_brand_font_size"
-            android:layout_alignBottom="@+id/image_cosmetic"
-            android:layout_toRightOf="@+id/image_cosmetic"
-            android:layout_toEndOf="@+id/image_cosmetic"
-            android:layout_marginLeft="@dimen/default_margin"
-            android:layout_marginStart="@dimen/default_margin"
-            android:layout_marginBottom="@dimen/default_list_margin"/>
+            android:layout_below="@+id/text_color_code"
+            android:layout_alignLeft="@+id/text_color_code"
+            android:layout_alignStart="@+id/text_color_code" />
 
         <ImageView
             android:layout_width="16dp"

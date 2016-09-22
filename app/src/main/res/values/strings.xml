@@ -43,6 +43,7 @@
     <string name="button_text">register</string>
 
     <!-- activity_beauty_tip_pop_up -->
+    <string name="dialog_comment_hint">Write Comment</string>
     <string name="dialog_button_text">send</string>
 
     <!-- view_beauty_tip_pop_up -->

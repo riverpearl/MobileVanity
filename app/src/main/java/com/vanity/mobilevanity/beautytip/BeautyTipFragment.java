@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
+import android.support.annotation.Dimension;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -87,6 +88,7 @@ public class BeautyTipFragment extends Fragment {
         ButterKnife.bind(this, view);
 
         setButton.setText(R.string.button_text);
+        setButton.setTextSize(Dimension.SP, 14);
 
         sAdapter = new BeautyTipSpinnerAdapter();
         spinner.setAdapter(sAdapter);

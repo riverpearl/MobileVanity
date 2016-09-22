@@ -21,7 +21,7 @@
     </me.dm7.barcodescanner.zxing.ZXingScannerView>
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/text_guide"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="41dp"
@@ -30,7 +30,6 @@
         android:text="@string/activity_register_barcode_title_text"
         android:textColor="@android:color/white"
         android:textSize="@dimen/activity_register_barcode_font_size"
-        android:textStyle="bold"
         android:layout_below="@+id/toolbar_register_barcode"
         android:layout_centerHorizontal="true" />
 

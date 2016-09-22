@@ -50,7 +50,8 @@
                 android:id="@+id/image_brand_stick"
                 android:layout_width="@dimen/activity_register_detail_brand_bar_width"
                 android:layout_height="@dimen/activity_register_detail_brand_bar_height"
-                android:src="@drawable/icon_brand_stick" />
+                android:src="@drawable/icon_brand_stick"
+                android:layout_marginBottom="4dp"/>
 
             <TextView
                 android:id="@+id/text_brand_name"
@@ -66,12 +67,12 @@
             android:id="@+id/text_color_code"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/text_cosmetic_name"
-            android:layout_centerHorizontal="true"
-            android:layout_marginRight="@dimen/view_cosmetic_cosmetic_color_margin_right"
             android:text="Color Code"
             android:textColor="@color/colorSub"
-            android:textSize="@dimen/activity_register_detail_cosmetic_name_font_size" />
+            android:textSize="@dimen/activity_register_detail_cosmetic_name_font_size"
+            android:layout_below="@+id/text_cosmetic_name"
+            android:layout_toRightOf="@+id/image_cosmetic"
+            android:layout_toEndOf="@+id/image_cosmetic" />
 
         <TextView
             android:id="@+id/text_color_name"
@@ -80,6 +81,7 @@
             android:layout_alignTop="@+id/text_color_code"
             android:layout_toEndOf="@+id/text_color_code"
             android:layout_toRightOf="@+id/text_color_code"
+            android:layout_marginRight="@dimen/default_margin"
             android:text="Color Name"
             android:textColor="@color/colorSub"
             android:textSize="@dimen/activity_register_detail_cosmetic_name_font_size" />
@@ -92,6 +94,7 @@
             android:layout_alignStart="@+id/text_color_code"
             android:layout_below="@+id/layout_brands"
             android:layout_marginBottom="@dimen/activity_register_detail_cosmetic_color_name_margin_top"
+            android:layout_marginRight="@dimen/default_margin"
             android:text="Cosmetic Name"
             android:textColor="@color/colorSub"
             android:textSize="@dimen/activity_register_detail_cosmetic_color_font_size" />
@@ -353,7 +356,7 @@
         android:src="@drawable/shape_stroke_line" />
 
     <TextView
-        android:id="@+id/textView13"
+        android:id="@+id/text_sale_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/layout_one"
@@ -363,14 +366,13 @@
         android:layout_marginLeft="@dimen/activity_cosmetic_detail_sale_margin"
         android:layout_marginTop="@dimen/activity_cosmetic_detail_brandname_margin_top"
         android:text="@string/activity_cosmetic_detail_sale_information"
-        android:textSize="@dimen/activity_cosmetic_detail_default_size"
-        android:textStyle="bold" />
+        android:textSize="@dimen/activity_cosmetic_detail_default_size" />
 
     <TextView
         android:id="@+id/text_sale_info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textView13"
+        android:layout_below="@+id/text_sale_title"
         android:layout_marginEnd="@dimen/activity_cosmetic_detail_sale_margin"
         android:layout_marginLeft="@dimen/activity_cosmetic_detail_sale_margin"
         android:layout_marginRight="@dimen/activity_cosmetic_detail_sale_margin"

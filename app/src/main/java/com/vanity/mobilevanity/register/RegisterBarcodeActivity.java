@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Typeface;
 import android.hardware.camera2.CameraManager;
 import android.os.SystemClock;
 import android.support.annotation.NonNull;
@@ -39,6 +40,9 @@ public class RegisterBarcodeActivity extends BaseActivity implements ZXingScanne
     @BindView(R.id.text_toolbar_title)
     TextView toolbarTitleView;
 
+    @BindView(R.id.text_guide)
+    TextView guideView;
+
     @BindView(R.id.view_scanner)
     ZXingScannerView scannerView;
 
@@ -65,6 +69,8 @@ public class RegisterBarcodeActivity extends BaseActivity implements ZXingScanne
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         toolbarTitleView.setText(getResources().getString(R.string.toolbar_title_register_barcode));
+        toolbarTitleView.setTypeface(Typeface.createFromAsset(getAssets(), "NanumGothicBold.ttf"));
+        guideView.setTypeface(Typeface.createFromAsset(getAssets(), "NanumGothicBold.ttf"));
         registerButton.setText(R.string.activity_register_barcode_button_text);
 
         Intent intent = getIntent();
